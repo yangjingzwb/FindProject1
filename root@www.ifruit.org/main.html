@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="screen-orientation" content="portrait" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+  <meta name="format-detection" content="telephone=no">
+  <meta name="full-screen" content="yes">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <!-- <link rel="apple-touch-startup-image" href="/static/img/error.png" /> -->
+
+
+  <title>发现</title>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR"></script>
+  <!-- <script src="https://openaf.xwbank.com/XWsdk-2-min.js?v=1.0"></script> -->
+  <!-- <script src="./static/polyfill.min.js"></script> -->
+  <script>
+
+    // 百度定位经纬度信息
+    window.LATITUDE = '';
+    window.LONGITUDE = '';
+    window.CITYNAME = '';
+    window.LBSINFO = {
+
+    }
+
+
+    try {
+      if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
+        setTimeout(() => {
+          // 苹果客户端定位
+          window.getLocationInfo()
+        }, 20)
+
+      } else {
+        // android 客户端定位
+        LBSINFO.Longitude = window.goActivity.getLongitude();//查询经度信息
+        LBSINFO.Latitude = window.goActivity.getLatitude();//查询纬度
+        LBSINFO.CityName = window.goActivity.getCity();
+      }
+    } catch (e) {
+
+    }
+   
+
+    // ios客户端回调
+    function callBackGetLocationInfo(json) {
+      // ios
+      window.LBSINFO = json
+    }
+
+     
+    var map = new BMap.Map("allmap");
+  
+    // var point = new BMap.Point(116.331398, 39.897445);
+   
+    // map.centerAndZoom(point, 12);
+
+    var geolocation = new BMap.Geolocation();
+    // 开启SDK辅助定位
+    geolocation.enableSDKLocation();
+    geolocation.getCurrentPosition(function (r) {
+      if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+        // var mk = new BMap.Marker(r.point);
+        // map.addOverlay(mk);
+        // map.panTo(r.point);
+        console.log('您的位置----：' + r.point.lng + ',' + r.point.lat);
+      }
+      else {
+        alert('failed' + this.getStatus());
+      }
+    });
+    new BMap.Geolocation().getCurrentPosition(function (r) {
+      // alert(31)
+      if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
+        console.log('您的位置：', r);// r.point.lng + ',' + r.point.lat
+        LATITUDE = r.latitude;
+        LONGITUDE = r.longitude;
+        CITYNAME = r.address.city;
+        // alert(4)
+      } else {
+        // new BMap.LocalCity().get(function (e) {
+        //   LATITUDE = e.center.lat;
+        //   LONGITUDE = e.center.lng;
+        //   CITYNAME = e.center.name;
+        // });
+      }
+    })
+      // new BMap.LocalCity().get(function (e) {
+      //       LATITUDE = LATITUDE || e.center.lat;
+      //       LONGITUDE = LONGITUDE || e.center.lng;
+      //       CITYNAME = CITYNAME || e.name;
+      //       console.log(e)
+      //       // alert(2)
+      // });
+    //  window.onerror = function (a, b, c, d) {
+    //     var msg = 'name=SM&error=' + a + "\n" + 'url:' + b + "\n" + '行:' + c + "\n" + '列:' + d;
+    //     // alert(msg)
+    //     // if (location.protocol == 'http:') {
+    //     //   var myreg = new RegExp('timeout'); //匹配加载超时
+    //     //   if (myreg.test(msg)) {
+    //     //     alert('请求超时');
+    //     //     location.reload();
+    //     //   } else {
+    //     //     // alert(msg);
+    //     //   }
+    //     // } else {
+    //     //   // setTimeout(function () {
+    //     //   //   ajax('/error', msg, 'POST');
+    //     //   // }, 10);
+    //     // }
+    //   };
+      // dd
+      // var map = new BMap.Map("container");
+    //   var geolocation = new BMap.Geolocation()
+    //   geolocation.getCurrentPosition(function (r) {
+    //     if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
+    //       // var mk = new BMap.Marker(r.point);//创建一个地图标注
+    //       // map.addOverlay(mk);
+    //       // map.panTo(r.point);//转向获取的地理坐标所在位置
+    //       alert('您的位置：' + JSON.stringify(r.point));// r.point.lng + ',' + r.point.lat
+    //     } else {
+
+    //     }
+    //   })
+
+    //  alert("请打开GPS")
+    //  new BMap.LocalCity().get(function (e) {
+    //         alert(JSON.stringify(e));
+    //       });
+  </script>
+  <!-- <script src="https://h5.bestpay.com.cn/common/js/bestpay.html5-2.0.js"></script> -->
+  <!-- <script src="https://openaf.xwbank.com/XWsdk-2-min.js?v=1.0"></script> -->
+  <!-- <script src="/static/bestpay.html5.js"></script> -->
+<link href="./static/css/app1c877b23bc3c2254c4b1.css" rel="stylesheet"></head>
+
+<body>
+  <div id="app" style="height:100%;">
+    <router-view></router-view>
+  </div>
+  <div id="container"></div>
+<script type="text/javascript" src="./static/js/manifest.1c877b23bc3c2254c4b1.js"></script><script type="text/javascript" src="./static/js/vendor.1c877b23bc3c2254c4b1.js"></script><script type="text/javascript" src="./static/js/app.1c877b23bc3c2254c4b1.js"></script></body>
+
+
+</html>
