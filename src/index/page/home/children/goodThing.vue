@@ -2,7 +2,7 @@
   <div style="position: absolue;height:56.25rem;">
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
     <scroll
-        :data = "shopList" :stopPropagation="stopPropagation">
+        :data = "shopList" :stopPropagation="stopPropagation" :scrollY="scrollY" @scroll="scrollListen">
          <ul class="scr">
             <li class="good" v-for="item in shopList" @click="goDetail(item.url)">
               <div class="good-i">
@@ -270,7 +270,12 @@ export default {
       //   defaultIcon: 'this.src="' + "/static/img/error.png" + '"'
     };
   },
-  props: {},
+  props: {
+    scrollY: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
      ...mapState([
       "token"
@@ -291,6 +296,17 @@ export default {
   // computed: {},
 
   methods: {
+    scrollListen(pos) {
+      console.log('goodThing')
+      console.log(pos)
+      // if(Math.abs(pos.y)>320){
+      //   this.OPENANDCLOSE(false)
+      //   this.topCat = true;
+      // }else{
+      //   this.topCat = false;
+      //   this.OPENANDCLOSE(true)
+      // }
+    },
     goDetail(url) {
       // alert(url)
       if (

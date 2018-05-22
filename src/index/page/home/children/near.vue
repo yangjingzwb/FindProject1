@@ -6,7 +6,9 @@
         :scrollbar='tabScrollbar'
         :pullDownRefresh='pullDownRefresh'
         :stopPropagation="stopPropagation"
+        :scrollY = "scrollY"
         pullUpLoad=true
+        @scroll="scrollListen"
         @pullingDown="onPullingDown"
         @pullingUp="onPullingUp">
         <ul v-for="item in shopList"  @click="goDetail($event,item,1)" :key="item.TX_JRN">
@@ -57,6 +59,10 @@ export default {
       type: String,
       default: false
     },
+    scrollY:{
+      type:Boolean,
+      default:false
+    },
     longitude: {
       type: String,
       default: false
@@ -92,6 +98,10 @@ export default {
   computed: {},
 
   methods: {
+    scrollListen(pos) {
+      console.log('near')
+      console.log(pos)
+    },
     aginEnter() {
       this.$emit("aginEnter");
     },

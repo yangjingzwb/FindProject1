@@ -1,7 +1,7 @@
 <template>
   <div style="position: absolue;height:56.25rem;">
      <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <scroll :data="goodList" :stopPropagation="stopPropagation">
+    <scroll :scrollY="scrollY"  :data="goodList" :stopPropagation="stopPropagation" @scroll = "scrollListen">
         <!-- {{goodList}} -->
          <ul class="scr" >
             <li v-for="item in goodList" :key="item.url" class="good" @click="goDetail(item.goUrl)">
@@ -33,20 +33,27 @@ const COMPONENT_NAME = "recommended";
 
 export default {
   name: COMPONENT_NAME,
-  props: {},
+  props: {
+    scrollY: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
-      stopPropagation:false,
+      stopPropagation: false,
       goodList: [
         {
           name: "全场五折起，超值尖货19.9包邮，真爱商品等你来撩",
           url: "/static/img/recommended/1.png",
-          goUrl: "https://dmp-data.vip.com/ndl?tra_from=tra%3Acfnzf3vm%3A%3A%3A%3A"
+          goUrl:
+            "https://dmp-data.vip.com/ndl?tra_from=tra%3Acfnzf3vm%3A%3A%3A%3A"
         },
         {
           name: "优惠倒计时，精明的人都在里面抢好货",
           url: "/static/img/recommended/2.png",
-          goUrl: "https://dmp-data.vip.com/ndl?tra_from=tra%3Acfnzf3vm%3A%3A%3A%3A"
+          goUrl:
+            "https://dmp-data.vip.com/ndl?tra_from=tra%3Acfnzf3vm%3A%3A%3A%3A"
         },
         {
           name: "让你一次爱个购，爱用和包说出来",
@@ -56,12 +63,14 @@ export default {
         {
           name: "月卡季卡随心购，独播热剧抢鲜看",
           url: "/static/img/recommended/4.png",
-          goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20160401004618&HEADER_FLG=1"
+          goUrl:
+            "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20160401004618&HEADER_FLG=1"
         },
         {
           name: "炎炎夏日，大额红包为你带来一波清凉",
           url: "/static/img/recommended/5.png",
-          goUrl: "https://h.umfintech.com/mallweb/h5hb/activitys/may.htm?channelid=H5"
+          goUrl:
+            "https://h.umfintech.com/mallweb/h5hb/activitys/may.htm?channelid=H5"
         },
         {
           name: "居家、餐厨、数码、饮食，总有你的倾心之选",
@@ -81,7 +90,8 @@ export default {
         {
           name: "五星商旅同款，浓情五月有买有赠、五折起购",
           url: "/static/img/recommended/9.png",
-          goUrl: "http://www.ylife.cn/mobile/subject.htm?subjectId=169&storeId=215"
+          goUrl:
+            "http://www.ylife.cn/mobile/subject.htm?subjectId=169&storeId=215"
         },
         {
           name: "给家一点新意，尽享倾心生活",
@@ -89,9 +99,10 @@ export default {
           goUrl: "https://huadupay.com/index.html#/special?ID=11"
         },
         {
-          name:"摩拜单车优惠券9折促销活动",
-          url:"/static/img/recommended/14.png",
-          goUrl:"http://develop.huahaikeji.cn/public/mobike/activity/index?activityCode=act000001"
+          name: "摩拜单车优惠券9折促销活动",
+          url: "/static/img/recommended/14.png",
+          goUrl:
+            "http://develop.huahaikeji.cn/public/mobike/activity/index?activityCode=act000001"
         }
       ]
     };
@@ -105,30 +116,45 @@ export default {
   },
 
   computed: {
-     ...mapState([
-      "token"
-    ])
+    ...mapState(["token"])
   },
 
   methods: {
+    scrollListen(pos) {
+      console.log("recommended");
+      console.log(pos);
+    },
     goDetail(url) {
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-          let url2 =
-            url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVERaccount="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
-          console.log(url2);
-          window.goActivity.goWeb(url2);
-       
+        let url2 =
+          url.indexOf("?") > 0
+            ? url.replace(
+                /\?/,
+                "?hebaosso=true&SOURCE=DISCOVERaccount=" +
+                  this.token.phone +
+                  "&"
+              )
+            : url +
+              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+              this.token.phone;
+        console.log(url2);
+        window.goActivity.goWeb(url2);
       } else {
-          let url_2 =
-            url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
-          window.location = "activity://goWeb?url=" + url_2;
+        let url_2 =
+          url.indexOf("?") > 0
+            ? url.replace(
+                /\?/,
+                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  this.token.phone +
+                  "&"
+              )
+            : url +
+              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+              this.token.phone;
+        window.location = "activity://goWeb?url=" + url_2;
       }
     }
   }
@@ -150,18 +176,18 @@ export default {
   img {
     display: block;
     width: 100%;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
   }
 }
 .t-1 {
-//   font-family: PingFangSC-Regular;
-font-size: 0.8125rem;
-color: #13252e;
-max-width: 100%;
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
-  padding-top: .5rem;
+  //   font-family: PingFangSC-Regular;
+  font-size: 0.8125rem;
+  color: #13252e;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-top: 0.5rem;
   padding-bottom: 1.25rem;
   text-align: left;
 }
