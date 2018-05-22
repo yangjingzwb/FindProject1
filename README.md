@@ -1,14 +1,9 @@
 # 项目运行
 npm install
 npm run dev demo 调试demo项目
-npm run dev index 调试甜橙借吧项目
-npm run build 发布项目
+npm run dev index 调试index项目
+npm run build index 发布index项目
 
-# 模块负责
-  还款模块  褚鹏飞
-  授信模块  葛彭泽
-  借款模块  王永辉
-  首页  杨静
 
 # demo项目布局
 
