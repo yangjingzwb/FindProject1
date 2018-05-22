@@ -1,5 +1,5 @@
 <template>
-  <div style="position: absoluex;width:100%; height:500px;top:0;">
+  <div style="position: absoluex;width:100%; height:31.25rem;top:0;">
     <scroll
         :data = "shopList">
          <ul class="scr">
@@ -53,8 +53,8 @@ export default {
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
 .good {
-  margin: 0 20px;
-  padding-top: 18px;
+  margin: 0 1.25rem;
+  padding-top: 1.125rem;
 }
 .good::after {
   @include onepx1(#d8d8d8);
@@ -64,23 +64,23 @@ export default {
   img {
     display: block;
     width: 100%;
-    border-radius: 2px;
+    border-radius: .125rem;
 
   }
 }
 .t-1 {
     font-family: PingFangSC-Regular;
-    font-size: 15px;
+    font-size: .9375rem;
     color: #13252E;
     letter-spacing: 0;
     text-align: right;
-    line-height: 15px;
-    padding-bottom: 20px;
-    padding-top: 8px;
+    line-height: .9375rem;
+    padding-bottom: 1.25rem;
+    padding-top: .5rem;
     text-align: left;
 }
 .null{
-    height: 50px;
+    height: 3.125rem;
 }
 
 </style>

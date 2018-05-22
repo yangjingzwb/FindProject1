@@ -118,10 +118,10 @@
           <div>
               <div class="slider-wrapper">
                   <slider :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
-                    <div style="position: relative;width:900px;">
+                    <div style="position: relative;width:56.25rem;">
                       <recommended></recommended>
                     </div>
-                    <div style="position: relative;width:900px;">
+                    <div style="position: relative;width:56.25rem;">
                       <near
                         :latitude = 'latitude'
                         :longitude = 'longitude'
@@ -1027,7 +1027,7 @@ export default {
   // background: #fff;
   margin-top: 0.5625rem;
   margin-bottom: 1rem;
-  height: 900px;
+  height: 56.25rem;
   ul {
     height: 7.5rem;
     padding-top: 1.625rem;
@@ -1183,7 +1183,7 @@ export default {
   -webkit-flex: 1;
   flex: 1;
   position: relative;
-  height: 900px;
+  height: 56.25rem;
   // margin: 0 .625rem .625rem;
 }
 .slider-item {

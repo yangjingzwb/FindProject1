@@ -1,5 +1,5 @@
 <template>
-  <div style="position: absolue;height:900px;">
+  <div style="position: absolue;height:56.25rem;">
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
     <scroll
         :data = "shopList" :stopPropagation="stopPropagation">
