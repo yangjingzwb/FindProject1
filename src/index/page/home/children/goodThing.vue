@@ -1,8 +1,8 @@
 <template>
-  <div style="position: absolue;height:900px;">
-    <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <scroll
-        :data = "shopList" :stopPropagation="stopPropagation">
+  <div>
+    <!-- style="position: absoluex;width:100%; height:31.25rem;top:0;" -->
+    <!-- <scroll
+        :data = "shopList"> -->
          <ul class="scr">
             <li class="good" v-for="item in shopList" @click="goDetail(item.url)">
               <div class="good-i">
@@ -11,69 +11,20 @@
                 <div class="t-2">¥{{item.price}}</div>
               </div>
             </li>
-            
-            
         </ul>
-         <!-- <ul class="scr">
-            <li class="good">
-              <div class="good-i">
-                <div class="t-0"><img src="/static/img/1-17.png"></div>
-                <div class="t-1">上班经常饿</div>
-                <div class="t-2">¥1.1</div>
-              </div>
-            </li>
-            <li class="good">
-              <div class="good-i">
-                <div class="t-0"><img src="/static/img/1-17.png"></div>
-                <div class="t-1">上班经常饿</div>
-                <div class="t-2">¥1.1</div>
-              </div>
-            </li>
-            <li class="good">
-              <div class="good-i">
-                <div class="t-0"><img src="/static/img/1-17.png"></div>
-                <div class="t-1">上班经常饿</div>
-                <div class="t-2">¥1.1</div>
-              </div>
-            </li>
-        </ul>
-         <ul class="scr">
-            <li class="good">
-              <div class="good-i">
-                <div class="t-0"><img src="/static/img/1-17.png"></div>
-                <div class="t-1">上班经常饿</div>
-                <div class="t-2">¥1.1</div>
-              </div>
-            </li>
-            <li class="good">
-              <div class="good-i">
-                <div class="t-0"><img src="/static/img/1-17.png"></div>
-                <div class="t-1">上班经常饿</div>
-                <div class="t-2">¥1.1</div>
-              </div>
-            </li>
-            <li class="good">
-              <div class="good-i">
-                <div class="t-0"><img src="/static/img/1-17.png"></div>
-                <div class="t-1">上班经常饿</div>
-                <div class="t-2">¥1.1</div>
-              </div>
-            </li>
-        </ul> -->
-         <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
-    </scroll>
+       
+         <div class="null"></div>
+    <!-- </scroll> -->
 </div>
 </template>
 
 <script>
 import { GetDistance } from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
-import { mapState } from "vuex";
 export default {
   data() {
     return {
-      stopPropagation:false,
-       shopList: [
+      shopList: [
         {
           name: "慕纯24卷纸",
           price: "45",
@@ -94,7 +45,7 @@ export default {
         },
         {
           name: "本色卫生纸",
-          price: "14.9",
+          price: "14.9-29.8",
           url:
             "https://union.juanpi.com/cpsfollow/call_url?utm=2176175&target=https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=75363918",
           imgUrl: "/static/img/juanzhi/1.png"
@@ -186,7 +137,7 @@ export default {
         },
         {
           name: "IQIYI月卡",
-          price: "14",
+          price: "138.6",
           url:
             "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20160401004618&HEADER_FLG=1",
           imgUrl: "/static/img/aqy/2.jpg"
@@ -195,13 +146,13 @@ export default {
           name: "血压计值套餐",
           price: "228",
           url: "https://h5shop.hhs16.com/index.html#/detail?id=420",
-          imgUrl: "/static/img/hhs/2.jpg"
+          imgUrl: "/static/img/hhs/1.jpg"
         },
         {
           name: "颈椎牵引器",
           price: "68",
           url: "https://h5shop.hhs16.com/index.html#/detail?id=398",
-          imgUrl: "/static/img/hhs/1.jpg"
+          imgUrl: "/static/img/hhs/2.jpg"
         },
         {
           name: "牛角刮痧板",
@@ -223,7 +174,7 @@ export default {
         },
         {
           name: "纯棉T恤",
-          price: "39",
+          price: "68",
           url: "https://huadupay.com/index.html#/detail?id=186",
           imgUrl: "/static/img/dxa/3.jpg"
         },
@@ -271,24 +222,16 @@ export default {
     };
   },
   props: {},
-  computed: {
-     ...mapState([
-      "token"
-    ])
-  },
+  computed: {},
 
   mounted() {},
-  created() {
-    this.shopList = this.shopList.sort(()=>{
-      return Math.random() > 0.5 ? -1 : 1;
-    })
-  },
+  created() {},
 
   components: {
     Scroll
   },
 
-  // computed: {},
+  computed: {},
 
   methods: {
     goDetail(url) {
@@ -299,16 +242,16 @@ export default {
       ) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER";
           console.log(url2);
           window.goActivity.goWeb(url2);
        
       } else {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER";
           window.location = "activity://goWeb?url=" + url_2;
       }
     }
@@ -326,6 +269,7 @@ export default {
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap; /* Safari 6.1+ */
   width: 100%;
+  margin-bottom: 50px;
 }
 .good {
   // margin: 0 1.25rem;
@@ -380,10 +324,7 @@ div.good-i {
   padding: .5rem 0rem;
 }
 .null {
-  height: 12rem;
-  padding-top: 1.2rem;
-  font-size: 0.6875rem;
-  color: #afadadc4;
+  height: 3rem;
 }
 // .list-wrapper{
 //   margin-right: .4375rem;

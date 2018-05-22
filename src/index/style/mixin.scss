@@ -74,7 +74,7 @@ $fc:#fff;
 // .03125rem 缩放实现 transform:scale()来达到压缩一半的目的
 @mixin onepx1($color){
 	content: "  ";
-	position: relative;
+	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 100%;
@@ -132,7 +132,7 @@ $fc:#fff;
 
 }
 body,html{
-	background-color: #F9F9F9;
+	// background-color: #F9F9F9;
 	font-family: PingFangSC-Regular;
 }
 

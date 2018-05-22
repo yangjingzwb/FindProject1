@@ -1,14 +1,13 @@
 <template>
-  <div style="position: absolue; height:900px;">
+  <div >
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <scroll
+    <!-- <scroll
         :data = "shopList"
         :scrollbar='tabScrollbar'
         :pullDownRefresh='pullDownRefresh'
-        :stopPropagation="stopPropagation"
         pullUpLoad=true
         @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp">
+        @pullingUp="onPullingUp"> -->
         <ul v-for="item in shopList"  @click="goDetail($event,item,1)" :key="item.TX_JRN">
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
@@ -29,8 +28,7 @@
             <ul v-if = "!shopList || shopList.length<=0 ">
             <li @click="aginEnter()" class="aa">请点击刷新试试</li>
         </ul>
-    </scroll>
-    <div class="null"></div>
+    <!-- </scroll> -->
     </div>
 </template>
 
@@ -48,7 +46,6 @@ import Scroll from "@@/components/scroll/scroll.vue";
 export default {
   data() {
     return {
-      stopPropagation:false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"'
     };
   },
@@ -604,11 +601,5 @@ export default {
   // &::after {
   //   @include onepx1(#d8d8d8);
   // }
-}
-.null {
-  height: 3rem;
-  // padding-top: 1.2rem;
-  // font-size: 0.6875rem;
-  // color: #afadadc4;
 }
 </style>

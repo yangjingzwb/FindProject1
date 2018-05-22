@@ -11,7 +11,7 @@ let baseUrl = {}; // // 环境
 let routerMode = 'hash'; // hash history
 let imgBaseUrl = '';
 console.log(process.env.NODE_ENV)
-const debug = 1 // process.env.NODE_ENV !== 'production'
+const debug = 5 // process.env.NODE_ENV !== 'production'
 
 
 // 配置环境
@@ -34,6 +34,7 @@ if (debug == 1) { //生产
   
     baseUrl.api = 'http://116.228.151.161:14156/api/';
     baseUrl.img = 'http://211.138.236.210:18480'
+   
 
 } else if (debug == 4) { //46 环境
    

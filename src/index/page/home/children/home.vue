@@ -5,7 +5,7 @@
     <!-- <nav class="city_nav">
     </nav> -->
     <!-- accountStatus 账户状态(正常:ACTIVE;失效:INACTIVE;过期:EXPIRED;已经逾期：overdue) -->
-    <section v-if="!flag&!topCat" class="s_1">
+    <section v-if="!flag&&!topCat" class="s_1">
       <ul>
         <li class="l t">
           {{cityName1}}
@@ -18,17 +18,18 @@
           <!-- </form> -->
         </li>
       </ul>
+      
     </section>
     <section v-if="topCat" class="s_1 animation_1">
       <ul class="cat_w">
-        <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
-          推荐
+        <li class="cat c1" :class="{'active':slideIndex==0}">
+          附近
           <!-- <span></span> -->
         </li>
-        <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)">
-          附近
+        <li class="cat c2" :class="{'active':slideIndex==1}">
+          推荐
         </li>
-        <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
+        <li class="cat c3" :class="{'active':slideIndex==2}">
           好物
         </li>
       </ul>
@@ -41,11 +42,10 @@
     </section> -->
      <div class="home home1" >
    <scroll
-    :data = "shopList"
-    :scrollbar='scrollbar'
+   :data = "shopList"
+    scrollbar='true'
+    :pullDownRefresh='pullDownRefresh'
     :pullUpLoad='pullUpLoad'
-    :bounce = "bounce"
-    :click = "slider_middle_click"
     @pullingDown="onPullingDown"
     @pullingUp="onPullingUp"
     @scroll = "scrollListen"
@@ -60,10 +60,10 @@
         <div class="scroll content slide-content">
           <div>
               <div class="slider-wrapper">
-                  <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
+                  <slider :autoPlay = "slider.length>1" :loop="slider.length>1">
                       <div v-for="item in slider">
                         <!-- :key="item.marketingId -->
-                          <a  @click="goDetail($event,item,2)" >
+                          <a @click = "goDetail($event,item,2)">
                               <img :src="item.marketingIcon">
                           </a>
                       </div>
@@ -85,27 +85,11 @@
 
       <section v-if="slider1 && slider1.length>0" class="s_3 s">
         <ul>
-          <li v-for="item in slider1"  @click="goDetail($event,item)">
+          <li v-for="item in slider1"  @tap="goDetail($event,item)">
             <!-- :key="item.id" -->
             <img :src="item.marketingIcon" :onerror='defaultIcon'  class="icon" >
             <span class="text">{{item.marketingTitle}}</span>
           </li>
-          <!-- <li>
-            <img src="/static/img/1-5@2x.png" class="icon">
-            <span class="text">{{超市}}</span>
-          </li>
-          <li>
-            <img src="/static/img/1-10@2x.png" class="icon">
-            <span class="text">加油</span>
-          </li>
-          <li>
-            <img src="/static/img/1-22@2x.png" class="icon">
-            <span class="text">药店</span>
-          </li>
-          <li>
-            <img src="/static/img/1-14@2x.png" class="icon">
-            <span class="text">全部</span>
-          </li> -->
         </ul>
       </section>
 
@@ -116,12 +100,9 @@
       <section class="s_5 s" >
           <div class=" content slide-content">
           <div>
-              <div class="slider-wrapper">
-                  <slider :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
-                    <div style="position: relative;width:900px;">
-                      <recommended></recommended>
-                    </div>
-                    <div style="position: relative;width:900px;">
+              <div ref="slides" class="slider-wrapper">
+                  <slider  :openAndClose = 'openAndClose' :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" :threshold ='threshold' class="tab-slider">
+                    <div style="position: relative;">
                       <near
                         :latitude = 'latitude'
                         :longitude = 'longitude'
@@ -130,11 +111,17 @@
                         :scrollbar='tabScrollbar'
                         :pullDownRefresh='pullDownRefresh'
                         :pullUpLoad='pullUpLoad'
+                        
+                        @aginEnter = "aginEnter"
                         @goDetail="goDetail"
                         @pullingDown="onPullingDown"
                         @pullingUp="onPullingUp">
                         >
                       </near>
+                    </div>
+
+                    <div style="position: relative;">
+                      <recommended></recommended>
                     </div>
                     <div>
                       <goodThing></goodThing>
@@ -196,6 +183,7 @@
       <!-- <section style="height:4.25rem;"></section> -->
       <!-- <foot-guide activeIcon = 'home'></foot-guide> -->
     
+    
     </div>
   </scroll>
      </div>
@@ -221,10 +209,11 @@ import {
 import BScroll from "better-scroll";
 import Scroll from "@@/components/scroll/scroll.vue";
 import { baseUrl } from "@@/config/env"; // baseUrl
-import Near from "./near.vue"
-import Recommended from "./recommended.vue"
-import Consulting from "./consulting.vue" // 咨询
-import GoodThing from "./goodThing.vue" // 好物
+import Near from "./near.vue";
+import { addClass } from "@@/components/common/js/dom";
+import Recommended from "./recommended.vue";
+import Consulting from "./consulting.vue"; // 咨询
+import GoodThing from "./goodThing.vue"; // 好物
 
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
@@ -232,22 +221,17 @@ import GoodThing from "./goodThing.vue" // 好物
 export default {
   data() {
     return {
-      pullUpLoad:false,
+      pullUpLoad: false,
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       product: [],
       listHeight: [],
       scrollY: "",
-      topCat:false,
-      scrollbar:false,
-      slider_top_click:false,
-      slider_middle_click:true,
-      bounce:false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
-      tabAutoPlay:false,
-      tabLoop:false,
-      tabScrollbar:false,
-      dots:['推荐','附近','好物'],//['附近','推荐','好物','咨询'],
+      tabAutoPlay: false,
+      tabLoop: false,
+      tabScrollbar: false,
+      dots: ["附近", "推荐", "好物"], //['附近','推荐','好物','咨询'],
       // autoPlay:,
       // defaultIcon: "",
 
@@ -255,6 +239,7 @@ export default {
       // slider1:[],
       // slider2:[],
       isError: true,
+      topCat:false,
       shopList: [],
       limit: "",
       creditResult: "",
@@ -269,23 +254,21 @@ export default {
       flag: false,
       shopListFlag: false,
       CURRENTPAGE: 0, // 页码
-      PAGNUM: 10,
+      PAGNUM: 15,
       refTime: "",
       baseImg: baseUrl.img,
       totalInit: 0,
       endX: 0,
-      sliderIndex:0,
       startX: 0,
-      threshold:0.3,
       cityName1: window.CITYNAME || "定位中",
+      threshold: 0.5,
       pullDownRefresh: {
         threshold: 120,
         stop: 60
       }
     };
   },
-  computed: {
-  },
+  computed: {},
 
   mounted() {
     if (!window.LATITUDE) {
@@ -294,8 +277,7 @@ export default {
       this.init();
     }
   },
-  created() {
-  },
+  created() {},
 
   components: {
     Slider,
@@ -303,7 +285,7 @@ export default {
     Near,
     Recommended,
     Consulting,
-    GoodThing
+    GoodThing,
     // vueLoading
     // SlideRender
   },
@@ -333,8 +315,18 @@ export default {
       "OPENANDCLOSE"
     ]),
     scrollListen(pos) {
-      // console.log(pos)
-      if(Math.abs(pos.y)>320){
+      // console.log(pos);
+
+      // addClass(this.$refs.slides, "test");
+      // console.log(this.$refs.slides.children[2])
+      // console.log(this.$refs.slides);
+      // if(Math.abs(pos.y)>250){
+      //   this.OPENANDCLOSE(false)
+      // }else{
+        
+      // }
+
+      if(Math.abs(pos.y)>300){
         this.OPENANDCLOSE(false)
         this.topCat = true;
       }else{
@@ -342,9 +334,6 @@ export default {
         this.OPENANDCLOSE(true)
       }
       
-    },
-    goToPage(index){
-      this.sliderIndex = index;
     },
     aginEnter() {
       // alert(33)
@@ -368,11 +357,13 @@ export default {
                 window.LONGITUDE = rs.point.lng;
                 window.CITYNAME = addComp.city;
                 that.cityName1 = addComp.city;
+                that.CITYNAME1(addComp.city);
               } else {
                 window.LATITUDE = r.point.lat;
                 window.LONGITUDE = r.point.lng;
                 window.CITYNAME = r.address.city;
                 that.cityName1 = r.address.city;
+                that.CITYNAME1(addComp.city);
               }
               that.init();
               // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
@@ -385,6 +376,7 @@ export default {
     },
     intervalCity() {
       this.cityName1 = window.CITYNAME || "定位中";
+      this.CITYNAME1(window.CITYNAME || "定位中");
     },
     defaultIconF(i) {
       this.shopList[i].PIC_URL_1 = "/static/img/error.png";
@@ -480,9 +472,9 @@ export default {
         if (flag == 2) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
-          // console.log(url2);
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER";
+          console.log(url2);
           window.goActivity.goWeb(url2);
         } else {
           window.goActivity.goWeb(
@@ -496,9 +488,9 @@ export default {
         if (flag == 2) {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
-          // console.log(url_2);
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER";
+          console.log(url_2);
           window.location = "activity://goWeb?url=" + url_2;
         } else {
           // console.log(
@@ -535,7 +527,7 @@ export default {
           merc_abbr: "", // 商户简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 10,
+          pagNum: this.PAGNUM || 15,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
@@ -637,6 +629,7 @@ export default {
       // 单点登录
       // 请求banner1
       this.cityName1 = window.CITYNAME || "定位中";
+      this.CITYNAME1(window.CITYNAME || "定位中");
       // this.cityName1 =
       //   window.CITYNAME ||
       //   (/iP(ad|hone|od)/.test(navigator.userAgent)
@@ -655,7 +648,7 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 10,
+          pagNum: this.PAGNUM || 15,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
@@ -790,7 +783,7 @@ export default {
 //   position: relative;
 // }
 .nullHeight {
-  height: .5625rem;
+  height: 0.5625rem;
   background: #f0f1f2;
 }
 .refresh {
@@ -812,12 +805,12 @@ export default {
   // -webkit-transition: all 0.3s;
   // transform: translateZ(0);
   // -webkit-transform: translateZ(0);
-  position: absolute;
+  // position: absolute;
   z-index: 1;
   top: 3rem;
   left: 0;
   width: 100%;
-  // position: relative;
+  position: absolute;
   height: 100%;
   // background: #f0f1f2;
   overflow: hidden;
@@ -826,6 +819,7 @@ export default {
   // margin-top: 4.25rem;
   height: 100%;
   overflow: hidden;
+  // position: relative;
   // z-index: 19;
 }
 .content {
@@ -840,12 +834,19 @@ export default {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
 }
+.s_1::after{
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 120%;
+  height: .0625rem;
+  background-color: #d8d8d8;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
 .s_1 {
-  // @include wh(100%, 3rem);
-  // // padding-top: 1.25rem;
-  // background: #ffffff;
-  // position: fixed;
-  // z-index: 100000;
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
   background: #ffffff;
@@ -1025,9 +1026,9 @@ export default {
 .s_5 {
   // padding: 0 0.9375rem;
   // background: #fff;
-  margin-top: 0.5625rem;
+  // margin-top: 0.5625rem;
+  background-color: #fff;
   margin-bottom: 1rem;
-  height: 900px;
   ul {
     height: 7.5rem;
     padding-top: 1.625rem;
@@ -1121,7 +1122,6 @@ export default {
     padding: 0.05rem 0.225rem;
     margin-right: 0.1875rem;
   }
-
 }
 
 .s_6 {
@@ -1183,7 +1183,6 @@ export default {
   -webkit-flex: 1;
   flex: 1;
   position: relative;
-  height: 900px;
   // margin: 0 .625rem .625rem;
 }
 .slider-item {
@@ -1296,7 +1295,7 @@ export default {
   background: #fff;
   z-index: 10;
   color: #444444;
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-align: center;
 }
 .hr-1 {
@@ -1316,17 +1315,17 @@ export default {
   //   @include onepx1(#d8d8d8);
   // }
 }
-.animation_1::after{
-  	content: "  ";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 120%;
-    height: .0625rem;
-    background-color: #d8d8d8;
-    /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
-    -webkit-transform: scaleY(.5);
-    transform:scaleY(.5);
+.slider-wrapper.test .dots {
+  position: sticky !important;
+  top: 0;
+  z-index: 100000000 !important;
 }
-
+// .animation_1{
+//     opacity: 1;
+//     transition: transform 1s ease 0s, opacity 1s ease 0s;
+//     -moz-transition: -moz-transform 1s ease 0s, opacity 1s ease 0s;
+//     -webkit-transition: -webkit-transform 1s ease 0s, opacity 1s ease 0s;
+//     -o-transition: -o-transform 1s ease 0s, opacity 1s ease 0s;
+//     -ms-transition: -ms-transform 1s ease 0s, opacity 1s ease 0s;
+// }
 </style>
