@@ -46,6 +46,7 @@
     :pullUpLoad='pullUpLoad'
     :bounce = "bounce"
     :click = "slider_middle_click"
+    :scrollY = "scrollY"
     @pullingDown="onPullingDown"
     @pullingUp="onPullingUp"
     @scroll = "scrollListen"
@@ -119,7 +120,9 @@
               <div class="slider-wrapper">
                   <slider :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
                     <div style="position: relative;width:56.25rem;">
-                      <recommended></recommended>
+                      <recommended
+                      :scrollY = 'scrollYOther'
+                      ></recommended>
                     </div>
                     <div style="position: relative;width:56.25rem;">
                       <near
@@ -130,6 +133,7 @@
                         :scrollbar='tabScrollbar'
                         :pullDownRefresh='pullDownRefresh'
                         :pullUpLoad='pullUpLoad'
+                        :scrollY = 'scrollYOther'
                         @goDetail="goDetail"
                         @pullingDown="onPullingDown"
                         @pullingUp="onPullingUp">
@@ -137,7 +141,9 @@
                       </near>
                     </div>
                     <div>
-                      <goodThing></goodThing>
+                      <goodThing
+                        :scrollY = 'scrollYOther'
+                      ></goodThing>
                     </div>
                     <!-- <div>
                       <consulting></consulting>
@@ -237,7 +243,7 @@ export default {
       icon: require("@@/images/mine/help_other-pressed.png"),
       product: [],
       listHeight: [],
-      scrollY: "",
+      // scrollY: "",
       topCat:false,
       scrollbar:false,
       slider_top_click:false,
@@ -276,6 +282,8 @@ export default {
       endX: 0,
       sliderIndex:0,
       startX: 0,
+      scrollY:true,
+      scrollYOther:false,
       threshold:0.3,
       cityName1: window.CITYNAME || "定位中",
       pullDownRefresh: {
@@ -333,15 +341,21 @@ export default {
       "OPENANDCLOSE"
     ]),
     scrollListen(pos) {
-      // console.log(pos)
+      console.log('home')
+      console.log(pos)
+      if(Math.abs(pos.y)>280){
+        this.scrollYOther = true;
+      }else{
+        this.scrollYOther = false;
+      }
       if(Math.abs(pos.y)>320){
         this.OPENANDCLOSE(false)
         this.topCat = true;
+        
       }else{
         this.topCat = false;
         this.OPENANDCLOSE(true)
       }
-      
     },
     goToPage(index){
       this.sliderIndex = index;
