@@ -7,7 +7,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   border: none;
   //color: #333;
   font-weight: normal;
-  font-family: "Microsoft Yahei";
+  font-family: "PingFangSC-Regular";
   box-sizing: border-box;
   // -webkit-tap-highlight-color: transparent;
   // -webkit-font-smoothing: antialiased;
@@ -19,10 +19,13 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   -webkit-text-size-adjust: none;
   -webkit-touch-callout:none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    // -webkit-transform-style: preserve-3d;
+    // -webkit-transform-style: preserve-3d;//子元素将保留其 3D 位置。
     // -webkit-backface-visibility:hidden;
   // -webkit-touch-callout: text;
   // -webkit-user-select: text;
+}
+.relate{
+  position: relative;
 }
 input, textarea {
   // -webkit-user-select: auto!important;
@@ -34,6 +37,13 @@ input, textarea {
 }
 html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6,span,li,ul,section {
   -webkit-text-size-adjust:100%;
+  font-family: PingFangSC-Regular;
+  -webkit-user-select: none!important;
+  -khtml-user-select: none!important;
+  -moz-user-select: none!important;
+  -ms-user-select: none!important;
+  -o-user-select: none!important;
+  user-select: none!important;
 }
 
 
@@ -55,10 +65,10 @@ html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6,span,li,ul,section {
     z-index: 100001;
     height: 30px;
     position: absolute;
-    top: 50%;
+    top: 360px;
     left: 50%;
-    transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
   }
 }
 
@@ -116,6 +126,7 @@ textarea {
 
 html, body {
   height: 100%;
+  // overflow: hidden;
   width: 100%;
   background: #ffffff;
   // background-color: #F9F9F9;

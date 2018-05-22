@@ -23,7 +23,7 @@
         </div>
       </slot>
     </div>
-    <!-- <slot name="pulldown"
+    <slot name="pulldown"
           :pullDownRefresh="pullDownRefresh"
           :pullDownStyle="pullDownStyle"
           :beforePullDown="beforePullDown"
@@ -41,7 +41,7 @@
           <div v-else><span style="color:#999999;font-size:0.6875rem;">{{refreshTxt}}</span></div>
         </div>
       </div>
-    </slot> -->
+    </slot>
   </div>
 </template>
 
@@ -64,17 +64,13 @@
           return []
         }
       },
-      stopPropagation:{
-        type: Boolean,
-        default: false
-      },
       probeType: {
         type: Number,
-        default: 3
+        default: 1
       },
       click: {
         type: Boolean,
-        default: false
+        default: true
       },
       listenScroll: {
         type: Boolean,
@@ -90,7 +86,7 @@
       },
       scrollbar: {
         type: null,
-        default: true
+        default: false
       },
       pullDownRefresh: {
         type: null,
@@ -165,28 +161,26 @@
 
         let options = {
           probeType: this.probeType,
-          click: this.click,
-          scrollY: true,//this.freeScroll || this.direction === DIRECTION_V,
-          scrollX: false,
-          scrollbar: false,//this.scrollbar,
-          // pullDownRefresh: this.pullDownRefresh,
+          click: false,
+          scrollY: this.freeScroll || this.direction === DIRECTION_V,
+          scrollX: this.freeScroll || this.direction === DIRECTION_H,
+          scrollbar: this.scrollbar,
+          pullDownRefresh: this.pullDownRefresh,
           pullUpLoad: this.pullUpLoad,
-          
           startY: this.startY,
-          // freeScroll: this.freeScroll,
+          freeScroll: this.freeScroll,
           mouseWheel: this.mouseWheel,
-          bounce: this.bounce,
-          // zoom: this.zoom,
-          stopPropagation:false,// this.stopPropagation
+          bounce: false,//this.bounce
+          zoom: this.zoom,
           preventDefault:true,
-          // directionLockThreshold:10
+          stopPropagation:true,
+          tap:true
         }
 
         this.scroll = new BScroll(this.$refs.wrapper, options)
 
         if (this.listenScroll) {
           this.scroll.on('scroll', (pos) => {
-            // console.log(pos)
             this.$emit('scroll', pos)
           })
         }

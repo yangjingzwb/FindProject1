@@ -1,13 +1,12 @@
 <template>
-  <div style="position: absolue;height:900px;">
-     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <scroll :data="goodList" :stopPropagation="stopPropagation">
+  <div >
+      <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
+    <!-- <scroll :data="goodList"> -->
         <!-- {{goodList}} -->
          <ul class="scr" >
             <li v-for="item in goodList" :key="item.url" class="good" @click="goDetail(item.goUrl)">
                 <div class="t-0"><img :src="item.url"></div>
                 <div class="t-1">{{item.name}}</div>
-                <div class="hr-1"></div>
             </li>
             <!-- <li class="good">
                 <div class="t-0"><img src="/static/img/banner.jpg"></div>
@@ -18,9 +17,8 @@
                 <div class="t-1">全场五折起，超值尖货19.9包邮，真爱商品等你来撩</div>
             </li> -->
         </ul>
-
-        <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
-    </scroll>
+         <!-- <div class="null"></div> -->
+    <!-- </scroll> -->
  
 </div>
 </template>
@@ -28,21 +26,13 @@
 <script>
 // import { GetDistance } from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
-import { mapState } from "vuex";
 const COMPONENT_NAME = "recommended";
-
 export default {
   name: COMPONENT_NAME,
   props: {},
   data() {
     return {
-      stopPropagation:false,
       goodList: [
-        {
-          name: "全场五折起，超值尖货19.9包邮，真爱商品等你来撩",
-          url: "/static/img/recommended/1.png",
-          goUrl: "https://dmp-data.vip.com/ndl?tra_from=tra%3Acfnzf3vm%3A%3A%3A%3A"
-        },
         {
           name: "优惠倒计时，精明的人都在里面抢好货",
           url: "/static/img/recommended/2.png",
@@ -65,7 +55,7 @@ export default {
         },
         {
           name: "居家、餐厨、数码、饮食，总有你的倾心之选",
-          url: "/static/img/recommended/13.jpg",
+          url: "/static/img/recommended/11.png",
           goUrl: "https://sn.51hive.com:7787/Repeater/ActApril"
         },
         {
@@ -87,15 +77,12 @@ export default {
           name: "给家一点新意，尽享倾心生活",
           url: "/static/img/recommended/10.png",
           goUrl: "https://huadupay.com/index.html#/special?ID=11"
-        },
-        {
-          name:"摩拜单车优惠券9折促销活动",
-          url:"/static/img/recommended/14.png",
-          goUrl:"http://develop.huahaikeji.cn/public/mobike/activity/index?activityCode=act000001"
         }
       ]
     };
   },
+
+  computed: {},
 
   mounted() {},
   created() {},
@@ -104,11 +91,7 @@ export default {
     Scroll
   },
 
-  computed: {
-     ...mapState([
-      "token"
-    ])
-  },
+  computed: {},
 
   methods: {
     goDetail(url) {
@@ -118,16 +101,16 @@ export default {
       ) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVERaccount="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER";
           console.log(url2);
           window.goActivity.goWeb(url2);
        
       } else {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER";
           window.location = "activity://goWeb?url=" + url_2;
       }
     }
@@ -142,9 +125,9 @@ export default {
   padding-top: 1.125rem;
   position: relative;
 }
-// .good::after {
-//   @include onepx1(#d8d8d8);
-// }
+.good::after {
+  @include onepx1(#d8d8d8);
+}
 .t-0 {
   width: 100%;
   img {
@@ -166,26 +149,6 @@ white-space: nowrap;
   text-align: left;
 }
 .null {
-  height: 13rem;
-  padding-top: 1.2rem;
-  font-size: 0.6875rem;
-  color: #afadadc4;
-}
-.hr-1 {
-  display: block;
-  position: absolute;
-  height: 0.0625rem;
-  float: left;
-  width: 100%;
-  bottom: 0;
-  background-color: #d8d8d8;
-  -webkit-transform-origin: 0, 0;
-  transform-origin: 0, 0;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-  // &::after {
-  //   @include onepx1(#d8d8d8);
-  // }
+  height: 12rem;
 }
 </style>

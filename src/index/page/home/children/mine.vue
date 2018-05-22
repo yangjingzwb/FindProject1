@@ -381,7 +381,7 @@ export default {
   // padding-top: 1.25rem;
   background: #ffffff;
   position: fixed;
-  z-index: 21;
+  z-index: 210000000;
   ul {
     width: 100%;
     height: 100%;
@@ -606,8 +606,8 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 2.75rem);
-  overflow: hidden;
+  // height: calc(100% - 2.75rem);
+  // overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 .foods-wrapper {

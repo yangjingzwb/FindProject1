@@ -4,21 +4,23 @@
       <slot>
       </slot>
     </div>
-    <div v-if="showDot" class="dots">
+    <div v-if="showDot" class="dots" id="dots" ref="dots">
       <span class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots" @click="goToIndex(index)">
         {{item}}
       </span>
-      <div v-if="dots_.length>0" class="hr-1"></div>
+      <!-- <div class="hr-1"></div> -->
     </div>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 import { addClass } from "@@/components/common/js/dom";
-import {mapState, mapMutations } from "vuex";
 import BScroll from "better-scroll";
+import {mapState, mapMutations } from "vuex";
 
 const COMPONENT_NAME = "slide";
+//SLIDEINDEX
+
 
 export default {
   name: COMPONENT_NAME,
@@ -39,19 +41,19 @@ export default {
       type: Boolean,
       default: true
     },
-    dots_:{
-      type:Array,
-       default() {
-          return []
-        }
+    dots_: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
     click: {
       type: Boolean,
-      default: false
+      default: true
     },
     threshold: {
       type: Number,
-      default: 0.2
+      default: 0.3
     },
     speed: {
       type: Number,
@@ -60,13 +62,9 @@ export default {
     openAndClose:{
       type: Boolean,
       default: true
-    },
-    sliderIndex:{
-      type: Boolean,
-      default: 0
     }
   },
-  computed: {
+   computed: {
     ...mapState([
       "slideIndex"
     ])
@@ -75,9 +73,16 @@ export default {
     return {
       dots: [],
       currentPageIndex: 0,
-      preIndex:0
+      preIndex: 0
     };
   },
+  // watch: {
+  //   currentPageIndex(curVal, oldVal) {
+  //     alert(2)
+  //     this.SLIDEINDEX(curVal)
+  //     // console.log(curVal, oldVal);
+  //   }
+  // },
   mounted() {
     this.update();
 
@@ -106,7 +111,7 @@ export default {
     let pageIndex = this.slide.getCurrentPage().pageX;
     this.slide.goToPage(pageIndex, 0, 0);
     this.currentPageIndex = pageIndex;
-    !this.autoPlay && this.SLIDEINDEX(this.currentPageIndex)
+    !this.autoPlay && this.SLIDEINDEX(pageIndex)
     if (this.autoPlay) {
       this._play();
     }
@@ -123,13 +128,12 @@ export default {
     ...mapMutations([
       'SLIDEINDEX'
     ]),
-    goToIndex(index){
+    goToIndex(index) {
       let aa = index - this.preIndex;
       this.slide.goToPage(this.currentPageIndex + aa);
       this.currentPageIndex += aa
       !this.autoPlay && this.SLIDEINDEX(this.currentPageIndex)
       this.preIndex = index;
-      // let aa = index - this.preIndex
       // // alert(aa)
       // switch(aa){
       //   case -1:
@@ -157,7 +161,7 @@ export default {
       //      this.slide.next();
       //      break;
       // }
-      // this.preIndex = index
+
       // this.slide.next();
       // if(index)
       // alert(index)
@@ -183,8 +187,10 @@ export default {
     },
     init() {
       clearTimeout(this.timer);
-      this.currentPageIndex = 0;
-      !this.autoPlay && this.SLIDEINDEX(this.currentPageIndex)
+      // this.currentPageIndex = this.slideIndex;
+      this.currentPageIndex = 0
+      !this.autoPlay && this.SLIDEINDEX(0)
+   
       this._setSlideWidth();
       if (this.showDot) {
         this._initDots();
@@ -194,6 +200,9 @@ export default {
       if (this.autoPlay) {
         this._play();
       }
+      // if(this.currentPageIndex>0){
+      //   this.slide.goToPage(this.slide.getCurrentPage()+this.currentPageIndex)
+      // }
     },
     _setSlideWidth(isResize) {
       this.children = this.$refs.slideGroup.children;
@@ -215,39 +224,51 @@ export default {
     _initSlide() {
       console.log(this.threshold);
       this.slide = new BScroll(this.$refs.slide, {
-        scrollX: true,
+        scrollX: this.openAndClose,
         scrollY: false,
+        // startX:400,
+        // directionLockThreshold:30,
+        // eventPassthrough:"vertical",
         momentum: false,
+        // freeScroll:true,
+        // probeType:2,
         snap: {
           loop: this.loop,
           threshold: this.threshold,
-          speed: this.speed
+          speed: this.speed,
+          // stepX: 100,
         },
-        // directionLockThreshold:10,
         bounce: false,
-        // stopPropagation: true,
         stopPropagation: false,
-        click: this.click,
-        tap:true
+        click: true,
+        tap: true
       });
 
       this.slide.on("scrollEnd", this._onScrollEnd);
-
+      let width_ = document.body.offsetWidth / 1;
       this.slide.on("touchEnd", () => {
         if (this.autoPlay) {
           this._play();
         }
       });
-
-      this.slide.on("beforeScrollStart", () => {
+      // this.slide.on('scroll',(pos)=>{
+      //   Math.abs(pos.x)/width_
+      //   console.log(pos)
+      //   return
+      // })
+      this.slide.on("beforeScrollStart", pos => {
+        console.log(pos);
         if (this.autoPlay) {
           clearTimeout(this.timer);
         }
       });
     },
     _onScrollEnd() {
+      // this.SLIDEINDEX(this.slide.getCurrentPage().pageX)
+      // alert(JSON.stringify(this.slide.getCurrentPage()))
       let pageIndex = this.slide.getCurrentPage().pageX;
       this.currentPageIndex = pageIndex;
+      // setTimeout()
       !this.autoPlay && this.SLIDEINDEX(this.currentPageIndex)
       if (this.autoPlay) {
         this._play();
@@ -255,9 +276,9 @@ export default {
     },
     _initDots() {
       // this.dots = new Array(this.children.length);
-      if(this.dots_.length>0){
-        this.dots = this.dots_
-      }else{
+      if (this.dots_.length > 0) {
+        this.dots = this.dots_;
+      } else {
         this.dots = new Array(this.children.length);
       }
     },
@@ -281,17 +302,19 @@ export default {
     threshold() {
       this.update();
     },
-    sliderIndex(){
-      this.slide.goToPage(this.sliderIndex)
-    }
+    // openAndClose(){
+    //   // this.refresh();
+    //   this.update();
+    // }
+
   }
 };
 </script>
 <style  lang="scss" scoped>
 .slide {
-  min-height: .0625rem;
+  min-height: 0.0625rem;
   .slide-group {
-    position: relative;
+    // position: relative;
     overflow: hidden;
     white-space: nowrap;
 
@@ -300,6 +323,7 @@ export default {
       box-sizing: border-box;
       overflow: hidden;
       text-align: center;
+      position: relative;
 
       a {
         display: block;
@@ -313,90 +337,76 @@ export default {
       }
     }
   }
+
   .dots {
     position: absolute;
     right: 0;
     left: 0;
-    bottom: .75rem;
-    transform: translateZ(.0625rem);
+    bottom: 0.75rem;
+    transform: translateZ(0.0625rem);
     text-align: center;
     font-size: 0;
     .dot {
       display: inline-block;
-      margin: 0 .25rem;
-      width: .3125rem;
-      height: .3125rem;
+      margin: 0 0.25rem;
+      width: 0.3125rem;
+      height: 0.3125rem;
       border-radius: 50%;
       background: #ccc;
       &.active {
-        width: .3125rem;
-        border-radius: .3125rem;
+        width: 0.3125rem;
+        border-radius: 0.3125rem;
         background: #ed1991;
       }
     }
   }
 }
-.tab-slider{
-  .slide-group{
-        // padding: 0 0.9375rem;
+.tab-slider {
+  position: relative;
+  .slide-group {
+    // padding: 0 0.9375rem;
   }
-    .dots {
-      height: 3rem!important;
-      top: 0rem!important;
-      background: white;
+  .dots {
+    height: 3rem !important;
+    top: 0rem !important;
+    background: white;
+    line-height: 3rem;
+    display: flex;
+    &::after {
+      content: "  ";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 120%;
+      height: 0.0625rem;
+      background-color: #d8d8d8;
+      /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+    .dot {
+      flex: 1;
+      height: 3rem;
       line-height: 3rem;
-      display: flex;
-      // &::after{
-      //   	content: "  ";
-      //     position: absolute;
-      //     left: 0;
-      //     bottom: 0;
-      //     width: 120%;
-      //     height: .0625rem;
-      //     background-color: #d8d8d8;
-      //     /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
-      //     -webkit-transform: scaleY(.5);
-      //     transform:scaleY(.5);
-      // }
-      .dot{
-        flex:1;
-        height: 3rem;
-        line-height: 3rem;
-        background: #fff;
-        font-family: PingFangSC-Regular;
-        
-        color: #13252E;
-        font-size: .9375rem;
-      }
-      .dot.active{
-        background: #fff;
-        color:#ED1991;
-        border-bottom: .125rem solid #ED1991;
-        border-radius: 0;
-      }
+      background: #fff;
+      font-family: PingFangSC-Regular;
+      color: #13252e;
+      font-size: 0.9375rem;
+    }
+    .dot.active {
+      background: #fff;
+      color: #ed1991;
+      border-bottom: 0.125rem solid #ed1991;
+      border-radius: 0;
+    }
   }
-  .slide-item{
-    padding-top: 3rem;
+  .slide-item {
+    // padding-top: 3rem;
+    top: 3rem;
+    // background: red;
   }
-  .slide-item{
-    position: relative!important;
+  .slide-item {
+    // position: relative!important;
   }
-}
-.hr-1 {
-  display: block;
-  position: absolute;
-  height: 0.0625rem;
-  float: left;
-  width: 100%;
-  bottom: 0;
-  background-color: #d8d8d8;
-  -webkit-transform-origin: 0, 0;
-  transform-origin: 0, 0;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-  // &::after {
-  //   @include onepx1(#d8d8d8);
-  // }
 }
 </style>

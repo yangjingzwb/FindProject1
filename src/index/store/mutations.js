@@ -110,7 +110,8 @@ export default {
 	},
 	[OPENANDCLOSE](state, data){
 		state['openAndClose'] = data
-	}
+	},
+	
 	
 	
 
