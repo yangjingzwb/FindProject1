@@ -192,7 +192,7 @@ export default {
           imgUrl: "/static/img/aqy/2.jpg"
         },
         {
-          name: "血压计值套餐",
+          name: "血压计套餐",
           price: "228",
           url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=420",
           imgUrl: "/static/img/hhs/2.jpg"
