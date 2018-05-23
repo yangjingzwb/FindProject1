@@ -115,7 +115,7 @@
           <img :src="slider2[0].marketingIcon" @click="goDetail($event,slider2[0])">
       </section> -->
       <div class="nullHeight"></div>
-      
+
       <!-- <section  class="animation_2 s_5_1">
         <ul class="cat_w">
           <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
@@ -146,6 +146,7 @@
                         :pullDownRefresh='pullDownRefresh'
                         :pullUpLoad='pullUpLoad'
                         :scrollY = 'scrollYOther'
+                        @changeIscrollY="changeIscrollY"
                         @goDetail="goDetail"
                         @pullingDown="onPullingDown"
                         @pullingUp="onPullingUp">
@@ -155,11 +156,13 @@
                     <div style="position: relative;width:56.25rem;">
                       <recommended
                       :scrollY = 'scrollYOther'
+                      @changeIscrollY="changeIscrollY"
                       ></recommended>
                     </div>
                     <div>
                       <goodThing
                         :scrollY = 'scrollYOther'
+                        @changeIscrollY="changeIscrollY"
                       ></goodThing>
                     </div>
                     <!-- <div>
@@ -371,9 +374,10 @@ export default {
       //   this.scrollYOther = true;
       //   this.scrollY = false
       //   // this.startY = pos.y
-      // }else{
+      // }else if(Math.abs(pos.y)>0){
+      //   console.log(99999)
       //   this.scrollYOther = false;
-      //   this.scrollY = true
+      //   // this.scrollY = true
       // }
       if(Math.abs(pos.y)>320){
         // this.scrollY = false
@@ -386,6 +390,9 @@ export default {
         this.topCat = false;
         this.OPENANDCLOSE(true)
       }
+    },
+    changeIscrollY(flag){
+      this.scrollY = flag;
     },
     goToPage(index){
       this.sliderIndex = index;
@@ -481,7 +488,7 @@ export default {
         fetchPoints(
           "index",
           obj.marketingPosition || obj.STORES_NM,
-          this.token.phone,
+          this.token.productNo,
           "发现页，点击",
           this.token.session.replace(/\+/g, "%2B")
         );
@@ -524,13 +531,13 @@ export default {
         if (flag == 2) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo;
           // console.log(url2);
           window.goActivity.goWeb(url2);
         } else {
           window.goActivity.goWeb(
-            url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&")
+            url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
           );
         }
       } else {
@@ -540,8 +547,8 @@ export default {
         if (flag == 2) {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo;
           // console.log(url_2);
           window.location = "activity://goWeb?url=" + url_2;
         } else {
@@ -552,10 +559,9 @@ export default {
             "activity://goWeb?url=" +
             url.replace(
               /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&"
+              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&"
             );
         }
-        // alert("activity://goWeb?url=" + url.replace(/\?/,'?showtitle=false&'))
       }
     },
     filterObj(obj) {

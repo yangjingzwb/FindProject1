@@ -149,7 +149,7 @@ export default {
       fetchPoints(
         "search",
         obj.STORES_NM,
-        this.token.phone,
+        this.token.productNo,
         "搜索页面，点击商户详情",
         this.token.session.replace(/\+/g, "%2B")
       );
@@ -271,7 +271,7 @@ export default {
         fetchPoints(
           "search",
           this.searchT,
-          this.token.phone,
+          this.token.productNo,
           "搜索页面，点击搜索",
           this.token.session.replace(/\+/g, "%2B")
         );

@@ -299,6 +299,11 @@ export default {
     scrollListen(pos) {
       console.log('goodThing')
       console.log(pos)
+      // if(Math.abs(pos.y)<5){
+      //   this.$emit('changeIscrollY',true)
+      // }else{
+      //   this.$emit('changeIscrollY',false)
+      // }
       // if(Math.abs(pos.y)>320){
       //   this.OPENANDCLOSE(false)
       //   this.topCat = true;
@@ -315,16 +320,16 @@ export default {
       ) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.productNo+"&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.productNo;
           console.log(url2);
           window.goActivity.goWeb(url2);
        
       } else {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.productNo+"&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.productNo;
           window.location = "activity://goWeb?url=" + url_2;
       }
     }
