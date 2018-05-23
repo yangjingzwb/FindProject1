@@ -115,20 +115,22 @@
           <img :src="slider2[0].marketingIcon" @click="goDetail($event,slider2[0])">
       </section> -->
       <div class="nullHeight"></div>
-      <section  class="animation_2 s_5_1">
+      
+      <!-- <section  class="animation_2 s_5_1">
         <ul class="cat_w">
           <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
             附近
-            <!-- <span></span> -->
-          </li>
-          <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)">
-            推荐
-          </li>
-          <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
-            好物
-          </li>
-        </ul>
-      </section>
+             <span></span> -->
+          <!-- </li> -->
+          <!-- <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)"> -->
+            <!-- 推荐 -->
+          <!-- </li> -->
+          <!-- <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)"> -->
+            <!-- 好物 -->
+          <!-- </li> -->
+        <!-- </ul> -->
+      <!-- </section> -->
+
       <section class="s_5 s" >
           <div class=" content slide-content">
           <div>
@@ -268,7 +270,7 @@ export default {
       tabAutoPlay:false,
       tabLoop:false,
       tabScrollbar:false,
-      showDot:false,
+      showDot:true,
       dots:['附近','推荐','好物'],//['附近','推荐','好物','咨询'],
       // autoPlay:,
       // defaultIcon: "",
