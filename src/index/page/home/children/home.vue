@@ -22,11 +22,11 @@
     <section v-if="topCat" class="s_1 animation_1">
       <ul class="cat_w">
         <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
-          推荐
+          附近
           <!-- <span></span> -->
         </li>
         <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)">
-          附近
+          推荐
         </li>
         <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
           好物
@@ -47,12 +47,13 @@
     :bounce = "bounce"
     :click = "slider_middle_click"
     :scrollY = "scrollY"
+    :startY = "startY"
     @pullingDown="onPullingDown"
     @pullingUp="onPullingUp"
     @scroll = "scrollListen"
    >
     <!-- <div class="home home1" > -->
-      <div class="content">
+ <div class="content">
       
       <!-- <section class="s_8">
       </section> -->
@@ -114,16 +115,25 @@
           <img :src="slider2[0].marketingIcon" @click="goDetail($event,slider2[0])">
       </section> -->
       <div class="nullHeight"></div>
+      <section  class="animation_2 s_5_1">
+        <ul class="cat_w">
+          <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
+            附近
+            <!-- <span></span> -->
+          </li>
+          <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)">
+            推荐
+          </li>
+          <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
+            好物
+          </li>
+        </ul>
+      </section>
       <section class="s_5 s" >
           <div class=" content slide-content">
           <div>
               <div class="slider-wrapper">
-                  <slider :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
-                    <div style="position: relative;width:56.25rem;">
-                      <recommended
-                      :scrollY = 'scrollYOther'
-                      ></recommended>
-                    </div>
+                  <slider :showDot = "showDot" :loopX = "loopX" :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
                     <div style="position: relative;width:56.25rem;">
                       <near
                         :latitude = 'latitude'
@@ -139,6 +149,11 @@
                         @pullingUp="onPullingUp">
                         >
                       </near>
+                    </div>
+                    <div style="position: relative;width:56.25rem;">
+                      <recommended
+                      :scrollY = 'scrollYOther'
+                      ></recommended>
                     </div>
                     <div>
                       <goodThing
@@ -243,7 +258,7 @@ export default {
       icon: require("@@/images/mine/help_other-pressed.png"),
       product: [],
       listHeight: [],
-      // scrollY: "",
+      scrollY: true,
       topCat:false,
       scrollbar:false,
       slider_top_click:false,
@@ -253,7 +268,8 @@ export default {
       tabAutoPlay:false,
       tabLoop:false,
       tabScrollbar:false,
-      dots:['推荐','附近','好物'],//['附近','推荐','好物','咨询'],
+      showDot:false,
+      dots:['附近','推荐','好物'],//['附近','推荐','好物','咨询'],
       // autoPlay:,
       // defaultIcon: "",
 
@@ -261,6 +277,7 @@ export default {
       // slider1:[],
       // slider2:[],
       isError: true,
+      loopX:true,
       shopList: [],
       limit: "",
       creditResult: "",
@@ -283,8 +300,9 @@ export default {
       sliderIndex:0,
       startX: 0,
       scrollY:true,
-      scrollYOther:false,
-      threshold:0.3,
+      scrollYOther:true,
+      startY:0,
+      threshold:0.2,
       cityName1: window.CITYNAME || "定位中",
       pullDownRefresh: {
         threshold: 120,
@@ -343,12 +361,22 @@ export default {
     scrollListen(pos) {
       console.log('home')
       console.log(pos)
-      if(Math.abs(pos.y)>280){
-        this.scrollYOther = true;
-      }else{
-        this.scrollYOther = false;
-      }
+      // setTimeout(()=>{
+
+      // })
+      // 处理滑动
+      // if(Math.abs(pos.y)>280){
+      //   this.scrollYOther = true;
+      //   this.scrollY = false
+      //   // this.startY = pos.y
+      // }else{
+      //   this.scrollYOther = false;
+      //   this.scrollY = true
+      // }
       if(Math.abs(pos.y)>320){
+        // this.scrollY = false
+        // this.scrollYOther = true;
+        // this.startY = -321
         this.OPENANDCLOSE(false)
         this.topCat = true;
         
@@ -854,7 +882,7 @@ export default {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
 }
-.s_1 {
+.s_1,.s_5_1 {
   // @include wh(100%, 3rem);
   // // padding-top: 1.25rem;
   // background: #ffffff;
@@ -1330,7 +1358,7 @@ export default {
   //   @include onepx1(#d8d8d8);
   // }
 }
-.animation_1::after{
+.animation_2::after,.animation_1::after{
   	content: "  ";
     position: absolute;
     left: 0;

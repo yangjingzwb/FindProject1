@@ -126,7 +126,7 @@ export default {
         },
         {
           name: "手撕牛肉干",
-          price: "79",
+          price: "52",
           url:
             "https://dmp-data.vip.com/ndl?tra_from=tra%3A6eo6kpcf%3A%3A%3A%3A",
           imgUrl: "/static/img/wp/1.png"
@@ -194,37 +194,37 @@ export default {
         {
           name: "血压计值套餐",
           price: "228",
-          url: "https://h5shop.hhs16.com/index.html#/detail?id=420",
+          url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=420",
           imgUrl: "/static/img/hhs/2.jpg"
         },
         {
           name: "颈椎牵引器",
           price: "68",
-          url: "https://h5shop.hhs16.com/index.html#/detail?id=398",
+          url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=398",
           imgUrl: "/static/img/hhs/1.jpg"
         },
         {
           name: "牛角刮痧板",
           price: "42.8",
-          url: "https://h5shop.hhs16.com/index.html#/detail?id=320",
+          url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=320",
           imgUrl: "/static/img/hhs/3.jpg"
         },
         {
           name: "全涤套件",
           price: "238",
-          url: "https://huadupay.com/index.html#/detail?id=256",
+          url: "https://huadupay.com/HebaoLogin?page=detail&id=256",
           imgUrl: "/static/img/dxa/1.jpg"
         },
         {
           name: "舒适腰枕",
           price: "99",
-          url: "https://huadupay.com/index.html#/detail?id=213",
+          url: "https://huadupay.com/HebaoLogin?page=detail&id=213",
           imgUrl: "/static/img/dxa/2.jpg"
         },
         {
           name: "纯棉T恤",
           price: "39",
-          url: "https://huadupay.com/index.html#/detail?id=186",
+          url: "https://huadupay.com/HebaoLogin?page=detail&id=186",
           imgUrl: "/static/img/dxa/3.jpg"
         },
         {
@@ -315,16 +315,16 @@ export default {
       ) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone+"&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone;
           console.log(url2);
           window.goActivity.goWeb(url2);
        
       } else {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.phone;
+              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone+"&")
+              : url + "?hebaosso=true&SOURCE=DISCOVER&HEADER_FLG=1&account="+this.token.phone;
           window.location = "activity://goWeb?url=" + url_2;
       }
     }
