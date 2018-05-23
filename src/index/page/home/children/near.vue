@@ -11,7 +11,8 @@
         @scroll="scrollListen"
         @pullingDown="onPullingDown"
         @pullingUp="onPullingUp">
-        <ul v-for="item in shopList"  @click="goDetail($event,item,1)" :key="item.TX_JRN">
+        <ul v-for="item in shopList"  @click="goDetail($event,item,1)" >
+          <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
                 <img v-else :src="'/static/img/error.png'" alt="">
@@ -101,6 +102,11 @@ export default {
     scrollListen(pos) {
       console.log('near')
       console.log(pos)
+      // if(Math.abs(pos.y)<5){
+      //   this.$emit('changeIscrollY',true)
+      // }else{
+      //   this.$emit('changeIscrollY',false)
+      // }
     },
     aginEnter() {
       this.$emit("aginEnter");

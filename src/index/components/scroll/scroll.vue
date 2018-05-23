@@ -177,7 +177,7 @@ export default {
       let options = {
         probeType: this.probeType,
         click: this.click,
-        scrollY: this.scrollY, //true,//this.freeScroll || this.direction === DIRECTION_V,
+        scrollY: true,//this.scrollY, //true,//this.freeScroll || this.direction === DIRECTION_V,
         scrollX: false,
         scrollbar: false, //this.scrollbar,
         // pullDownRefresh: this.pullDownRefresh,
@@ -320,10 +320,11 @@ export default {
       }, this.refreshDelay);
     },
     scrollY() {
+      console.log(this.scrollY+'---------')
       if(this.scrollY){
-        this.scroll.refresh()
+        this.scroll.enable();
       }else{
-        this.scroll.stop();
+        this.scroll.disable()
       }
       
       // this.update();

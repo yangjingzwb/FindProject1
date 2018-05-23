@@ -387,7 +387,7 @@ export default {
       }
   }
   .slide-item{
-    // padding-top: 3rem;
+    padding-top: 3rem;
   }
   .slide-item{
     position: relative!important;

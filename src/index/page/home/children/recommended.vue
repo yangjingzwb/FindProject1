@@ -124,6 +124,12 @@ export default {
     scrollListen(pos) {
       console.log("recommended");
       console.log(pos);
+      // if(Math.abs(pos.y)<20){
+      //   console.log(888888)
+      //   this.$emit('changeIscrollY',true)
+      // }else{
+      //   this.$emit('changeIscrollY',false)
+      // }
     },
     goDetail(url) {
       if (
@@ -135,12 +141,12 @@ export default {
             ? url.replace(
                 /\?/,
                 "?hebaosso=true&SOURCE=DISCOVERaccount=" +
-                  this.token.phone +
+                  this.token.productNo +
                   "&"
               )
             : url +
               "?hebaosso=true&SOURCE=DISCOVER&account=" +
-              this.token.phone;
+              this.token.productNo;
         console.log(url2);
         window.goActivity.goWeb(url2);
       } else {
@@ -149,12 +155,12 @@ export default {
             ? url.replace(
                 /\?/,
                 "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                  this.token.phone +
+                  this.token.productNo +
                   "&"
               )
             : url +
               "?hebaosso=true&SOURCE=DISCOVER&account=" +
-              this.token.phone;
+              this.token.productNo;
         window.location = "activity://goWeb?url=" + url_2;
       }
     }
