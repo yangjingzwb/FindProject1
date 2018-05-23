@@ -62,8 +62,12 @@ export default {
       default: true
     },
     sliderIndex:{
-      type: Boolean,
+      type: Number,
       default: 0
+    },
+    loopX:{
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -183,7 +187,7 @@ export default {
     },
     init() {
       clearTimeout(this.timer);
-      this.currentPageIndex = 0;
+      this.currentPageIndex = this.loopX ? 1 : 0;
       !this.autoPlay && this.SLIDEINDEX(this.currentPageIndex)
       this._setSlideWidth();
       if (this.showDot) {
@@ -218,8 +222,12 @@ export default {
         scrollX: true,
         scrollY: false,
         momentum: false,
+        startX:375,
+        // startY:100,
         snap: {
           loop: this.loop,
+          // el:'aaaa',
+          _loopX:this.loopX,
           threshold: this.threshold,
           speed: this.speed
         },
@@ -230,7 +238,10 @@ export default {
         click: this.click,
         tap:true
       });
-
+      // setTimeout(()=>{
+      //   this.slide.goToPage(this.slide.getCurrentPage().pageX+1)
+      // })
+      
       this.slide.on("scrollEnd", this._onScrollEnd);
 
       this.slide.on("touchEnd", () => {
@@ -376,7 +387,7 @@ export default {
       }
   }
   .slide-item{
-    padding-top: 3rem;
+    // padding-top: 3rem;
   }
   .slide-item{
     position: relative!important;

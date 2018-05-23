@@ -320,7 +320,13 @@ export default {
       }, this.refreshDelay);
     },
     scrollY() {
-      this.update();
+      if(this.scrollY){
+        this.scroll.refresh()
+      }else{
+        this.scroll.stop();
+      }
+      
+      // this.update();
     }
   },
   components: {

@@ -47,7 +47,7 @@ export default {
           name: "全场五折起，超值尖货19.9包邮，真爱商品等你来撩",
           url: "/static/img/recommended/1.png",
           goUrl:
-            "https://dmp-data.vip.com/ndl?tra_from=tra%3Acfnzf3vm%3A%3A%3A%3A"
+            "https://mall.joypay.cn/cm-mall/activity/forlove.do"
         },
         {
           name: "优惠倒计时，精明的人都在里面抢好货",
@@ -97,13 +97,14 @@ export default {
           name: "给家一点新意，尽享倾心生活",
           url: "/static/img/recommended/10.png",
           goUrl: "https://huadupay.com/index.html#/special?ID=11"
-        },
-        {
-          name: "摩拜单车优惠券9折促销活动",
-          url: "/static/img/recommended/14.png",
-          goUrl:
-            "http://develop.huahaikeji.cn/public/mobike/activity/index?activityCode=act000001"
         }
+        // ,
+        // {
+        //   name: "摩拜单车优惠券9折促销活动",
+        //   url: "/static/img/recommended/14.png",
+        //   goUrl:
+        //     "http://develop.huahaikeji.cn/public/mobike/activity/index?activityCode=act000001"
+        // }
       ]
     };
   },
