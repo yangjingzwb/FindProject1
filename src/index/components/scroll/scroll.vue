@@ -64,6 +64,10 @@ export default {
         return [];
       }
     },
+    data1:{
+      type: Boolean,
+      default: false
+    },
     stopPropagation: {
       type: Boolean,
       default: false
@@ -245,11 +249,20 @@ export default {
           this._afterPullDown();
         });
       } else if (this.pullUpLoad && this.isPullUpLoad) {
+        console.log(33)
         this.isPullUpLoad = false;
         this.scroll.finishPullUp();
         this.pullUpDirty = dirty;
         this.refresh();
       } else {
+        console.log(34)
+        console.log(this.data1)
+        if(this.data1){
+          
+          console.log(35)
+          this.pullUpDirty = false
+        }
+        
         this.refresh();
       }
     },
@@ -282,7 +295,12 @@ export default {
     },
     _initPullUpLoad() {
       this.scroll.on("pullingUp", () => {
-        this.isPullUpLoad = true;
+        if(!this.data1){
+          this.isPullUpLoad = true;
+        }else{
+          this.isPullUpLoad = false;
+        }
+        
         this.$emit("pullingUp");
       });
     },
@@ -328,6 +346,15 @@ export default {
       }
       
       // this.update();
+    },
+    data1(){
+      // this.isPullingDown = false;
+      // this.pullUpTxt = '没有更多数据了'
+      // this.refresh();
+      console.log(36)
+      setTimeout(() => {
+        this.forceUpdate(false);
+      }, 300);
     }
   },
   components: {

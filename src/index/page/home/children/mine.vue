@@ -26,7 +26,8 @@
       <div class="home home1" ref="home">
         <scroll
         :data = "shopList"
-          pullUpLoad=true
+          :pullUpLoad="pullUpLoad"
+          :data1 = "shopListFlag"
           @pullingUp="onPullingUp"
         >
       <div class="content">
@@ -86,11 +87,15 @@ export default {
       shopList: [],
       isAdmittance: false,
       home: "",
+      // data1:true,
       shopListFlag: false,
       CURRENTPAGE: 1, // 页码
       PAGNUM: 8, // 页数
       isFirstIn: 1,
-      isIphone: os
+      isIphone: os,
+      pullUpLoad: {
+        threshold: -50 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
+      }
     };
   },
   directives: {
@@ -204,9 +209,12 @@ export default {
           // this.shopList = res.STORES_REC;
           // 合并数组
           this.shopList.push.apply(this.shopList, res.data);
-          if (res.STORES_REC.length < this.PAGNUM) {
+          if (res.data.length < this.PAGNUM) {
+            // this.data1 = true
             this.shopListFlag = true;
             // 数组没有更多了
+          }else{
+            this.shopListFlag = false;
           }
           // setTimeout(() => {
           //   this.home.refresh();
@@ -261,10 +269,10 @@ export default {
       this.$refs.searchInput.blur();
       this.SHOWLOADING(true);
       e.preventDefault();
-      if (!this.searchT) {
-        this.SHOWLOADING(false);
-        return;
-      }
+      // if (!this.searchT) {
+      //   this.SHOWLOADING(false);
+      //   return;
+      // }
 
       // 埋点
       try {
@@ -292,6 +300,16 @@ export default {
           this.SHOWLOADING(false);
           this.shopList = res.data;
           this.isFirstIn = 0;
+          if(res.data.length == 0){
+            this.isFirstIn = false;
+          }
+          if (res.data.length < this.PAGNUM) {
+            this.shopListFlag = true;
+            // this.data1 = true
+            // 数组没有更多了
+          }else{
+            this.shopListFlag = false;
+          }
         })
         .catch(res => {
           this.SHOWLOADING(false);
@@ -300,6 +318,17 @@ export default {
     },
     goToApply() {},
     closeAlert() {}
+  },
+  watch:{
+     searchT(){
+        if(!this.searchT){
+          this.shopList = [];
+          this.isFirstIn = true
+          this.shopListFlag = true
+          return
+        }
+        this.searchT =  this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g,'');
+      }
   }
   // props:['activeIcon']
 };
@@ -454,10 +483,12 @@ export default {
       width: 100%;
       // position: relative;
       // top: 0.5rem;
-      text-indent: 2em;
+      // text-indent: 2em;
       background: #f0f1f2;
       border-radius: 0.25rem;
       font-size: 0.8125rem;
+      padding-left: 2em;
+      padding-right: 2em;
     }
   }
 }

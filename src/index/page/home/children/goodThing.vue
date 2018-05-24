@@ -136,14 +136,14 @@ export default {
           price: "80",
           url:
             "https://dmp-data.vip.com/ndl?tra_from=tra%3A3oav53zg%3A%3A%3A%3A",
-          imgUrl: "/static/img/wp/2.jpg"
+          imgUrl: "/static/img/wp/3.jpg"
         },
         {
           name: "混合坚果仁",
           price: "148",
           url:
             "https://dmp-data.vip.com/ndl?tra_from=tra%3A7v1wd0kz%3A%3A%3A%3A",
-          imgUrl: "/static/img/wp/3.jpg"
+          imgUrl: "/static/img/wp/2.jpg"
         },
         {
           name: "进口啤酒",
