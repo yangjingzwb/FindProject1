@@ -2,12 +2,13 @@
   <div style="position: absolue; height:56.25rem;" class="aaaa">
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
     <scroll
+        :data1 ="data1"
         :data = "shopList"
         :scrollbar='tabScrollbar'
         :pullDownRefresh='pullDownRefresh'
         :stopPropagation="stopPropagation"
         :scrollY = "scrollY"
-        pullUpLoad=true
+        :pullUpLoad= "pullUpLoad"
         @scroll="scrollListen"
         @pullingDown="onPullingDown"
         @pullingUp="onPullingUp">
@@ -52,13 +53,20 @@ export default {
   data() {
     return {
       stopPropagation:false,
-      defaultIcon: 'this.src="' + "/static/img/error.png" + '"'
+      defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
+      pullUpLoad:{
+        threshold: -50
+      }
     };
   },
   props: {
     latitude: {
       type: String,
       default: false
+    },
+    data1:{
+      type:Boolean,
+      default:false
     },
     scrollY:{
       type:Boolean,
@@ -82,10 +90,10 @@ export default {
       type: null,
       default: true
     },
-    pullUpLoad: {
-      type: Boolean,
-      default: false
-    }
+    // pullUpLoad: {
+    //   type: Boolean,
+    //   default: false
+    // }
   },
   computed: {},
 

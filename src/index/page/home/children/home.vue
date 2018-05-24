@@ -138,14 +138,16 @@
                   <slider :showDot = "showDot" :loopX = "loopX" :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
                     <div style="position: relative;width:56.25rem;">
                       <near
+                        :data1 = "data1"
                         :latitude = 'latitude'
                         :longitude = 'longitude'
                         :shopList="shopList"
                         :data = "shopList"
                         :scrollbar='tabScrollbar'
                         :pullDownRefresh='pullDownRefresh'
-                        :pullUpLoad='pullUpLoad'
+                        :pullUpLoad='pullUpLoad_near'
                         :scrollY = 'scrollYOther'
+                        @aginEnter = "aginEnter"
                         @changeIscrollY="changeIscrollY"
                         @goDetail="goDetail"
                         @pullingDown="onPullingDown"
@@ -259,6 +261,8 @@ export default {
   data() {
     return {
       pullUpLoad:false,
+      pullUpLoad_near:true,
+      data1:false,
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       product: [],
@@ -594,7 +598,11 @@ export default {
           this.shopList.push.apply(this.shopList, this.filterObj(res.data));
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
+            this.data1 = true
             // 数组没有更多了
+          }else{
+            this.shopListFlag = false;
+            this.data1 = false
           }
           this.initScroll();
         })
@@ -741,11 +749,15 @@ export default {
             }
             return;
           }
-
+          
           // console.log(this.shopList);
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
+            this.data1 = true
             //没有更多了
+          }else{
+            this.shopListFlag = false;
+            this.data1 = false
           }
           // setTimeout(() => {
           //   // this.foodsScroll.scrollTo(0, -42, 500);
