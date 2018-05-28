@@ -80,7 +80,7 @@ export default {
         {
           name: "精选口碑好货，约惠最美的你",
           url: "/static/img/recommended/7.png",
-          goUrl: "https://mact.juanpi.com/bbjwag"
+          goUrl: "https://muser.juanpi.com/hebao/go?go=act"
         },
         {
           name: "好护士表孝心，关爱家人从健康做起",
