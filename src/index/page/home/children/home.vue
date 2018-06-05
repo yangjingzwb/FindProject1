@@ -4,18 +4,14 @@
     <!-- <alert-tip :alertTextFirst='alertTextFirst' :alertTextSecond='alertTextSecond' :btnText='btnText'  v-if="isShowAlert" @closeTip='closeAlert'/> -->
     <!-- <nav class="city_nav">
     </nav> -->
-    <!-- accountStatus 账户状态(正常:ACTIVE;失效:INACTIVE;过期:EXPIRED;已经逾期：overdue) -->
     <section v-if="!flag&!topCat" class="s_1">
       <ul>
         <li class="l t">
           {{cityName1}}
-          <!-- <span></span> -->
         </li>
         <li class="l i" @click="done()">
           <span class="icon"><img src="/static/img/1-20.png"></span>
-          <!-- <form action="#"  onsubmit="return false;" @click="done()"> -->
             <button>搜一搜：请输入商户名称</button>
-          <!-- </form> -->
         </li>
       </ul>
     </section>
@@ -23,7 +19,6 @@
       <ul class="cat_w">
         <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
           附近
-          <!-- <span></span> -->
         </li>
         <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)">
           推荐
@@ -31,201 +26,100 @@
         <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
           好物
         </li>
+        <!-- <li class="cat c3" :class="{'active':slideIndex==3}" @click="goToPage(3)">
+          咨询
+        </li> -->
       </ul>
-      
     </section>
-    <!-- <section v-if="flag" class="s_1 s">
-      <h6 class="title">
-        <span class="text">为你推荐</span>
-      </h6>
-    </section> -->
-     <div class="home home1" >
-   <scroll
-    :data = "shopList"
-    :scrollbar='scrollbar'
-    :pullUpLoad='pullUpLoad'
-    :bounce = "bounce"
-    :click = "slider_middle_click"
-    :scrollY = "scrollY"
-    :startY = "startY"
-    @pullingDown="onPullingDown"
-    @pullingUp="onPullingUp"
-    @scroll = "scrollListen"
-   >
-    <!-- <div class="home home1" > -->
- <div class="content">
-      
-      <!-- <section class="s_8">
-      </section> -->
-       <!-- <h5 v-if="isError" class="refresh"></h5> -->
-      <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
-        <div class="scroll content slide-content">
-          <div>
-              <div class="slider-wrapper">
-                  <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
-                      <div v-for="item in slider">
-                        <!-- :key="item.marketingId -->
-                          <a  @click="goDetail($event,item,2)" >
-                              <img :src="item.marketingIcon">
-                          </a>
-                      </div>
-                      <!-- <div>
-                          <a>
-                              <img src="/static/img/banner.jpg" alt="">
-                          </a>
-                      </div>
-                      <div>
-                          <a>
-                              <img src="/static/img/banner.jpg" alt="">
-                          </a>
-                      </div> -->
-                  </slider>
+    <div class="home home1" >
+      <scroll
+        :data = "shopList"
+        :scrollbar='scrollbar'
+        :pullUpLoad='pullUpLoad'
+        :bounce = "bounce"
+        :click = "slider_middle_click"
+        :scrollY = "scrollY"
+        :startY = "startY"
+        @pullingDown="onPullingDown"
+        @pullingUp="onPullingUp"
+        @scroll = "scrollListen">
+        <div class="content">
+          <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
+            <div class="scroll content slide-content">
+              <div>
+                  <div class="slider-wrapper">
+                      <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
+                          <div v-for="item in slider">
+                            <!-- :key="item.marketingId -->
+                              <a  @click="goDetail($event,item,2)" >
+                                  <img :src="item.marketingIcon">
+                              </a>
+                          </div>
+                      </slider>
+                  </div>
               </div>
-          </div>
+            </div>
+          </section>
+
+          <section v-if="slider1 && slider1.length>0" class="s_3 s">
+            <ul>
+              <li v-for="item in slider1"  @click="goDetail($event,item)">
+                <!-- :key="item.id" -->
+                <img :src="item.marketingIcon" :onerror='defaultIcon'  class="icon" >
+                <span class="text">{{item.marketingTitle}}</span>
+              </li>
+            </ul>
+          </section>
+
+          <div class="nullHeight"></div>
+
+          
+          <section class="s_5 s" >
+              <div class=" content slide-content">
+              <div>
+                  <div class="slider-wrapper">
+                      <slider :showDot = "showDot" :loopX = "loopX" :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
+                        <div style="position: relative;width:56.25rem;">
+                          <near
+                            :data1 = "data1"
+                            :latitude = 'latitude'
+                            :longitude = 'longitude'
+                            :shopList="shopList"
+                            :data = "shopList"
+                            :scrollbar='tabScrollbar'
+                            :pullDownRefresh='pullDownRefresh'
+                            :pullUpLoad='pullUpLoad_near'
+                            :scrollY = 'scrollYOther'
+                            @aginEnter = "aginEnter"
+                            @changeIscrollY="changeIscrollY"
+                            @goDetail="goDetail"
+                            @pullingDown="onPullingDown"
+                            @pullingUp="onPullingUp">
+                            >
+                          </near>
+                        </div>
+                        <div style="position: relative;width:56.25rem;">
+                          <recommended
+                          :scrollY = 'scrollYOther'
+                          @changeIscrollY="changeIscrollY"
+                          ></recommended>
+                        </div>
+                        <div>
+                          <goodThing
+                            :scrollY = 'scrollYOther'
+                            @changeIscrollY="changeIscrollY"
+                          ></goodThing>
+                        </div>
+                        <!-- <div>
+                          <consulting></consulting>
+                        </div> -->
+                      </slider>
+                  </div>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-
-      <section v-if="slider1 && slider1.length>0" class="s_3 s">
-        <ul>
-          <li v-for="item in slider1"  @click="goDetail($event,item)">
-            <!-- :key="item.id" -->
-            <img :src="item.marketingIcon" :onerror='defaultIcon'  class="icon" >
-            <span class="text">{{item.marketingTitle}}</span>
-          </li>
-          <!-- <li>
-            <img src="/static/img/1-5@2x.png" class="icon">
-            <span class="text">{{超市}}</span>
-          </li>
-          <li>
-            <img src="/static/img/1-10@2x.png" class="icon">
-            <span class="text">加油</span>
-          </li>
-          <li>
-            <img src="/static/img/1-22@2x.png" class="icon">
-            <span class="text">药店</span>
-          </li>
-          <li>
-            <img src="/static/img/1-14@2x.png" class="icon">
-            <span class="text">全部</span>
-          </li> -->
-        </ul>
-      </section>
-
-      <!-- <section class="s_4 s" v-if="slider2.length">
-          <img :src="slider2[0].marketingIcon" @click="goDetail($event,slider2[0])">
-      </section> -->
-      <div class="nullHeight"></div>
-
-      <!-- <section  class="animation_2 s_5_1">
-        <ul class="cat_w">
-          <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
-            附近
-             <span></span> -->
-          <!-- </li> -->
-          <!-- <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)"> -->
-            <!-- 推荐 -->
-          <!-- </li> -->
-          <!-- <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)"> -->
-            <!-- 好物 -->
-          <!-- </li> -->
-        <!-- </ul> -->
-      <!-- </section> -->
-
-      <section class="s_5 s" >
-          <div class=" content slide-content">
-          <div>
-              <div class="slider-wrapper">
-                  <slider :showDot = "showDot" :loopX = "loopX" :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
-                    <div style="position: relative;width:56.25rem;">
-                      <near
-                        :data1 = "data1"
-                        :latitude = 'latitude'
-                        :longitude = 'longitude'
-                        :shopList="shopList"
-                        :data = "shopList"
-                        :scrollbar='tabScrollbar'
-                        :pullDownRefresh='pullDownRefresh'
-                        :pullUpLoad='pullUpLoad_near'
-                        :scrollY = 'scrollYOther'
-                        @aginEnter = "aginEnter"
-                        @changeIscrollY="changeIscrollY"
-                        @goDetail="goDetail"
-                        @pullingDown="onPullingDown"
-                        @pullingUp="onPullingUp">
-                        >
-                      </near>
-                    </div>
-                    <div style="position: relative;width:56.25rem;">
-                      <recommended
-                      :scrollY = 'scrollYOther'
-                      @changeIscrollY="changeIscrollY"
-                      ></recommended>
-                    </div>
-                    <div>
-                      <goodThing
-                        :scrollY = 'scrollYOther'
-                        @changeIscrollY="changeIscrollY"
-                      ></goodThing>
-                    </div>
-                    <!-- <div>
-                      <consulting></consulting>
-                    </div> -->
-                  </slider>
-              </div>
-          </div>
-        </div>
-
-        <!-- {{cityName1 !='' && cityName1 != '定位中'&& shopList && shopList.length  0 }} -->
-        <!-- <ul v-if = "cityName1 !='' && cityName1 != '定位中'&& shopList && shopList.length<=0 ">
-          <li @click="aginEnter()" class="aa">请点击刷新试试</li>
-        </ul> -->
-        <!-- <div class="end" v-if="shopListFlag">没有更多了</div> -->
-        <!-- <ul>
-          <li class="left">
-            <img src="/static/img/1-17.png" alt="">
-          </li>
-          <li class="right">
-              <div class="c1">肯德基（步步高梅溪湖新天地店）</div>
-              <div class="c2">
-                <span class="l">肯德基（步步高梅溪湖新天地店）</span>
-                <span class="r">1.2km</span>
-              </div>
-              <div class="c3">
-                <span class="b">满20减15</span>
-                <span class="b">5折</span>
-              </div>
-          </li>
-        </ul> -->
-      </section>
-
-      <!-- <section class="s_6 s" ref="foodsRef">
-        <h6 class="title">
-          <span class="text">为你推荐</span>
-        </h6>
-        <ul>
-          <li class="left">
-            <img src="/static/img/2-1.png" alt="">
-          </li>
-          <li class="c-t">上班经常饿？来点坚果补能量</li>
-        </ul>
-        <ul>
-          <li class="left">
-            <img src="/static/img/2-1.png" alt="">
-          </li>
-          <li class="c-t">上班经常饿？来点坚果补能量</li>
-        </ul>
-        <ul>
-          <li class="left">
-            <img src="/static/img/2-1.png" alt="">
-          </li>
-          <li class="c-t">上班经常饿？来点坚果补能量</li>
-        </ul>
-      </section> -->
-      <!-- <section style="height:4.25rem;"></section> -->
-      <!-- <foot-guide activeIcon = 'home'></foot-guide> -->
-    
-    </div>
-  </scroll>
+      </scroll>
      </div>
   </div>
 </template>
@@ -251,7 +145,7 @@ import Scroll from "@@/components/scroll/scroll.vue";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Near from "./near.vue"
 import Recommended from "./recommended.vue"
-import Consulting from "./consulting.vue" // 咨询
+// import Consulting from "./consulting.vue" // 咨询
 import GoodThing from "./goodThing.vue" // 好物
 
 // console.log(axios);
@@ -337,7 +231,7 @@ export default {
     Scroll,
     Near,
     Recommended,
-    Consulting,
+    // Consulting,
     GoodThing
     // vueLoading
     // SlideRender
@@ -1087,7 +981,7 @@ export default {
 .s_5 {
   // padding: 0 0.9375rem;
   // background: #fff;
-  margin-top: 0.5625rem;
+  // margin-top: 0.5625rem;
   margin-bottom: 1rem;
   height: 56.25rem;
   ul {

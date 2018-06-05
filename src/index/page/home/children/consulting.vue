@@ -25,6 +25,7 @@
 <script>
 import { GetDistance } from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
+import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
@@ -37,16 +38,29 @@ export default {
   },
   computed: {},
 
-  mounted() {},
+  mounted() {
+    this.init()
+  },
   created() {},
 
   components: {
       Scroll
   },
 
-  computed: {},
+  computed: {}, 
 
-  methods: {}
+  methods: {
+    init(){
+      // 请求接口
+      axios.post('http://yys-open.jd.com/content/getContent',{
+          "contentType": "ARTICLE",
+          "startIndex":0,
+          "endIndex":10
+      }).then((res)=>{
+        alert(JSON.stringify(res))
+      })
+    },
+  }
 };
 </script>
 
