@@ -128,6 +128,7 @@ export default {
       'SLIDEINDEX'
     ]),
     goToIndex(index){
+      console.log('我被点击');
       let aa = index - this.preIndex;
       this.slide.goToPage(this.currentPageIndex + aa);
       this.currentPageIndex += aa
@@ -352,7 +353,7 @@ export default {
         // padding: 0 0.9375rem;
   }
     .dots {
-      height: 3rem!important;
+      height: 3.5625rem!important;
       top: 0rem!important;
       background: white;
       line-height: 3rem;
@@ -371,8 +372,9 @@ export default {
       // }
       .dot{
         flex:1;
-        height: 3rem;
+        height: 3.5625rem;
         line-height: 3rem;
+        padding-top: 0.5625rem;
         background: #fff;
         font-family: PingFangSC-Regular;
         
@@ -387,7 +389,7 @@ export default {
       }
   }
   .slide-item{
-    padding-top: 3rem;
+    top: 3.5625rem;
   }
   .slide-item{
     position: relative!important;

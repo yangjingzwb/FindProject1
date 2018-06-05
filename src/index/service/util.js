@@ -1,5 +1,8 @@
+import md5 from 'blueimp-md5'
 import store from '@@/store/'
 import axios from "@@/plugins/rsa/axios";
+// console.log(11111)
+console.log(md5('ct001fb8ada5237c5ae97978ff07fc7471d20{"contenttype":"article","startindex":0,"endindex":10}'));
 
 /**
  * 工具方法
@@ -26,6 +29,11 @@ export const GetDistance = (lat1, lng1, lat2, lng2) => {
     //     return 10 + Math.random().toFixed(2)
     // }
     return s+'';
+}
+
+export const setMd5 = (data)=>{
+    let d = 'ct001fb8ada5237c5ae97978ff07fc7471d20'+JSON.stringify(data);
+    return md5(d);
 }
 
 export const fetchPoints = (parent_title, sub_title, phone, remark, session) => {
