@@ -44,28 +44,28 @@ export default {
       stopPropagation: false,
       goodList: [
         {
-          name: "全场低至7折起，为端午福利和季夏优惠疯狂打cal",
+          name: "全场低至7折起，为端午福利和夏季优惠疯狂打call",
           url: "/static/img/recommended/4-1.png",
           goUrl:
-            " https://mall.joypay.cn/cm-mall/activity/newLife.do"
+            "https://mall.joypay.cn/cm-mall/activity/newLife.do"
         },
-        {
-          name: "99元任选3件，还可领20元购物红包",
-          url: "/static/img/recommended/4-2.png",
-          goUrl:
-            "https://dmp-data.vip.com/ndl?tra_from=tra%3A75gpn5yd%3A%3A%3A%3A"
-        },
+        // {
+        //   name: "99元任选3件，还可领20元购物红包",
+        //   url: "/static/img/recommended/4-2.png",
+        //   goUrl:
+        //     "https://dmp-data.vip.com/ndl?tra_from=tra%3A75gpn5yd%3A%3A%3A%3A"
+        // },
         {
           name: "情浓端午，“粽”享优惠，领券立减50",
           url: "/static/img/recommended/4-3.png",
           goUrl: "https://h.umfintech.com/mallweb/h5hb/activitys/April.htm"
         },
-        {
-          name: "京选好物，超低特价，无限京彩，让你燃动一夏",
-          url: "/static/img/recommended/4-4.png",
-          goUrl:
-            "https://cmpay.jdcloud.com/jd/hd/10.jsp"
-        },
+        // {
+        //   name: "京选好物，超低特价，无限京彩，让你燃动一夏",
+        //   url: "/static/img/recommended/4-4.png",
+        //   goUrl:
+        //     "https://cmpay.jdcloud.com/jd/hd/10.jsp"
+        // },
         {
           name: "粽情端午卷皮特卖 超低价爆款好货1折起",
           url: "/static/img/recommended/4-5.png",
@@ -82,11 +82,11 @@ export default {
           url: "/static/img/recommended/4-7.png",
           goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131"
         },
-        {
-          name: "享买一赠一  赏视听好剧",
-          url: "/static/img/recommended/4-7.png",
-          goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131"
-        },
+        // {
+        //   name: "享买一赠一  赏视听好剧",
+        //   url: "/static/img/recommended/4-7.png",
+        //   goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131"
+        // },
         {
           name: "今日商品限量秒杀，手慢无！",
           url: "/static/img/recommended/4-8.png",
@@ -112,12 +112,13 @@ export default {
           name: "放心购好药，健康大参林",
           url: "/static/img/recommended/4-12.png",
           goUrl: "http://enjoy.changyuelife.com/app/index.php?i=4&c=entry&m=shop&do=mobile"
-        },
-        {
-          name: "爱宝贝、爱家人；爱在端午， 尖货秒杀季",
-          url: "/static/img/recommended/4-13.png",
-          goUrl: "https://sale.baobeigezi.com/2018/3/1/index.html"
         }
+        // ,
+        // {
+        //   name: "爱宝贝、爱家人；爱在端午， 尖货秒杀季",
+        //   url: "/static/img/recommended/4-13.png",
+        //   goUrl: "https://sale.baobeigezi.com/2018/3/1/index.html"
+        // }
         // ,
         // {
         //   name: "摩拜单车优惠券9折促销活动",
