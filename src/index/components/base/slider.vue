@@ -79,7 +79,7 @@ export default {
     return {
       dots: [],
       currentPageIndex: 0,
-      preIndex:0
+      preIndex:1
     };
   },
   mounted() {
