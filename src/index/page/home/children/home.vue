@@ -24,7 +24,7 @@
           推荐
         </li>
         <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
-          好物
+          世界杯专区
         </li>
         <!-- <li class="cat c3" :class="{'active':slideIndex==3}" @click="goToPage(3)">
           咨询
@@ -172,7 +172,7 @@ export default {
       tabLoop:false,
       tabScrollbar:false,
       showDot:true,
-      dots:['附近','推荐','好物'],//['附近','推荐','好物','咨询'],
+      dots:['附近','推荐','世界杯专区'],//['附近','推荐','世界杯专区','咨询'],
       // autoPlay:,
       // defaultIcon: "",
 
@@ -195,7 +195,7 @@ export default {
       flag: false,
       shopListFlag: false,
       CURRENTPAGE: 0, // 页码
-      PAGNUM: 10,
+      PAGNUM: 4,
       refTime: "",
       baseImg: baseUrl.img,
       totalInit: 0,
@@ -483,7 +483,7 @@ export default {
           merc_abbr: "", // 商户简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 10,
+          pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
@@ -607,7 +607,7 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 10,
+          pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {

@@ -29,9 +29,9 @@
                 </div>
             </li>
             <li class="hr-1"></li>
-            </ul>
-            <ul v-if = "!shopList || shopList.length<=0 ">
-            <li @click="aginEnter()" class="aa">请点击刷新试试</li>
+        </ul>
+        <ul v-if = "!shopList || shopList.length<=0 ">
+          <li @click="aginEnter()" class="aa">请点击刷新试试</li>
         </ul>
     </scroll>
     <div class="null"></div>
@@ -52,9 +52,9 @@ import Scroll from "@@/components/scroll/scroll.vue";
 export default {
   data() {
     return {
-      stopPropagation:false,
+      stopPropagation: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
-      pullUpLoad:{
+      pullUpLoad: {
         threshold: -50
       }
     };
@@ -64,13 +64,13 @@ export default {
       type: String,
       default: false
     },
-    data1:{
-      type:Boolean,
-      default:false
+    data1: {
+      type: Boolean,
+      default: false
     },
-    scrollY:{
-      type:Boolean,
-      default:false
+    scrollY: {
+      type: Boolean,
+      default: false
     },
     longitude: {
       type: String,
@@ -89,7 +89,7 @@ export default {
     pullDownRefresh: {
       type: null,
       default: true
-    },
+    }
     // pullUpLoad: {
     //   type: Boolean,
     //   default: false
@@ -108,8 +108,8 @@ export default {
 
   methods: {
     scrollListen(pos) {
-      console.log('near')
-      console.log(pos)
+      console.log("near");
+      console.log(pos);
       // if(Math.abs(pos.y)<5){
       //   this.$emit('changeIscrollY',true)
       // }else{
@@ -609,7 +609,7 @@ export default {
   background: #fff;
   z-index: 10;
   color: #444444;
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-align: center;
 }
 .hr-1 {

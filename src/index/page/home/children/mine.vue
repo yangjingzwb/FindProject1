@@ -90,7 +90,7 @@ export default {
       // data1:true,
       shopListFlag: false,
       CURRENTPAGE: 1, // 页码
-      PAGNUM: 8, // 页数
+      PAGNUM: 4, // 页数
       isFirstIn: 1,
       isIphone: os,
       pullUpLoad: {
