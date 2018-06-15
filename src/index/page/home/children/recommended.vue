@@ -60,12 +60,12 @@ export default {
           url: "/static/img/recommended/4-3.png",
           goUrl: "https://h.umfintech.com/mallweb/h5hb/activitys/April.htm"
         },
-        // {
-        //   name: "京选好物，超低特价，无限京彩，让你燃动一夏",
-        //   url: "/static/img/recommended/jd.png",
-        //   goUrl:
-        //     "https://cmpay.jdcloud.com/jd/hd/10.jsp"
-        // },
+        {
+          name: "京选好物，超低特价，无限京彩，让你燃动一夏",
+          url: "/static/img/recommended/jd.png",
+          goUrl:
+            "https://cmpay.jdcloud.com/jd/hd/10.jsp"
+        },
         {
           name: "粽情端午卷皮特卖 超低价爆款好货1折起",
           url: "/static/img/recommended/4-101.jpg",
