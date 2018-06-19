@@ -1,10 +1,6 @@
 <template>
   <div >
-    <!-- <div > -->
-    <!-- <alert-tip :alertTextFirst='alertTextFirst' :alertTextSecond='alertTextSecond' :btnText='btnText'  v-if="isShowAlert" @closeTip='closeAlert'/> -->
-    <!-- <nav class="city_nav">
-    </nav> -->
-    <section v-if="!flag&!topCat" class="s_1">
+    <section class="s_1">
       <ul>
         <li class="l t">
           {{cityName1}}
@@ -15,34 +11,18 @@
         </li>
       </ul>
     </section>
-    <section v-if="topCat" class="s_1 animation_1">
-      <ul class="cat_w">
-        <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
-          附近
-        </li>
-        <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)">
-          推荐
-        </li>
-        <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
-          世界杯专区
-        </li>
-        <!-- <li class="cat c3" :class="{'active':slideIndex==3}" @click="goToPage(3)">
-          咨询
-        </li> -->
-      </ul>
-    </section>
-    <div class="home home1" >
+
+    <div class="home">
       <scroll
+        :data1 ="data1"
         :data = "shopList"
-        :scrollbar='scrollbar'
-        :pullUpLoad='pullUpLoad'
-        :bounce = "bounce"
-        :click = "slider_middle_click"
-        :scrollY = "scrollY"
-        :startY = "startY"
+        :scrollbar='tabScrollbar'
+        :pullDownRefresh='pullDownRefresh'
+        :scrollY = "scrollYOther"
+        :pullUpLoad= "pullUpLoad_near"
         @pullingDown="onPullingDown"
         @pullingUp="onPullingUp"
-        @scroll = "scrollListen">
+        >
         <div class="content">
           <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
             <div class="scroll content slide-content">
@@ -72,51 +52,24 @@
           </section>
 
           <div class="nullHeight"></div>
-
-          
           <section class="s_5 s" >
-              <div class=" content slide-content">
-              <div>
-                  <div class="slider-wrapper">
-                      <slider :showDot = "showDot" :loopX = "loopX" :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
-                        <div style="position: relative;width:56.25rem;">
-                          <near
-                            :data1 = "data1"
-                            :latitude = 'latitude'
-                            :longitude = 'longitude'
-                            :shopList="shopList"
-                            :data = "shopList"
-                            :scrollbar='tabScrollbar'
-                            :pullDownRefresh='pullDownRefresh'
-                            :pullUpLoad='pullUpLoad_near'
-                            :scrollY = 'scrollYOther'
-                            @aginEnter = "aginEnter"
-                            @changeIscrollY="changeIscrollY"
-                            @goDetail="goDetail"
-                            @pullingDown="onPullingDown"
-                            @pullingUp="onPullingUp">
-                            >
-                          </near>
-                        </div>
-                        <div style="position: relative;width:56.25rem;">
-                          <recommended
-                          :scrollY = 'scrollYOther'
-                          @changeIscrollY="changeIscrollY"
-                          ></recommended>
-                        </div>
-                        <div>
-                          <goodThing
-                            :scrollY = 'scrollYOther'
-                            @changeIscrollY="changeIscrollY"
-                          ></goodThing>
-                        </div>
-                        <!-- <div>
-                          <consulting></consulting>
-                        </div> -->
-                      </slider>
-                  </div>
-              </div>
-            </div>
+              <near
+                :data1 = "data1"
+                :latitude = 'latitude'
+                :longitude = 'longitude'
+                :shopList="shopList"
+                :data = "shopList"
+                :scrollbar='tabScrollbar'
+                :pullDownRefresh='pullDownRefresh'
+                :pullUpLoad='pullUpLoad_near'
+                :scrollY = 'scrollYOther'
+                @aginEnter = "aginEnter"
+                @changeIscrollY="changeIscrollY"
+                @goDetail="goDetail"
+                @pullingDown="onPullingDown"
+                @pullingUp="onPullingUp">
+                >
+              </near>
           </section>
         </div>
       </scroll>
@@ -984,7 +937,7 @@ export default {
   // background: #fff;
   // margin-top: 0.5625rem;
   margin-bottom: 1rem;
-  height: 56.25rem;
+  // height: 56.25rem;
   ul {
     height: 7.5rem;
     padding-top: 1.625rem;

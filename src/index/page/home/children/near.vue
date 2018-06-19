@@ -1,7 +1,7 @@
 <template>
-  <div style="position: absolue; height:56.25rem;" class="aaaa">
+  <div >
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <scroll
+    <!-- <scroll
         :data1 ="data1"
         :data = "shopList"
         :scrollbar='tabScrollbar'
@@ -11,7 +11,7 @@
         :pullUpLoad= "pullUpLoad"
         @scroll="scrollListen"
         @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp">
+        @pullingUp="onPullingUp"> -->
         <ul v-for="item in shopList"  @click="goDetail($event,item,1)" >
           <!-- :key="item.TX_JRN" -->
             <li class="left">
@@ -33,8 +33,8 @@
         <ul v-if = "!shopList || shopList.length<=0 ">
           <li @click="aginEnter()" class="aa">请点击刷新试试</li>
         </ul>
-    </scroll>
-    <div class="null"></div>
+    <!-- </scroll> -->
+    <!-- <div class="null"></div> -->
     </div>
 </template>
 
