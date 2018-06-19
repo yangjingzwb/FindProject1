@@ -115,6 +115,10 @@ export default {
     font-size: 15px;
     color: #13252e;
     font-family: PingFangSC-Regular;
+    background-image: url(/static/img/2-11.png);
+    background-repeat: no-repeat;
+    background-size: auto 30%;
+    background-position: 38%;
   }
   .u1 > li {
     height: 210px;
