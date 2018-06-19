@@ -51,18 +51,19 @@ export default {
 
   methods: {
     init(){
-      alert(111)
+      // alert(111)
       // 请求接口
-      axios.post('/content/getContent',{
+      let params_ = {
           "contentType": "ARTICLE",
-          "startIndex":0,
+          "startIndex":1,
           "endIndex":10
-      },{
-        "j-auth": "78787878",
-        "User-Agent":"jd",
-        "withCredentials":true
-      }).then((res)=>{
-        alert(JSON.stringify(res))
+      }
+      axios.post('/content/getContent',params_, {headers: {
+            "j-auth": setMd5(params_),
+            "User-Agent":"jd",
+            "Content-Type":"application/json;encoding=utf-8"
+        }}).then((res)=>{
+        // alert(JSON.stringify(res))
       })
     },
   }
