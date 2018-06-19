@@ -67,7 +67,7 @@ export default {
             "https://cmpay.jdcloud.com/jd/hd/10.jsp"
         },
         {
-          name: "粽情端午卷皮特卖 超低价爆款好货1折起",
+          name: "卷皮618年中大促  跨店铺满80减20上不封顶",
           url: "/static/img/recommended/4-101.jpg",
           goUrl:
             "https://union.juanpi.com/cpsfollow/call_url?utm=2176175&target=https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=act"

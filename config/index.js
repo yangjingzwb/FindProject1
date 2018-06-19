@@ -25,13 +25,13 @@ module.exports = {
         env: {
             NODE_ENV: '"development"'
         },
-        port: 8000,
+        port: 8080,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         context: [ //代理路径
             '/mock',
         ],
-        proxypath: 'http://211.138.236.219:9103/',
+        proxypath: 'http://yys-open.jd.com/',//http://211.138.236.219:9103/
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README
         // (https://github.com/webpack/css-loader#sourcemaps)

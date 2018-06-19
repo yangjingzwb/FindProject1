@@ -26,9 +26,9 @@
         <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
           世界杯专区
         </li>
-        <!-- <li class="cat c3" :class="{'active':slideIndex==3}" @click="goToPage(3)">
+        <li class="cat c3" :class="{'active':slideIndex==3}" @click="goToPage(3)">
           咨询
-        </li> -->
+        </li>
       </ul>
     </section>
     <div class="home home1" >
@@ -110,9 +110,9 @@
                             @changeIscrollY="changeIscrollY"
                           ></goodThing>
                         </div>
-                        <!-- <div>
+                        <div>
                           <consulting></consulting>
-                        </div> -->
+                        </div>
                       </slider>
                   </div>
               </div>
@@ -145,7 +145,7 @@ import Scroll from "@@/components/scroll/scroll.vue";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Near from "./near.vue"
 import Recommended from "./recommended.vue"
-// import Consulting from "./consulting.vue" // 咨询
+import Consulting from "./consulting.vue" // 咨询
 import GoodThing from "./goodThing.vue" // 好物
 
 // console.log(axios);
@@ -172,7 +172,7 @@ export default {
       tabLoop:false,
       tabScrollbar:false,
       showDot:true,
-      dots:['附近','推荐','世界杯专区'],//['附近','推荐','世界杯专区','咨询'],
+      dots:['附近','推荐','世界杯专区','咨询'],//['附近','推荐','世界杯专区','咨询'],
       // autoPlay:,
       // defaultIcon: "",
 
@@ -231,7 +231,7 @@ export default {
     Scroll,
     Near,
     Recommended,
-    // Consulting,
+    Consulting,
     GoodThing
     // vueLoading
     // SlideRender
