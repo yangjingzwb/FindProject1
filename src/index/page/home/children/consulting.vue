@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { GetDistance } from "@@/service/util";
+import { GetDistance ,setMd5} from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
 import axios from "@@/plugins/rsa/axios";
 export default {
@@ -51,11 +51,16 @@ export default {
 
   methods: {
     init(){
+      alert(111)
       // 请求接口
-      axios.post('http://yys-open.jd.com/content/getContent',{
+      axios.post('/content/getContent',{
           "contentType": "ARTICLE",
           "startIndex":0,
           "endIndex":10
+      },{
+        "j-auth": "78787878",
+        "User-Agent":"jd",
+        "withCredentials":true
       }).then((res)=>{
         alert(JSON.stringify(res))
       })

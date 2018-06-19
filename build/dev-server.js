@@ -37,8 +37,8 @@ compiler.plugin('compilation', function(compilation) {
 var context = config.dev.context
 
 switch(process.env.NODE_ENV){
-    case 'local': var proxypath = 'http://www.ifruit.org/'; break;//http://211.138.236.219:9103/
-    case 'online': var proxypath = 'http://www.ifruit.org/'; break;
+    case 'local': var proxypath = 'http://yys-open.jd.com/'; break;//http://211.138.236.219:9103/
+    case 'online': var proxypath = 'http://yys-open.jd.com/'; break;
     default:  var proxypath = config.dev.proxypath; 
 }
 var options = {
@@ -47,7 +47,7 @@ var options = {
 }
 console.log(options)
 if (context.length) {
-    server.use(proxyMiddleware('/rcServer', options))
+    server.use(proxyMiddleware('/content', options))
 }
 
 // handle fallback for HTML5 history API

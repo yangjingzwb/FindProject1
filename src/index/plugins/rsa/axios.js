@@ -31,6 +31,7 @@ axios.interceptors.request.use(config => {
     if(config.url == "queryAccount"){
         config.url = urlObj.api + config.url+"?"+window.location.href.split('?')[1].replace(/SIGN_DATA/g,'sign_data').replace(/CREDTENTIAL/g,'credtential')
     }else if(config.url.indexOf('getContent')>0){
+        console.log(999999)
         // 更换头部
         axios.defaults.headers.post['Content-Type'] = 'application/json;encoding=utf-8';
         // axios.defaults.headers.post['User-Agent'] = 'jd';
