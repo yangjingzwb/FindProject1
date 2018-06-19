@@ -2,7 +2,7 @@
     <div class="goods-3">
               <div class="nullHeight"></div>
                <div class="title">
-                <div>咨询</div>
+                <div class="t-text">咨询</div>
               </div>
               <ul class="u1">
                 <li>
@@ -55,6 +55,16 @@ export default {
     height: 49px;
     line-height: 49px;
     text-align: center;
+    background-image:url('/static/img/2-5.png');
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: 100% auto; 
+    margin: auto 16px;
+  }
+  .t-text{
+    width: 80px;
+    margin: 0 auto;
+    background-color: #fff;
   }
   .icon {
     height: 200px;

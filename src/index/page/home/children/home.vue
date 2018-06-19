@@ -20,7 +20,7 @@
           </section>
 
           <section class="s_3 s">
-            <img src="/static/img/11.jpg" :onerror='defaultIcon'>
+            <img src="/static/img/banner2.png" :onerror='defaultIcon'>
           </section>
 
           <div class="nullHeight"></div>

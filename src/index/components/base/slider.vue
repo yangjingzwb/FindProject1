@@ -339,11 +339,13 @@ export default {
       width: .3125rem;
       height: .3125rem;
       border-radius: 50%;
-      background: #ccc;
+      // background: #fff;
+      border: 1px solid #fff;
       &.active {
         width: .3125rem;
         border-radius: .3125rem;
         background: #ed1991;
+        border-width:0;
       }
     }
   }
