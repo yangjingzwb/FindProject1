@@ -21,7 +21,7 @@ axios.defaults.responseType = 'json'
 // axios.defaults.headers.common['Authorization'] = "Basic " + App.getSessionKey();
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 // axios.defaults.dataType = 'JSON'
-// axios.defaults.headers['Authorization'] = "Basic " + App.getSessionKey();
+// axios.defaults.headers['Authorization'] = "Basic "
 // setMd5()
 // console.log(222)
 // http请求拦截器 --加密等
@@ -31,12 +31,12 @@ axios.interceptors.request.use(config => {
     if(config.url == "queryAccount"){
         config.url = urlObj.api + config.url+"?"+window.location.href.split('?')[1].replace(/SIGN_DATA/g,'sign_data').replace(/CREDTENTIAL/g,'credtential')
     }else if(config.url.indexOf('getContent')>0){
-        console.log(999999)
+        alert(999999)
         // 更换头部
-        axios.defaults.headers.post['Content-Type'] = 'application/json;encoding=utf-8';
+        axios.defaults.headers['Content-Type'] = 'application/json;encoding=utf-8';
         // axios.defaults.headers.post['User-Agent'] = 'jd';
         // alert(setMd5(config.data))
-        axios.defaults.headers.post['j-auth'] = setMd5(config.data)
+        axios.defaults.headers['j-auth'] = setMd5(config.data)||'34938493'
     }else{
         config.url = urlObj.api + config.url +"?"+objPlan(config.data,1)
     }
