@@ -34,6 +34,11 @@ export const GetDistance = (lat1, lng1, lat2, lng2) => {
 
 export const setMd5 = (data)=>{
     let d = 'ct001fb8ada5237c5ae97978ff07fc7471d20'+JSON.stringify(data);
+    return "ct001;"+md5(d);
+}
+export const setMd5HY = (data)=>{
+    let se = 'CE59E262D7AD716E24BA3D613DC617EB' //md5秘钥
+    let d = ''+data.channel+data.requestId+se
     return md5(d);
 }
 

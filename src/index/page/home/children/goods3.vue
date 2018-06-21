@@ -5,13 +5,30 @@
                 <div class="t-text">咨询</div>
               </div>
               <ul class="u1">
-                <li @click="goDetail($event,item,1)">
-                  <ul class="u2">
+                <li @click="goDetail($event,item,1)" v-for="item in data" :key="item.id">
+                  <ul v-if="item.imageUrls.length == 1" class="u2">
                     <li class="icon">
-                      <img src="/static/img/1-1.png">
+                      <img :src="item.imageUrls[0]">
                     </li>
                     <li class="text">
-                        上班经常饿？来点坚果补能量
+                         {{item.title}}
+                    </li>
+                  </ul>
+                  <ul v-else class="u2">
+                    <li class="icon">
+                      <ul>
+                        <li class="left">
+                          <img :src="item.imageUrls[0]">
+                        </li>
+                        <li class="right">
+                          <img :src="item.imageUrls[1]">
+                          <img class="i2" :src="item.imageUrls[2]">
+                        </li>
+                      </ul>
+                      
+                    </li>
+                    <li class="text">
+                        {{item.title}}
                     </li>
                   </ul>
                 </li>
@@ -20,30 +37,61 @@
 </template>
 
 <script>
-import { GetDistance } from "@@/service/util";
+import { GetDistance, setMd5 } from "@@/service/util";
 import { mapState } from "vuex";
+import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
-     
+      data: []
     };
   },
   computed: {
     ...mapState(["token"])
   },
 
-  mounted() {},
-  created() {
-    
+  mounted() {
+    this.init();
   },
+  created() {},
 
-  components: {
-  },
+  components: {},
 
   methods: {
+    init() {
+      let params_ = {
+        contentType: "GOODS",
+        startIndex: 0,
+        endIndex: 10
+      };
+      // 京东
+      axios
+        .post("http://yys-open.jd.com/content/getContent", params_, {
+          headers: {
+            "j-auth": setMd5(params_),
+            "Content-Type": "application/json;encoding=utf-8"
+          }
+        })
+        .then(res => {
+          this.data = this.dealData(res.result);
+        });
+    },
+    // 处理数据
+    dealData(data){
+      let res = []
+      let obj={}
+      for(let i=0;i<data.length;i++){
+        obj  = data[i]
+        obj.imageUrls = obj.imageUrls.split(',')
+        res.push(obj)
+      }
+      console.log('99998888')
+      console.log(res)
+      return res
+    },
     goDetail(event, obj, flag) {
       this.$emit("goDetail", event, obj, flag);
-    },
+    }
   }
 };
 </script>
@@ -53,30 +101,50 @@ export default {
 
 .goods-3 {
   clear: both;
-  .title{
+  .title {
     height: 49px;
     line-height: 49px;
     text-align: center;
-    background-image:url('/static/img/2-5.png');
+    background-image: url("/static/img/2-5.png");
     background-repeat: no-repeat;
     background-position: 100%;
-    background-size: 100% auto; 
+    background-size: 100% auto;
     margin: auto 16px;
   }
-  .t-text{
+  .t-text {
     width: 80px;
     margin: 0 auto;
     background-color: #fff;
   }
   .icon {
     height: 200px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .left {
+    width: 70%;
+    float: left;
+    img {
+      height: 200px;
+      padding-right: 0;
+    }
+  }
+  .right {
+    width: 30%;
+    float: right;
+    img {
+      height: 99px;
+      padding-left: 2px;
+    }
+    img.i2 {
+      margin-top: 2px;
+    }
   }
   img {
     display: -webkit-box;
     width: 100%;
     height: 200px;
-    padding-left: 12px;
-    padding-right: 12px;
+    border-radius: 5px;
     box-sizing: border-box;
   }
   .text {
@@ -84,8 +152,8 @@ export default {
     font-size: 15px;
     font-family: PingFangSC-Regular;
     padding-left: 12px;
-    margin-top:5px;
-    margin-bottom: 10px; 
+    margin-top: 5px;
+    margin-bottom: 15px;
   }
 }
 </style>

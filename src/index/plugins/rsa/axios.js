@@ -35,7 +35,7 @@ axios.interceptors.request.use(config => {
         axios.defaults.headers.post['Content-Type'] = 'application/json;encoding=utf-8';
         // axios.defaults.headers.post['User-Agent'] = 'jd';
         // alert(setMd5(config.data))
-        axios.defaults.headers.post['j-auth'] = setMd5(config.data)
+        // axios.defaults.headers.post['j-auth'] = setMd5(config.data)
     }else{
         config.url = urlObj.api + config.url +"?"+objPlan(config.data,1)
     }

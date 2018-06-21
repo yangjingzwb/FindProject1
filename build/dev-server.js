@@ -35,12 +35,15 @@ compiler.plugin('compilation', function(compilation) {
 })
 
 var context = config.dev.context
+console.log(context)
 
 switch(process.env.NODE_ENV){
     case 'local': var proxypath = 'http://www.ifruit.org/'; break;//http://211.138.236.219:9103/
     case 'online': var proxypath = 'http://www.ifruit.org/'; break;
     default:  var proxypath = config.dev.proxypath; 
 }
+
+console.log(process.env.NODE_ENV+'99999')
 var options = {
     target: proxypath,
     changeOrigin: true,

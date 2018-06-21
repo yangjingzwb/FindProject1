@@ -27,7 +27,7 @@
    
 </template>
 <script>
-import { GetDistance,fenToyuan } from "@@/service/util";
+import { GetDistance,fenToyuan,getUUID,setMd5HY } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
@@ -57,12 +57,14 @@ export default {
       }).then((res)=>{
         this.banner = res.data[0]
       })
+      let param_ = {
+        "channel":10197,
+        "requestId":getUUID(),
+      }
+      param_.setMd5HY(param_)
       // 和悦商品接口
-      axios.post('topiclist.do',{
-        "channel":632,
-        "requestId":"2a8da9eaa388324270885bdcfa6c9038cd01",
-        "sign":"0DAF8FC523BB6C164C4D66ADA0F8E2E4"
-      }).then((res)=>{
+      // 生产：https://mall.joypay.cn/cm-mall/outservice/hy/topiclist.do
+      axios.post('topiclist.do',param_).then((res)=>{
         let data =res.topiclist[0].goodslist.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
@@ -82,11 +84,11 @@ export default {
 @import "~@@/style/mixin";
 .banner {
   width: 100%;
-  height: 8.3125rem;
+  // height: 8.3125rem;
   overflow: hidden;
   img {
     width: 100%;
-    height: 100%;
+    // height: 100%;
   }
 }
 .goods {
