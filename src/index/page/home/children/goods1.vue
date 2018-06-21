@@ -1,7 +1,7 @@
 <template>
 <div>
-    <div class="banner">
-      <img src="/static/img/11.jpg" >
+    <div class="banner" @click="goDetail($event,banner)">
+      <img :src="banner.marketingIcon" >
     </div>
     <div class="goods">
       
@@ -33,7 +33,8 @@ import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
-      data:{}
+      data:{},
+      banner:{}
     };
   },
   computed: {
@@ -49,6 +50,14 @@ export default {
 
   methods: {
     init(){
+      // 获取banner
+       axios.post('queryMarketing',{
+        "position": "MIDDLE",
+        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      }).then((res)=>{
+        this.banner = res.data[0]
+      })
+      // 和悦商品接口
       axios.post('topiclist.do',{
         "channel":632,
         "requestId":"2a8da9eaa388324270885bdcfa6c9038cd01",
@@ -74,6 +83,7 @@ export default {
 .banner {
   width: 100%;
   height: 8.3125rem;
+  overflow: hidden;
   img {
     width: 100%;
     height: 100%;
@@ -81,6 +91,9 @@ export default {
 }
 .goods {
   // height: 181px;
+  .u2{
+    overflow: hidden;
+  }
   .u1 {
     padding: 0 !important;
     display: flex;
@@ -96,6 +109,7 @@ export default {
       // margin-top: 22px;
       // margin-bottom: 22px;
       text-align: center;
+      overflow: hidden;
     }
     img {
       // width: 60px;

@@ -78,6 +78,10 @@ export default {
     background-size: auto 30%;
     background-position: 38%;
     padding-bottom: 4px;
+    overflow: hidden;
+  }
+  .u2{
+     overflow: hidden;
   }
   .u1 > li {
     height: 210px;
@@ -85,6 +89,7 @@ export default {
     float: left;
     padding:0 8px 0 8px;
     margin-bottom: 18px;
+    overflow: hidden;
   }
   .text {
     font-size: 13px;
@@ -110,11 +115,11 @@ export default {
     max-height: 156px;
     min-height: 94px;
     display: block;
+    overflow: hidden;
   }
   img {
     max-width: 100%;
     max-height: 156px;
   }
 }
-
 </style>

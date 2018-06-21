@@ -6,7 +6,7 @@
         <div>
             <div class="slider-wrapper">
                 <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
-                    <div v-for="item in slider">
+                    <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
                         <a  @click="goDetail($event,item,2)" >
                             <img :src="item.marketingIcon">
@@ -18,8 +18,8 @@
       </div>
     </section>
     <!-- 秒杀 -->
-    <section class="s_3 s">
-      <img src="/static/img/banner2.png" >
+    <section class="s_3 s" @click="goDetail($event,jdBanner,2)">
+      <img :src="jdBanner.marketingIcon" >
     </section>
 
           
@@ -85,11 +85,13 @@ export default {
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
       slider_top_click:false,
+      jdBanner:{}
     };
   },
   computed: {},
 
   mounted() {
+    this.jdSKill()
     if (!window.LATITUDE) {
       this.aginEnter();
     } else {
@@ -130,7 +132,15 @@ export default {
       "CITYNAME1",
       "OPENANDCLOSE"
     ]),
-
+    jdSKill(){
+      axios.post('queryMarketing',{
+        "position": "MARKET",
+        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      })
+      .then((res)=>{
+        this.jdBanner = res.data[0]
+      })
+    },
     changeIscrollY(flag) {
       this.scrollY = flag;
     },

@@ -9,6 +9,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   font-weight: normal;
   font-family: "Microsoft Yahei";
   box-sizing: border-box;
+  overflow-x: hidden;
   // -webkit-tap-highlight-color: transparent;
   // -webkit-font-smoothing: antialiased;
   &:hover {
@@ -19,6 +20,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   -webkit-text-size-adjust: none;
   -webkit-touch-callout:none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  // overflow: hidden;
     // -webkit-transform-style: preserve-3d;
     // -webkit-backface-visibility:hidden;
   // -webkit-touch-callout: text;

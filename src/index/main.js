@@ -140,7 +140,7 @@ router.beforeEach((to, from, next) => {
     // });
     let slider = 0;
     let slider1 = 0;
-    let slider2 = 1;
+    let slider2 = 0;
     // alert(33)
     // alert(window.location)
     // window.getLocationInfo()
@@ -200,16 +200,17 @@ router.beforeEach((to, from, next) => {
         }).catch(() => {
             // window.location.reload()
         })
-        // axios.post('queryMarketing', {
-        //     "position": "MIDDLE",
-        //     "session": store.state.token.session.replace(/\+/g,'%2B') // 单点登录返回session
-        // }).then((res) => {
-        //     store.commit('SLIDER2', (res.data ? res.data : []))
-        //     slider2 += 1
-        //     checkUtil(slider, slider1, slider2, next)
-        // }).catch(() => {
-        //     // window.location.reload()
-        // })
+        // 运营banner
+        axios.post('queryMarketing', {
+            "position": "OPERATION",
+            "session": store.state.token.session.replace(/\+/g,'%2B') // 单点登录返回session
+        }).then((res) => {
+            store.commit('SLIDER2', (res.data ? res.data : []))
+            slider2 += 1
+            checkUtil(slider, slider1, slider2, next)
+        }).catch(() => {
+            // window.location.reload()
+        })
     }).catch((res) => {
         // if (isIPhone) {
         //     //ios
