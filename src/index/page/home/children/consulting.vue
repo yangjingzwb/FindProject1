@@ -54,7 +54,7 @@ export default {
       // alert(111)
       // 请求接口
       let params_ = {
-          "contentType": "ARTICLE",
+          "contentType": "GOODS",
           "startIndex":1,
           "endIndex":10
       }
