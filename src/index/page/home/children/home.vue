@@ -1,6 +1,6 @@
 <template>
-  <div class="home home1" >
-    <header>发现</header>
+  <div class="home">
+    <div class="header">发现</div>
     <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
       <div class="scroll content slide-content">
         <div>
@@ -361,19 +361,29 @@ export default {
   width: 100%;
   height: 3.125rem;
 }
-header{
-  height: 48px;
+.header{
+  // height: 48px;
+  // width: 100%;
+  // line-height: 48px;
+  // font-size: 18px;
+  // color:#13252E;
+  // font-family: PingFangSC-Regular;
+  // text-align: center;
   width: 100%;
-  line-height: 48px;
-  font-size: 18px;
-  color:#13252E;
-  font-family: PingFangSC-Regular;
+  height: 3rem;
+  background: #ffffff;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 100000000;
+  top: 0;
+  left: 0;
   text-align: center;
+  line-height: 3rem;
 }
 
 .home {
   width: 100%;
-  height: auto;
+  height: 100%;
   // overflow: hidden;
 }
 
@@ -539,12 +549,12 @@ header{
   // @include wh(100%, 4.875rem);
   text-align: center;
   background-color: #fff;
-  height: 6.25rem;
+  // height: 6.25rem;
   width: 100%;
   img {
     width: 100%;
-    height: 5.625rem;
-    margin-top: 0.25rem;
+    // height: 5.625rem;
+    margin-top: 0.2rem;
   }
 }
 .s_4 {
