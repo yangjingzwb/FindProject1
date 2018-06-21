@@ -133,6 +133,7 @@ export default {
       "OPENANDCLOSE"
     ]),
     jdSKill(){
+      // 京东秒杀
       axios.post('queryMarketing',{
         "position": "MARKET",
         "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
@@ -529,6 +530,8 @@ export default {
 }
 .s_2 {
   @include wh(100%, 10.625rem);
+  height: auto;
+  max-height: 10.625rem;
   overflow: hidden;
   background-color: #fff;
   ul,
@@ -720,17 +723,18 @@ export default {
   }
   img {
     max-height: 10.625rem;
+    // height:10.625rem;
   }
 }
 .scroll {
-  height: 10.625rem;
+  // height: 10.625rem;
 }
 .slide-content {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
   position: relative;
-  height: 56.25rem;
+  // height: 56.25rem;
   // margin: 0 .625rem .625rem;
 }
 .slider-item {

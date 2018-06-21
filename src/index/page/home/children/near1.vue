@@ -148,7 +148,7 @@ export default {
 }
 .nullHeight {
   height: 0.5625rem;
-  background: #f0f1f2;
+  background: #F6F7F8;
 }
 .refresh {
   text-align: center;
@@ -348,8 +348,8 @@ export default {
   margin-top: 0.5625rem;
   margin-bottom: 1rem;
   ul {
-    height: 7.5rem;
-    padding-top: 1.625rem;
+    height: 107px;
+    padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
   }
@@ -430,7 +430,7 @@ export default {
   }
   .r {
     position: absolute;
-    right: 0.9375rem;
+    right: 0;
   }
   .b {
     display: inline-block;

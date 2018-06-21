@@ -39,7 +39,7 @@ export const setMd5 = (data)=>{
 export const setMd5HY = (data)=>{
     let se = 'CE59E262D7AD716E24BA3D613DC617EB' //md5秘钥
     let d = ''+data.channel+data.requestId+se
-    return md5(d);
+    return md5(d).toUpperCase();
 }
 
 export const fetchPoints = (parent_title, sub_title, phone, remark, session) => {
@@ -474,7 +474,7 @@ export const objPlan = (data) => {
         res += d + '=' + data[d] + '&'
     }
     if (res) {
-        // res = res.substr(0,res.length-1)
+        res = res.substr(0,res.length-1)
     }
     return res
 }

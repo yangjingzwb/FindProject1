@@ -412,5 +412,6 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 16px 0;
+  margin-bottom: 60px;
 }
 </style>
