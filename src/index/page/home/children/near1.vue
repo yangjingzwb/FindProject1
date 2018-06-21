@@ -1,6 +1,7 @@
 <template>
   <div >
-        <div class="t-2">
+    <div class="nullHeight"></div>
+        <div class="t-2" @click="goMorePer()">
             附近优惠
             <div class="t-4">更多优惠</div>
             <div class="hr-1"></div>
@@ -32,11 +33,7 @@
 
 <script>
 import {
-  //   fetchPoints,
   GetDistance
-  //   setLItem,
-  //   getLItem,
-  //   getCode
 } from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
 // import { baseUrl } from "@@/config/env"; // baseUrl
@@ -56,14 +53,6 @@ export default {
       type: String,
       default: false
     },
-    data1: {
-      type: Boolean,
-      default: false
-    },
-    scrollY: {
-      type: Boolean,
-      default: false
-    },
     longitude: {
       type: String,
       default: false
@@ -73,19 +62,7 @@ export default {
       default: function() {
         return [];
       }
-    },
-    tabScrollbar: {
-      type: Boolean,
-      default: false
-    },
-    pullDownRefresh: {
-      type: null,
-      default: true
     }
-    // pullUpLoad: {
-    //   type: Boolean,
-    //   default: false
-    // }
   },
   computed: {},
 
@@ -99,15 +76,6 @@ export default {
   computed: {},
 
   methods: {
-    scrollListen(pos) {
-      console.log("near");
-      console.log(pos);
-      // if(Math.abs(pos.y)<5){
-      //   this.$emit('changeIscrollY',true)
-      // }else{
-      //   this.$emit('changeIscrollY',false)
-      // }
-    },
     aginEnter() {
       this.$emit("aginEnter");
     },
@@ -120,12 +88,9 @@ export default {
     goDetail(event, obj, flag) {
       this.$emit("goDetail", event, obj, flag);
     },
-
-    onPullingDown() {
-      this.$emit("pullingDown");
-    },
-    onPullingUp() {
-      this.$emit("pullingUp");
+    // 更多优惠
+    goMorePer(){
+      this.$router.push("/home1");
     }
   }
 };

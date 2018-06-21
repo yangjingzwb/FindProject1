@@ -5,7 +5,7 @@
                 <div class="t-text">咨询</div>
               </div>
               <ul class="u1">
-                <li>
+                <li @click="goDetail($event,item,1)">
                   <ul class="u2">
                     <li class="icon">
                       <img src="/static/img/1-1.png">
@@ -41,7 +41,9 @@ export default {
   },
 
   methods: {
-    
+    goDetail(event, obj, flag) {
+      this.$emit("goDetail", event, obj, flag);
+    },
   }
 };
 </script>

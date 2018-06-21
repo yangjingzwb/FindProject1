@@ -4,71 +4,16 @@
                 为你推荐
               </div>
               <ul class="u1">
-                <li>
+                <li v-for="item in data" :key="item.url" @click="goDetail($event,item,1)" >
                   <ul class="u2">
                     <li class="icon">
-                      <img src="/static/img/1-1.png">
+                      <img :src="item.marketingIcon">
                     </li>
                     <li class="text">
-                      佳佰 汤锅珐琅铸铁22cm双耳汤锅(电磁炉明火
+                      {{item.marketingTitle}}
                     </li>
                     <li class="price">
-                      ¥219.00
-                    </li>
-                  </ul>
-                </li>
-                 <li>
-                  <ul class="u2">
-                    <li class="icon">
-                      <img src="/static/img/1-1.png">
-                    </li>
-                    <li class="text">
-                      佳佰 汤锅珐琅铸铁22cm双耳汤锅(电磁炉明火
-                    </li>
-                    <li class="price">
-                      ¥219.00
-                    </li>
-                  </ul>
-                </li>
-
-                 <li>
-                  <ul class="u2">
-                    <li class="icon">
-                      <img src="/static/img/1-1.png">
-                    </li>
-                    <li class="text">
-                      佳佰 汤锅珐琅铸铁22cm双耳汤锅(电磁炉明火
-                    </li>
-                    <li class="price">
-                      ¥219.00
-                    </li>
-                  </ul>
-                </li>
-
-                 <li>
-                  <ul class="u2">
-                    <li class="icon">
-                      <img src="/static/img/1-1.png">
-                    </li>
-                    <li class="text">
-                      佳佰 汤锅珐琅铸铁22cm双耳汤锅(电磁炉明火
-                    </li>
-                    <li class="price">
-                      ¥219.00
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  <ul class="u2">
-                    <li class="icon">
-                      <img src="/static/img/1-1.png">
-                    </li>
-                    <li class="text">
-                      佳佰 汤锅珐琅铸铁22cm双耳汤锅(电磁炉明火
-                    </li>
-                    <li class="price">
-                      ¥219.00
+                      ¥{{item.Commodity_price/100}}
                     </li>
                   </ul>
                 </li>
@@ -79,17 +24,20 @@
 <script>
 import { GetDistance } from "@@/service/util";
 import { mapState } from "vuex";
+import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
-     
+     data:[]
     };
   },
   computed: {
     ...mapState(["token"])
   },
 
-  mounted() {},
+  mounted() {
+    this.init()
+  },
   created() {
     
   },
@@ -98,7 +46,17 @@ export default {
   },
 
   methods: {
-    
+    init(){
+      axios.post('queryMarketing',{
+        "position": "RECOMMEND",
+        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      }).then((res)=>{
+        this.data = res.data
+      })
+    },
+    goDetail(event, obj, flag) {
+      this.$emit("goDetail", event, obj, flag);
+    },
   }
 };
 </script>
@@ -119,15 +77,14 @@ export default {
     background-repeat: no-repeat;
     background-size: auto 30%;
     background-position: 38%;
+    padding-bottom: 4px;
   }
   .u1 > li {
     height: 210px;
     width: 50%;
     float: left;
-    // flex: 2;
-    // flex-direction: row;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding:0 8px 0 8px;
+    margin-bottom: 18px;
   }
   .text {
     font-size: 13px;
@@ -141,8 +98,8 @@ export default {
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
+    overflow: hidden;
     padding-top: 4px;
-    padding-bottom: 4px;
   }
   .price {
     font-size: 15px;
@@ -155,8 +112,8 @@ export default {
     display: block;
   }
   img {
-    max-height: 100%;
     max-width: 100%;
+    max-height: 156px;
   }
 }
 

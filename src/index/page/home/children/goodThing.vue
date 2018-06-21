@@ -323,11 +323,12 @@ div.good-i {
   }
 }
 .t-1 {
-  white-space: normal!important;
+  
   font-family: "PingFangSC-Regular";
   font-size: .75rem;
   margin: .5rem 0;
   overflow: hidden;
+  white-space: normal!important;
   display: -webkit-box;
   /* autoprefixer: ignore next */
   -webkit-box-orient: vertical;
