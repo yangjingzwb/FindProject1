@@ -55,10 +55,10 @@ export default {
       // 请求接口
       let params_ = {
           "contentType": "GOODS",
-          "startIndex":1,
+          "startIndex":0,
           "endIndex":10
       }
-      axios.post('/content/getContent',params_, {headers: {
+      axios.post('http://yys-open.jd.com/content/getContent',params_, {headers: {
             "j-auth": setMd5(params_),
             "User-Agent":"jd",
             "Content-Type":"application/json;encoding=utf-8"
