@@ -61,10 +61,10 @@ export default {
         "channel":10197,
         "requestId":getUUID(),
       }
-      param_.setMd5HY(param_)
+      param_.sign = setMd5HY(param_)
       // 和悦商品接口
       // 生产：https://mall.joypay.cn/cm-mall/outservice/hy/topiclist.do
-      axios.post('topiclist.do',param_).then((res)=>{
+        axios.post('topiclist.do',param_).then((res)=>{
         let data =res.topiclist[0].goodslist.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
@@ -93,6 +93,8 @@ export default {
 }
 .goods {
   // height: 181px;
+  padding-left: 11px;
+  padding-right: 11px;
   .u2{
     overflow: hidden;
   }
@@ -130,7 +132,7 @@ export default {
       // -webkit-box-orient: vertical;
       // text-overflow: ellipsis;
       text-align: left;
-      padding-left: 10px;
+      padding-right: 12px;
       @include space();
     }
     .price {
@@ -138,7 +140,7 @@ export default {
       color: #ed1991;
       font-family: PingFangSC-Medium;
       text-align: left;
-      padding-left: 10px;
+      // padding-left: 10px;
     }
     .linePrice {
       font-size: 12px;

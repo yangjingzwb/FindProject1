@@ -13,7 +13,7 @@
                       {{item.marketingTitle}}
                     </li>
                     <li class="price">
-                      ¥{{item.Commodity_price/100}}
+                      ¥{{item.commodityPrice.toFixed(2)}}
                     </li>
                   </ul>
                 </li>
@@ -77,7 +77,7 @@ export default {
     background-repeat: no-repeat;
     background-size: auto 30%;
     background-position: 38%;
-    padding-bottom: 4px;
+    // padding-bottom: 4px;
     overflow: hidden;
   }
   .u2{
@@ -104,22 +104,30 @@ export default {
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    padding-top: 4px;
+    padding-top: 10px;
   }
   .price {
     font-size: 15px;
     color: #c11325;
     font-family: PingFangSC-Regular;
+    padding-top: 5px;
   }
   li.icon {
     max-height: 156px;
     min-height: 94px;
+    height: 156px;
     display: block;
     overflow: hidden;
+    position: relative;
   }
   img {
     max-width: 100%;
     max-height: 156px;
+    display: block;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
   }
 }
 </style>

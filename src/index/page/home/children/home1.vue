@@ -701,7 +701,7 @@ export default {
 // }
 .nullHeight {
   height: .5625rem;
-  background: #f0f1f2;
+  background: #F6F7F8;
 }
 .refresh {
   text-align: center;
