@@ -1,79 +1,71 @@
 <template>
 <div>
-  <div class="banner">
-              <img src="/static/img/11.jpg" :onerror='defaultIcon'>
-            </div>
-<div class="goods">
+    <div class="banner">
+      <img src="/static/img/11.jpg" >
+    </div>
+    <div class="goods">
       
-              <ul class="u1">
-                <li>
-                  <ul class="u2">
-                    <li class="icon">
-                      <img src="/static/img/1-1.png">
-                    </li>
-                    <li class="text">
-                      黑凤梨20寸全铝
-                    </li>
-                    <li>
-                      <span class="price">¥329.00</span>
-                      <span class="linePrice">¥449.00</span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  <ul class="u2">
-                    <li class="icon">
-                      <img src="/static/img/1-1.png">
-                    </li>
-                    <li class="text">
-                      黑凤梨20寸全铝
-                    </li>
-                    <li>
-                      <span class="price">¥329.00</span>
-                      <span class="linePrice">¥449.00</span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  <ul class="u2">
-                    <li class="icon">
-                      <img src="/static/img/1-1.png">
-                    </li>
-                    <li class="text">
-                      黑凤梨20寸全铝
-                    </li>
-                    <li>
-                      <span class="price">¥329.00</span>
-                      <span class="linePrice">¥449.00</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-               <div class="nullHeight"></div>
-            </div>
+    <ul class="u1">
+      <li @click="goDetail($event,item,1)" v-for="item in data" :key="item.goodsId">
+        <ul class="u2">
+          <li class="icon">
+            <img :src="item.picurl">
+          </li>
+          <li class="text">
+            {{item.name}}
+          </li>
+          <li>
+            <span class="price">¥{{fenToyuan(item.price)}}</span>
+            <span class="linePrice">¥{{fenToyuan(item.marketPrice)}}</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+      <div class="nullHeight"></div>
+  </div>
 </div>
    
 </template>
-
 <script>
-import { GetDistance } from "@@/service/util";
+import { GetDistance,fenToyuan } from "@@/service/util";
 import { mapState } from "vuex";
+import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
-    return {};
+    return {
+      data:{}
+    };
   },
   computed: {
     ...mapState(["token"])
   },
 
-  mounted() {},
+  mounted() {
+    this.init();
+  },
   created() {},
 
   components: {},
 
-  methods: {}
+  methods: {
+    init(){
+      axios.post('topiclist.do',{
+        "channel":632,
+        "requestId":"2a8da9eaa388324270885bdcfa6c9038cd01",
+        "sign":"0DAF8FC523BB6C164C4D66ADA0F8E2E4"
+      }).then((res)=>{
+        let data =res.topiclist[0].goodslist.sort(() => {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        this.data = data.slice(0, 3) // 每个专题必须至少返回3个商品
+      })
+      
+    },
+    goDetail(event, obj, flag) {
+      this.$emit("goDetail", event, obj, flag);
+    },
+    fenToyuan:fenToyuan
+  }
 };
 </script>
 
@@ -95,32 +87,35 @@ export default {
     & > li {
       flex: 3;
       flex-direction: row;
+      max-width: 34%;
     }
 
     li.icon {
-      height: 66px;
+      max-height: 110px;
       margin: 0 auto;
-      margin-top: 22px;
-      margin-bottom: 22px;
+      // margin-top: 22px;
+      // margin-bottom: 22px;
       text-align: center;
     }
     img {
-      width: 60px;
-      min-height: 66px;
-      max-height: 70px;
+      // width: 60px;
+      // min-height: 66px;
+      max-width: 105px;
+      max-height: 105px;
     }
     .text {
       font-size: 12px;
       color: #13252e;
       font-family: PingFangSC-Light;
       text-align: center;
-      overflow: hidden;
-      display: -webkit-box;
+      // overflow: hidden;
+      // display: -webkit-box;
       /* autoprefixer: ignore next */
-      -webkit-box-orient: vertical;
-      text-overflow: ellipsis;
+      // -webkit-box-orient: vertical;
+      // text-overflow: ellipsis;
       text-align: left;
       padding-left: 10px;
+      @include space();
     }
     .price {
       font-size: 12px;

@@ -1,58 +1,46 @@
 <template>
-  <div >
-    <div class="home home1" >
-        <div class="content">
-          <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
-            <div class="scroll content slide-content">
-              <div>
-                  <div class="slider-wrapper">
-                      <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
-                          <div v-for="item in slider">
-                            <!-- :key="item.marketingId -->
-                              <a  @click="goDetail($event,item,2)" >
-                                  <img :src="item.marketingIcon">
-                              </a>
-                          </div>
-                      </slider>
-                  </div>
-              </div>
+  <div class="home home1" >
+    <header>发现</header>
+    <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
+      <div class="scroll content slide-content">
+        <div>
+            <div class="slider-wrapper">
+                <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
+                    <div v-for="item in slider">
+                      <!-- :key="item.marketingId -->
+                        <a  @click="goDetail($event,item,2)" >
+                            <img :src="item.marketingIcon">
+                        </a>
+                    </div>
+                </slider>
             </div>
-          </section>
-
-          <section class="s_3 s">
-            <img src="/static/img/banner2.png" :onerror='defaultIcon'>
-          </section>
-
-          <div class="nullHeight"></div>
+        </div>
+      </div>
+    </section>
+    <!-- 秒杀 -->
+    <section class="s_3 s">
+      <img src="/static/img/banner2.png" >
+    </section>
 
           
-          <section class="s_5 s" >
-            <near
-              :data1 = "data1"
-              :latitude = 'latitude'
-              :longitude = 'longitude'
-              :shopList="shopList"
-              :data = "shopList"
-              :scrollbar='tabScrollbar'
-              :pullDownRefresh='pullDownRefresh'
-              :pullUpLoad='pullUpLoad_near'
-              :scrollY = 'scrollYOther'
-              @aginEnter = "aginEnter"
-              @changeIscrollY="changeIscrollY"
-              @goDetail="goDetail"
-              @pullingDown="onPullingDown"
-              @pullingUp="onPullingUp">
-              >
-            </near>
-            
-           
-            
-            <goods1></goods1>
-            <goods2></goods2>
-            <goods3></goods3>
-          </section>
-        </div>
-     </div>
+          
+    <section class="s_5 s" >
+      <!-- 附近 -->
+      <near1
+        :latitude = 'latitude'
+        :longitude = 'longitude'
+        :shopList="shopList"
+        @aginEnter = "aginEnter"
+        @goDetail="goDetail"
+        >
+      </near1>
+      <!-- 和悦专题营销位 -->
+      <goods1></goods1>
+      <!-- 为你推荐 -->
+      <goods2></goods2>
+      <!-- 资讯 -->
+      <goods3></goods3>
+    </section>
   </div>
 </template>
 
@@ -73,12 +61,12 @@ import {
   getCode
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
-import BScroll from "better-scroll";
-import Scroll from "@@/components/scroll/scroll.vue";
+// import BScroll from "better-scroll";
+// import Scroll from "@@/components/scroll/scroll.vue";
 import Goods1 from './goods1.vue';
 import Goods2 from './goods2.vue';
 import Goods3 from './goods3.vue';
-import Near from "./near1.vue";
+import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
 // import Consulting from "./consulting.vue" // 咨询
 import GoodThing from "./goodThing.vue"; // 好物
@@ -89,63 +77,14 @@ import GoodThing from "./goodThing.vue"; // 好物
 export default {
   data() {
     return {
-      pullUpLoad: false,
-      pullUpLoad_near: true,
-      data1: false,
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
-      product: [],
-      listHeight: [],
-      scrollY: true,
-      topCat: false,
-      scrollbar: false,
-      slider_top_click: false,
-      slider_middle_click: true,
-      bounce: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
-      tabAutoPlay: false,
-      tabLoop: false,
-      tabScrollbar: false,
-      showDot: true,
-      dots: ["附近", "推荐", "世界杯专区"], //['附近','推荐','世界杯专区','咨询'],
-      // autoPlay:,
-      // defaultIcon: "",
-
-      // slider:[],
-      // slider1:[],
-      // slider2:[],
-      isError: true,
-      loopX: true,
       shopList: [],
-      limit: "",
-      creditResult: "",
-      isShowAlert: false,
-      alertTextFirst: "",
-      alertTextSecond: "",
-      btnText: "",
-      isAdmittance: false,
-      home: "",
-      foodsScroll: "",
-      residue: 0,
-      flag: false,
-      shopListFlag: false,
       CURRENTPAGE: 0, // 页码
-      PAGNUM: 4,
-      refTime: "",
-      baseImg: baseUrl.img,
-      totalInit: 0,
-      endX: 0,
-      sliderIndex: 0,
-      startX: 0,
-      scrollY: true,
-      scrollYOther: true,
-      startY: 0,
-      threshold: 0.2,
+      PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      pullDownRefresh: {
-        threshold: 120,
-        stop: 60
-      }
+      slider_top_click:false,
     };
   },
   computed: {},
@@ -161,16 +100,10 @@ export default {
 
   components: {
     Slider,
-    Scroll,
-    Near,
-    Recommended,
+    Near1,
     Goods1,
     Goods2,
     Goods3,
-    // Consulting,
-    GoodThing
-    // vueLoading
-    // SlideRender
   },
 
   computed: {
@@ -207,7 +140,6 @@ export default {
     aginEnter() {
       // alert(33)
       this.SHOWLOADING(true);
-      this.initScroll();
       let that = this;
       if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
         this.init();
@@ -244,30 +176,16 @@ export default {
     intervalCity() {
       this.cityName1 = window.CITYNAME || "定位中";
     },
-    defaultIconF(i) {
-      this.shopList[i].PIC_URL_1 = "/static/img/error.png";
-    },
+    // defaultIcon(i) {
+    //   this.shopList[i].PIC_URL_1 = "/static/img/error.png";
+    // },
     GetDistance(a, b, c, d) {
-      // alert(GetDistance(a, b, c, d))
       return GetDistance(a, b, c, d);
     },
     detail(url) {
       window.location = url;
     },
-    gotoAddress(path) {
-      this.$router.push(path);
-    },
-    done() {
-      // 跳转到下一个页面
-      this.$router.push("/mine");
-    },
-    touchStart(e) {
-      let touch = e.changedTouches[0];
-      this.startX = touch.pageX;
-      // console.log(touch)
-      // startY = touch.pageY;
-      // startX = touch.pageX;
-    },
+   
     goDetail(event, obj, flag) {
       
       //埋点 parent_title, sub_title,phone,remark, session
@@ -344,64 +262,7 @@ export default {
       }
       return obj;
     },
-    loadMore() {
-      if (this.shopListFlag) {
-        return;
-      }
-      this.CURRENTPAGE += 1;
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 商户简称
-          // tixn_cnl: "ROYTEL", // 固定值
-          currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B")
-        })
-        .then(res => {
-          // this.shopList = res.STORES_REC;
-          // 合并数组
-          this.shopList.push.apply(this.shopList, this.filterObj(res.data));
-          if (res.data.length < this.PAGNUM) {
-            this.shopListFlag = true;
-            this.data1 = true;
-            // 数组没有更多了
-          } else {
-            this.shopListFlag = false;
-            this.data1 = false;
-          }
-          this.initScroll();
-        })
-        .catch(res => {
-          this.initScroll();
-        });
-    },
-    scrollTo() {
-      this.$refs.scroll.scrollTo(
-        this.scrollToX,
-        this.scrollToY,
-        this.scrollToTime,
-        ease[this.scrollToEasing]
-      );
-    },
-    onPullingDown() {
-      this.init(true);
-    },
-    onPullingUp() {
-      this.loadMore();
-    },
-    rebuildScroll() {
-      this.nextTick(() => {
-        this.$refs.scroll.destroy();
-        this.$refs.scroll.initScroll();
-      });
-    },
-
-    refresh() {
-      this.init(true);
-    },
+   
     init(flag) {
       this.CURRENTPAGE = 1;
       if (!flag) {
@@ -426,14 +287,13 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
+          pagNum: this.PAGNUM || 2,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
-            this.initScroll();
             setTimeout(() => {
               this.SHOWLOADING(false);
             }, 300);
@@ -448,24 +308,9 @@ export default {
               // setTimeout(() => {
               this.SHOWLOADING(false);
               this.isError = false;
-              if (flag) {
-                this.initScroll();
-              } else {
-                this.initScroll();
-              }
               // }, 300);
             }
             return;
-          }
-
-          // console.log(this.shopList);
-          if (res.data.length < this.PAGNUM) {
-            this.shopListFlag = true;
-            this.data1 = true;
-            //没有更多了
-          } else {
-            this.shopListFlag = false;
-            this.data1 = false;
           }
         })
         .catch(res => {
@@ -474,16 +319,15 @@ export default {
           if (this.totalInit <= 5) {
             this.init();
           } else {
-            this.initScroll();
           }
 
         });
       // 请求banner2
       // 请求品类
     },
-    initScroll() {},
-    _calcHeight() {
-    },
+    // initScroll() {},
+    // _calcHeight() {
+    // },
     goToApply() {},
     closeAlert() {}
   }
@@ -507,22 +351,22 @@ export default {
   width: 100%;
   height: 3.125rem;
 }
-
-
-
-
+header{
+  height: 48px;
+  width: 100%;
+  line-height: 48px;
+  font-size: 18px;
+  color:#13252E;
+  font-family: PingFangSC-Regular;
+  text-align: center;
+}
 
 .home {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  height: auto;
+  // overflow: hidden;
 }
-.home1 {
-  // margin-top: 4.25rem;
-  height: 100%;
-  overflow: hidden;
-  // z-index: 19;
-}
+
 .content {
   // height: auto;
 }
