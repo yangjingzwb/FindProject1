@@ -2,7 +2,7 @@
   <div >
     <section class="s_1">
       <ul>
-        <li class="l t">
+        <li class="l t" @click="goBack()">
           {{cityName1}}
         </li>
         <li class="l i" @click="done()">
@@ -688,7 +688,10 @@ export default {
       // }, 0);
     },
     goToApply() {},
-    closeAlert() {}
+    closeAlert() {},
+    goBack() {
+      this.$router.go(-1);
+    },
   }
   // props:['activeIcon']
 };
@@ -822,11 +825,15 @@ export default {
   .t {
     color: #6c6c6c;
     font-size: 0.9375rem;
-    width: 4.1875rem;
+    width: 5.1875rem;
     position: relative;
     float: left;
     text-align: left;
-    padding-left: 0.9375rem;
+    padding-left: 1.9375rem;
+    background-image: url(/static/img/back.png);
+    background-repeat: no-repeat;
+    background-position: 6px 50%;
+    background-size: 20px;
     // padding-right: 0.6rem;
     @include space();
   }
@@ -850,9 +857,10 @@ export default {
     position: absolute;
     z-index: 2;
     left: 0.25rem;
-    top: 0.125rem;
+    top: 15px;
     img {
       width: 100%;
+      display: block;
     }
   }
   .i {

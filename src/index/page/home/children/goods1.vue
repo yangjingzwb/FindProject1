@@ -1,12 +1,12 @@
 <template>
 <div>
-    <div class="banner" @click="goDetail($event,banner)">
+    <div class="banner" @click="goDetail($event,banner,2)">
       <img :src="banner.marketingIcon" >
     </div>
     <div class="goods">
       
     <ul class="u1">
-      <li @click="goDetail($event,item,1)" v-for="item in data" :key="item.goodsId">
+      <li @click="goDetail($event,item,2)" v-for="item in data" :key="item.goodsId">
         <ul class="u2">
           <li class="icon">
             <img :src="item.picurl">
@@ -21,8 +21,9 @@
         </ul>
       </li>
     </ul>
-      <div class="nullHeight"></div>
+     
   </div>
+   <div class="nullHeight"></div>
 </div>
    
 </template>
@@ -73,6 +74,7 @@ export default {
       
     },
     goDetail(event, obj, flag) {
+      // alert(JSON.stringify(obj))
       this.$emit("goDetail", event, obj, flag);
     },
     fenToyuan:fenToyuan
@@ -86,6 +88,7 @@ export default {
   width: 100%;
   // height: 8.3125rem;
   overflow: hidden;
+  margin-bottom: 8px;
   img {
     width: 100%;
     // height: 100%;
@@ -97,10 +100,12 @@ export default {
   padding-right: 11px;
   .u2{
     overflow: hidden;
+    
   }
   .u1 {
     padding: 0 !important;
     display: flex;
+    padding-top: 11px;
     & > li {
       flex: 3;
       flex-direction: row;
@@ -150,7 +155,7 @@ export default {
       text-align: left;
     }
     .u2 {
-      padding-bottom: 8px;
+        padding-bottom: 23px;
     }
   }
 }
