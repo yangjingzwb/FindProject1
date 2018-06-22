@@ -2,10 +2,10 @@
     <div class="goods-3">
               <div class="nullHeight"></div>
                <div class="title">
-                <div class="t-text">咨询</div>
+                <div class="t-text">咨讯</div>
               </div>
               <ul class="u1">
-                <li @click="goDetail($event,item,1)" v-for="item in data" :key="item.id">
+                <li @click="goDetail($event,item,2)" v-for="item in data" :key="item.id">
                   <ul v-if="item.imageUrls.length == 1" class="u2">
                     <li class="icon">
                       <img :src="item.imageUrls[0]">
@@ -82,7 +82,7 @@ export default {
       let obj={}
       for(let i=0;i<data.length;i++){
         obj  = data[i]
-        obj.imageUrls = obj.imageUrls.split(',')
+        obj.imageUrls = obj.imageUrls.replace(/,$/,'').split(',')
         res.push(obj)
       }
       console.log('99998888')

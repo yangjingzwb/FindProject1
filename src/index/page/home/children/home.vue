@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <div class="header">发现</div>
+    <div class="content">
+
+    
     <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
       <div class="scroll content slide-content">
         <div>
@@ -35,12 +38,19 @@
         >
       </near1>
       <!-- 和悦专题营销位 -->
-      <goods1></goods1>
+      <goods1
+        @goDetail="goDetail"
+      ></goods1>
       <!-- 为你推荐 -->
-      <goods2></goods2>
+      <goods2
+        @goDetail="goDetail"
+      ></goods2>
       <!-- 资讯 -->
-      <goods3></goods3>
+      <goods3
+        @goDetail="goDetail"
+      ></goods3>
     </section>
+    </div>
   </div>
 </template>
 
@@ -347,7 +357,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-
+.content{
+  overflow:auto;  
+  -webkit-overflow-scrolling:touch;  
+}
+div.container::-webkit-scrollbar {
+    display:none
+  }
 .refresh {
   text-align: center;
   padding: 1.25rem 0;

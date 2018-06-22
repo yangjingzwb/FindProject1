@@ -4,7 +4,7 @@
                 为你推荐
               </div>
               <ul class="u1">
-                <li v-for="item in data" :key="item.url" @click="goDetail($event,item,1)" >
+                <li v-for="item in data" :key="item.url" @click="goDetail($event,item,2)" >
                   <ul class="u2">
                     <li class="icon">
                       <img :src="item.marketingIcon">
