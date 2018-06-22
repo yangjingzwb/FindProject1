@@ -102,30 +102,30 @@ export default {
 .goods-3 {
   clear: both;
   .title {
-    height: 49px;
-    line-height: 49px;
+    height: 3.0625rem;
+    line-height: 3.0625rem;
     text-align: center;
     background-image: url("/static/img/2-5.png");
     background-repeat: no-repeat;
     background-position: 100%;
     background-size: 100% auto;
-    margin: auto 16px;
+    margin: auto 1rem;
   }
   .t-text {
-    width: 80px;
+    width: 5rem;
     margin: 0 auto;
     background-color: #fff;
   }
   .icon {
-    height: 200px;
-    padding-left: 12px;
-    padding-right: 12px;
+    height: 12.5rem;
+    padding-left: .75rem;
+    padding-right: .75rem;
   }
   .left {
     width: 70%;
     float: left;
     img {
-      height: 200px;
+      height: 12.5rem;
       padding-right: 0;
     }
   }
@@ -133,27 +133,27 @@ export default {
     width: 30%;
     float: right;
     img {
-      height: 99px;
-      padding-left: 2px;
+      height: 6.1875rem;
+      padding-left: .125rem;
     }
     img.i2 {
-      margin-top: 2px;
+      margin-top: .125rem;
     }
   }
   img {
     display: -webkit-box;
     width: 100%;
-    height: 200px;
-    border-radius: 5px;
+    height: 12.5rem;
+    border-radius: .3125rem;
     box-sizing: border-box;
   }
   .text {
     color: #13252e;
-    font-size: 15px;
+    font-size: .9375rem;
     font-family: PingFangSC-Regular;
-    padding-left: 12px;
-    margin-top: 5px;
-    margin-bottom: 15px;
+    padding-left: .75rem;
+    margin-top: .3125rem;
+    margin-bottom: .9375rem;
   }
 }
 </style>

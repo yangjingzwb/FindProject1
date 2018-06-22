@@ -379,10 +379,10 @@ div.container::-webkit-scrollbar {
   height: 3.125rem;
 }
 .header{
-  // height: 48px;
+  // height: 3rem;
   // width: 100%;
-  // line-height: 48px;
-  // font-size: 18px;
+  // line-height: 3rem;
+  // font-size: 1.125rem;
   // color:#13252E;
   // font-family: PingFangSC-Regular;
   // text-align: center;

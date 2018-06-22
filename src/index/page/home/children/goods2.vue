@@ -64,65 +64,65 @@ export default {
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
 .goods-2 {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: .5rem;
+  padding-right: .5rem;
   .title {
-    height: 49px;
-    line-height: 49px;
+    height: 3.0625rem;
+    line-height: 3.0625rem;
     text-align: center;
-    font-size: 15px;
+    font-size: .9375rem;
     color: #13252e;
     font-family: PingFangSC-Regular;
     background-image: url(/static/img/2-11.png);
     background-repeat: no-repeat;
     background-size: auto 30%;
     background-position: 38%;
-    // padding-bottom: 4px;
+    // padding-bottom: .25rem;
     overflow: hidden;
   }
   .u2{
      overflow: hidden;
   }
   .u1 > li {
-    height: 210px;
+    height: 13.125rem;
     width: 50%;
     float: left;
-    padding:0 8px 0 8px;
-    margin-bottom: 18px;
+    padding:0 .5rem 0 .5rem;
+    margin-bottom: 1.125rem;
     overflow: hidden;
   }
   .text {
-    font-size: 13px;
+    font-size: .8125rem;
     color: #13252e;
     font-family: PingFangSC-Light;
     white-space: normal !important;
-    letter-spacing: 1px;
-    line-height: 15px;
+    letter-spacing: .0625rem;
+    line-height: .9375rem;
     display: -webkit-box;
     /* autoprefixer: ignore next */
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    padding-top: 10px;
+    padding-top: .625rem;
   }
   .price {
-    font-size: 15px;
+    font-size: .9375rem;
     color: #c11325;
     font-family: PingFangSC-Regular;
-    padding-top: 5px;
+    padding-top: .3125rem;
   }
   li.icon {
-    max-height: 156px;
-    min-height: 94px;
-    height: 156px;
+    max-height: 9.75rem;
+    min-height: 5.875rem;
+    height: 9.75rem;
     display: block;
     overflow: hidden;
     position: relative;
   }
   img {
     max-width: 100%;
-    max-height: 156px;
+    max-height: 9.75rem;
     display: block;
     top: 50%;
     left: 50%;
