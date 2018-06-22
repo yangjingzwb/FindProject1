@@ -832,8 +832,8 @@ export default {
     padding-left: 1.9375rem;
     background-image: url(/static/img/back.png);
     background-repeat: no-repeat;
-    background-position: 6px 50%;
-    background-size: 20px;
+    background-position: .375rem 50%;
+    background-size: 1.25rem;
     // padding-right: 0.6rem;
     @include space();
   }
@@ -857,7 +857,7 @@ export default {
     position: absolute;
     z-index: 2;
     left: 0.25rem;
-    top: 15px;
+    top: .9375rem;
     img {
       width: 100%;
       display: block;

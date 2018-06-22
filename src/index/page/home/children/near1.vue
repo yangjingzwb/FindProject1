@@ -348,7 +348,7 @@ export default {
   margin-top: 0.5625rem;
   margin-bottom: 1rem;
   ul {
-    height: 107px;
+    height: 6.6875rem;
     padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
