@@ -1,7 +1,7 @@
 import App from '@@/App'
-import axios from "@@/plugins/rsa/axios";
+// import axios from "@@/plugins/rsa/axios";
 // tab
-const tab = r => require.ensure([], () => r(require('../page/home/tab')), 'tab')
+// const tab = r => require.ensure([], () => r(require('../page/home/tab')), 'tab')
 // 首页
 const home = r => require.ensure([], () => r(require('../page/home/children/home')), 'home')
 

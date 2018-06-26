@@ -6,7 +6,7 @@
     <div class="goods">
       
     <ul class="u1">
-      <li @click="goDetail($event,item,2)" v-for="item in data" :key="item.goodsId">
+      <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.goodsId">
         <ul class="u2">
           <li class="icon">
             <img :src="item.picurl">
@@ -114,6 +114,8 @@ export default {
 
     li.icon {
       max-height: 6.875rem;
+      height: 6.875rem;
+      position: relative;
       margin: 0 auto;
       // margin-top: 1.375rem;
       // margin-bottom: 1.375rem;
@@ -123,8 +125,14 @@ export default {
     img {
       // width: 3.75rem;
       // min-height: 4.125rem;
-      max-width: 6.5625rem;
-      max-height: 6.5625rem;
+    
+          display: block;
+    max-width: 6.5625rem;
+    max-height: 6.5625rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     }
     .text {
       font-size: .75rem;

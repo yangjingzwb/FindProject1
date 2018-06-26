@@ -31,7 +31,7 @@ export const GetDistance = (lat1, lng1, lat2, lng2) => {
     // }
     return s+'';
 }
-
+// 
 export const setMd5 = (data)=>{
     let d = 'ct001fb8ada5237c5ae97978ff07fc7471d20'+JSON.stringify(data);
     return "ct001;"+md5(d);

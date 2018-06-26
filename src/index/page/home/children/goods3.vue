@@ -2,10 +2,10 @@
     <div class="goods-3">
               <div class="nullHeight"></div>
                <div class="title">
-                <div class="t-text">咨讯</div>
+                <div class="t-text">资讯</div>
               </div>
               <ul class="u1">
-                <li @click="goDetail($event,item,2)" v-for="item in data" :key="item.id">
+                <li @click="goDetail($event,item,3)" v-for="item in data" :key="item.id">
                   <ul v-if="item.imageUrls.length == 1" class="u2">
                     <li class="icon">
                       <img :src="item.imageUrls[0]">

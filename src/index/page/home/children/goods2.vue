@@ -9,7 +9,7 @@
                     <li class="icon">
                       <img :src="item.marketingIcon">
                     </li>
-                    <li class="text">
+                    <li class="text" style="-webkit-box-orient: vertical;">
                       {{item.marketingTitle}}
                     </li>
                     <li class="price">
@@ -84,7 +84,7 @@ export default {
      overflow: hidden;
   }
   .u1 > li {
-    height: 13.125rem;
+    height: 14.4rem;
     width: 50%;
     float: left;
     padding:0 .5rem 0 .5rem;
@@ -104,13 +104,13 @@ export default {
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    padding-top: .625rem;
+    margin-top: .625rem;
   }
   .price {
     font-size: .9375rem;
     color: #c11325;
     font-family: PingFangSC-Regular;
-    padding-top: .3125rem;
+    margin-top: .3125rem;
   }
   li.icon {
     max-height: 9.75rem;

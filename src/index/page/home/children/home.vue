@@ -221,11 +221,13 @@ export default {
       } catch (e) {}
 
       let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
+      url = flag==3 ? obj.detailUrl:url;
+      url = flag == 4 ? obj.url:url;
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 2) {
+        if (flag == 2||flag==3 || flag==4) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
