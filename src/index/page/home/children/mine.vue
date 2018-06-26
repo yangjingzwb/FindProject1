@@ -109,6 +109,15 @@ export default {
     }
   },
   mounted() {
+    try {
+      fetchPoints(
+        "mine",
+        "event_4",
+        this.token.productNo,
+        "进入附近商户搜索页",
+        this.token.session.replace(/\+/g, "%2B")
+      );
+    } catch (e) {}
     setTimeout(() => {
       // this.$nextTick(() => {
       this.init();
@@ -140,8 +149,8 @@ export default {
     GetDistance(a, b, c, d) {
       return GetDistance(a, b, c, d);
     },
-    onPullingUp(){
-      this.loadMore(true)
+    onPullingUp() {
+      this.loadMore(true);
     },
     goDetail(event, obj, flag) {
       // this.SHOWLOADING(true);
@@ -152,10 +161,10 @@ export default {
       // }
       //parent_title, sub_title,phone,remark, session
       fetchPoints(
-        "search",
-        obj.STORES_NM,
+        "mine",
+        "event_5",
         this.token.productNo,
-        "搜索页面，点击商户详情",
+        "搜索页面，点击"+obj.STORES_NM,
         this.token.session.replace(/\+/g, "%2B")
       );
 
@@ -213,7 +222,7 @@ export default {
             // this.data1 = true
             this.shopListFlag = true;
             // 数组没有更多了
-          }else{
+          } else {
             this.shopListFlag = false;
           }
           // setTimeout(() => {
@@ -300,14 +309,14 @@ export default {
           this.SHOWLOADING(false);
           this.shopList = res.data;
           this.isFirstIn = 0;
-          if(res.data.length == 0){
+          if (res.data.length == 0) {
             this.isFirstIn = false;
           }
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
             // this.data1 = true
             // 数组没有更多了
-          }else{
+          } else {
             this.shopListFlag = false;
           }
         })
@@ -319,16 +328,16 @@ export default {
     goToApply() {},
     closeAlert() {}
   },
-  watch:{
-     searchT(){
-        if(!this.searchT){
-          this.shopList = [];
-          this.isFirstIn = true
-          this.shopListFlag = true
-          return
-        }
-        this.searchT =  this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g,'');
+  watch: {
+    searchT() {
+      if (!this.searchT) {
+        this.shopList = [];
+        this.isFirstIn = true;
+        this.shopListFlag = true;
+        return;
       }
+      this.searchT = this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g, "");
+    }
   }
   // props:['activeIcon']
 };
@@ -505,7 +514,7 @@ export default {
   }
   // ul::after {
   //   @include onepx1(#d8d8d8);
-  //   
+  //
   // }
   ul:nth-last-child(1)::after {
     height: 0 !important;
@@ -755,20 +764,20 @@ export default {
   height: 0;
   background-image: linear-gradient(0deg, #fff 50%, transparent 50%);
 }
-.list-wrapper{
+.list-wrapper {
   background-color: #f0f1f2;
 }
 
 .hr-1 {
   display: block;
   position: absolute;
-  height: .0625rem;
+  height: 0.0625rem;
   float: left;
   width: 100%;
   bottom: 0;
   background-color: #d8d8d8;
-  -webkit-transform-origin: 0,0;
-  transform-origin: 0,0;
+  -webkit-transform-origin: 0, 0;
+  transform-origin: 0, 0;
   -webkit-transform: scaleY(0.5);
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);

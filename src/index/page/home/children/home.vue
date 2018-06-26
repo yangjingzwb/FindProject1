@@ -73,9 +73,9 @@ import {
 import { baseUrl } from "@@/config/env"; // baseUrl
 // import BScroll from "better-scroll";
 // import Scroll from "@@/components/scroll/scroll.vue";
-import Goods1 from './goods1.vue';
-import Goods2 from './goods2.vue';
-import Goods3 from './goods3.vue';
+import Goods1 from "./goods1.vue";
+import Goods2 from "./goods2.vue";
+import Goods3 from "./goods3.vue";
 import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
 // import Consulting from "./consulting.vue" // 咨询
@@ -94,14 +94,23 @@ export default {
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      slider_top_click:false,
-      jdBanner:{}
+      slider_top_click: false,
+      jdBanner: {}
     };
   },
   computed: {},
 
   mounted() {
-    this.jdSKill()
+    try {
+      fetchPoints(
+        "home",
+        "event_1",
+        this.token.productNo,
+        "进入发现频道",
+        this.token.session.replace(/\+/g, "%2B")
+      );
+    } catch (e) {}
+    this.jdSKill();
     if (!window.LATITUDE) {
       this.aginEnter();
     } else {
@@ -115,7 +124,7 @@ export default {
     Near1,
     Goods1,
     Goods2,
-    Goods3,
+    Goods3
   },
 
   computed: {
@@ -142,15 +151,16 @@ export default {
       "CITYNAME1",
       "OPENANDCLOSE"
     ]),
-    jdSKill(){
+    jdSKill() {
       // 京东秒杀
-      axios.post('queryMarketing',{
-        "position": "MARKET",
-        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-      })
-      .then((res)=>{
-        this.jdBanner = res.data[0]
-      })
+      axios
+        .post("queryMarketing", {
+          position: "MARKET",
+          session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+        })
+        .then(res => {
+          this.jdBanner = res.data[0];
+        });
     },
     changeIscrollY(flag) {
       this.scrollY = flag;
@@ -206,28 +216,27 @@ export default {
     detail(url) {
       window.location = url;
     },
-   
+
     goDetail(event, obj, flag) {
-      
       //埋点 parent_title, sub_title,phone,remark, session
       try {
         fetchPoints(
-          "index",
-          obj.marketingPosition || obj.STORES_NM,
+          "home",
+          "event_2",
           this.token.productNo,
-          "发现页，点击",
+          obj.marketingPosition || obj.STORES_NM || obj.name || obj.title,
           this.token.session.replace(/\+/g, "%2B")
         );
       } catch (e) {}
 
       let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
-      url = flag==3 ? obj.detailUrl:url;
-      url = flag == 4 ? obj.url:url;
+      url = flag == 3 ? obj.detailUrl : url;
+      url = flag == 4 ? obj.url : url;
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 2||flag==3 || flag==4) {
+        if (flag == 2 || flag == 3 || flag == 4) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -285,7 +294,7 @@ export default {
       }
       return obj;
     },
-   
+
     init(flag) {
       this.CURRENTPAGE = 1;
       if (!flag) {
@@ -297,7 +306,7 @@ export default {
       // 单点登录
       // 请求banner1
       this.cityName1 = window.CITYNAME || "定位中";
-      
+
       if (!window.LONGITUDE) {
         this.SHOWLOADING(false);
         return;
@@ -343,7 +352,6 @@ export default {
             this.init();
           } else {
           }
-
         });
       // 请求banner2
       // 请求品类
@@ -359,13 +367,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-.content{
-  overflow:auto;  
-  -webkit-overflow-scrolling:touch;  
+.content {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 div.container::-webkit-scrollbar {
-    display:none
-  }
+  display: none;
+}
 .refresh {
   text-align: center;
   padding: 1.25rem 0;
@@ -380,7 +388,7 @@ div.container::-webkit-scrollbar {
   width: 100%;
   height: 3.125rem;
 }
-.header{
+.header {
   // height: 3rem;
   // width: 100%;
   // line-height: 3rem;

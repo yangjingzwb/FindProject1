@@ -97,10 +97,10 @@ import { baseUrl } from "@@/config/env"; // baseUrl
 import BScroll from "better-scroll";
 import Scroll from "@@/components/scroll/scroll.vue";
 
-import Near from "./near.vue"
-import Recommended from "./recommended.vue"
+import Near from "./near.vue";
+import Recommended from "./recommended.vue";
 // import Consulting from "./consulting.vue" // 咨询
-import GoodThing from "./goodThing.vue" // 好物
+import GoodThing from "./goodThing.vue"; // 好物
 
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
@@ -108,25 +108,25 @@ import GoodThing from "./goodThing.vue" // 好物
 export default {
   data() {
     return {
-      pullUpLoad:false,
-      pullUpLoad_near:true,
-      data1:false,
+      pullUpLoad: false,
+      pullUpLoad_near: true,
+      data1: false,
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       product: [],
       listHeight: [],
       scrollY: true,
-      topCat:false,
-      scrollbar:false,
-      slider_top_click:false,
-      slider_middle_click:true,
-      bounce:false,
+      topCat: false,
+      scrollbar: false,
+      slider_top_click: false,
+      slider_middle_click: true,
+      bounce: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
-      tabAutoPlay:false,
-      tabLoop:false,
-      tabScrollbar:false,
-      showDot:true,
-      dots:['附近','推荐','世界杯专区'],//['附近','推荐','世界杯专区','咨询'],
+      tabAutoPlay: false,
+      tabLoop: false,
+      tabScrollbar: false,
+      showDot: true,
+      dots: ["附近", "推荐", "世界杯专区"], //['附近','推荐','世界杯专区','咨询'],
       // autoPlay:,
       // defaultIcon: "",
 
@@ -134,7 +134,7 @@ export default {
       // slider1:[],
       // slider2:[],
       isError: true,
-      loopX:true,
+      loopX: true,
       shopList: [],
       limit: "",
       creditResult: "",
@@ -154,12 +154,12 @@ export default {
       baseImg: baseUrl.img,
       totalInit: 0,
       endX: 0,
-      sliderIndex:0,
+      sliderIndex: 0,
       startX: 0,
-      scrollY:true,
-      scrollYOther:true,
-      startY:0,
-      threshold:0.2,
+      scrollY: true,
+      scrollYOther: true,
+      startY: 0,
+      threshold: 0.2,
       cityName1: window.CITYNAME || "定位中",
       pullDownRefresh: {
         threshold: 120,
@@ -167,18 +167,25 @@ export default {
       }
     };
   },
-  computed: {
-  },
+  computed: {},
 
   mounted() {
+    try {
+      fetchPoints(
+        "home1",
+        "event_3",
+        this.token.productNo,
+        "进入附近商户",
+        this.token.session.replace(/\+/g, "%2B")
+      );
+    } catch (e) {}
     if (!window.LATITUDE) {
       this.aginEnter();
     } else {
       this.init();
     }
   },
-  created() {
-  },
+  created() {},
 
   components: {
     Slider,
@@ -216,8 +223,8 @@ export default {
       "OPENANDCLOSE"
     ]),
     scrollListen(pos) {
-      console.log('home')
-      console.log(pos)
+      console.log("home");
+      console.log(pos);
       // setTimeout(()=>{
 
       // })
@@ -231,22 +238,21 @@ export default {
       //   this.scrollYOther = false;
       //   // this.scrollY = true
       // }
-      if(Math.abs(pos.y)>320){
+      if (Math.abs(pos.y) > 320) {
         // this.scrollY = false
         // this.scrollYOther = true;
         // this.startY = -321
-        this.OPENANDCLOSE(false)
+        this.OPENANDCLOSE(false);
         this.topCat = true;
-        
-      }else{
+      } else {
         this.topCat = false;
-        this.OPENANDCLOSE(true)
+        this.OPENANDCLOSE(true);
       }
     },
-    changeIscrollY(flag){
+    changeIscrollY(flag) {
       this.scrollY = flag;
     },
-    goToPage(index){
+    goToPage(index) {
       this.sliderIndex = index;
     },
     aginEnter() {
@@ -383,13 +389,25 @@ export default {
         if (flag == 2) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo;
+              ? url.replace(
+                  /\?/,
+                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo;
           // console.log(url2);
           window.goActivity.goWeb(url2);
         } else {
           window.goActivity.goWeb(
-            url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
+            url.replace(
+              /\?/,
+              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo +
+                "&"
+            )
           );
         }
       } else {
@@ -399,8 +417,15 @@ export default {
         if (flag == 2) {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo;
+              ? url.replace(
+                  /\?/,
+                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo;
           // console.log(url_2);
           window.location = "activity://goWeb?url=" + url_2;
         } else {
@@ -411,7 +436,9 @@ export default {
             "activity://goWeb?url=" +
             url.replace(
               /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&"
+              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo +
+                "&"
             );
         }
       }
@@ -446,11 +473,11 @@ export default {
           this.shopList.push.apply(this.shopList, this.filterObj(res.data));
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
-            this.data1 = true
+            this.data1 = true;
             // 数组没有更多了
-          }else{
+          } else {
             this.shopListFlag = false;
-            this.data1 = false
+            this.data1 = false;
           }
           this.initScroll();
         })
@@ -597,15 +624,15 @@ export default {
             }
             return;
           }
-          
+
           // console.log(this.shopList);
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
-            this.data1 = true
+            this.data1 = true;
             //没有更多了
-          }else{
+          } else {
             this.shopListFlag = false;
-            this.data1 = false
+            this.data1 = false;
           }
           // setTimeout(() => {
           //   // this.foodsScroll.scrollTo(0, -42, 500);
@@ -691,7 +718,7 @@ export default {
     closeAlert() {},
     goBack() {
       this.$router.go(-1);
-    },
+    }
   }
   // props:['activeIcon']
 };
@@ -703,8 +730,8 @@ export default {
 //   position: relative;
 // }
 .nullHeight {
-  height: .5625rem;
-  background: #F6F7F8;
+  height: 0.5625rem;
+  background: #f6f7f8;
 }
 .refresh {
   text-align: center;
@@ -753,7 +780,8 @@ export default {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
 }
-.s_1,.s_5_1 {
+.s_1,
+.s_5_1 {
   // @include wh(100%, 3rem);
   // // padding-top: 1.25rem;
   // background: #ffffff;
@@ -766,17 +794,17 @@ export default {
   z-index: 100000000;
   top: 0;
   left: 0;
-  .cat_w{
-      height: 3rem !important;
-      top: 0rem !important;
-      background: white;
-      line-height: 3rem;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
+  .cat_w {
+    height: 3rem !important;
+    top: 0rem !important;
+    background: white;
+    line-height: 3rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
   }
-  .cat{
+  .cat {
     width: 33%;
     text-align: center;
     -webkit-box-flex: 1;
@@ -787,13 +815,13 @@ export default {
     line-height: 3rem;
     background: #fff;
     font-family: PingFangSC-Regular;
-    color: #13252E;
-    font-size: .9375rem;
+    color: #13252e;
+    font-size: 0.9375rem;
   }
-  .cat.active{
+  .cat.active {
     background: #fff;
-    color: #ED1991;
-    border-bottom: .125rem solid #ED1991;
+    color: #ed1991;
+    border-bottom: 0.125rem solid #ed1991;
     border-radius: 0;
   }
   .title {
@@ -832,7 +860,7 @@ export default {
     padding-left: 1.9375rem;
     background-image: url(/static/img/back.png);
     background-repeat: no-repeat;
-    background-position: .375rem 50%;
+    background-position: 0.375rem 50%;
     background-size: 1.25rem;
     // padding-right: 0.6rem;
     @include space();
@@ -857,7 +885,7 @@ export default {
     position: absolute;
     z-index: 2;
     left: 0.25rem;
-    top: .9375rem;
+    top: 0.9375rem;
     img {
       width: 100%;
       display: block;
@@ -1039,7 +1067,6 @@ export default {
     padding: 0.05rem 0.225rem;
     margin-right: 0.1875rem;
   }
-
 }
 
 .s_6 {
@@ -1214,7 +1241,7 @@ export default {
   background: #fff;
   z-index: 10;
   color: #444444;
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-align: center;
 }
 .hr-1 {
@@ -1234,17 +1261,17 @@ export default {
   //   @include onepx1(#d8d8d8);
   // }
 }
-.animation_2::after,.animation_1::after{
-  	content: "  ";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 120%;
-    height: .0625rem;
-    background-color: #d8d8d8;
-    /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
-    -webkit-transform: scaleY(.5);
-    transform:scaleY(.5);
+.animation_2::after,
+.animation_1::after {
+  content: "  ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 120%;
+  height: 0.0625rem;
+  background-color: #d8d8d8;
+  /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
-
 </style>
