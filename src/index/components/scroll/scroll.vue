@@ -368,7 +368,7 @@ export default {
 .list-wrapper {
   position: relative;
   height: 100%;
-  /*position: absolute*/
+  /*position: absolute
   /*left: 0*/
   /*top: 0*/
   /*right: 0*/
@@ -412,5 +412,6 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 16px 0;
+  margin-bottom: 60px;
 }
 </style>

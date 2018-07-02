@@ -1,9 +1,11 @@
 import App from '@@/App'
-import axios from "@@/plugins/rsa/axios";
+// import axios from "@@/plugins/rsa/axios";
 // tab
-const tab = r => require.ensure([], () => r(require('../page/home/tab')), 'tab')
+// const tab = r => require.ensure([], () => r(require('../page/home/tab')), 'tab')
 // 首页
 const home = r => require.ensure([], () => r(require('../page/home/children/home')), 'home')
+
+const home1 = r => require.ensure([], () => r(require('../page/home/children/home1')), 'home1')
 // 贷款超市
 // const shop = r => require.ensure([], () => r(require('../page/home/children/shop')), 'shop')
 // 我的
@@ -25,6 +27,26 @@ export default [{
         {
             path: 'home', // 随意借首页
             component: home,
+            meta:{
+                keepAlive:true
+            }
+            // beforeEnter: (to, from, next) => {
+            //     // 请求banner1
+            //     axios.post('queryMarketing',{
+            //         "position":"TOP",
+            //         "session":"" // 单点登录返回session
+            //     }).then((res)=>{
+            //         console.log(res)
+            //         next()
+            //         // this.bannerTop = res.data
+            //     }).catch((res)=>{
+
+            //     })
+            // },
+        },
+        {
+            path: 'home1', // 随意借首页
+            component: home1,
             meta:{
                 keepAlive:true
             }

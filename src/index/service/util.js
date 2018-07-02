@@ -7,6 +7,7 @@ console.log(md5('ct001fb8ada5237c5ae97978ff07fc7471d20{"contenttype":"article","
 /**
  * 工具方法
  */
+
 /**
  * 计算两个经纬度之间的距离
  */
@@ -30,16 +31,22 @@ export const GetDistance = (lat1, lng1, lat2, lng2) => {
     // }
     return s+'';
 }
-
+// 
 export const setMd5 = (data)=>{
     let d = 'ct001fb8ada5237c5ae97978ff07fc7471d20'+JSON.stringify(data);
-    return md5(d);
+    return "ct001;"+md5(d);
+}
+export const setMd5HY = (data)=>{
+    let se = 'CE59E262D7AD716E24BA3D613DC617EB' //md5秘钥
+    let d = ''+data.channel+data.requestId+se
+    return md5(d).toUpperCase();
 }
 
 export const fetchPoints = (parent_title, sub_title, phone, remark, session) => {
+   
     axios.post('collectOpera', {
         "channel": /iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android", // 渠道> android、ios、html5
-        "parent_title": parent_title, // 父标题
+        "parent_title": window.location.hash||parent_title, // 父标题
         "sub_title": sub_title, //子 标题
         "phone": phone, // 手机号
         "remark": remark, // 备注
@@ -468,7 +475,7 @@ export const objPlan = (data) => {
         res += d + '=' + data[d] + '&'
     }
     if (res) {
-        // res = res.substr(0,res.length-1)
+        res = res.substr(0,res.length-1)
     }
     return res
 }

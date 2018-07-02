@@ -9,7 +9,7 @@ import Vue from 'vue'
 // import Vue from 'vue'
 // import App from './App'
 import VueRouter from 'vue-router'
-import VueLazyload from 'vue-lazyload'
+// import VueLazyload from 'vue-lazyload'
 import routes from './router/router'
 // import bestpay from '@@/service/bestpay'
 // import { getProduct, getSessionKey, system, setTopRightBar } from '@@/service/bestpay_'
@@ -84,6 +84,7 @@ router.beforeEach((to, from, next) => {
         next()
         return
     }
+    
     // 获取gps信息
     // latitude: '', // 当前位置纬度
     // longitude: '', // 当前位置经度
@@ -140,7 +141,7 @@ router.beforeEach((to, from, next) => {
     // });
     let slider = 0;
     let slider1 = 0;
-    let slider2 = 1;
+    let slider2 = 0;
     // alert(33)
     // alert(window.location)
     // window.getLocationInfo()
@@ -151,32 +152,13 @@ router.beforeEach((to, from, next) => {
     // 单点登录
     //?SERVICE=user_ssoservice&VERSION=1.0&PARTNER=80010003&SIGN_TYPE=MD5&CREDTENTIAL=1593305,1502335609,1502336209,1502335609,218.77.2.82,client.cmpay.com&SIGN_DATA=08229a7a638c243bb7ab0a0e67e6d81c&viewCode=html 
     axios.post('queryAccount', {
-        // "SERVICE":geURLParam('SERVICE'),
-        // "VERSION":geURLParam('VERSION'),
-        // "PARTNER":geURLParam('PARTNER'),
-        // "SIGN_TYPE":geURLParam('SIGN_TYPE'),
-        // "CREDTENTIAL":geURLParam('CREDTENTIAL'),
-        // "SIGN_DATA":geURLParam('SIGN_DATA'),
-        // "viewCode":geURLParam('viewCode')
     }).then((res) => {
         store.commit('TOKEN', res.data)
         if (!res.data || res.data.length <= 0) {
-            // try {
-            //     if (isIPhone) {
-            //         //ios
-            //         window.location = "activity://CLOSEWEBVIEW"
-            //     } else {
-            //         // android
-            //         window.goActivity.closeWebView()
-            //     }
-            // } catch (e) {
-
-            // }
+          
         } else {
 
         }
-
-       
         
         // 请求banner1
         axios.post('queryMarketing', {
@@ -200,26 +182,19 @@ router.beforeEach((to, from, next) => {
         }).catch(() => {
             // window.location.reload()
         })
-        // axios.post('queryMarketing', {
-        //     "position": "MIDDLE",
-        //     "session": store.state.token.session.replace(/\+/g,'%2B') // 单点登录返回session
-        // }).then((res) => {
-        //     store.commit('SLIDER2', (res.data ? res.data : []))
-        //     slider2 += 1
-        //     checkUtil(slider, slider1, slider2, next)
-        // }).catch(() => {
-        //     // window.location.reload()
-        // })
+        // 运营banner
+        axios.post('queryMarketing', {
+            "position": "OPERATION",
+            "session": store.state.token.session.replace(/\+/g,'%2B') // 单点登录返回session
+        }).then((res) => {
+            store.commit('SLIDER2', (res.data ? res.data : []))
+            slider2 += 1
+            checkUtil(slider, slider1, slider2, next)
+        }).catch(() => {
+            // window.location.reload()
+        })
     }).catch((res) => {
-        // if (isIPhone) {
-        //     //ios
-        //     window.location = "activity://CLOSEWEBVIEW"
-        // } else {
-        //     // android
-        //     window.goActivity.closeWebView()
-        // }
-        // 重新加载
-        // window.location.reload()
+       
     })
 
 

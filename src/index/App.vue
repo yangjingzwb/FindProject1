@@ -1,6 +1,6 @@
 <template>
  <!-- style="height:100%;" -->
-	<div class="app" style="min-height:100%;">
+	<div class="app" style="height:100%;">
 		<!-- <head-top signin-up='home'>
 		<span slot='logo' class="head_logo" @click="reload">随意借</span>
 		</head-top> -->

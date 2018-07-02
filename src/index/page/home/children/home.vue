@@ -1,126 +1,56 @@
 <template>
-  <div >
-    <!-- <div > -->
-    <!-- <alert-tip :alertTextFirst='alertTextFirst' :alertTextSecond='alertTextSecond' :btnText='btnText'  v-if="isShowAlert" @closeTip='closeAlert'/> -->
-    <!-- <nav class="city_nav">
-    </nav> -->
-    <section v-if="!flag&!topCat" class="s_1">
-      <ul>
-        <li class="l t">
-          {{cityName1}}
-        </li>
-        <li class="l i" @click="done()">
-          <span class="icon"><img src="/static/img/1-20.png"></span>
-            <button>搜一搜：请输入商户名称</button>
-        </li>
-      </ul>
-    </section>
-    <section v-if="topCat" class="s_1 animation_1">
-      <ul class="cat_w">
-        <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
-          附近
-        </li>
-        <li class="cat c2" :class="{'active':slideIndex==1}" @click="goToPage(1)">
-          推荐
-        </li>
-        <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
-          世界杯专区
-        </li>
-        <!-- <li class="cat c3" :class="{'active':slideIndex==3}" @click="goToPage(3)">
-          咨询
-        </li> -->
-      </ul>
-    </section>
-    <div class="home home1" >
-      <scroll
-        :data = "shopList"
-        :scrollbar='scrollbar'
-        :pullUpLoad='pullUpLoad'
-        :bounce = "bounce"
-        :click = "slider_middle_click"
-        :scrollY = "scrollY"
-        :startY = "startY"
-        @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp"
-        @scroll = "scrollListen">
-        <div class="content">
-          <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
-            <div class="scroll content slide-content">
-              <div>
-                  <div class="slider-wrapper">
-                      <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
-                          <div v-for="item in slider">
-                            <!-- :key="item.marketingId -->
-                              <a  @click="goDetail($event,item,2)" >
-                                  <img :src="item.marketingIcon">
-                              </a>
-                          </div>
-                      </slider>
-                  </div>
-              </div>
+  <div class="home">
+    <div class="header">发现</div>
+    <div class="content">
+
+    
+    <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
+      <div class="scroll content slide-content">
+        <div>
+            <div class="slider-wrapper">
+                <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
+                    <div v-for="item in slider2">
+                      <!-- :key="item.marketingId -->
+                        <a  @click="goDetail($event,item,2)" >
+                            <img :src="item.marketingIcon">
+                        </a>
+                    </div>
+                </slider>
             </div>
-          </section>
-
-          <section v-if="slider1 && slider1.length>0" class="s_3 s">
-            <ul>
-              <li v-for="item in slider1"  @click="goDetail($event,item)">
-                <!-- :key="item.id" -->
-                <img :src="item.marketingIcon" :onerror='defaultIcon'  class="icon" >
-                <span class="text">{{item.marketingTitle}}</span>
-              </li>
-            </ul>
-          </section>
-
-          <div class="nullHeight"></div>
+        </div>
+      </div>
+    </section>
+    <!-- 秒杀 -->
+    <section class="s_3 s" @click="goDetail($event,jdBanner,2)">
+      <img :src="jdBanner.marketingIcon" >
+    </section>
 
           
-          <section class="s_5 s" >
-              <div class=" content slide-content">
-              <div>
-                  <div class="slider-wrapper">
-                      <slider :showDot = "showDot" :loopX = "loopX" :threshold="threshold" :sliderIndex = "sliderIndex" :click="slider_top_click" :autoPlay = "tabAutoPlay" :loop = "tabLoop" :dots_="dots" class="tab-slider">
-                        <div style="position: relative;width:56.25rem;">
-                          <near
-                            :data1 = "data1"
-                            :latitude = 'latitude'
-                            :longitude = 'longitude'
-                            :shopList="shopList"
-                            :data = "shopList"
-                            :scrollbar='tabScrollbar'
-                            :pullDownRefresh='pullDownRefresh'
-                            :pullUpLoad='pullUpLoad_near'
-                            :scrollY = 'scrollYOther'
-                            @aginEnter = "aginEnter"
-                            @changeIscrollY="changeIscrollY"
-                            @goDetail="goDetail"
-                            @pullingDown="onPullingDown"
-                            @pullingUp="onPullingUp">
-                            >
-                          </near>
-                        </div>
-                        <div style="position: relative;width:56.25rem;">
-                          <recommended
-                          :scrollY = 'scrollYOther'
-                          @changeIscrollY="changeIscrollY"
-                          ></recommended>
-                        </div>
-                        <div>
-                          <goodThing
-                            :scrollY = 'scrollYOther'
-                            @changeIscrollY="changeIscrollY"
-                          ></goodThing>
-                        </div>
-                        <!-- <div>
-                          <consulting></consulting>
-                        </div> -->
-                      </slider>
-                  </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </scroll>
-     </div>
+          
+    <section class="s_5 s" >
+      <!-- 附近 -->
+      <near1
+        :latitude = 'latitude'
+        :longitude = 'longitude'
+        :shopList="shopList"
+        @aginEnter = "aginEnter"
+        @goDetail="goDetail"
+        >
+      </near1>
+      <!-- 和悦专题营销位 -->
+      <goods1
+        @goDetail="goDetail"
+      ></goods1>
+      <!-- 为你推荐 -->
+      <goods2
+        @goDetail="goDetail"
+      ></goods2>
+      <!-- 资讯 -->
+      <goods3
+        @goDetail="goDetail"
+      ></goods3>
+    </section>
+    </div>
   </div>
 </template>
 
@@ -140,13 +70,16 @@ import {
   getLItem,
   getCode
 } from "@@/service/util";
-import BScroll from "better-scroll";
-import Scroll from "@@/components/scroll/scroll.vue";
 import { baseUrl } from "@@/config/env"; // baseUrl
-import Near from "./near.vue"
-import Recommended from "./recommended.vue"
+// import BScroll from "better-scroll";
+// import Scroll from "@@/components/scroll/scroll.vue";
+import Goods1 from "./goods1.vue";
+import Goods2 from "./goods2.vue";
+import Goods3 from "./goods3.vue";
+import Near1 from "./near1.vue";
+import Recommended from "./recommended.vue";
 // import Consulting from "./consulting.vue" // 咨询
-import GoodThing from "./goodThing.vue" // 好物
+import GoodThing from "./goodThing.vue"; // 好物
 
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
@@ -154,87 +87,44 @@ import GoodThing from "./goodThing.vue" // 好物
 export default {
   data() {
     return {
-      pullUpLoad:false,
-      pullUpLoad_near:true,
-      data1:false,
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
-      product: [],
-      listHeight: [],
-      scrollY: true,
-      topCat:false,
-      scrollbar:false,
-      slider_top_click:false,
-      slider_middle_click:true,
-      bounce:false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
-      tabAutoPlay:false,
-      tabLoop:false,
-      tabScrollbar:false,
-      showDot:true,
-      dots:['附近','推荐','世界杯专区'],//['附近','推荐','世界杯专区','咨询'],
-      // autoPlay:,
-      // defaultIcon: "",
-
-      // slider:[],
-      // slider1:[],
-      // slider2:[],
-      isError: true,
-      loopX:true,
       shopList: [],
-      limit: "",
-      creditResult: "",
-      isShowAlert: false,
-      alertTextFirst: "",
-      alertTextSecond: "",
-      btnText: "",
-      isAdmittance: false,
-      home: "",
-      foodsScroll: "",
-      residue: 0,
-      flag: false,
-      shopListFlag: false,
       CURRENTPAGE: 0, // 页码
-      PAGNUM: 4,
-      refTime: "",
-      baseImg: baseUrl.img,
-      totalInit: 0,
-      endX: 0,
-      sliderIndex:0,
-      startX: 0,
-      scrollY:true,
-      scrollYOther:true,
-      startY:0,
-      threshold:0.2,
+      PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      pullDownRefresh: {
-        threshold: 120,
-        stop: 60
-      }
+      slider_top_click: false,
+      jdBanner: {}
     };
   },
-  computed: {
-  },
+  computed: {},
 
   mounted() {
+    try {
+      fetchPoints(
+        "home",
+        "event_1",
+        this.token.productNo,
+        "进入发现频道",
+        this.token.session.replace(/\+/g, "%2B")
+      );
+    } catch (e) {}
+    this.jdSKill();
     if (!window.LATITUDE) {
       this.aginEnter();
     } else {
       this.init();
     }
   },
-  created() {
-  },
+  created() {},
 
   components: {
     Slider,
-    Scroll,
-    Near,
-    Recommended,
-    // Consulting,
-    GoodThing
-    // vueLoading
-    // SlideRender
+    Near1,
+    Goods1,
+    Goods2,
+    Goods3
   },
 
   computed: {
@@ -261,44 +151,26 @@ export default {
       "CITYNAME1",
       "OPENANDCLOSE"
     ]),
-    scrollListen(pos) {
-      console.log('home')
-      console.log(pos)
-      // setTimeout(()=>{
-
-      // })
-      // 处理滑动
-      // if(Math.abs(pos.y)>280){
-      //   this.scrollYOther = true;
-      //   this.scrollY = false
-      //   // this.startY = pos.y
-      // }else if(Math.abs(pos.y)>0){
-      //   console.log(99999)
-      //   this.scrollYOther = false;
-      //   // this.scrollY = true
-      // }
-      if(Math.abs(pos.y)>320){
-        // this.scrollY = false
-        // this.scrollYOther = true;
-        // this.startY = -321
-        this.OPENANDCLOSE(false)
-        this.topCat = true;
-        
-      }else{
-        this.topCat = false;
-        this.OPENANDCLOSE(true)
-      }
+    jdSKill() {
+      // 京东秒杀
+      axios
+        .post("queryMarketing", {
+          position: "MARKET",
+          session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+        })
+        .then(res => {
+          this.jdBanner = res.data[0];
+        });
     },
-    changeIscrollY(flag){
+    changeIscrollY(flag) {
       this.scrollY = flag;
     },
-    goToPage(index){
+    goToPage(index) {
       this.sliderIndex = index;
     },
     aginEnter() {
       // alert(33)
       this.SHOWLOADING(true);
-      this.initScroll();
       let that = this;
       if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
         this.init();
@@ -335,129 +207,81 @@ export default {
     intervalCity() {
       this.cityName1 = window.CITYNAME || "定位中";
     },
-    defaultIconF(i) {
-      this.shopList[i].PIC_URL_1 = "/static/img/error.png";
-    },
+    // defaultIcon(i) {
+    //   this.shopList[i].PIC_URL_1 = "/static/img/error.png";
+    // },
     GetDistance(a, b, c, d) {
-      // alert(GetDistance(a, b, c, d))
       return GetDistance(a, b, c, d);
     },
     detail(url) {
       window.location = url;
     },
-    gotoAddress(path) {
-      this.$router.push(path);
-    },
-    done() {
-      // 跳转到下一个页面
-      this.$router.push("/mine");
-    },
-    touchStart(e) {
-      let touch = e.changedTouches[0];
-      this.startX = touch.pageX;
-      // console.log(touch)
-      // startY = touch.pageY;
-      // startX = touch.pageX;
-    },
-    goDetail(event, obj, flag) {
-      // alert(33)
-      // if (flag == 2) {
-      //   let touch = event.changedTouches[0];
-      //   console.log(touch);
-      //   this.endX = touch.pageX;
-      //   // 点击影响滑动
-      //   if (Math.abs(this.endX - this.startX) > 50) {
-      //     return;
-      //   }
-      // }
 
-      // let touch = event.touches[0];
-      // event.stopPropagation();
-      // event.preventDefault();
-      // if(this.stopClick){
-      //   return
-      // }
-      // 防止pc端触发两次点击
-      // if (!event._constructed) {
-      //   return;
-      // }
+    goDetail(event, obj, flag) {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
         fetchPoints(
-          "index",
-          obj.marketingPosition || obj.STORES_NM,
+          "home",
+          "event_2",
           this.token.productNo,
-          "发现页，点击",
+          obj.marketingPosition || obj.STORES_NM || obj.name || obj.title,
           this.token.session.replace(/\+/g, "%2B")
         );
       } catch (e) {}
 
       let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
-      // if (flag == 1) {
-      //   setLItem("shopList", JSON.stringify(this.shopList));
-      //   // localStorage.setItem("shopList", JSON.stringify(this.shopList));
-      //   //.replace(/www/, "uat")
-      //   this.SHOWLOADING(true);
-      //   // setTimeout(()=>{
-
-      //   // },5000)
-      //   // this.stopClick = 1
-      //   window.location =
-      //     url.indexOf("?") > 0
-      //       ? url.replace(/\?/, "?showtitle=false&") +
-      //         "&SOURCE=DISCOVER&" +
-      //         window.location.href.split("?")[1].split("#")[0]
-      //       : url +
-      //         "?showtitle=false&SOURCE=DISCOVE&" +
-      //         window.location.href.split("?")[1].split("#")[0];
-      //   return;
-      // }
-      // alert(33)
+      url = flag == 3 ? obj.detailUrl : url;
+      url = flag == 4 ? obj.url : url;
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        // window.location =
-        //   url.indexOf("?") > 0
-        //     ? url.replace(/\?/, "?showtitle=false&") +
-        //       "&SOURCE=DISCOVER&" +
-        //       window.location.href.split("?")[1].split("#")[0]
-        //     : url +
-        //       "?showtitle=false&SOURCE=DISCOVE&" +
-        //       window.location.href.split("?")[1].split("#")[0];
-        // window.location = url.replace(/\?/, "?showtitle=false&");
-        if (flag == 2) {
+        if (flag == 2 || flag == 3 || flag == 4) {
           let url2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo;
-          // console.log(url2);
+              ? url.replace(
+                  /\?/,
+                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo;
           window.goActivity.goWeb(url2);
         } else {
           window.goActivity.goWeb(
-            url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
+            url.replace(
+              /\?/,
+              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo +
+                "&"
+            )
           );
         }
       } else {
-        // console.log(
-        //   "activity://goWeb?url=" + url.replace(/\?/, "?showtitle=false&")
-        // );
-        if (flag == 2) {
+        if (flag == 2 || flag == 3 || flag == 4) {
           let url_2 =
             url.indexOf("?") > 0
-              ? url.replace(/\?/, "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&")
-              : url + "?hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo;
+              ? url.replace(
+                  /\?/,
+                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo;
           // console.log(url_2);
           window.location = "activity://goWeb?url=" + url_2;
         } else {
-          // console.log(
-          //   url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&")
-          // );
           window.location =
             "activity://goWeb?url=" +
             url.replace(
               /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account="+this.token.productNo+"&"
+              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo +
+                "&"
             );
         }
       }
@@ -470,115 +294,8 @@ export default {
       }
       return obj;
     },
-    loadMore() {
-      if (this.shopListFlag) {
-        return;
-      }
-      this.CURRENTPAGE += 1;
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 商户简称
-          // tixn_cnl: "ROYTEL", // 固定值
-          currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B")
-        })
-        .then(res => {
-          // this.shopList = res.STORES_REC;
-          // 合并数组
-          this.shopList.push.apply(this.shopList, this.filterObj(res.data));
-          if (res.data.length < this.PAGNUM) {
-            this.shopListFlag = true;
-            this.data1 = true
-            // 数组没有更多了
-          }else{
-            this.shopListFlag = false;
-            this.data1 = false
-          }
-          this.initScroll();
-        })
-        .catch(res => {
-          this.initScroll();
-        });
-    },
-    scrollTo() {
-      this.$refs.scroll.scrollTo(
-        this.scrollToX,
-        this.scrollToY,
-        this.scrollToTime,
-        ease[this.scrollToEasing]
-      );
-    },
-    onPullingDown() {
-      this.init(true);
-      // 模拟更新数据
-      // setTimeout(() => {
-      //   if (Math.random() > 0.5) {
-      //     // 如果有新数据
-      //     this.items.unshift(this.$i18n.t('normalScrollListPage.newDataTxt') + +new Date())
-      //   } else {
-      //     // 如果没有新数据
-      //     this.$refs.scroll.forceUpdate()
-      //   }
-      // }, 2000)
-    },
-    onPullingUp() {
-      // 更新数据
-      // console.log('pulling up and load data')
-      // setTimeout(() => {
-      //   if (Math.random() > 0.5) {
-      //     // 如果有新数据
-      //     let newPage = []
-      //     for (let i = 0; i < 10; i++) {
-      //       newPage.push(this.$i18n.t('normalScrollListPage.previousTxt') + ++this.itemIndex + this.$i18n.t('normalScrollListPage.followingTxt'))
-      //     }
 
-      //     this.items = this.items.concat(newPage)
-      //   } else {
-      //     // 如果没有新数据
-      //     this.$refs.scroll.forceUpdate()
-      //   }
-      // }, 1500)
-      this.loadMore();
-    },
-    rebuildScroll() {
-      this.nextTick(() => {
-        this.$refs.scroll.destroy();
-        this.$refs.scroll.initScroll();
-      });
-    },
-
-    refresh() {
-      this.init(true);
-      // 下拉刷新
-      // if (this.refTime) {
-      //   // 移除定时器
-      //   clearTimeout(this.refTime);
-      //   this.init(true);
-      //   // window.location = "http://211.138.236.219:9100/main.html?hebaosso=true&showtitle=false"
-      // }
-    },
     init(flag) {
-      // this.CURRENTPAGE = 1;
-      // this.SHOWLOADING(true);
-      // if (history.length >= 3 && localStorage && getLItem("shopList", 60000)) {
-      //   // if (history.length >= 3 && localStorage && localStorage.getItem("shopList")) {
-      //   this.CURRENTPAGE = 1;
-      //   this.SHOWLOADING(true);
-      //   // this.shopList = JSON.parse(localStorage.getItem("shopList"));
-      //   this.shopList = getLItem("shopList", 60000);
-      //   this.initScroll();
-      //   setTimeout(() => {
-      //     this.SHOWLOADING(false);
-      //   }, 300);
-      //   // if (res.data.length < this.PAGNUM) {
-      //   this.shopListFlag = true;
-      //   return;
-      // }
-
       this.CURRENTPAGE = 1;
       if (!flag) {
         this.SHOWLOADING(true);
@@ -589,11 +306,6 @@ export default {
       // 单点登录
       // 请求banner1
       this.cityName1 = window.CITYNAME || "定位中";
-      // this.cityName1 =
-      //   window.CITYNAME ||
-      //   (/iP(ad|hone|od)/.test(navigator.userAgent)
-      //     ? window.LBSINFO.CityName || "定位中"
-      //     : getCode(window.LBSINFO.CityName));
 
       if (!window.LONGITUDE) {
         this.SHOWLOADING(false);
@@ -607,19 +319,13 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
+          pagNum: this.PAGNUM || 2,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
-            // if (flag) {
-            //   this.home.finishPullDown();
-            // } else {
-            //   this.home.refresh();
-            // }
-            this.initScroll();
             setTimeout(() => {
               this.SHOWLOADING(false);
             }, 300);
@@ -634,120 +340,39 @@ export default {
               // setTimeout(() => {
               this.SHOWLOADING(false);
               this.isError = false;
-              if (flag) {
-                this.initScroll();
-              } else {
-                this.initScroll();
-              }
               // }, 300);
             }
             return;
           }
-          
-          // console.log(this.shopList);
-          if (res.data.length < this.PAGNUM) {
-            this.shopListFlag = true;
-            this.data1 = true
-            //没有更多了
-          }else{
-            this.shopListFlag = false;
-            this.data1 = false
-          }
-          // setTimeout(() => {
-          //   // this.foodsScroll.scrollTo(0, -42, 500);
-          //   this.home.refresh();
-          //   this._calcHeight();
-          // }, 40);
-          // alert(33)
         })
         .catch(res => {
-          // alert(11)
-          // setTimeout(()=>{
           this.SHOWLOADING(false);
           this.totalInit++;
           if (this.totalInit <= 5) {
             this.init();
           } else {
-            this.initScroll();
           }
-
-          // },300)
         });
       // 请求banner2
       // 请求品类
     },
-    initScroll() {
-      // if (!this.home) {
-      // this.$nextTick(() => {
-      // this.foodsScroll = this.home = new BScroll(this.$refs.home, {
-      //   scrollY: true,
-      //   // startY: -39,
-      //   // scrollX: false,
-      //   click: true,
-      //   probeType: 1,
-      //   bounce: true,
-      //   scrollbar: {
-      //     fade: true,
-      //     interactive: false // 1.8.0 新增
-      //   },
-      //   //  pullUpLoad:{
-      //   //                   threshold: -70, // 当上拉到超过底部 4.375rem 时，
-      //   //               }
-      //   // pullDownRefresh: {
-      //   //   threshold: 70,
-      //   //   stop: 50 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
-      //   // },
-      //   pullUpLoad: {
-      //     threshold: 50 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
-      //   }
-      //   // momentumLimitDistance: 15
-      // });
-      // // this.foodsScroll.on("pullingDown", () => {
-      // //   this.refresh(true);
-      // // });
-      // this.foodsScroll.on("pullingUp", pos => {
-      //   this.loadMore();
-      // });
-      // });
-      // this.foodsScroll.on('scrollEnd',(pos)=>{
-      //   console.log("888888888")
-      //   console.log(pos)
-      // })
-      // } else {
-      // this.home.finishPullUp();
-      // setTimeout(() => {
-      // this.$refs.scroll.forceUpdate()
-      // this.home.finishPullDown();
-      // // }, 300);
-      // this.home.finishPullUp();
-      // this.home.refresh();
-      // }
-    },
-    _calcHeight() {
-      // if (this.residue > 0) {
-      //   this.listHeight[this.listHeight.length - 1] += residue;
-      // }
-      // this.residueHeight = residue > 0 ? residue + "px" : "0rem"; //设置最后菜单的padding
-      // 重置滚动区域
-      // setTimeout(() => {
-      //   this._initScroll();
-      // }, 0);
-    },
+    // initScroll() {},
+    // _calcHeight() {
+    // },
     goToApply() {},
     closeAlert() {}
   }
-  // props:['activeIcon']
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-// .home{
-//   position: relative;
-// }
-.nullHeight {
-  height: .5625rem;
-  background: #f0f1f2;
+.content {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+div.container::-webkit-scrollbar {
+  display: none;
 }
 .refresh {
   text-align: center;
@@ -763,27 +388,32 @@ export default {
   width: 100%;
   height: 3.125rem;
 }
-.home {
-  // transition: all 0.3s;
-  // -webkit-transition: all 0.3s;
-  // transform: translateZ(0);
-  // -webkit-transform: translateZ(0);
-  position: absolute;
-  z-index: 1;
-  top: 3rem;
-  left: 0;
+.header {
+  // height: 3rem;
+  // width: 100%;
+  // line-height: 3rem;
+  // font-size: 1.125rem;
+  // color:#13252E;
+  // font-family: PingFangSC-Regular;
+  // text-align: center;
   width: 100%;
-  // position: relative;
-  height: 100%;
-  // background: #f0f1f2;
-  overflow: hidden;
+  height: 3rem;
+  background: #ffffff;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 100000000;
+  top: 0;
+  left: 0;
+  text-align: center;
+  line-height: 3rem;
 }
-.home1 {
-  // margin-top: 4.25rem;
+
+.home {
+  width: 100%;
   height: 100%;
-  overflow: hidden;
-  // z-index: 19;
+  // overflow: hidden;
 }
+
 .content {
   // height: auto;
 }
@@ -796,7 +426,8 @@ export default {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
 }
-.s_1,.s_5_1 {
+.s_1,
+.s_5_1 {
   // @include wh(100%, 3rem);
   // // padding-top: 1.25rem;
   // background: #ffffff;
@@ -809,17 +440,17 @@ export default {
   z-index: 100000000;
   top: 0;
   left: 0;
-  .cat_w{
-      height: 3rem !important;
-      top: 0rem !important;
-      background: white;
-      line-height: 3rem;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
+  .cat_w {
+    height: 3rem !important;
+    top: 0rem !important;
+    background: white;
+    line-height: 3rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
   }
-  .cat{
+  .cat {
     width: 33%;
     text-align: center;
     -webkit-box-flex: 1;
@@ -830,13 +461,13 @@ export default {
     line-height: 3rem;
     background: #fff;
     font-family: PingFangSC-Regular;
-    color: #13252E;
-    font-size: .9375rem;
+    color: #13252e;
+    font-size: 0.9375rem;
   }
-  .cat.active{
+  .cat.active {
     background: #fff;
-    color: #ED1991;
-    border-bottom: .125rem solid #ED1991;
+    color: #ed1991;
+    border-bottom: 0.125rem solid #ed1991;
     border-radius: 0;
   }
   .title {
@@ -925,6 +556,8 @@ export default {
 }
 .s_2 {
   @include wh(100%, 10.625rem);
+  height: auto;
+  max-height: 10.625rem;
   overflow: hidden;
   background-color: #fff;
   ul,
@@ -942,28 +575,15 @@ export default {
 }
 
 .s_3 {
-  @include wh(100%, 4.875rem);
+  // @include wh(100%, 4.875rem);
   text-align: center;
   background-color: #fff;
-  .icon {
-    height: 1.75rem;
-    width: auto;
-    display: inline-block;
-    padding: 0.84375rem 0 0.25rem 0;
-  }
-  .text {
-    display: block;
-    color: #13252e;
-    font-size: 0.75rem;
-  }
-
-  ul {
-    display: flex;
-    height: 100%;
-    li {
-      height: 100%;
-      flex: 1;
-    }
+  // height: 6.25rem;
+  width: 100%;
+  img {
+    width: 100%;
+    // height: 5.625rem;
+    margin-top: 0.2rem;
   }
 }
 .s_4 {
@@ -978,107 +598,107 @@ export default {
   }
 }
 
-.s_5 {
-  // padding: 0 0.9375rem;
-  // background: #fff;
-  // margin-top: 0.5625rem;
-  margin-bottom: 1rem;
-  height: 56.25rem;
-  ul {
-    height: 7.5rem;
-    padding-top: 1.625rem;
-    position: relative;
-    margin: 0 0.9375rem;
-  }
-  // ul::after {
-  //   @include onepx1(#d8d8d8);
-  // }
-  ul:nth-last-child(1)::after {
-    height: 0 !important;
-  }
-  .title {
-    position: relative;
-    height: 1.5625rem;
-    text-align: center;
-    background-color: #fff;
-  }
-  .title:after {
-    @include onepx1(#d8d8d8);
-  }
-  .text {
-    position: relative;
-    width: 4rem;
-    padding: 0.3125rem 0.625rem;
-    top: 0.75rem;
-    background: #fff;
-    z-index: 10;
-    color: #444444;
-    font-size: 0.875rem;
-  }
-  .left {
-    width: 5.1875rem;
-    height: auto;
-    float: left;
-    max-height: 5rem;
-    overflow: hidden;
-    img {
-      width: 100%;
-      max-height: 5rem;
-      min-height: 4.5625rem;
-    }
-  }
-  .right {
-    float: left;
-    padding-left: 0.5625rem;
-    min-width: 60%;
-    width: 75%;
-    text-align: left;
-  }
-  .c1 {
-    font-size: 0.8125rem;
-    color: #13252e;
-    max-width: 100%;
-    @include space();
-  }
-  .c2 {
-    font-size: 0.6875rem;
-    color: #999999;
-    padding-top: 0.5625rem;
-    max-width: 90%;
-    @include space();
-    .l {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      display: inline-block;
-      max-width: 70%;
-    }
-  }
-  .c3 {
-    font-size: 0.75rem;
-    color: #e11a2f;
-    padding-top: 0.5625rem;
-    letter-spacing: -0.00375rem;
-    max-width: 70%;
-    @include space();
-    div {
-      @include space();
-    }
-  }
-  .r {
-    position: absolute;
-    right: 0.9375rem;
-  }
-  .b {
-    display: inline-block;
-    background: #fff0f1;
-    border: thin solid rgba(224, 24, 45, 0.2);
-    border-radius: 0.125rem;
-    padding: 0.05rem 0.225rem;
-    margin-right: 0.1875rem;
-  }
+// .s_5 {
+//   // padding: 0 0.9375rem;
+//   // background: #fff;
+//   // margin-top: 0.5625rem;
+//   margin-bottom: 1rem;
+//   // height: 56.25rem;
+//   ul {
+//     height: 7.5rem;
+//     padding-top: 1.625rem;
+//     position: relative;
+//     margin: 0 0.9375rem;
+//   }
+//   // ul::after {
+//   //   @include onepx1(#d8d8d8);
+//   // }
+//   ul:nth-last-child(1)::after {
+//     height: 0 !important;
+//   }
+//   .title {
+//     position: relative;
+//     height: 1.5625rem;
+//     text-align: center;
+//     background-color: #fff;
+//   }
+//   .title:after {
+//     @include onepx1(#d8d8d8);
+//   }
+//   .text {
+//     position: relative;
+//     width: 4rem;
+//     padding: 0.3125rem 0.625rem;
+//     top: 0.75rem;
+//     background: #fff;
+//     z-index: 10;
+//     color: #444444;
+//     font-size: 0.875rem;
+//   }
+//   .left {
+//     width: 5.1875rem;
+//     height: auto;
+//     float: left;
+//     max-height: 5rem;
+//     overflow: hidden;
+//     img {
+//       width: 100%;
+//       max-height: 5rem;
+//       min-height: 4.5625rem;
+//     }
+//   }
+//   .right {
+//     float: left;
+//     padding-left: 0.5625rem;
+//     min-width: 60%;
+//     width: 75%;
+//     text-align: left;
+//   }
+//   .c1 {
+//     font-size: 0.8125rem;
+//     color: #13252e;
+//     max-width: 100%;
+//     @include space();
+//   }
+//   .c2 {
+//     font-size: 0.6875rem;
+//     color: #999999;
+//     padding-top: 0.5625rem;
+//     max-width: 90%;
+//     @include space();
+//     .l {
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       white-space: nowrap;
+//       display: inline-block;
+//       max-width: 70%;
+//     }
+//   }
+//   .c3 {
+//     font-size: 0.75rem;
+//     color: #e11a2f;
+//     padding-top: 0.5625rem;
+//     letter-spacing: -0.00375rem;
+//     max-width: 70%;
+//     @include space();
+//     div {
+//       @include space();
+//     }
+//   }
+//   .r {
+//     position: absolute;
+//     right: 0.9375rem;
+//   }
+//   .b {
+//     display: inline-block;
+//     background: #fff0f1;
+//     border: thin solid rgba(224, 24, 45, 0.2);
+//     border-radius: 0.125rem;
+//     padding: 0.05rem 0.225rem;
+//     margin-right: 0.1875rem;
+//   }
 
-}
+// }
 
 .s_6 {
   padding: 0 0.9375rem;
@@ -1129,17 +749,18 @@ export default {
   }
   img {
     max-height: 10.625rem;
+    // height:10.625rem;
   }
 }
 .scroll {
-  height: 10.625rem;
+  // height: 10.625rem;
 }
 .slide-content {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
   position: relative;
-  height: 56.25rem;
+  // height: 56.25rem;
   // margin: 0 .625rem .625rem;
 }
 .slider-item {
@@ -1252,7 +873,7 @@ export default {
   background: #fff;
   z-index: 10;
   color: #444444;
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-align: center;
 }
 .hr-1 {
@@ -1272,17 +893,17 @@ export default {
   //   @include onepx1(#d8d8d8);
   // }
 }
-.animation_2::after,.animation_1::after{
-  	content: "  ";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 120%;
-    height: .0625rem;
-    background-color: #d8d8d8;
-    /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
-    -webkit-transform: scaleY(.5);
-    transform:scaleY(.5);
+.animation_2::after,
+.animation_1::after {
+  content: "  ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 120%;
+  height: 0.0625rem;
+  background-color: #d8d8d8;
+  /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
-
 </style>

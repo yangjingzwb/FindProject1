@@ -1,21 +1,9 @@
 <template>
   <div >
-    <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <!-- <scroll
-        :data1 ="data1"
-        :data = "shopList"
-        :scrollbar='tabScrollbar'
-        :pullDownRefresh='pullDownRefresh'
-        :stopPropagation="stopPropagation"
-        :scrollY = "scrollY"
-        :pullUpLoad= "pullUpLoad"
-        @scroll="scrollListen"
-        @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp"> -->
-        <div class="t-2">
-          <div class="t-1">
-            <div class="t-3">附近优惠</div>
-            </div>
+    <div class="nullHeight"></div>
+        <div class="t-2" @click="goMorePer()">
+            附近优惠
+            <div class="t-4">更多优惠</div>
             <div class="hr-1"></div>
         </div>
         <ul v-for="item in shopList"  @click="goDetail($event,item,1)" >
@@ -39,18 +27,13 @@
         <ul v-if = "!shopList || shopList.length<=0 ">
           <li @click="aginEnter()" class="aa">请点击刷新试试</li>
         </ul>
-    <!-- </scroll> -->
-    <!-- <div class="null"></div> -->
+        <div v-else class="nullHeight"></div>
     </div>
 </template>
 
 <script>
 import {
-  //   fetchPoints,
   GetDistance
-  //   setLItem,
-  //   getLItem,
-  //   getCode
 } from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
 // import { baseUrl } from "@@/config/env"; // baseUrl
@@ -70,14 +53,6 @@ export default {
       type: String,
       default: false
     },
-    data1: {
-      type: Boolean,
-      default: false
-    },
-    scrollY: {
-      type: Boolean,
-      default: false
-    },
     longitude: {
       type: String,
       default: false
@@ -87,19 +62,7 @@ export default {
       default: function() {
         return [];
       }
-    },
-    tabScrollbar: {
-      type: Boolean,
-      default: false
-    },
-    pullDownRefresh: {
-      type: null,
-      default: true
     }
-    // pullUpLoad: {
-    //   type: Boolean,
-    //   default: false
-    // }
   },
   computed: {},
 
@@ -113,15 +76,6 @@ export default {
   computed: {},
 
   methods: {
-    scrollListen(pos) {
-      console.log("near");
-      console.log(pos);
-      // if(Math.abs(pos.y)<5){
-      //   this.$emit('changeIscrollY',true)
-      // }else{
-      //   this.$emit('changeIscrollY',false)
-      // }
-    },
     aginEnter() {
       this.$emit("aginEnter");
     },
@@ -134,12 +88,9 @@ export default {
     goDetail(event, obj, flag) {
       this.$emit("goDetail", event, obj, flag);
     },
-
-    onPullingDown() {
-      this.$emit("pullingDown");
-    },
-    onPullingUp() {
-      this.$emit("pullingUp");
+    // 更多优惠
+    goMorePer(){
+      this.$router.push("/home1");
     }
   }
 };
@@ -148,9 +99,30 @@ export default {
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
 .t-2{
-  height: 2.5625rem;
+  position: relative;
+  height: 2.875rem;
   text-align: center;
   position: relative;
+  color:#13252E;
+  line-height: 2.875rem;
+  font-family: PingFangSC-Regular;
+  font-size: .9375rem;
+}
+.t-4{
+  // width: 1.125rem;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  font-size: .75rem;
+  position: absolute;
+  right: 0;
+  padding-right: 1.5rem;
+  color:#888888;
+  top:0;
+  background-image: url('/static/img/2-10.png');
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-position: 85% 47%;
+  background-size: auto 30%;
 }
 .t-2:after {
   @include onepx1(#d8d8d8);
@@ -376,8 +348,8 @@ export default {
   margin-top: 0.5625rem;
   margin-bottom: 1rem;
   ul {
-    height: 7.5rem;
-    padding-top: 1.625rem;
+    height: 6.6875rem;
+    padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
   }
