@@ -74,6 +74,14 @@ export const geURLParam = (name) => {
     }
 }
 
+export const encodeJson = (obj)=>{
+    let res="";
+    for(let k in obj){
+     res +=k+"="+obj[k]+"&"
+    }
+    return res.substr(0,res.length-1);
+}
+
 /**
  * 格式化日期
  * @param fmt
