@@ -260,7 +260,7 @@ export default {
           );
         }
       } else {
-        if (flag == 2) {
+        if (flag == 2 || flag == 3 || flag == 4) {
           let url_2 =
             url.indexOf("?") > 0
               ? url.replace(
