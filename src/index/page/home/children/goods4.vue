@@ -1,34 +1,31 @@
 <template>
-<div>
-    <div class="banner" @click="goDetail($event,banner,2)">
-      <img :src="banner.marketingIcon" >
-    </div>
-    <div class="goods">
-      
-    <ul class="u1">
-      <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.goodsId">
-        <ul class="u2">
-          <li class="icon">
-            <img :src="item.picurl">
-          </li>
-          <li class="text">
-            {{item.name}}
-          </li>
-          <li>
-            <span class="price">¥{{fenToyuan(item.price)}}</span>
-            <span class="linePrice">¥{{fenToyuan(item.marketPrice)}}</span>
+  <div>
+      <div class="banner" @click="goDetail($event,banner,1)">
+        <img :src="banner.marketingIcon" >
+      </div>
+      <div class="goods">
+        <ul class="u1">
+          <li @click="goDetail($event,item,3)" v-for="item in data" :key="item.goodsId">
+            <ul class="u2">
+              <li class="icon">
+                <img :src="item.picurl">
+              </li>
+              <li class="text">
+                {{item.title}}
+              </li>
+              <li>
+                <span class="price">¥{{fenToyuan(item.cprice)}}</span>
+                <span class="linePrice">¥{{fenToyuan(item.oprice)}}</span>
+              </li>
+            </ul>
           </li>
         </ul>
-      </li>
-    </ul>
-     
+     </div>
+     <div class="nullHeight"></div>
   </div>
-   <div class="nullHeight"></div>
-</div>
-   
 </template>
 <script>
-import { GetDistance,fenToyuan,getUUID,setMd5HY } from "@@/service/util";
+import { GetDistance,fenToyuan,getUUID,setMd5HY,encodeJson } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
@@ -47,29 +44,31 @@ export default {
   },
   created() {},
 
-  components: {},
 
   methods: {
     init(){
       // 获取banner
-       axios.post('queryMarketing',{
-        "position": "MIDDLE",
+      axios.post('queryMarketing',{
+        "position": "TOP",
         "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       }).then((res)=>{
         this.banner = res.data[0]
       })
+
       let param_ = {
         "channel":10197,
         "requestId":getUUID(),
       }
+
       param_.sign = setMd5HY(param_)
-      // 和悦商品接口
-      // 生产：https://mall.joypay.cn/cm-mall/outservice/hy/topiclist.do
-        axios.post('topiclist.do',param_).then((res)=>{
-        let data =res.topiclist[0].goodslist.sort(() => {
+      // 卷皮商品接口
+      axios.get('getactgoods?'+encodeJson(param_))
+      .then(res => {
+        let data_ =res.goods.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
-        this.data = data.slice(0, 3) // 每个专题必须至少返回3个商品
+        this.data = data_.slice(0, 3) // 每个专题必须至少返回3个商品
+        console.log(this.data)
       })
       
     },
@@ -86,16 +85,13 @@ export default {
 @import "~@@/style/mixin";
 .banner {
   width: 100%;
-  // height: 8.3125rem;
   overflow: hidden;
   margin-bottom: .5rem;
   img {
     width: 100%;
-    // height: 100%;
   }
 }
 .goods {
-  // height: 11.3125rem;
   padding-left: .6875rem;
   padding-right: .6875rem;
   .u2{
@@ -117,34 +113,24 @@ export default {
       height: 6.875rem;
       position: relative;
       margin: 0 auto;
-      // margin-top: 1.375rem;
-      // margin-bottom: 1.375rem;
       text-align: center;
       overflow: hidden;
     }
     img {
-      // width: 3.75rem;
-      // min-height: 4.125rem;
-    
-          display: block;
-    max-width: 6.5625rem;
-    max-height: 6.5625rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    border: 1px solid #D8D8D8;
+      display: block;
+      max-width: 6.5625rem;
+      max-height: 6.5625rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      border: 1px solid #D8D8D8;
     }
     .text {
       font-size: .75rem;
       color: #13252e;
       font-family: PingFangSC-Light;
       text-align: center;
-      // overflow: hidden;
-      // display: -webkit-box;
-      /* autoprefixer: ignore next */
-      // -webkit-box-orient: vertical;
-      // text-overflow: ellipsis;
       text-align: left;
       padding-right: .75rem;
       @include space();
@@ -154,7 +140,6 @@ export default {
       color: #ed1991;
       font-family: PingFangSC-Medium;
       text-align: left;
-      // padding-left: .625rem;
     }
     .linePrice {
       font-size: .75rem;
@@ -164,7 +149,7 @@ export default {
       text-align: left;
     }
     .u2 {
-        padding-bottom: 1.4375rem;
+      padding-bottom: 1.4375rem;
     }
   }
 }

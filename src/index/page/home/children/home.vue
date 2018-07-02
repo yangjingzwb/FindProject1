@@ -28,6 +28,22 @@
           
           
     <section class="s_5 s" >
+      <!-- 和悦专题营销位 -->
+      <goods1
+        @goDetail="goDetail"
+      ></goods1>
+      <!-- 卷皮专题营销位 -->
+      <goods4
+        @goDetail="goDetail"
+      ></goods4>
+      <!-- 多喜爱专题营销位 -->
+      <goods5
+        @goDetail="goDetail"
+      ></goods5>
+      <!-- 为你推荐 -->
+      <goods2
+        @goDetail="goDetail"
+      ></goods2>
       <!-- 附近 -->
       <near1
         :latitude = 'latitude'
@@ -37,18 +53,6 @@
         @goDetail="goDetail"
         >
       </near1>
-      <!-- 和悦专题营销位 -->
-      <goods1
-        @goDetail="goDetail"
-      ></goods1>
-      <!-- 为你推荐 -->
-      <goods2
-        @goDetail="goDetail"
-      ></goods2>
-      <!-- 资讯 -->
-      <goods3
-        @goDetail="goDetail"
-      ></goods3>
     </section>
     </div>
   </div>
@@ -74,8 +78,9 @@ import { baseUrl } from "@@/config/env"; // baseUrl
 // import BScroll from "better-scroll";
 // import Scroll from "@@/components/scroll/scroll.vue";
 import Goods1 from "./goods1.vue";
+import Goods4 from "./goods4.vue";
+import Goods5 from "./goods5.vue";
 import Goods2 from "./goods2.vue";
-import Goods3 from "./goods3.vue";
 import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
 // import Consulting from "./consulting.vue" // 咨询
@@ -123,8 +128,9 @@ export default {
     Slider,
     Near1,
     Goods1,
-    Goods2,
-    Goods3
+    Goods4,
+    Goods5,
+    Goods2
   },
 
   computed: {
