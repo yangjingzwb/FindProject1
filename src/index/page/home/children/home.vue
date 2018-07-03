@@ -195,7 +195,7 @@ export default {
       flag: false,
       shopListFlag: false,
       CURRENTPAGE: 0, // 页码
-      PAGNUM: 4,
+      PAGNUM: 8,
       refTime: "",
       baseImg: baseUrl.img,
       totalInit: 0,
@@ -355,28 +355,8 @@ export default {
     touchStart(e) {
       let touch = e.changedTouches[0];
       this.startX = touch.pageX;
-      // console.log(touch)
-      // startY = touch.pageY;
-      // startX = touch.pageX;
     },
     goDetail(event, obj, flag) {
-      // alert(33)
-      // if (flag == 2) {
-      //   let touch = event.changedTouches[0];
-      //   console.log(touch);
-      //   this.endX = touch.pageX;
-      //   // 点击影响滑动
-      //   if (Math.abs(this.endX - this.startX) > 50) {
-      //     return;
-      //   }
-      // }
-
-      // let touch = event.touches[0];
-      // event.stopPropagation();
-      // event.preventDefault();
-      // if(this.stopClick){
-      //   return
-      // }
       // 防止pc端触发两次点击
       // if (!event._constructed) {
       //   return;
@@ -417,15 +397,6 @@ export default {
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        // window.location =
-        //   url.indexOf("?") > 0
-        //     ? url.replace(/\?/, "?showtitle=false&") +
-        //       "&SOURCE=DISCOVER&" +
-        //       window.location.href.split("?")[1].split("#")[0]
-        //     : url +
-        //       "?showtitle=false&SOURCE=DISCOVE&" +
-        //       window.location.href.split("?")[1].split("#")[0];
-        // window.location = url.replace(/\?/, "?showtitle=false&");
         if (flag == 2) {
           let url2 =
             url.indexOf("?") > 0
@@ -439,9 +410,6 @@ export default {
           );
         }
       } else {
-        // console.log(
-        //   "activity://goWeb?url=" + url.replace(/\?/, "?showtitle=false&")
-        // );
         if (flag == 2) {
           let url_2 =
             url.indexOf("?") > 0
@@ -483,7 +451,7 @@ export default {
           merc_abbr: "", // 商户简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
+          pagNum: this.PAGNUM || 8,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
@@ -562,23 +530,6 @@ export default {
       // }
     },
     init(flag) {
-      // this.CURRENTPAGE = 1;
-      // this.SHOWLOADING(true);
-      // if (history.length >= 3 && localStorage && getLItem("shopList", 60000)) {
-      //   // if (history.length >= 3 && localStorage && localStorage.getItem("shopList")) {
-      //   this.CURRENTPAGE = 1;
-      //   this.SHOWLOADING(true);
-      //   // this.shopList = JSON.parse(localStorage.getItem("shopList"));
-      //   this.shopList = getLItem("shopList", 60000);
-      //   this.initScroll();
-      //   setTimeout(() => {
-      //     this.SHOWLOADING(false);
-      //   }, 300);
-      //   // if (res.data.length < this.PAGNUM) {
-      //   this.shopListFlag = true;
-      //   return;
-      // }
-
       this.CURRENTPAGE = 1;
       if (!flag) {
         this.SHOWLOADING(true);
@@ -589,12 +540,6 @@ export default {
       // 单点登录
       // 请求banner1
       this.cityName1 = window.CITYNAME || "定位中";
-      // this.cityName1 =
-      //   window.CITYNAME ||
-      //   (/iP(ad|hone|od)/.test(navigator.userAgent)
-      //     ? window.LBSINFO.CityName || "定位中"
-      //     : getCode(window.LBSINFO.CityName));
-
       if (!window.LONGITUDE) {
         this.SHOWLOADING(false);
         return;
@@ -607,18 +552,14 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
+          pagNum: this.PAGNUM || 8,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
-            // if (flag) {
-            //   this.home.finishPullDown();
-            // } else {
-            //   this.home.refresh();
-            // }
+          
             this.initScroll();
             setTimeout(() => {
               this.SHOWLOADING(false);
@@ -629,7 +570,6 @@ export default {
             if (this.totalInit <= 5) {
               this.init();
             } else {
-              // this.shopList = getLItem("shopList", 600000);
               this.shopList = [];
               // setTimeout(() => {
               this.SHOWLOADING(false);
@@ -644,7 +584,6 @@ export default {
             return;
           }
           
-          // console.log(this.shopList);
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
             this.data1 = true
@@ -653,15 +592,9 @@ export default {
             this.shopListFlag = false;
             this.data1 = false
           }
-          // setTimeout(() => {
-          //   // this.foodsScroll.scrollTo(0, -42, 500);
-          //   this.home.refresh();
-          //   this._calcHeight();
-          // }, 40);
-          // alert(33)
         })
         .catch(res => {
-          // alert(11)
+        
           // setTimeout(()=>{
           this.SHOWLOADING(false);
           this.totalInit++;
@@ -736,7 +669,6 @@ export default {
     goToApply() {},
     closeAlert() {}
   }
-  // props:['activeIcon']
 };
 </script>
 
