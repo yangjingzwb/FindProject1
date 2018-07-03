@@ -44,10 +44,10 @@ export default {
       stopPropagation: false,
       goodList: [
         {
-          name: "全场低至7折起，为端午福利和夏季优惠疯狂打call",
-          url: "/static/img/recommended/4-1.png",
+          name: "3种王牌暑惠，给“盛夏狂欢”打个样",
+          url: "/static/img/recommended/7-1.jpg",
           goUrl:
-            "https://mall.joypay.cn/cm-mall/activity/newLife.do"
+            "https://mall.joypay.cn/cm-mall/activity/act_july.do"
         },
         // {
         //   name: "99元任选3件，还可领20元购物红包",
@@ -56,31 +56,31 @@ export default {
         //     "https://dmp-data.vip.com/ndl?tra_from=tra%3A75gpn5yd%3A%3A%3A%3A"
         // },
         {
-          name: "情浓端午，“粽”享优惠，领券立减50",
-          url: "/static/img/recommended/4-3.png",
-          goUrl: "https://h.umfintech.com/mallweb/h5hb/activitys/April.htm"
+          name: "激情一夏，唯品会助力世界杯百万好物爽看球",
+          url: "/static/img/recommended/7-2.jpg",
+          goUrl: "https://dmp-data.vip.com/ndl?tra_from=tra%3A6viye9gn%3A%3A%3A%3A"
         },
         {
-          name: "京选好物，超低特价，无限京彩，让你燃动一夏",
-          url: "/static/img/recommended/jd.png",
+          name: "夏季爆款秒杀，和包专享特价购不停",
+          url: "/static/img/recommended/7-3.jpg",
           goUrl:
-            "https://cmpay.jdcloud.com/jd/hd/10.jsp"
+            "https://cmpay.jdcloud.com/jd/hd/13.jsp?"
         },
         {
-          name: "粽情端午卷皮特卖 超低价爆款好货1折起",
-          url: "/static/img/recommended/4-101.jpg",
+          name: "卷皮限量快抢，精选好货，每日准时秒杀开抢",
+          url: "/static/img/recommended/7-4.jpg",
           goUrl:
             "https://union.juanpi.com/cpsfollow/call_url?utm=2176175&target=https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=act"
         },
         {
-          name: "精挑好货，优质商品，疯狂6月限时购",
-          url: "/static/img/recommended/4-6.png",
-          goUrl: "https://sn.51hive.com:7787/Repeater/ActJune"
+          name: "苏宁易购七月活动专场，助您清凉一夏",
+          url: "/static/img/recommended/7-5.jpg",
+          goUrl: "https://sn.51hive.com:7787/Repeater/ActApril"
         },
         {
-          name: "超级影视VIP  四屏独播享好剧",
-          url: "/static/img/recommended/4-7.png",
-          goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131"
+          name: "夏季出游，购精选商品，给你美美夏日",
+          url: "/static/img/recommended/7-6.jpg",
+          goUrl: "http://h.umfintech.com/mallweb/h5hb/activitys/July.htm"
         },
         // {
         //   name: "享买一赠一  赏视听好剧",
@@ -88,30 +88,35 @@ export default {
         //   goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131"
         // },
         {
-          name: "今日商品限量秒杀，手慢无！",
-          url: "/static/img/recommended/4-8.png",
+          name: "人气商品低至七折，数量有限，售完为止",
+          url: "/static/img/recommended/7-7.jpg",
           goUrl:
-            "https://huadupay.com/index.html#/special?ID=13"
+            "http://www.ylife.cn/mobile/subject.htm?subjectId=169&storeId=215"
         },
         {
-          name: "想瘦生活，享受未来 将来的你一定感谢现在流汗的自己",
-          url: "/static/img/recommended/4-9.png",
-          goUrl: "https://mobike.huahaikeji.cn/public/mobike/activity/index?activityCode=act000001"
+          name: "夏日养生之道，好护士为您精挑细选",
+          url: "/static/img/recommended/7-8.jpg",
+          goUrl: "https://h5shop.hhs16.com/HebaoLogin?page=special&ID=27"
         },
         {
-          name: "“粽”情端午，共享商旅美好时光",
-          url: "/static/img/recommended/4-10.png",
-          goUrl: "http://www.ylife.cn/mobile/subject.htm?subjectId=169&storeId=215"
+          name: "超级影视VIP，九折优惠享好剧",
+          url: "/static/img/recommended/7-9.jpg",
+          goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131"
         },
         {
-          name: "领劵满98减10，满198减20；感恩回馈，底价限量爆款大放送",
-          url: "/static/img/recommended/4-11.png",
-          goUrl: "https://h5shop.hhs16.com/index.html#/special?ID=25"
+          name: "反季“巨划算”，家纺2折疯抢，一起打造轻奢时尚",
+          url: "/static/img/recommended/7-10.jpg",
+          goUrl: "https://huadupay.com/HebaoLogin?page=special&ID=15"
         },
         {
-          name: "放心购好药，健康大参林",
-          url: "/static/img/recommended/4-12.png",
-          goUrl: "http://enjoy.changyuelife.com/app/index.php?i=4&c=entry&m=shop&do=mobile"
+          name: "领满120减15券，为爱疯狂Go",
+          url: "/static/img/recommended/7-11.jpg",
+          goUrl: "http://enjoy.changyuelife.com/app/index.php?i=4&c=entry&m=shop&do=mobile&r=diypage&id=9053"
+        },
+        {
+          name: "党建宣传新阵地，中国故事，砥砺前行",
+          url: "/static/img/recommended/7-12.jpg",
+          goUrl: "https://hb.iredmall.com/HebaoLogin?page=special&id=25"
         }
         // ,
         // {
