@@ -15,7 +15,7 @@
         </li>
       </ul>
     </section>
-    <section v-if="topCat" class="s_1 animation_1">
+    <section v-show="topCat" class="s_1 animation_1">
       <ul class="cat_w">
         <li class="cat c1" :class="{'active':slideIndex==0}" @click="goToPage(0)">
           附近
@@ -200,7 +200,7 @@ export default {
       baseImg: baseUrl.img,
       totalInit: 0,
       endX: 0,
-      sliderIndex:0,
+      sliderIndex:1,
       startX: 0,
       scrollY:true,
       scrollYOther:true,
@@ -281,18 +281,19 @@ export default {
         // this.scrollY = false
         // this.scrollYOther = true;
         // this.startY = -321
-        this.OPENANDCLOSE(false)
+        // this.OPENANDCLOSE(false)
         this.topCat = true;
         
       }else{
         this.topCat = false;
-        this.OPENANDCLOSE(true)
+        // this.OPENANDCLOSE(true)
       }
     },
     changeIscrollY(flag){
       this.scrollY = flag;
     },
     goToPage(index){
+      console.log("这是index----- ",index)
       this.sliderIndex = index;
     },
     aginEnter() {

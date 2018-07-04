@@ -63,7 +63,7 @@ export default {
     },
     sliderIndex:{
       type: Number,
-      default: 0
+      default: 1
     },
     loopX:{
       type: Boolean,
@@ -128,7 +128,8 @@ export default {
       'SLIDEINDEX'
     ]),
     goToIndex(index){
-      console.log('我被点击');
+      
+      console.log('我被点击 ',index);
       let aa = index - this.preIndex;
       this.slide.goToPage(this.currentPageIndex + aa);
       this.currentPageIndex += aa
@@ -294,7 +295,9 @@ export default {
       this.update();
     },
     sliderIndex(){
-      this.slide.goToPage(this.sliderIndex)
+      console.log("促发了我了",this.sliderIndex)
+      this.goToIndex(this.sliderIndex)
+      // this.slide.goToPage(this.sliderIndex)
     }
   }
 };

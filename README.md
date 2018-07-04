@@ -3,10 +3,24 @@ npm install
 npm run dev demo 调试demo项目
 npm run dev index 调试index项目
 npm run build index 发布index项目
-
+# 服务器信息
 服务器：113.108.79.80
 账号信息：root/Rtck12345
 NGINX配置：/usr/local/nginx/conf/nginx.conf
+
+# 测试服务器
+1、打包发布测试服务器test目录
+sh sh-test.sh
+
+2、打包发布测试服务器根目录
+sh sh-pro.sh
+
+# 环境变量
+env.js
+1:生产
+5:本地
+
+
 
 
 # demo项目布局

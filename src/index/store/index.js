@@ -28,7 +28,7 @@ const state = {
 	showLoading:true,
 	sliderScroll:'',
 	cityName1:window.CITYNAME || "定位中",
-	slideIndex:0,
+	slideIndex:1,
 	openAndClose:true
 
 }
