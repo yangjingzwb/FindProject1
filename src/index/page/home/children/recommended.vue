@@ -64,7 +64,7 @@ export default {
           name: "夏季爆款秒杀，和包专享特价购不停",
           url: "/static/img/recommended/7-3.jpg",
           goUrl:
-            "https://cmpay.jdcloud.com/jd/hd/13.jsp?"
+            "https://cmpay.jdcloud.com/jd/hd/13.jsp"
         },
         {
           name: "卷皮限量快抢，精选好货，每日准时秒杀开抢",
