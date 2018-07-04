@@ -128,12 +128,14 @@ export default {
       'SLIDEINDEX'
     ]),
     goToIndex(index){
-      
       console.log('我被点击 ',index);
       let aa = index - this.preIndex;
-      this.slide.goToPage(this.currentPageIndex + aa);
-      this.currentPageIndex += aa
-      !this.autoPlay && this.SLIDEINDEX(this.currentPageIndex)
+      if(this.slide.getCurrentPage().pageX != index){
+        this.slide.goToPage(index);//this.currentPageIndex + aa
+      } 
+      
+      this.currentPageIndex = this.slide.getCurrentPage().pageX
+      !this.autoPlay && this.SLIDEINDEX(this.slide.getCurrentPage().pageX)
       this.preIndex = index;
       // let aa = index - this.preIndex
       // // alert(aa)
