@@ -195,7 +195,7 @@ export default {
       flag: false,
       shopListFlag: false,
       CURRENTPAGE: 0, // 页码
-      PAGNUM: 8,
+      PAGNUM: 4,
       refTime: "",
       baseImg: baseUrl.img,
       totalInit: 0,
@@ -208,7 +208,7 @@ export default {
       threshold:0.2,
       cityName1: window.CITYNAME || "定位中",
       pullDownRefresh: {
-        threshold: 120,
+        threshold: 60,
         stop: 60
       }
     };
@@ -452,7 +452,7 @@ export default {
           merc_abbr: "", // 商户简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 8,
+          pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
@@ -553,7 +553,7 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 8,
+          pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
