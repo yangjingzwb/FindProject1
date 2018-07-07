@@ -125,6 +125,22 @@ export default {
   font-family: PingFangSC-Regular;
   font-size: .9375rem;
 }
+.t-4{
+  // width: 1.125rem;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  font-size: .75rem;
+  position: absolute;
+  right: 0;
+  padding-right: 1.5rem;
+  color:#888888;
+  top:0;
+  background-image: url('/static/img/2-10.png');
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-position: 85% 47%;
+  background-size: auto 30%;
+}
 .t-2:after {
   @include onepx1(#d8d8d8);
 }

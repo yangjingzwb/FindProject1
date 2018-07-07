@@ -1,12 +1,12 @@
 <!--卷皮专题营销位-->
 <template>
   <div>
-      <div class="banner" @click="goDetail($event,banner,1)">
+      <div class="banner" @click="goDetail($event,banner,2)">
         <img :src="banner.marketingIcon" >
       </div>
       <div class="goods">
         <ul class="u1">
-          <li @click="goDetail($event,item,3)" v-for="item in data" :key="item.goodsId">
+          <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.actid">
             <ul class="u2">
               <li class="icon">
                 <img :src="item.picurl">
@@ -15,8 +15,8 @@
                 {{item.title}}
               </li>
               <li>
-                <span class="price">¥{{fenToyuan(item.cprice)}}</span>
-                <span class="linePrice">¥{{fenToyuan(item.oprice)}}</span>
+                <span class="price">¥{{(item.cprice)}}</span>
+                <span class="linePrice">¥{{(item.oprice)}}</span>
               </li>
             </ul>
           </li>
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { GetDistance,fenToyuan,getUUID,setMd5HY,encodeJson } from "@@/service/util";
+import { GetDistance,getUUID,setMd5HY,encodeJson } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
@@ -76,8 +76,7 @@ export default {
     goDetail(event, obj, flag) {
       // alert(JSON.stringify(obj))
       this.$emit("goDetail", event, obj, flag);
-    },
-    fenToyuan:fenToyuan
+    }
   }
 };
 </script>
