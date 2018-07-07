@@ -3,6 +3,7 @@
     <div class="nullHeight"></div>
         <div class="t-2" @click="goMorePer()">
             附近优惠
+            <div class="t-4">更多优惠</div>
             <div class="hr-1"></div>
         </div>
         <ul v-for="item in shopList"  @click="goDetail($event,item,1)" >
@@ -106,6 +107,22 @@ export default {
   line-height: 2.875rem;
   font-family: PingFangSC-Regular;
   font-size: .9375rem;
+}
+.t-4{
+  // width: 1.125rem;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  font-size: .75rem;
+  position: absolute;
+  right: 0;
+  padding-right: 1.5rem;
+  color:#888888;
+  top:0;
+  background-image: url('/static/img/2-10.png');
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-position: 85% 47%;
+  background-size: auto 30%;
 }
 .t-2:after {
   @include onepx1(#d8d8d8);
@@ -335,7 +352,6 @@ export default {
     padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
-    border-bottom: 1px solid #E6E6E6;
   }
   // ul::after {
   //   @include onepx1(#d8d8d8);
@@ -368,7 +384,6 @@ export default {
     float: left;
     max-height: 5rem;
     overflow: hidden;
-    border: 1px solid #D8D8D8;
     img {
       width: 100%;
       max-height: 5rem;

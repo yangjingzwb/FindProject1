@@ -28,6 +28,15 @@
           
           
     <section class="s_5 s" >
+      <!-- 附近 -->
+      <near1
+        :latitude = 'latitude'
+        :longitude = 'longitude'
+        :shopList="shopList"
+        @aginEnter = "aginEnter"
+        @goDetail="goDetail"
+        >
+      </near1>
       <!-- 和悦专题营销位 -->
       <goods1
         @goDetail="goDetail"
@@ -44,15 +53,6 @@
       <goods2
         @goDetail="goDetail"
       ></goods2>
-      <!-- 附近 -->
-      <near1
-        :latitude = 'latitude'
-        :longitude = 'longitude'
-        :shopList="shopList"
-        @aginEnter = "aginEnter"
-        @goDetail="goDetail"
-        >
-      </near1>
     </section>
     </div>
   </div>

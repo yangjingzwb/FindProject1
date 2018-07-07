@@ -133,7 +133,6 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    border: 1px solid #D8D8D8;
     }
     .text {
       font-size: .75rem;
