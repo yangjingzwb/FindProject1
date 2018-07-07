@@ -1,3 +1,4 @@
+<!--卷皮专题营销位-->
 <template>
   <div>
       <div class="banner" @click="goDetail($event,banner,1)">
@@ -59,17 +60,17 @@ export default {
         "channel":10197,
         "requestId":getUUID(),
       }
-
+      
       param_.sign = setMd5HY(param_)
+      // +encodeJson(param_)
       // 卷皮商品接口
-      axios.get('getactgoods?'+encodeJson(param_))
-      .then(res => {
-        let data_ =res.goods.sort(() => {
+     axios.get("https://muser.juanpi.com/hebao/getactgoods?from=hebao&baseUrl=0")
+     .then(res => {
+        let data = res.goods.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
-        this.data = data_.slice(0, 3) // 每个专题必须至少返回3个商品
-        console.log(this.data)
-      })
+        this.data = data.slice(0, 3); // 每个专题必须至少返回3个商品
+      });
       
     },
     goDetail(event, obj, flag) {
@@ -124,7 +125,7 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%,-50%);
-      border: 1px solid #D8D8D8;
+      // border: 1px solid #D8D8D8;
     }
     .text {
       font-size: .75rem;

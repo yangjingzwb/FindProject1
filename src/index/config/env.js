@@ -45,7 +45,7 @@ if (debug == 1) { //生产
     // baseUrl.api = 'http://localhost:8000/rcServer/';//
     // baseUrl.api = 'http://www.ifruit.org/rcServer/';//
     // baseUrl.api = 'http://192.168.157.198:7300/mock/59cd9c4f55deb8dfcb498e17/mock/'
-    baseUrl.api = 'http://127.0.0.1:7300/mock/5b3220db868c2f2ba48851e8/mock/';
+    baseUrl.api = 'http://127.0.0.1:7300/mock/59cd9c4f55deb8dfcb498e17/mock/';
     baseUrl.img = 'https://mca.cmpay.com:28710'
     // baseUrl.img = 'https://mca.cmpay.com:28710'
     

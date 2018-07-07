@@ -62,14 +62,15 @@ export default {
 
       param_.sign = setMd5HY(param_)
       // 多喜爱商品接口
-      axios.get('toShopInfo?'+encodeJson(param_))
-      .then(res => {
-        let data_ =res.Data.sort(() => {
+      //https://huadupay.com/Interface/GetShopInfo?baseUrl=0
+     axios.get("GetShopInfo").then(res => {
+        let data = res.Data.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
-        this.data = data_.slice(0, 3) // 每个专题必须至少返回3个商品
+        this.data = data.slice(0, 3); // 每个专题必须至少返回3个商品
+        console.log('9999999999999999999')
         console.log(this.data)
-      })
+      });
       
     },
     goDetail(event, obj, flag) {
@@ -124,7 +125,7 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%,-50%);
-      border: 1px solid #D8D8D8;
+      // border: 1px solid #D8D8D8;
     }
     .text {
       font-size: .75rem;

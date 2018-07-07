@@ -18,7 +18,7 @@
             </div>
             <div class="hr-1"></div>
         </div>
-        <ul v-for="item in shopList"  @click="goDetail($event,item,1)" >
+        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,1)" >
           <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
@@ -34,7 +34,7 @@
                     <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
                 </div>
             </li>
-            <li class="hr-1"></li>
+            <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
           <li @click="aginEnter()" class="aa">请点击刷新试试</li>
@@ -660,6 +660,9 @@ export default {
   // &::after {
   //   @include onepx1(#d8d8d8);
   // }
+}
+.hr-1:nth-last-child(-1){
+  height: 0;
 }
 .null {
   height: 3rem;

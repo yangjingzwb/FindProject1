@@ -52,6 +52,7 @@ export default {
         "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       }).then((res)=>{
         this.data = res.data
+        console.log(this.data)
       })
     },
     goDetail(event, obj, flag) {
@@ -128,7 +129,7 @@ export default {
     left: 50%;
     position: absolute;
     transform: translate(-50%,-50%);
-    border: 1px solid #D8D8D8;
+    // border: 1px solid #D8D8D8;
   }
 }
 </style>

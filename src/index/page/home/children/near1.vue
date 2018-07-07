@@ -3,9 +3,10 @@
     <div class="nullHeight"></div>
         <div class="t-2" @click="goMorePer()">
             附近优惠
+            <div class="t-4">更多优惠</div>
             <div class="hr-1"></div>
         </div>
-        <ul v-for="item in shopList"  @click="goDetail($event,item,1)" >
+        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,1)" >
           <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
@@ -21,7 +22,7 @@
                     <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
                 </div>
             </li>
-            <li class="hr-1"></li>
+            <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
           <li @click="aginEnter()" class="aa">请点击刷新试试</li>
@@ -97,6 +98,23 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
+.t-4{
+  // width: 1.125rem;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  font-size: .75rem;
+  position: absolute;
+  right: 0;
+  padding-right: 1.5rem;
+  color:#888888;
+  top:0;
+  background-image: url('/static/img/2-10.png');
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-position: 85% 47%;
+  background-size: auto 30%;
+}
+
 .t-2{
   position: relative;
   height: 2.875rem;
@@ -335,7 +353,7 @@ export default {
     padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
-    border-bottom: 1px solid #E6E6E6;
+    // border-bottom: 1px solid #E6E6E6;
   }
   // ul::after {
   //   @include onepx1(#d8d8d8);
@@ -368,7 +386,7 @@ export default {
     float: left;
     max-height: 5rem;
     overflow: hidden;
-    border: 1px solid #D8D8D8;
+    // border: 1px solid #D8D8D8;
     img {
       width: 100%;
       max-height: 5rem;
@@ -617,6 +635,12 @@ export default {
   // &::after {
   //   @include onepx1(#d8d8d8);
   // }
+}
+.hr-1:nth-last-child(-1){
+  height: 0;
+}
+.hr-1.height0{
+  height:0!important;
 }
 .null {
   height: 3rem;
