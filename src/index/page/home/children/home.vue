@@ -24,7 +24,7 @@
           推荐
         </li>
         <li class="cat c3" :class="{'active':slideIndex==2}" @click="goToPage(2)">
-          世界杯专区
+          好物
         </li>
         <!-- <li class="cat c3" :class="{'active':slideIndex==3}" @click="goToPage(3)">
           咨询
@@ -172,7 +172,7 @@ export default {
       tabLoop:false,
       tabScrollbar:false,
       showDot:true,
-      dots:['附近','推荐','世界杯专区'],//['附近','推荐','世界杯专区','咨询'],
+      dots:['附近','推荐','好物'],//['附近','推荐','好物','咨询'],
       // autoPlay:,
       // defaultIcon: "",
 

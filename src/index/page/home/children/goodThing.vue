@@ -75,127 +75,203 @@ export default {
       stopPropagation: false,
       shopList: [
         {
-          name: "精武卤味零食礼盒675g",
-          price: "69.00 ",
-          url:
-            "https://mall.joypay.cn/cm-mall/goods/explosionTwentySeven.do?1=1",
-          imgUrl: "/static/img/heyue1/1.jpg"
-        },
-        {
-          name: "宜红羽露 经典盒装袋泡茶*25包 口味可选",
-          price: "18.00 ",
-          url: "https://mall.joypay.cn/cm-mall/goods/explosionThirty.do?1=1",
-          imgUrl: "/static/img/heyue1/2.jpg"
-        },
-        {
-          name: "吉利火星罐装爆米花150克*4罐 口味随机 ",
-          price: "31.00 ",
-          url:
-            "https://mall.joypay.cn/cm-mall/goods/explosionTwentyEight.do?1=1",
-          imgUrl: "/static/img/heyue1/3.jpg"
-        },
-        {
-          name: " 希尔顿酒店同款加大加厚柔软面巾2条装",
-          price: "48.00 ",
-          url: "http://www.ylife.cn/mobile/item/12381.html?storeId=215",
-          imgUrl: "/static/img/huazhu1/1.jpg"
-        },
-        {
-          name: "乐扣乐扣  创意便捷运动水杯",
-          price: "50.00 ",
-          url: "http://www.ylife.cn/mobile/item/11993.html?storeId=215",
-          imgUrl: "/static/img/huazhu1/2.jpg"
-        },
-        {
-          name: "全球通用旅行插座转换器",
-          price: "70.00 ",
-          url: "http://www.ylife.cn/mobile/item/12369.html?storeId=215",
-          imgUrl: "/static/img/huazhu1/3.jpg"
-        },
-        {
-          name:
-            "乐事（Lay’s）无限薯片 休闲零食 104g*3组合装（原味+烤肉+番茄）百事食品",
-          price: "18.90 ",
-          url:
-            "https://cmpay.jdcloud.com/jd/product/sku_view.jsp?skuId=963181&",
-          imgUrl: "/static/img/jingdong1/1.jpg"
-        },
-        {
-          name: "【京东超市】雪花啤酒（Snowbeer） 8度清爽330ml*24听整箱装",
-          price: "49.90 ",
-          url:
-            "https://cmpay.jdcloud.com/jd/product/sku_view.jsp?skuId=3532366&",
-          imgUrl: "/static/img/jingdong1/2.jpg"
-        },
-        {
-          name:
-            "三只松鼠零食特产每日坚果送礼礼盒夏威夷果碧根果坚果大礼包火红A1493g/盒",
-          price: "108.00 ",
-          url:
-            "https://cmpay.jdcloud.com/jd/product/sku_view.jsp?skuId=3995878&",
-          imgUrl: "/static/img/jingdong1/3.jpg"
-        },
-        {
-          name: "百乐可碎巧克力饼干 350g*3袋组合装",
+          name: "西域美农 纸皮核桃 250g*2",
           price: "35.00 ",
-          url: "https://h.umfintech.com/mallweb/h5hb/goodsdetail/028/8008.htm?",
-          imgUrl: "/static/img/juu1/1.jpg"
-        },
-        {
-          name: "中粮时怡麻辣牛肉条",
-          price: "30.00 ",
-          url: "https://h.umfintech.com/mallweb/h5hb/goodsdetail/946/8001.htm?",
-          imgUrl: "/static/img/juu1/2.jpg"
-        },
-        {
-          name: "圣卡罗传统番茄风味薯片 2袋*150g组合装",
-          price: "33.00 ",
-          url: "https://h.umfintech.com/mallweb/h5hb/goodsdetail/030/8008.htm?",
-          imgUrl: "/static/img/juu1/3.jpg"
-        },
-        {
-          name: "户外运动足球袜长筒袜",
-          price: "12.90 ",
           url:
-            "https://union.juanpi.com/cpsfollow/call_url?utm=2176175&target=https://muser.juanpi.com/hebao/auth_web?go=45195458",
-          imgUrl: "/static/img/juanpi1/1.jpg"
+            "https://mall.joypay.cn/cm-mall/goods/explosionThirtyOne.do?1=1",
+          imgUrl: "/static/img/heyue2/1.jpg"
         },
         {
-          name: "亿动5号专用足球",
-          price: "29.00 ",
-          url:
-            "https://union.juanpi.com/cpsfollow/call_url?utm=2176176&target=https://muser.juanpi.com/hebao/auth_web?go=52695234",
-          imgUrl: "/static/img/juanpi1/2.jpg"
+          name: "日本SANTEN-FX参天清凉滴眼液  银色NEO12ml",
+          price: "69.00 ",
+          url: "https://mall.joypay.cn/cm-mall/goods/explosionThirtyTwo.do?1=1",
+          imgUrl: "/static/img/heyue2/2.jpg"
         },
         {
-          name: "乔丹格兰男运动足球鞋",
-          price: "89.00 ",
-          url:
-            "https://union.juanpi.com/cpsfollow/call_url?utm=2176177&target=https://muser.juanpi.com/hebao/auth_web?go=47775535",
-          imgUrl: "/static/img/juanpi1/3.jpg"
+          name: "atreus 泰国VC爽肤水",
+          price: "49.00 ",
+          url: "https://mall.joypay.cn/cm-mall/goods/explosionThirtyThree.do?1=1",
+          imgUrl: "/static/img/heyue2/3.jpg"
         },
         {
-          name: "雪花啤酒冰酷拉罐330ml*24听",
-          price: "44.90 ",
-          url:
-            "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000131257768?state=1",
-          imgUrl: "/static/img/suning1/1.jpg"
+          name: " 佳佰 强力吸壁风筒架吸盘壁挂吹风机架免打孔 电吹风置物架浴室卫生间风筒收纳架",
+          price: "9.90",
+          url: "https://cmpay.jdcloud.com/jd/product/sku_view.jsp?skuId=4755653&",
+          imgUrl: "/static/img/jingdong2/1.jpg"
         },
         {
-          name:
-            "百草味（BE&CHEERY）牛肉粒(五香味)100g/包*5包 牛肉粒 五香味 百草味出品",
-          price: "88.00 ",
-          url:
-            "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000780000894?state=1",
-          imgUrl: "/static/img/suning1/2.jpg"
+          name: "佳佰 陶瓷水杯情侣杯办公咖啡杯花茶杯 时尚礼物马克杯",
+          price: "9.90",
+          url: "https://cmpay.jdcloud.com/jd/product/sku_view.jsp?skuId=5180963&",
+          imgUrl: "/static/img/jingdong2/2.jpg"
         },
         {
-          name:
-            "百草味（BE&CHEERY）仁仁果缤纷果仁175g/盒 坚果 混合果仁 百草味出品",
-          price: "34.50 ",
-          url:
-            "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000780000866?state=1",
-          imgUrl: "/static/img/suning1/3.jpg"
+          name: "佳佰 纯棉毛巾 素色子母纱全棉加厚柔软吸水面巾 青色34cm*74cm/120克/条",
+          price: "9.90",
+          url: "https://cmpay.jdcloud.com/jd/product/sku_view.jsp?skuId=7487700&",
+          imgUrl: "/static/img/jingdong2/3.jpg"
+        },
+        {
+          name: "雷瓦独立浮动三刀头电动剃须VT67",
+          price: "119.00",
+          url: "https://h.umfintech.com/mallweb/h5hb/goodsdetail/664/8001.htm?",
+          imgUrl: "/static/img/juu2/1.png"
+        },
+        {
+          name: "乐仕菲斯厨房工具五件套RS503T",
+          price: "60.00 ",
+          url: "https://h.umfintech.com/mallweb/h5hb/goodsdetail/541/8001.htm?",
+          imgUrl: "/static/img/juu2/2.jpg"
+        },
+        {
+          name: "国美电吹风家用型时尚风筒 GM172",
+          price: "75.00 ",
+          url: "https://h.umfintech.com/mallweb/h5hb/goodsdetail/003/8011.htm?",
+          imgUrl: "/static/img/juu2/3.jpg"
+        },
+        {
+          name: "先锋(Singfun）FS40-11G大风量电风扇/落地扇",
+          price: "99.00 ",
+          url: "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000102364525?state=1",
+          imgUrl: "/static/img/suning2/1.jpg"
+        },
+        {
+          name: "维达（Vinda） 卷纸 超韧四层180g*10卷卫生纸",
+          price: "25.90 ",
+          url: "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000104038134?state=1",
+          imgUrl: "/static/img/suning2/2.jpg"
+        },
+        {
+          name: "蓝月亮洗衣液套餐 2kg瓶*2+1kg袋*2 超值大包装",
+          price: "79.90 ",
+          url: "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000189562270?state=1",
+          imgUrl: "/static/img/suning2/3.jpg"
+        },
+        {
+          name: "颈椎牵引器治疗器",
+          price: "58.00 ",
+          url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=395",
+          imgUrl: "/static/img/hhs2/1.jpg"
+        },
+        {
+          name: "陈年无烟手工艾条批发49枚",
+          price: "22.80 ",
+          url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=200",
+          imgUrl: "/static/img/hhs2/2.jpg"
+        },
+        {
+          name: "可孚血压计",
+          price: "108.00 ",
+          url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=427",
+          imgUrl: "/static/img/hhs2/3.jpg"
+        },
+        {
+          name: "双层纯棉面巾",
+          price: "22.80",
+          url: "https://huadupay.com/HebaoLogin?page=detail&id=278",
+          imgUrl: "/static/img/dxa2/1.jpg"
+        },
+        {
+          name: "千惠荞麦枕",
+          price: "88.00",
+          url: "https://huadupay.com/HebaoLogin?page=detail&id=263",
+          imgUrl: "/static/img/dxa2/2.jpg"
+        },
+        {
+          name: "全棉夏薄被",
+          price: "228.00",
+          url: "https://huadupay.com/HebaoLogin?page=detail&id=225",
+          imgUrl: "/static/img/dxa2/3.jpg"
+        },
+        {
+          name: "钙尔奇维生素D钙软胶囊(促销装)",
+          price: "79.00",
+          url: "http://enjoy.changyuelife.com/app/index.php?i=4&c=entry&m=shop&do=mobile&r=goods.detail&id=335874",
+          imgUrl: "/static/img/dsl2/1.jpg"
+        },
+        {
+          name: "气血康口服液(云南白药)",
+          price: "79.00",
+          url: "http://enjoy.changyuelife.com/app/index.php?i=4&c=entry&m=shop&do=mobile&r=goods.detail&id=336518",
+          imgUrl: "/static/img/dsl2/2.jpg"
+        },
+        {
+          name: "舒适达专业修复牙膏",
+          price: "39.00",
+          url: "http://enjoy.changyuelife.com/app/index.php?i=4&c=entry&m=shop&do=mobile&r=goods.detail&id=336891",
+          imgUrl: "/static/img/dsl2/3.jpg"
+        },
+        {
+          name: "公牛 全球通用旅行插座转换器（有USB）",
+          price: "70.00",
+          url: "http://www.ylife.cn/mobile/item/12369.html?storeId=215",
+          imgUrl: "/static/img/huazhu2/1.jpg"
+        },
+        {
+          name: "拉芳 商旅洗护便携套装（柔顺系列）",
+          price: "30.00",
+          url: "http://www.ylife.cn/mobile/item/12725.html?storeId=215",
+          imgUrl: "/static/img/huazhu2/2.jpg"
+        },
+        {
+          name: "大润窑 休闲牛奶杯（酒店推荐）",
+          price: "15.00",
+          url: "http://www.ylife.cn/mobile/item/12061.html?storeId=215",
+          imgUrl: "/static/img/huazhu2/3.jpg"
+        },
+        {
+          name: "腾讯视频超级影视VIP月卡",
+          price: "27.00",
+          url: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131",
+          imgUrl: "/static/img/tencet/1.jpg"
+        },
+        {
+          name: "腾讯视频超级影视VIP季卡",
+          price: "76.50",
+          url: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521150919",
+          imgUrl: "/static/img/tencet/1.jpg"
+        },
+        {
+          name: "腾讯视频超级影视VIP年卡",
+          price: "297.00",
+          url: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521151310",
+          imgUrl: "/static/img/tencet/1.jpg"
+        },
+        {
+          name: "习近平用典 （第二辑）",
+          price: "49.00",
+          url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=473",
+          imgUrl: "/static/img/rmrb/1.jpg"
+        },
+        {
+          name: "不忘初心 牢记使命：党的十九大精神党员学习工作笔记",
+          price: "29.00",
+          url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=461",
+          imgUrl: "/static/img/rmrb/2.jpg"
+        },
+        {
+          name: " “中国梦·中国道路”丛书",
+          price: "280.00",
+          url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=446",
+          imgUrl: "/static/img/rmrb/3.jpg"
+        },
+        {
+          name: "乳胶慢回弹记忆枕",
+          price: "37.00",
+          url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=84114345&",
+          imgUrl: "/static/img/juanpi2/1.jpg"
+        },
+        {
+          name: "夏装时尚休闲两件套女",
+          price: "39.90",
+          url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=85431727&",
+          imgUrl: "/static/img/juanpi2/2.jpg"
+        },
+        {
+          name: "夏装韩版时尚两件套女",
+          price: "39.90",
+          url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=82231887&",
+          imgUrl: "/static/img/juanpi2/3.jpg"
         }
       ]
       //   defaultIcon: 'this.src="' + "/static/img/error.png" + '"'

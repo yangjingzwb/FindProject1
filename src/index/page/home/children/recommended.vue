@@ -89,7 +89,7 @@ export default {
         // },
         {
           name: "人气商品低至七折，数量有限，售完为止",
-          url: "/static/img/recommended/7-7.jpg",
+          url: "/static/img/recommended/huazhu.jpg",
           goUrl:
             "http://www.ylife.cn/mobile/subject.htm?subjectId=169&storeId=215"
         },
