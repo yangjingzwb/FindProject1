@@ -21,11 +21,9 @@
       </div>
     </section>
     <!-- 秒杀 -->
-    <section class="s_3 s" @click="goDetail($event,jdBanner,2)">
+    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2)">
       <img :src="jdBanner.marketingIcon" >
-    </section>
-
-          
+    </section>  
            
     <section class="s_5 s" >
       <!-- 附近 -->
