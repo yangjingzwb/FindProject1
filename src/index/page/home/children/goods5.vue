@@ -67,11 +67,20 @@ export default {
         let data = res.Data.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
-        this.data = data.slice(0, 3); // 每个专题必须至少返回3个商品
-        console.log('9999999999999999999')
+        this.data = this.filterObj(data.slice(0, 3)); // 每个专题必须至少返回3个商品
+        
         console.log(this.data)
+        //url
       });
       
+    },
+    filterObj(obj) {
+      for (let i = 0; i < obj.length; i++) {
+        if (obj[i].Detail_Url) {
+          obj[i].url = obj[i].Detail_Url
+        }
+      }
+      return obj;
     },
     goDetail(event, obj, flag) {
       // alert(JSON.stringify(obj))

@@ -69,9 +69,17 @@ export default {
         let data = res.goods.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
-        this.data = data.slice(0, 3); // 每个专题必须至少返回3个商品
+        this.data = this.filterObj(data.slice(0, 3)); // 每个专题必须至少返回3个商品
       });
       
+    },
+    filterObj(obj) {
+      for (let i = 0; i < obj.length; i++) {
+        if (obj[i].linkurl) {
+          obj[i].url = obj[i].linkurl
+        }
+      }
+      return obj;
     },
     goDetail(event, obj, flag) {
       // alert(JSON.stringify(obj))
