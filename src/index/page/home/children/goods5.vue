@@ -63,7 +63,7 @@ export default {
       param_.sign = setMd5HY(param_)
       // 多喜爱商品接口
       //https://huadupay.com/Interface/GetShopInfo?baseUrl=0
-     axios.get("GetShopInfo").then(res => {
+     axios.get("https://huadupay.com/Interface/GetShopInfo?baseUrl=0").then(res => {
         let data = res.Data.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
