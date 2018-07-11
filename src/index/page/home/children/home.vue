@@ -166,7 +166,7 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
         })
         .then(res => {
-          this.jdBanner = res.data[0];
+          this.jdBanner = res.data && res.data.length>0 ? res.data[0] : {};
         });
     },
     changeIscrollY(flag) {
@@ -333,6 +333,7 @@ export default {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
+            console.log(this.shopList)
             setTimeout(() => {
               this.SHOWLOADING(false);
             }, 300);
