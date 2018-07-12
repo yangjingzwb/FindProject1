@@ -55,11 +55,11 @@ export default {
         //   goUrl:
         //     "https://dmp-data.vip.com/ndl?tra_from=tra%3A75gpn5yd%3A%3A%3A%3A"
         // },
-        {
-          name: "激情一夏，唯品会助力世界杯百万好物爽看球",
-          url: "/static/img/recommended/7-2.jpg",
-          goUrl: "https://dmp-data.vip.com/ndl?tra_from=tra%3A6viye9gn%3A%3A%3A%3A"
-        },
+        // {
+        //   name: "激情一夏，唯品会助力世界杯百万好物爽看球",
+        //   url: "/static/img/recommended/7-2.jpg",
+        //   goUrl: "https://dmp-data.vip.com/ndl?tra_from=tra%3A6viye9gn%3A%3A%3A%3A"
+        // },
         {
           name: "夏季爆款秒杀，和包专享特价购不停",
           url: "/static/img/recommended/7-3.jpg",
