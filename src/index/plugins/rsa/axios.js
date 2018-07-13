@@ -47,7 +47,8 @@ axios.interceptors.request.use(config => {
 })
 // http响应拦截器
 axios.interceptors.response.use(data => { // 响应成功关闭loading
-    return data.data
+    let res = data.data ? JSON.stringify(data.data).replace(/<|>/g,''):JSON.stringify({})
+    return JSON.parse(res)
 }, error => {
     return Promise.reject(error)
 })
