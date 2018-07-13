@@ -161,9 +161,15 @@ export default {
         },
         {
           name: "蓝月亮洗衣液套餐 2kg瓶*2+1kg袋*2 超值大包装",
-          price: "79.90 ",
+          price: "79.90",
           url: "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000189562270?state=1",
           imgUrl: "/static/img/suning2/3.jpg"
+        },
+        {
+          name: "苏宁易购-豆本豆 原味豆奶250ml6",
+          price: "18.00",
+          url: "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000623443666?state=1",
+          imgUrl: "/static/img/suning2/4.jpg"
         },
         {
           name: "颈椎牵引器治疗器",
