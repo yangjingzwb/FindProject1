@@ -278,7 +278,7 @@ export default {
       try {
         fetchPoints(
           "search",
-          this.searchT,
+          this.searchT.replace(/<|>|'|%|\(|\)|&|\+/g,''),
           this.token.productNo,
           "搜索页面，点击搜索",
           this.token.session.replace(/\+/g, "%2B")
@@ -327,7 +327,7 @@ export default {
           this.shopListFlag = true
           return
         }
-        this.searchT =  this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g,'');
+        this.searchT =  this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g,'').replace(/<|>|'|%|\(|\)|&|\+/g,'');
       }
   }
   // props:['activeIcon']
