@@ -147,12 +147,12 @@ export default {
           url: "https://h.umfintech.com/mallweb/h5hb/goodsdetail/003/8011.htm?",
           imgUrl: "/static/img/juu2/3.jpg"
         },
-        {
-          name: "先锋(Singfun）FS40-11G大风量电风扇/落地扇",
-          price: "99.00 ",
-          url: "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000102364525?state=1",
-          imgUrl: "/static/img/suning2/1.jpg"
-        },
+        // {
+        //   name: "先锋(Singfun）FS40-11G大风量电风扇/落地扇",
+        //   price: "99.00 ",
+        //   url: "https://sn.51hive.com:7787/Repeater/GoodsDetail/160000000000000102364525?state=1",
+        //   imgUrl: "/static/img/suning2/1.jpg"
+        // },
         {
           name: "维达（Vinda） 卷纸 超韧四层180g*10卷卫生纸",
           price: "25.90 ",
