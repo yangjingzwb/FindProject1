@@ -66,12 +66,12 @@ export default {
           goUrl:
             "https://cmpay.jdcloud.com/jd/hd/13.jsp"
         },
-        {
-          name: "卷皮限量快抢，精选好货，每日准时秒杀开抢",
-          url: "/static/img/recommended/7-4.jpg",
-          goUrl:
-            "https://union.juanpi.com/cpsfollow/call_url?utm=2176175&target=https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=act"
-        },
+        // {
+        //   name: "卷皮限量快抢，精选好货，每日准时秒杀开抢",
+        //   url: "/static/img/recommended/7-4.jpg",
+        //   goUrl:
+        //     "https://union.juanpi.com/cpsfollow/call_url?utm=2176175&target=https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=act"
+        // },
         {
           name: "苏宁易购七月活动专场，助您清凉一夏",
           url: "/static/img/recommended/7-5.jpg",
@@ -103,21 +103,21 @@ export default {
           url: "/static/img/recommended/7-9.jpg",
           goUrl: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521145131"
         },
-        {
-          name: "反季“巨划算”，家纺2折疯抢，一起打造轻奢时尚",
-          url: "/static/img/recommended/7-10.jpg",
-          goUrl: "https://huadupay.com/HebaoLogin?page=special&ID=15"
-        },
+        // {
+        //   name: "反季“巨划算”，家纺2折疯抢，一起打造轻奢时尚",
+        //   url: "/static/img/recommended/7-10.jpg",
+        //   goUrl: "https://huadupay.com/HebaoLogin?page=special&ID=15"
+        // },
         {
           name: "领满120减15券，为爱疯狂Go",
           url: "/static/img/recommended/7-11.jpg",
           goUrl: "http://enjoy.changyuelife.com/app/index.php?i=4&c=entry&m=shop&do=mobile&r=diypage&id=9053"
-        },
-        {
-          name: "党建宣传新阵地，中国故事，砥砺前行",
-          url: "/static/img/recommended/7-12.jpg",
-          goUrl: "https://hb.iredmall.com/HebaoLogin?page=special&id=25"
         }
+        // {
+        //   name: "党建宣传新阵地，中国故事，砥砺前行",
+        //   url: "/static/img/recommended/7-12.jpg",
+        //   goUrl: "https://hb.iredmall.com/HebaoLogin?page=special&id=25"
+        // }
         // ,
         // {
         //   name: "爱宝贝、爱家人；爱在端午， 尖货秒杀季",

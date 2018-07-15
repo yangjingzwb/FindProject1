@@ -189,24 +189,24 @@ export default {
           url: "https://h5shop.hhs16.com/HebaoLogin?page=detail&id=427",
           imgUrl: "/static/img/hhs2/3.jpg"
         },
-        {
-          name: "双层纯棉面巾",
-          price: "22.80",
-          url: "https://huadupay.com/HebaoLogin?page=detail&id=278",
-          imgUrl: "/static/img/dxa2/1.jpg"
-        },
-        {
-          name: "千惠荞麦枕",
-          price: "88.00",
-          url: "https://huadupay.com/HebaoLogin?page=detail&id=263",
-          imgUrl: "/static/img/dxa2/2.jpg"
-        },
-        {
-          name: "全棉夏薄被",
-          price: "228.00",
-          url: "https://huadupay.com/HebaoLogin?page=detail&id=225",
-          imgUrl: "/static/img/dxa2/3.jpg"
-        },
+        // {
+        //   name: "双层纯棉面巾",
+        //   price: "22.80",
+        //   url: "https://huadupay.com/HebaoLogin?page=detail&id=278",
+        //   imgUrl: "/static/img/dxa2/1.jpg"
+        // },
+        // {
+        //   name: "千惠荞麦枕",
+        //   price: "88.00",
+        //   url: "https://huadupay.com/HebaoLogin?page=detail&id=263",
+        //   imgUrl: "/static/img/dxa2/2.jpg"
+        // },
+        // {
+        //   name: "全棉夏薄被",
+        //   price: "228.00",
+        //   url: "https://huadupay.com/HebaoLogin?page=detail&id=225",
+        //   imgUrl: "/static/img/dxa2/3.jpg"
+        // },
         {
           name: "钙尔奇维生素D钙软胶囊(促销装)",
           price: "79.00",
@@ -261,42 +261,42 @@ export default {
           url: "https://www.cmpay.com/mkmweb/wap_produce_detail.xhtml?viewCode=html&PROD_NO=20180521151310",
           imgUrl: "/static/img/tencet/1.jpg"
         },
-        {
-          name: "习近平用典 （第二辑）",
-          price: "49.00",
-          url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=473",
-          imgUrl: "/static/img/rmrb/1.jpg"
-        },
-        {
-          name: "不忘初心 牢记使命：党的十九大精神党员学习工作笔记",
-          price: "29.00",
-          url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=461",
-          imgUrl: "/static/img/rmrb/2.jpg"
-        },
-        {
-          name: " “中国梦·中国道路”丛书",
-          price: "280.00",
-          url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=446",
-          imgUrl: "/static/img/rmrb/3.jpg"
-        },
-        {
-          name: "乳胶慢回弹记忆枕",
-          price: "37.00",
-          url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=84114345&",
-          imgUrl: "/static/img/juanpi2/1.jpg"
-        },
-        {
-          name: "夏装时尚休闲两件套女",
-          price: "39.90",
-          url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=85431727&",
-          imgUrl: "/static/img/juanpi2/2.jpg"
-        },
-        {
-          name: "夏装韩版时尚两件套女",
-          price: "39.90",
-          url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=82231887&",
-          imgUrl: "/static/img/juanpi2/3.jpg"
-        }
+        // {
+        //   name: "习近平用典 （第二辑）",
+        //   price: "49.00",
+        //   url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=473",
+        //   imgUrl: "/static/img/rmrb/1.jpg"
+        // },
+        // {
+        //   name: "不忘初心 牢记使命：党的十九大精神党员学习工作笔记",
+        //   price: "29.00",
+        //   url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=461",
+        //   imgUrl: "/static/img/rmrb/2.jpg"
+        // },
+        // {
+        //   name: " “中国梦·中国道路”丛书",
+        //   price: "280.00",
+        //   url: "https://hb.iredmall.com/HebaoLogin?page=detail&id=446",
+        //   imgUrl: "/static/img/rmrb/3.jpg"
+        // }
+        // {
+        //   name: "乳胶慢回弹记忆枕",
+        //   price: "37.00",
+        //   url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=84114345&",
+        //   imgUrl: "/static/img/juanpi2/1.jpg"
+        // },
+        // {
+        //   name: "夏装时尚休闲两件套女",
+        //   price: "39.90",
+        //   url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=85431727&",
+        //   imgUrl: "/static/img/juanpi2/2.jpg"
+        // },
+        // {
+        //   name: "夏装韩版时尚两件套女",
+        //   price: "39.90",
+        //   url: "https://web.juanpi.com/html/hebaologin.html?utm=2176175&go=82231887&",
+        //   imgUrl: "/static/img/juanpi2/3.jpg"
+        // }
       ]
       //   defaultIcon: 'this.src="' + "/static/img/error.png" + '"'
     };
