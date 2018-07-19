@@ -11,12 +11,13 @@ let baseUrl = {}; // // 环境
 let routerMode = 'hash'; // hash history
 let imgBaseUrl = '';
 console.log(process.env.NODE_ENV)
-const debug = 2 // process.env.NODE_ENV !== 'production'
+const debug = 1 // process.env.NODE_ENV !== 'production'
 
 
 // 配置环境
 if (debug == 1) { //生产
-    baseUrl.api = 'http://211.138.236.219:9103/rcServer/';
+    // baseUrl.api = 'http://211.138.236.219:9103/rcServer/';
+    baseUrl.api = 'http://113.108.79.80:3020/rcServer/';
     baseUrl.img = 'https://mca.cmpay.com:28710'
     // baseUrl.img = 'http://211.138.236.210:18480'
 } else if (debug == 0) { //准生产

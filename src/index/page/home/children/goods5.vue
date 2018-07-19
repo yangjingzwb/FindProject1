@@ -13,7 +13,7 @@
               <li class="text">
                 {{item.Name}}
               </li>
-              <li>
+              <li class="sub">
                 <span class="price">¥{{(item.Price)}}</span>
                 <span class="linePrice">¥{{(item.Original_Price)}}</span>
               </li>
@@ -52,24 +52,23 @@ export default {
         "position": "MIDDLE",
         "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       }).then((res)=>{
-        this.banner = res.data.length>=3 ? res.data[2] : res.data[0]
-      })
+        this.banner = res.data.length>=2 ? res.data[1] : res.data[0]
+      });
 
       let param_ = {
         "channel":10197,
-        "requestId":getUUID(),
-      }
+        "requestId":getUUID()
+      };
 
-      param_.sign = setMd5HY(param_)
+      param_.sign = setMd5HY(param_);
       // 多喜爱商品接口
       //https://huadupay.com/Interface/GetShopInfo?baseUrl=0
      axios.get("https://huadupay.com/Interface/GetShopInfo?baseUrl=0").then(res => {
         let data = res.Data.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
-        this.data = this.filterObj(data.slice(0, 3)); // 每个专题必须至少返回3个商品
-        
-        console.log(this.data)
+        this.data = this.filterObj(data.slice(0, 3)); // 每个专题必须至少返回3个商品 
+        // console.log(this.data)
         //url
       });
       
@@ -136,6 +135,7 @@ export default {
       // border: 1px solid #D8D8D8;
     }
     .text {
+      text-indent: .3rem;
       font-size: .75rem;
       color: #13252e;
       font-family: PingFangSC-Light;
@@ -159,6 +159,9 @@ export default {
     }
     .u2 {
       padding-bottom: 1.4375rem;
+    }
+    .sub {
+      text-indent: .3rem;
     }
   }
 }

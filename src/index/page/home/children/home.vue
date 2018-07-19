@@ -40,9 +40,9 @@
         @goDetail="goDetail"
       ></goods1>
       <!-- 卷皮专题营销位 -->
-      <goods4
+<!--       <goods4
         @goDetail="goDetail"
-      ></goods4>
+      ></goods4> -->
       <!-- 多喜爱专题营销位 -->
       <goods5
         @goDetail="goDetail"
@@ -78,7 +78,7 @@ import { baseUrl } from "@@/config/env"; // baseUrl
 // import BScroll from "better-scroll";
 // import Scroll from "@@/components/scroll/scroll.vue";
 import Goods1 from "./goods1.vue";
-import Goods4 from "./goods4.vue";
+// import Goods4 from "./goods4.vue";
 import Goods5 from "./goods5.vue";
 import Goods2 from "./goods2.vue";
 import Near1 from "./near1.vue";
@@ -128,7 +128,7 @@ export default {
     Slider,
     Near1,
     Goods1,
-    Goods4,
+    // Goods4,
     Goods5,
     Goods2
   },

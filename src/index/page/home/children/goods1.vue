@@ -15,7 +15,7 @@
           <li class="text">
             {{item.name}}
           </li>
-          <li>
+          <li class="sub">
             <span class="price">¥{{fenToyuan(item.price)}}</span>
             <span class="linePrice">¥{{fenToyuan(item.marketPrice)}}</span>
           </li>
@@ -59,7 +59,8 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
         })
         .then(res => {
-          this.banner = res.data[0];
+          this.banner = res.data.length>=1 ? res.data[0] : res.data[0]
+          // this.banner = res.data[0];
         });
       let param_ = {
         channel: 10197,
@@ -137,6 +138,7 @@ export default {
       // border: 1px solid #D8D8D8;
     }
     .text {
+      // text-indent: .3rem;
       font-size: 0.75rem;
       color: #13252e;
       font-family: PingFangSC-Light;
@@ -166,6 +168,9 @@ export default {
     }
     .u2 {
       padding-bottom: 1.4375rem;
+    }
+    .sub {
+      text-indent: .3rem;
     }
   }
 }

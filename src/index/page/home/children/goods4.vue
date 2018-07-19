@@ -14,7 +14,7 @@
               <li class="text">
                 {{item.title}}
               </li>
-              <li>
+              <li class="sub">
                 <span class="price">¥{{(item.cprice)}}</span>
                 <span class="linePrice">¥{{(item.oprice)}}</span>
               </li>
@@ -135,6 +135,7 @@ export default {
       // border: 1px solid #D8D8D8;
     }
     .text {
+      text-indent: .3rem;
       font-size: .75rem;
       color: #13252e;
       font-family: PingFangSC-Light;
@@ -158,6 +159,9 @@ export default {
     }
     .u2 {
       padding-bottom: 1.4375rem;
+    }
+    .sub {
+      text-indent: .3rem;
     }
   }
 }

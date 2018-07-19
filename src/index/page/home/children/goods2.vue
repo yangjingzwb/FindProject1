@@ -122,7 +122,7 @@ export default {
     position: relative;
   }
   img {
-    max-width: 100%;
+    width: 100%;
     max-height: 9.75rem;
     display: block;
     top: 50%;
