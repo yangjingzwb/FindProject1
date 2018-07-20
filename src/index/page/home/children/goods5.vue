@@ -5,7 +5,7 @@
       </div>
       <div class="goods">
         <ul class="u1">
-          <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.goodsId">
+          <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.Special_ID">
             <ul class="u2">
               <li class="icon">
                 <img :src="item.Pic">
@@ -61,9 +61,10 @@ export default {
       };
 
       param_.sign = setMd5HY(param_);
-      // 多喜爱商品接口
-      //https://huadupay.com/Interface/GetShopInfo?baseUrl=0
-     axios.get("https://huadupay.com/Interface/GetShopInfo?baseUrl=0").then(res => {
+      // 好护士商品接口
+      // https://h5shop.hhs16.com/Interface/GetShopInfo
+      axios.get("https://h5shop.hhs16.com/Interface/GetShopInfo?baseUrl=0")
+      .then(res => {
         let data = res.Data.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });

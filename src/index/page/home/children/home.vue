@@ -21,9 +21,9 @@
       </div>
     </section>
     <!-- 秒杀 -->
-    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2)">
+    <!-- <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2)">
       <img :src="jdBanner.marketingIcon" >
-    </section>  
+    </section>   -->
            
     <section class="s_5 s" >
       <!-- 附近 -->
@@ -43,7 +43,7 @@
 <!--       <goods4
         @goDetail="goDetail"
       ></goods4> -->
-      <!-- 多喜爱专题营销位 -->
+      <!-- 好护士专题营销位 -->
       <goods5
         @goDetail="goDetail"
       ></goods5>
@@ -100,7 +100,7 @@ export default {
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
       slider_top_click: false,
-      jdBanner: {}
+      // jdBanner: {}
     };
   },
   computed: {},
