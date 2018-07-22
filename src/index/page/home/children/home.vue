@@ -552,7 +552,7 @@ export default {
           latitude: window.LATITUDE, // 维度
           stores_nm: "", // 门店名称
           merc_abbr: "", // 门店简称
-           mblno:this.token.productNo,//用户手机号
+          mblno:this.token.productNo,//用户手机号
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 4,
