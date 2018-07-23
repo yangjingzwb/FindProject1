@@ -99,7 +99,7 @@ export default {
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      slider_top_click: false,
+      slider_top_click: true,
       // jdBanner: {}
     };
   },
