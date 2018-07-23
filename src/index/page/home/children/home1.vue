@@ -149,7 +149,7 @@ export default {
       flag: false,
       shopListFlag: false,
       CURRENTPAGE: 0, // 页码
-      PAGNUM: 8,
+      PAGNUM: 4,
       refTime: "",
       baseImg: baseUrl.img,
       totalInit: 0,
@@ -462,9 +462,10 @@ export default {
           latitude: window.LATITUDE, // 维度
           stores_nm: "", // 门店名称
           merc_abbr: "", // 商户简称
+          mblno:this.token.productNo,//用户手机号
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 8,
+          pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
@@ -588,7 +589,8 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 8,
+          mblno:this.token.productNo,//用户手机号
+          pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
