@@ -209,6 +209,7 @@ export default {
           latitude: window.LATITUDE, // 维度
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, //  商户简称
+          mblno:this.token.productNo,//用户手机号
           // TTXN_CNL: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM,
@@ -301,6 +302,7 @@ export default {
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, // 商户名称
           currentPage: this.CURRENTPAGE, // 当前页数
+          mblno:this.token.productNo,//用户手机号
           pagNum: this.PAGNUM, // 没页条
           // TTXN_CNL: "ROYTEL", // 固定值
           session: this.token.session.replace(/\+/g, "%2B")

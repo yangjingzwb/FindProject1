@@ -40,7 +40,7 @@
         @goDetail="goDetail"
       ></goods1>
       <!-- 卷皮专题营销位 -->
-<!--       <goods4
+    <!--   <goods4
         @goDetail="goDetail"
       ></goods4> -->
       <!-- 好护士专题营销位 -->
@@ -88,7 +88,8 @@ export default {
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      slider_top_click: false,
+      slider_top_click: true,
+      // jdBanner: {}
     };
   },
   computed: {},
@@ -311,6 +312,7 @@ export default {
           latitude: window.LATITUDE, // 维度
           stores_nm: "", // 门店名称
           merc_abbr: "", // 门店简称
+          mblno:this.token.productNo,//用户手机号
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 2,
