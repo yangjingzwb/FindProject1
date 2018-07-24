@@ -59,13 +59,9 @@
 </template>
 
 <script>
-// import headTop from "@@/components/header/head";
-// import footGuide from '@@/components/footer/footGuide'
-// import SlideRender from '@@/components/page-render/slide-render'
-import { mapState, mapMutations } from "vuex";
 
+import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
-// import Scroll from '@@/components/scroll/scroll.vue'
 import axios from "@@/plugins/rsa/axios";
 import {
   fetchPoints,
@@ -75,19 +71,12 @@ import {
   getCode
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
-// import BScroll from "better-scroll";
-// import Scroll from "@@/components/scroll/scroll.vue";
 import Goods1 from "./goods1.vue";
-// import Goods4 from "./goods4.vue";
 import Goods5 from "./goods5.vue";
 import Goods2 from "./goods2.vue";
 import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
-// import Consulting from "./consulting.vue" // 咨询
 import GoodThing from "./goodThing.vue"; // 好物
-
-// console.log(axios);
-// import {cityGuess, hotcity, groupcity} from '../../service/getData'
 
 export default {
   data() {
@@ -100,7 +89,6 @@ export default {
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
       slider_top_click: false,
-      // jdBanner: {}
     };
   },
   computed: {},
@@ -108,10 +96,10 @@ export default {
   mounted() {
     try {
       fetchPoints(
-        "home",
-        "event_1",
+        "010000000000", // 页面索引
+        "010000000000K13", //事件标记
         this.token.productNo,
-        "进入发现频道",
+        "进入发现频道", // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
