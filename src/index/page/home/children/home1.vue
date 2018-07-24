@@ -118,7 +118,7 @@ export default {
       scrollY: true,
       topCat: false,
       scrollbar: false,
-      slider_top_click: false,
+      slider_top_click: true,
       slider_middle_click: true,
       bounce: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
