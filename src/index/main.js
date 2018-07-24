@@ -153,7 +153,7 @@ router.beforeEach((to, from, next) => {
     //?SERVICE=user_ssoservice&VERSION=1.0&PARTNER=80010003&SIGN_TYPE=MD5&CREDTENTIAL=1593305,1502335609,1502336209,1502335609,218.77.2.82,client.cmpay.com&SIGN_DATA=08229a7a638c243bb7ab0a0e67e6d81c&viewCode=html 
     axios.post('queryAccount', {
     }).then((res) => {
-        store.commit('TOKEN', res.data)
+        store.commit('TOKEN', res.data || {})
         if (!res.data || res.data.length <= 0) {
           
         } else {

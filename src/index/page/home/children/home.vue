@@ -11,7 +11,7 @@
                 <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
-                        <a  @click="goDetail($event,item,2)" >
+                        <a  @click="goDetail($event,item,2,'top')" >
                             <img :src="item.marketingIcon">
                         </a>
                     </div>
@@ -21,7 +21,7 @@
       </div>
     </section>
     <!-- 秒杀 -->
-    <!-- <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2)">
+    <!-- <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2,'jd')">
       <img :src="jdBanner.marketingIcon" >
     </section>   -->
            
@@ -40,7 +40,7 @@
         @goDetail="goDetail"
       ></goods1>
       <!-- 卷皮专题营销位 -->
-    <!--   <goods4
+      <!--   <goods4
         @goDetail="goDetail"
       ></goods4> -->
       <!-- 好护士专题营销位 -->
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
@@ -88,7 +87,7 @@ export default {
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      slider_top_click: true,
+      slider_top_click: true
       // jdBanner: {}
     };
   },
@@ -154,7 +153,7 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
         })
         .then(res => {
-          this.jdBanner = res.data && res.data.length>0 ? res.data[0] : {};
+          this.jdBanner = res.data && res.data.length > 0 ? res.data[0] : {};
         });
     },
     changeIscrollY(flag) {
@@ -212,16 +211,27 @@ export default {
       window.location = url;
     },
 
-    goDetail(event, obj, flag) {
+    goDetail(event, obj, flag, channel = 'default') {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
-        fetchPoints(
-          "home",
-          "event_2",
-          this.token.productNo,
-          obj.marketingPosition || obj.STORES_NM || obj.name || obj.title,
-          this.token.session.replace(/\+/g, "%2B")
-        );
+        if(channel == 'jd'){
+          fetchPoints(
+            "010000000000",
+            "010000000000K10",
+            this.token.productNo,
+            "京东轮播banner",
+            this.token.session.replace(/\+/g, "%2B")
+          );
+        }else if (channel == 'top'){
+          // banner图埋点
+          fetchPoints(
+            "010000000000",
+            "010000000000K08",
+            this.token.productNo,
+            "顶部banner" + "-" + obj.marketingTitle,
+            this.token.session.replace(/\+/g, "%2B")
+          );
+        }
       } catch (e) {}
 
       let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
@@ -312,7 +322,7 @@ export default {
           latitude: window.LATITUDE, // 维度
           stores_nm: "", // 门店名称
           merc_abbr: "", // 门店简称
-          mblno:this.token.productNo,//用户手机号
+          mblno: this.token.productNo, //用户手机号
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 2,
@@ -322,7 +332,7 @@ export default {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
-            console.log(this.shopList)
+            console.log(this.shopList);
             setTimeout(() => {
               this.SHOWLOADING(false);
             }, 300);

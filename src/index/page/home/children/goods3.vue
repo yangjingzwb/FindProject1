@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { GetDistance, setMd5 } from "@@/service/util";
+import { fetchPoints,GetDistance, setMd5 } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
@@ -77,19 +77,27 @@ export default {
         });
     },
     // 处理数据
-    dealData(data){
-      let res = []
-      let obj={}
-      for(let i=0;i<data.length;i++){
-        obj  = data[i]
-        obj.imageUrls = obj.imageUrls.replace(/,$/,'').split(',')
-        res.push(obj)
+    dealData(data) {
+      let res = [];
+      let obj = {};
+      for (let i = 0; i < data.length; i++) {
+        obj = data[i];
+        obj.imageUrls = obj.imageUrls.replace(/,$/, "").split(",");
+        res.push(obj);
       }
-      console.log('99998888')
-      console.log(res)
-      return res
+      console.log("99998888");
+      console.log(res);
+      return res;
     },
     goDetail(event, obj, flag) {
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K10", //事件标记
+        this.token.productNo,
+        "京东咨询-" + obj.title, // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
+
       this.$emit("goDetail", event, obj, flag);
     }
   }
@@ -118,8 +126,8 @@ export default {
   }
   .icon {
     height: 12.5rem;
-    padding-left: .75rem;
-    padding-right: .75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
   .left {
     width: 70%;
@@ -134,26 +142,26 @@ export default {
     float: right;
     img {
       height: 6.1875rem;
-      padding-left: .125rem;
+      padding-left: 0.125rem;
     }
     img.i2 {
-      margin-top: .125rem;
+      margin-top: 0.125rem;
     }
   }
   img {
     display: -webkit-box;
     width: 100%;
     height: 12.5rem;
-    border-radius: .3125rem;
+    border-radius: 0.3125rem;
     box-sizing: border-box;
   }
   .text {
     color: #13252e;
-    font-size: .9375rem;
+    font-size: 0.9375rem;
     font-family: PingFangSC-Regular;
-    padding-left: .75rem;
-    margin-top: .3125rem;
-    margin-bottom: .9375rem;
+    padding-left: 0.75rem;
+    margin-top: 0.3125rem;
+    margin-bottom: 0.9375rem;
   }
 }
 </style>

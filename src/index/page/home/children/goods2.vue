@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import { GetDistance } from "@@/service/util";
+import { fetchPoints, GetDistance } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
-     data:[]
+      data: []
     };
   },
   computed: {
@@ -36,28 +36,35 @@ export default {
   },
 
   mounted() {
-    this.init()
+    this.init();
   },
-  created() {
-    
-  },
+  created() {},
 
-  components: {
-  },
+  components: {},
 
   methods: {
-    init(){
-      axios.post('queryMarketing',{
-        "position": "RECOMMEND",
-        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-      }).then((res)=>{
-        this.data = res.data
-        console.log(this.data)
-      })
+    init() {
+      axios
+        .post("queryMarketing", {
+          position: "RECOMMEND",
+          session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+        })
+        .then(res => {
+          this.data = res.data;
+          console.log(this.data);
+        });
     },
     goDetail(event, obj, flag) {
+      // 埋点-为你推荐
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K05", //事件标记
+        this.token.productNo,
+        "为你推荐-"+obj.marketingTitle, // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       this.$emit("goDetail", event, obj, flag);
-    },
+    }
   }
 };
 </script>
@@ -65,13 +72,13 @@ export default {
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
 .goods-2 {
-  padding-left: .5rem;
-  padding-right: .5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   .title {
     height: 3.0625rem;
     line-height: 3.0625rem;
     text-align: center;
-    font-size: .9375rem;
+    font-size: 0.9375rem;
     color: #13252e;
     font-family: PingFangSC-Regular;
     background-image: url(/static/img/2-11.png);
@@ -81,37 +88,37 @@ export default {
     // padding-bottom: .25rem;
     overflow: hidden;
   }
-  .u2{
-     overflow: hidden;
+  .u2 {
+    overflow: hidden;
   }
   .u1 > li {
     height: 14.4rem;
     width: 50%;
     float: left;
-    padding:0 .5rem 0 .5rem;
+    padding: 0 0.5rem 0 0.5rem;
     margin-bottom: 1.125rem;
     overflow: hidden;
   }
   .text {
-    font-size: .8125rem;
+    font-size: 0.8125rem;
     color: #13252e;
     font-family: PingFangSC-Light;
     white-space: normal !important;
-    letter-spacing: .0625rem;
-    line-height: .9375rem;
+    letter-spacing: 0.0625rem;
+    line-height: 0.9375rem;
     display: -webkit-box;
     /* autoprefixer: ignore next */
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    margin-top: .625rem;
+    margin-top: 0.625rem;
   }
   .price {
-    font-size: .9375rem;
+    font-size: 0.9375rem;
     color: #c11325;
     font-family: PingFangSC-Regular;
-    margin-top: .3125rem;
+    margin-top: 0.3125rem;
   }
   li.icon {
     max-height: 9.75rem;
@@ -128,7 +135,7 @@ export default {
     top: 50%;
     left: 50%;
     position: absolute;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     // border: 1px solid #D8D8D8;
   }
 }

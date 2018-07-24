@@ -46,7 +46,7 @@ export const fetchPoints = (parent_title, sub_title, phone, remark, session) => 
    
     axios.post('collectOpera', {
         "channel": /iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android", // 渠道> android、ios、html5
-        "parent_title": window.location.hash||parent_title, // 父标题
+        "parent_title": parent_title, // 父标题
         "sub_title": sub_title, //子 标题
         "phone": phone, // 手机号
         "remark": remark, // 备注

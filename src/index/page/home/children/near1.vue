@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import {
-  GetDistance
-} from "@@/service/util";
+import { mapState, mapMutations } from "vuex";
+import { fetchPoints, GetDistance } from "@@/service/util";
+
 import Scroll from "@@/components/scroll/scroll.vue";
 // import { baseUrl } from "@@/config/env"; // baseUrl
 
@@ -64,7 +64,9 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(["token"])
+  },
 
   mounted() {},
   created() {},
@@ -72,9 +74,6 @@ export default {
   components: {
     Scroll
   },
-
-  computed: {},
-
   methods: {
     aginEnter() {
       this.$emit("aginEnter");
@@ -86,10 +85,24 @@ export default {
     },
 
     goDetail(event, obj, flag) {
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K06", //事件标记
+        this.token.productNo,
+        "附近商户-" + obj.STORES_NM, // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       this.$emit("goDetail", event, obj, flag);
     },
     // 更多优惠
-    goMorePer(){
+    goMorePer() {
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K07", //事件标记
+        this.token.productNo,
+        "更多优惠按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       this.$router.push("/home1");
     }
   }
@@ -98,44 +111,44 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-.t-4{
+.t-4 {
   // width: 1.125rem;
   height: 100%;
   font-family: PingFangSC-Regular;
-  font-size: .75rem;
+  font-size: 0.75rem;
   position: absolute;
   right: 0;
   padding-right: 1.5rem;
-  color:#888888;
-  top:0;
-  background-image: url('/static/img/2-10.png');
+  color: #888888;
+  top: 0;
+  background-image: url("/static/img/2-10.png");
   background-repeat: no-repeat;
   background-position: 100%;
   background-position: 85% 47%;
   background-size: auto 30%;
 }
 
-.t-2{
+.t-2 {
   position: relative;
   height: 2.875rem;
   text-align: center;
   position: relative;
-  color:#13252E;
+  color: #13252e;
   line-height: 2.875rem;
   font-family: PingFangSC-Regular;
-  font-size: .9375rem;
+  font-size: 0.9375rem;
 }
-.t-4{
+.t-4 {
   // width: 1.125rem;
   height: 100%;
   font-family: PingFangSC-Regular;
-  font-size: .75rem;
+  font-size: 0.75rem;
   position: absolute;
   right: 0;
   padding-right: 1.5rem;
-  color:#888888;
-  top:0;
-  background-image: url('/static/img/2-10.png');
+  color: #888888;
+  top: 0;
+  background-image: url("/static/img/2-10.png");
   background-repeat: no-repeat;
   background-position: 100%;
   background-position: 85% 47%;
@@ -144,28 +157,28 @@ export default {
 .t-2:after {
   @include onepx1(#d8d8d8);
 }
-.t-1{
+.t-1 {
   height: 100%;
   line-height: 2.5625rem;
   width: 9.375rem;
   margin: 0 auto;
-  background-image:url('/static/img/2-5.png');
+  background-image: url("/static/img/2-5.png");
   background-repeat: no-repeat;
   background-position: 100%;
 }
-.t-3{
+.t-3 {
   height: 100%;
   line-height: 2.5625rem;
   width: 4.375rem;
-  color:#888888;
+  color: #888888;
   font-family: PingFangSC-Regular;
-  font-size: .75rem;
+  font-size: 0.75rem;
   margin: 0 auto;
-  background:#fff;
+  background: #fff;
 }
 .nullHeight {
   height: 0.5625rem;
-  background: #F6F7F8;
+  background: #f6f7f8;
 }
 .refresh {
   text-align: center;
@@ -642,7 +655,7 @@ export default {
   float: left;
   width: 100%;
   bottom: 0;
-  background-color: #E6E6E6;
+  background-color: #e6e6e6;
   -webkit-transform-origin: 0, 0;
   transform-origin: 0, 0;
   -webkit-transform: scaleY(0.5);
@@ -652,11 +665,11 @@ export default {
   //   @include onepx1(#d8d8d8);
   // }
 }
-.hr-1:nth-last-child(-1){
+.hr-1:nth-last-child(-1) {
   height: 0;
 }
-.hr-1.height0{
-  height:0!important;
+.hr-1.height0 {
+  height: 0 !important;
 }
 .null {
   height: 3rem;

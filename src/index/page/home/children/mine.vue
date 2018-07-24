@@ -109,15 +109,6 @@ export default {
     }
   },
   mounted() {
-    try {
-      fetchPoints(
-        "mine",
-        "event_4",
-        this.token.productNo,
-        "进入附近商户搜索页",
-        this.token.session.replace(/\+/g, "%2B")
-      );
-    } catch (e) {}
     setTimeout(() => {
       // this.$nextTick(() => {
       this.init();
@@ -153,18 +144,16 @@ export default {
       this.loadMore(true);
     },
     goDetail(event, obj, flag) {
-      // this.SHOWLOADING(true);
       event.stopPropagation();
       event.preventDefault();
       // if (!event._constructed) {
       //   return;
       // }
-      //parent_title, sub_title,phone,remark, session
       fetchPoints(
-        "mine",
-        "event_5",
+        "030000000000", // 页面索引
+        "030000000000K04", //事件标记
         this.token.productNo,
-        "搜索页面，点击"+obj.STORES_NM,
+        "搜索结果列表商户点击-" + obj.STORES_NM, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
 
@@ -190,6 +179,13 @@ export default {
       }
     },
     cancel() {
+      fetchPoints(
+        "030000000000", // 页面索引
+        "030000000000K05", //事件标记
+        this.token.productNo,
+        "搜索页面取消按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       this.$router.go(-1);
     },
     detail(url) {
@@ -209,7 +205,7 @@ export default {
           latitude: window.LATITUDE, // 维度
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, //  商户简称
-          mblno:this.token.productNo,//用户手机号
+          mblno: this.token.productNo, //用户手机号
           // TTXN_CNL: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM,
@@ -238,6 +234,13 @@ export default {
         });
     },
     clear() {
+      fetchPoints(
+        "030000000000", // 页面索引
+        "030000000000K03", //事件标记
+        this.token.productNo,
+        "搜索词清除按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       this.searchT = "";
     },
     init() {
@@ -287,10 +290,10 @@ export default {
       // 埋点
       try {
         fetchPoints(
-          "search",
-          this.searchT,
+          "030000000000", // 页面索引
+          "030000000000K02", //事件标记
           this.token.productNo,
-          "搜索页面，点击搜索",
+          "搜索按钮", // 事件名称
           this.token.session.replace(/\+/g, "%2B")
         );
       } catch (e) {}
@@ -302,7 +305,7 @@ export default {
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, // 商户名称
           currentPage: this.CURRENTPAGE, // 当前页数
-          mblno:this.token.productNo,//用户手机号
+          mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM, // 没页条
           // TTXN_CNL: "ROYTEL", // 固定值
           session: this.token.session.replace(/\+/g, "%2B")
@@ -339,6 +342,13 @@ export default {
         return;
       }
       this.searchT = this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g, "");
+      fetchPoints(
+        "030000000000", // 页面索引
+        "030000000000K01", //事件标记
+        this.token.productNo,
+        "搜索栏-" + this.searchT, // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
     }
   }
   // props:['activeIcon']

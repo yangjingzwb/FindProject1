@@ -31,7 +31,7 @@
                       <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
                           <div v-for="item in slider">
                             <!-- :key="item.marketingId -->
-                              <a  @click="goDetail($event,item,2)" >
+                              <a  @click="goDetail($event,item,2,'top')" >
                                   <img :src="item.marketingIcon">
                               </a>
                           </div>
@@ -43,7 +43,7 @@
 
           <section v-if="slider1 && slider1.length>0" class="s_3 s">
             <ul>
-              <li v-for="item in slider1"  @click="goDetail($event,item)">
+              <li v-for="item in slider1"  @click="goDetail($event,item, undefined, 'classify')">
                 <!-- :key="item.id" -->
                 <img :src="item.marketingIcon" :onerror='defaultIcon'  class="icon" >
                 <span class="text">{{item.marketingTitle}}</span>
@@ -319,7 +319,7 @@ export default {
       // startY = touch.pageY;
       // startX = touch.pageX;
     },
-    goDetail(event, obj, flag) {
+    goDetail(event, obj, flag, channel = "default") {
       // alert(33)
       // if (flag == 2) {
       //   let touch = event.changedTouches[0];
@@ -343,13 +343,23 @@ export default {
       // }
       //埋点 parent_title, sub_title,phone,remark, session
       try {
-        fetchPoints(
-          "index",
-          obj.marketingPosition || obj.STORES_NM,
-          this.token.productNo,
-          "发现页，点击",
-          this.token.session.replace(/\+/g, "%2B")
-        );
+        if (channel == "top") {
+          fetchPoints(
+            "020000000000",
+            "020000000000K01",
+            this.token.productNo,
+            "轮播banner-" + obj.marketingTitle,
+            this.token.session.replace(/\+/g, "%2B")
+          );
+        } else if (channel == "classify") {
+          fetchPoints(
+            "020000000000",
+            "020000000000K02",
+            this.token.productNo,
+            "分类-" + obj.marketingTitle,
+            this.token.session.replace(/\+/g, "%2B")
+          );
+        }
       } catch (e) {}
 
       let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
@@ -462,7 +472,7 @@ export default {
           latitude: window.LATITUDE, // 维度
           stores_nm: "", // 门店名称
           merc_abbr: "", // 商户简称
-          mblno:this.token.productNo,//用户手机号
+          mblno: this.token.productNo, //用户手机号
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 4,
@@ -589,7 +599,7 @@ export default {
           merc_abbr: "", // 门店简称
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
-          mblno:this.token.productNo,//用户手机号
+          mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B")
         })
@@ -863,7 +873,7 @@ export default {
     background-image: url(/static/img/back.png);
     background-repeat: no-repeat;
     background-position: 0.375rem 50%;
-    background-size: 1.10rem;
+    background-size: 1.1rem;
     // padding-right: 0.6rem;
     @include space();
   }

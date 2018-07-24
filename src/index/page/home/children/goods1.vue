@@ -29,7 +29,13 @@
    
 </template>
 <script>
-import { GetDistance, fenToyuan, getUUID, setMd5HY } from "@@/service/util";
+import {
+  fetchPoints,
+  GetDistance,
+  fenToyuan,
+  getUUID,
+  setMd5HY
+} from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
@@ -59,7 +65,7 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
         })
         .then(res => {
-          this.banner = res.data.length>=1 ? res.data[0] : res.data[0]
+          this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
           // this.banner = res.data[0];
         });
       let param_ = {
@@ -77,6 +83,24 @@ export default {
       });
     },
     goDetail(event, obj, flag) {
+      if (flag == 2) {
+        fetchPoints(
+          "010000000000", // 页面索引
+          "010000000000K04", //事件标记
+          this.token.productNo,
+          "和悦专题营销位", // 事件名称
+          this.token.session.replace(/\+/g, "%2B")
+        );
+      }
+      if(flag==4){
+        fetchPoints(
+          "010000000000", // 页面索引
+          "010000000000K04", //事件标记
+          this.token.productNo,
+          "和悦专题营销位-"+obj.name, // 事件名称
+          this.token.session.replace(/\+/g, "%2B")
+        );
+      }
       // alert(JSON.stringify(obj))
       this.$emit("goDetail", event, obj, flag);
     },
@@ -170,7 +194,7 @@ export default {
       padding-bottom: 1.4375rem;
     }
     .sub {
-      text-indent: .3rem;
+      text-indent: 0.3rem;
     }
   }
 }
