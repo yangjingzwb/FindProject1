@@ -235,7 +235,7 @@ export default {
         // directionLockThreshold:10,
         bounce: false,
         // stopPropagation: true,
-        stopPropagation: false,
+        stopPropagation: true,
         click: this.click,
         tap:true
       });

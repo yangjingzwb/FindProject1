@@ -94,7 +94,7 @@ import {
   getCode
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
-import BScroll from "better-scroll";
+// import BScroll from "better-scroll";
 import Scroll from "@@/components/scroll/scroll.vue";
 
 import Near from "./near.vue";
