@@ -8,14 +8,14 @@
           <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.Special_ID">
             <ul class="u2">
               <li class="icon">
-                <img :src="item.Pic">
+                <img :src="item.pic">
               </li>
               <li class="text">
-                {{item.Name}}
+                {{item.name}}
               </li>
               <li class="sub">
-                <span class="price">¥{{(item.Price)}}</span>
-                <span class="linePrice">¥{{(item.Original_Price)}}</span>
+                <span class="price">¥{{(item.price)}}</span>
+                <span class="linePrice">¥{{(item.originalPrice)}}</span>
               </li>
             </ul>
           </li>
@@ -61,15 +61,10 @@ export default {
       };
 
       param_.sign = setMd5HY(param_);
-      // 好护士商品接口
-      // https://h5shop.hhs16.com/Interface/GetShopInfo
-      axios.post("queryGoodsByMerchant", {
-        "merchant": 31,
-        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-        // "session": store.state.token.session.replace(/\+/g, '%2B') // 单点登录返回session
-      })
+      // 唯品会商品接口
+      axios.get("queryGoodsByMerchant?merchant=31")
       .then(res => {
-        let data = res.Data.sort(() => {
+        let data = res.data.sort(() => {
           return Math.random() > 0.5 ? -1 : 1;
         });
         this.data = this.filterObj(data.slice(0, 3)); // 每个专题必须至少返回3个商品 
@@ -80,8 +75,8 @@ export default {
     },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {
-        if (obj[i].Detail_Url) {
-          obj[i].url = obj[i].Detail_Url
+        if (obj[i].detailUrl) {
+          obj[i].url = obj[i].detailUrl
         }
       }
       return obj;
