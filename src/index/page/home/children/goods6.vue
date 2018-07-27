@@ -8,14 +8,14 @@
           <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.Special_ID">
             <ul class="u2">
               <li class="icon">
-                <img :src="item.Pic">
+                <img :src="item.pic">
               </li>
               <li class="text">
                 {{item.Name}}
               </li>
               <li class="sub">
-                <span class="price">¥{{(item.Price)}}</span>
-                <span class="linePrice">¥{{(item.Original_Price)}}</span>
+                <span class="price">¥{{(item.price)}}</span>
+                <span class="linePrice">¥{{(item.originalPrice)}}</span>
               </li>
             </ul>
           </li>
@@ -69,10 +69,10 @@ export default {
         // "session": store.state.token.session.replace(/\+/g, '%2B') // 单点登录返回session
       })
       .then(res => {
-        let data = res.Data.sort(() => {
-          return Math.random() > 0.5 ? -1 : 1;
-        });
-        this.data = this.filterObj(data.slice(0, 3)); // 每个专题必须至少返回3个商品 
+        // let data = res.Data.sort(() => {
+        //   return Math.random() > 0.5 ? -1 : 1;
+        // });
+        this.data = this.filterObj(res.data.slice(0, 3)); // 每个专题必须至少返回3个商品 
         // console.log(this.data)
         //url
       });
@@ -80,8 +80,8 @@ export default {
     },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {
-        if (obj[i].Detail_Url) {
-          obj[i].url = obj[i].Detail_Url
+        if (obj[i].detailUrl) {
+          obj[i].url = obj[i].detailUrl
         }
       }
       return obj;
