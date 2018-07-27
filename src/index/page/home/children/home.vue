@@ -47,6 +47,10 @@
       <goods5
         @goDetail="goDetail"
       ></goods5>
+      <!-- 唯品会专题营销位 -->
+      <goods6
+        @goDetail="goDetail"
+      ></goods6>
       <!-- 为你推荐 -->
       <goods2
         @goDetail="goDetail"
@@ -72,6 +76,7 @@ import {
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Goods1 from "./goods1.vue";
 import Goods5 from "./goods5.vue";
+import Goods6 from "./goods6.vue";
 import Goods2 from "./goods2.vue";
 import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
@@ -118,6 +123,7 @@ export default {
     Goods1,
     // Goods4,
     Goods5,
+    Goods6,
     Goods2
   },
 
