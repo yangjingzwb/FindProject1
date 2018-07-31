@@ -86,7 +86,7 @@ export default {
       if (flag == 2) {
         fetchPoints(
           "010000000000", // 页面索引
-          "010000000000K04", //事件标记
+          "010000000000K03", //事件标记
           this.token.productNo,
           "好护士专题营销位", // 事件名称
           this.token.session.replace(/\+/g, "%2B")
@@ -95,7 +95,7 @@ export default {
       if (flag == 4) {
         fetchPoints(
           "010000000000", // 页面索引
-          "010000000000K04", //事件标记
+          "010000000000K03", //事件标记
           this.token.productNo,
           "好护士专题营销位-" + obj.Name, // 事件名称
           this.token.session.replace(/\+/g, "%2B")

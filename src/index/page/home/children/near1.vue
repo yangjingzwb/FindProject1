@@ -3,7 +3,7 @@
     <div class="nullHeight"></div>
         <div class="t-2" @click="goMorePer()">
             附近优惠
-            <div class="t-4">更多优惠</div>
+            <div class="t-4">更多</div>
             <div class="hr-1"></div>
         </div>
         <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,1)" >
@@ -111,23 +111,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-.t-4 {
-  // width: 1.125rem;
-  height: 100%;
-  font-family: PingFangSC-Regular;
-  font-size: 0.75rem;
-  position: absolute;
-  right: 0;
-  padding-right: 1.5rem;
-  color: #888888;
-  top: 0;
-  background-image: url("/static/img/2-10.png");
-  background-repeat: no-repeat;
-  background-position: 100%;
-  background-position: 85% 47%;
-  background-size: auto 30%;
-}
-
 .t-2 {
   position: relative;
   height: 2.875rem;
@@ -144,15 +127,15 @@ export default {
   font-family: PingFangSC-Regular;
   font-size: 0.75rem;
   position: absolute;
-  right: 0;
-  padding-right: 1.5rem;
-  color: #888888;
+  right: .5rem;
+  padding-right: 1.1rem;
+  color: #7E7E7E;
   top: 0;
-  background-image: url("/static/img/2-10.png");
+  background-image: url("/static/img/more_button.png");
   background-repeat: no-repeat;
   background-position: 100%;
-  background-position: 85% 47%;
-  background-size: auto 30%;
+  background-position: 85% 50%;
+  background-size: auto 25%;
 }
 .t-2:after {
   @include onepx1(#d8d8d8);

@@ -11,7 +11,7 @@
                 <img :src="item.pic">
               </li>
               <li class="text">
-                {{item.Name}}
+                {{item.name}}
               </li>
               <li class="sub">
                 <span class="price">¥{{(item.price)}}</span>
@@ -61,20 +61,15 @@ export default {
       };
 
       param_.sign = setMd5HY(param_);
-      // 好护士商品接口
-      // https://h5shop.hhs16.com/Interface/GetShopInfo
-      axios.post("queryGoodsByMerchant", {
-        "merchant": 31,
-        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-        // "session": store.state.token.session.replace(/\+/g, '%2B') // 单点登录返回session
-      })
+      // 唯品会商品接口
+      // http://113.108.79.80:3020/rcServer/queryGoodsByMerchant?merchant=31
+      axios.get("queryGoodsByMerchant?merchant=31")
       .then(res => {
         // let data = res.Data.sort(() => {
         //   return Math.random() > 0.5 ? -1 : 1;
         // });
         this.data = this.filterObj(res.data.slice(0, 3)); // 每个专题必须至少返回3个商品 
         // console.log(this.data)
-        //url
       });
       
     },
@@ -90,18 +85,18 @@ export default {
       if (flag == 2) {
         fetchPoints(
           "010000000000", // 页面索引
-          "010000000000K04", //事件标记
+          "010000000000K02", //事件标记
           this.token.productNo,
-          "好护士专题营销位", // 事件名称
+          "唯品会专题营销位", // 事件名称
           this.token.session.replace(/\+/g, "%2B")
         );
       }
       if (flag == 4) {
         fetchPoints(
           "010000000000", // 页面索引
-          "010000000000K04", //事件标记
+          "010000000000K02", //事件标记
           this.token.productNo,
-          "好护士专题营销位-" + obj.Name, // 事件名称
+          "唯品会专题营销位-" + obj.Name, // 事件名称
           this.token.session.replace(/\+/g, "%2B")
         );
       }
@@ -149,7 +144,7 @@ export default {
     }
     img {
       display: block;
-      max-width: 6.5625rem;
+      min-width: 6.3rem;
       max-height: 6.5625rem;
       position: absolute;
       top: 50%;
