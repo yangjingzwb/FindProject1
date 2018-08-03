@@ -170,6 +170,7 @@ export default {
       text-align: left;
     }
     .linePrice {
+      display: none;
       font-size: .75rem;
       color: #9b9b9b;
       font-family: PingFangSC-Regular;

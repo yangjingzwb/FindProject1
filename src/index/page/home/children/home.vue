@@ -11,7 +11,7 @@
                 <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
-                        <a  @click="goDetail($event,item,2,'top')" >
+                        <a @click="goDetail($event,item,2,'top')" >
                             <img :src="item.marketingIcon">
                         </a>
                     </div>
@@ -21,9 +21,9 @@
       </div>
     </section>
     <!-- 秒杀 -->
-    <!-- <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2,'jd')">
+    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2,'jd')">
       <img :src="jdBanner.marketingIcon" >
-    </section>   -->
+    </section>  
            
     <section class="s_5 s" >
       <!-- 附近 -->
@@ -43,14 +43,14 @@
       <!--   <goods4
         @goDetail="goDetail"
       ></goods4> -->
-      <!-- 好护士专题营销位 -->
-      <goods5
-        @goDetail="goDetail"
-      ></goods5>
       <!-- 唯品会专题营销位 -->
       <goods6
         @goDetail="goDetail"
       ></goods6>
+      <!-- 好护士专题营销位 -->
+      <goods5
+        @goDetail="goDetail"
+      ></goods5>
       <!-- 为你推荐 -->
       <goods2
         @goDetail="goDetail"
@@ -75,8 +75,8 @@ import {
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Goods1 from "./goods1.vue";
-import Goods5 from "./goods5.vue";
 import Goods6 from "./goods6.vue";
+import Goods5 from "./goods5.vue";
 import Goods2 from "./goods2.vue";
 import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
@@ -92,8 +92,9 @@ export default {
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      slider_top_click: true
-      // jdBanner: {}
+      slider_top_click: true,
+      baseImg: baseUrl.img,
+      jdBanner: {}
     };
   },
   computed: {},
@@ -122,8 +123,8 @@ export default {
     Near1,
     Goods1,
     // Goods4,
-    Goods5,
     Goods6,
+    Goods5,
     Goods2
   },
 
@@ -207,9 +208,9 @@ export default {
     intervalCity() {
       this.cityName1 = window.CITYNAME || "定位中";
     },
-    // defaultIcon(i) {
-    //   this.shopList[i].PIC_URL_1 = "/static/img/error.png";
-    // },
+    defaultIcon(i) {
+      this.shopList[i].PIC_URL_1 = "/static/img/error.png";
+    },
     GetDistance(a, b, c, d) {
       return GetDistance(a, b, c, d);
     },

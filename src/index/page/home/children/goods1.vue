@@ -184,6 +184,7 @@ export default {
       // padding-left: .625rem;
     }
     .linePrice {
+      display: none;
       font-size: 0.75rem;
       color: #9b9b9b;
       font-family: PingFangSC-Regular;
