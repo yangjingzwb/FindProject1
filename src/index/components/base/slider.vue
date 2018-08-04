@@ -29,7 +29,7 @@ export default {
     },
     autoPlay: {
       type: Boolean,
-      default: false
+      default: true
     },
     interval: {
       type: Number,
@@ -63,11 +63,11 @@ export default {
     },
     sliderIndex:{
       type: Number,
-      default: 1
+      default: 0
     },
     loopX:{
       type: Boolean,
-      default: true
+      default: false
     }
   },
   computed: {
@@ -344,11 +344,13 @@ export default {
       width: .3125rem;
       height: .3125rem;
       border-radius: 50%;
-      background: #ccc;
+      // background: #fff;
+      border: 1px solid #fff;
       &.active {
         width: .3125rem;
         border-radius: .3125rem;
         background: #ed1991;
+        border-width:0;
       }
     }
   }
