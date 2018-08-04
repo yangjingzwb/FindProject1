@@ -2,9 +2,9 @@
   <div >
     <section class="s_1">
       <ul>
-        <li class="l t" @click="goBack()">
+        <router-link tag="li" class="l t" to="/"> <!--@click="goBack()"-->
           {{cityName1}}
-        </li>
+        </router-link>
         <li class="l i" @click="done()">
           <span class="icon"><img src="/static/img/1-20.png"></span>
             <button>搜一搜：请输入商户名称</button>

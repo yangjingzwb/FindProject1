@@ -144,7 +144,8 @@ export default {
     }
     img {
       display: block;
-      min-width: 6.3rem;
+      max-width: 6.5625rem;
+      // min-width: 6.3rem;
       max-height: 6.5625rem;
       position: absolute;
       top: 50%;

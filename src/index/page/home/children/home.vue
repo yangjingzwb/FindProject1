@@ -8,7 +8,7 @@
       <div class="scroll content slide-content">
         <div>
             <div class="slider-wrapper">
-                <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
+                <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
                         <a @click="goDetail($event,item,2,'top')" >
@@ -92,7 +92,7 @@ export default {
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
-      slider_top_click: true,
+      slider_top_click: false,
       baseImg: baseUrl.img,
       jdBanner: {}
     };
@@ -406,9 +406,9 @@ div.container::-webkit-scrollbar {
   // height: 3rem;
   // width: 100%;
   // line-height: 3rem;
-  // font-size: 1.125rem;
-  // color:#13252E;
-  // font-family: PingFangSC-Regular;
+  font-size: 1.125rem;
+  color:#13252E;
+  font-family: PingFangSC-Regular;
   // text-align: center;
   width: 100%;
   height: 3rem;
