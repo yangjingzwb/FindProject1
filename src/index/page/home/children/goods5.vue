@@ -52,7 +52,7 @@ export default {
         "position": "MIDDLE",
         "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       }).then((res)=>{
-        this.banner = res.data.length>=2 ? res.data[1] : res.data[0]
+        this.banner = res.data.length>=3 ? res.data[2] : res.data[0]
       });
 
       let param_ = {

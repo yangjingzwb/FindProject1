@@ -21,11 +21,11 @@ if (debug == 1) { //生产
     // baseUrl.img = 'http://211.138.236.210:18480'
 } else if (debug == 0) { //准生产
 
-    baseUrl.api = 'http://211.138.236.219:9103/rcServer/';
+    baseUrl.api = 'http://211.138.236.219:9103/rcServer/'; //生产
     baseUrl.img = 'https://mca.cmpay.com:28710'
 
 } else if (debug == 2) { //综测
-    baseUrl.api = 'http://113.108.79.80:3020/rcServer/';
+    baseUrl.api = 'http://113.108.79.80:3020/rcServer/'; //综测
     baseUrl.img = 'https://mca.cmpay.com:28710'
 
 }else { //客户端模拟
