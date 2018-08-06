@@ -406,12 +406,12 @@ div.container::-webkit-scrollbar {
   // height: 3rem;
   // width: 100%;
   // line-height: 3rem;
-  font-size: 1.125rem;
-  color:#13252E;
-  font-family: PingFangSC-Regular;
   // text-align: center;
   width: 100%;
   height: 3rem;
+  font-size: 1.125rem !important;
+  color:#13252E;
+  font-family: PingFangSC-Regular !important;
   background: #ffffff;
   position: -webkit-sticky;
   position: sticky;
