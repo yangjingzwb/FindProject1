@@ -31,8 +31,8 @@ module.exports = {
         context: [ //代理路径
             '/mock',
         ],
-        // proxypath: 'http://211.138.236.219:9103/',
-        proxypath: 'http://113.108.79.80:3020/',
+        proxypath: 'http://211.138.236.219:9103/',
+        // proxypath: 'http://113.108.79.80:3020/',
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README
         // (https://github.com/webpack/css-loader#sourcemaps)

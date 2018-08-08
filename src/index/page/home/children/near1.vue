@@ -1,9 +1,9 @@
 <template>
   <div >
     <div class="nullHeight"></div>
-        <div class="t-2" @click="goMorePer()">
+        <div class="t-2">
             附近优惠
-            <div class="t-4">更多</div>
+            <div class="t-4" @click="goMorePer()">更多</div>
             <div class="hr-1"></div>
         </div>
         <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,1)" >

@@ -52,7 +52,7 @@ export default {
         "position": "MIDDLE",
         "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       }).then((res)=>{
-        this.banner = res.data.length>=3 ? res.data[2] : res.data[0]
+        this.banner = res.data.length>=2 ? res.data[1] : res.data[0]
       });
 
       let param_ = {
@@ -144,7 +144,8 @@ export default {
     }
     img {
       display: block;
-      min-width: 6.3rem;
+      max-width: 6.5625rem;
+      // min-width: 6.3rem;
       max-height: 6.5625rem;
       position: absolute;
       top: 50%;
@@ -169,6 +170,7 @@ export default {
       text-align: left;
     }
     .linePrice {
+      display: none;
       font-size: .75rem;
       color: #9b9b9b;
       font-family: PingFangSC-Regular;
