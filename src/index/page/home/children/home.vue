@@ -436,7 +436,7 @@ div.container::-webkit-scrollbar {
   // text-align: center;
   width: 100%;
   height: 3rem;
-  font-size: 1.125rem !important;
+  font-size: 0.99rem !important;
   color: #13252e;
   font-family: PingFangSC-Regular !important;
   background: #ffffff;
@@ -445,6 +445,7 @@ div.container::-webkit-scrollbar {
   z-index: 100000000;
   top: 0;
   left: 0;
+  // font-weight: 200;
   text-align: center;
   line-height: 3rem;
 }

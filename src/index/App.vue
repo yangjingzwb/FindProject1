@@ -1,6 +1,6 @@
 <template>
  <!-- style="height:100%;" -->
-	<div class="app" style="height:100%;">
+	<div class="app" style="height:100%;overflow:hidden;">
 		<!-- <head-top signin-up='home'>
 		<span slot='logo' class="head_logo" @click="reload">随意借</span>
 		</head-top> -->
@@ -149,6 +149,7 @@ export default {
 .router-v{
   width: 100%;
   min-height:100%;
+  overflow: hidden;
   // position: absolute;
   // transition: all .1s cubic-bezier(.55,0,.1,1); ;
 }
