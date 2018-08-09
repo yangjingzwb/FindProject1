@@ -22,8 +22,10 @@ import {
 	SLIDERSCROLL,
 	CITYNAME1,
 	SLIDEINDEX,
-	OPENANDCLOSE
+	OPENANDCLOSE,
+	SETMIDDLE
 } from './mutation-types.js'
+// import { stat } from 'fs';
 
 // import {setStore, getStore} from '../config/mUtils'
 
@@ -110,6 +112,9 @@ export default {
 	},
 	[OPENANDCLOSE](state, data){
 		state['openAndClose'] = data
+	},
+	[SETMIDDLE](state, data) {
+		state['middle'] = data
 	}
 	
 	

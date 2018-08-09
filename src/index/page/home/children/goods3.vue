@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { fetchPoints,GetDistance, setMd5 } from "@@/service/util";
+import { fetchPoints, GetDistance, setMd5 } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
@@ -52,6 +52,14 @@ export default {
 
   mounted() {
     this.init();
+  },
+  props: {
+    middle: {
+      type: Array,
+      default() {
+        return [{},{},{}]
+      }
+    }
   },
   created() {},
 

@@ -5,7 +5,7 @@
 
     
     <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
-      <div class="scroll content slide-content">
+      <div class="scroll slide-content">
         <div>
             <div class="slider-wrapper">
                 <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
@@ -38,6 +38,7 @@
       <!-- 和悦专题营销位 -->
       <goods1
         @goDetail="goDetail"
+        :middle = "banner1"
       ></goods1>
       <!-- 卷皮专题营销位 -->
       <!--   <goods4
@@ -46,10 +47,12 @@
       <!-- 唯品会专题营销位 -->
       <goods6
         @goDetail="goDetail"
+        :middle = "banner1"
       ></goods6>
       <!-- 好护士专题营销位 -->
       <goods5
         @goDetail="goDetail"
+        :middle = "banner1"
       ></goods5>
       <!-- 为你推荐 -->
       <goods2
@@ -87,19 +90,22 @@ export default {
     return {
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
-      defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
+      // defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       shopList: [],
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
       slider_top_click: true,
       baseImg: baseUrl.img,
-      jdBanner: {}
+      jdBanner: {},
+      banner1:[]
     };
   },
   computed: {},
 
   mounted() {
+    // 获取运营banner
+    this.getMiddle()
     try {
       fetchPoints(
         "010000000000", // 页面索引
@@ -150,7 +156,8 @@ export default {
       "PRODUCTS",
       "SHOWLOADING",
       "CITYNAME1",
-      "OPENANDCLOSE"
+      "OPENANDCLOSE",
+      "SETMIDDLE"
     ]),
     jdSKill() {
       // 京东秒杀
@@ -218,10 +225,10 @@ export default {
       window.location = url;
     },
 
-    goDetail(event, obj, flag, channel = 'default') {
+    goDetail(event, obj, flag, channel = "default") {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
-        if(channel == 'jd'){
+        if (channel == "jd") {
           fetchPoints(
             "010000000000",
             "010000000000K10",
@@ -229,7 +236,7 @@ export default {
             "京东轮播banner",
             this.token.session.replace(/\+/g, "%2B")
           );
-        }else if (channel == 'top'){
+        } else if (channel == "top") {
           // banner图埋点
           fetchPoints(
             "010000000000",
@@ -370,6 +377,21 @@ export default {
       // 请求banner2
       // 请求品类
     },
+    // 获取运营banner位
+    getMiddle() {
+      axios
+        .post("queryMarketing", {
+          position: "MIDDLE",
+          session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+        })
+        .then(res => {
+          // 将middle的banner存储到vuex中
+          this.banner1 = res.data
+          this.SETMIDDLE(res.data)
+          // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
+          // this.banner = res.data[0];
+        });
+    },
     // initScroll() {},
     // _calcHeight() {
     // },
@@ -382,7 +404,9 @@ export default {
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
 .content {
-  overflow: auto;
+  // overflow: auto;
+  position: relative;
+  top: 3rem;
   -webkit-overflow-scrolling: touch;
 }
 div.container::-webkit-scrollbar {
@@ -410,11 +434,11 @@ div.container::-webkit-scrollbar {
   width: 100%;
   height: 3rem;
   font-size: 1.125rem !important;
-  color:#13252E;
+  color: #13252e;
   font-family: PingFangSC-Regular !important;
   background: #ffffff;
-  position: -webkit-sticky;
-  position: sticky;
+  // position: -webkit-sticky;
+  position: fixed;
   z-index: 100000000;
   top: 0;
   left: 0;

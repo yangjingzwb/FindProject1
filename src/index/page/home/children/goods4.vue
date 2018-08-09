@@ -1,7 +1,7 @@
 <!--卷皮专题营销位-->
 <template>
   <div>
-      <div class="banner" @click="goDetail($event,banner,2)">
+      <div v-if="banner" class="banner" @click="goDetail($event,banner,2)">
         <img :src="banner.marketingIcon" >
       </div>
       <div class="goods">
@@ -39,13 +39,23 @@ export default {
   data() {
     return {
       data: {},
-      banner: {}
+      // banner: {}
     };
   },
   computed: {
-    ...mapState(["token"])
+    ...mapState(["token"]),
+    banner:function(){
+      return this.middle.length >= 2 ? this.middle[1] : this.middle[0];
+    }
   },
-
+  props: {
+    middle: {
+      type: Array,
+      default() {
+        return [{},{},{}]
+      }
+    }
+  },
   mounted() {
     this.init();
   },
@@ -53,15 +63,16 @@ export default {
 
   methods: {
     init() {
+      // this.banner = this.middle.length >= 2 ? this.middle[1] : this.middle[0];
       // 获取banner
-      axios
-        .post("queryMarketing", {
-          position: "MIDDLE",
-          session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-        })
-        .then(res => {
-          this.banner = res.data.length >= 2 ? res.data[1] : res.data[0];
-        });
+      // axios
+      //   .post("queryMarketing", {
+      //     position: "MIDDLE",
+      //     session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      //   })
+      //   .then(res => {
+      //     this.banner = res.data.length >= 2 ? res.data[1] : res.data[0];
+      //   });
 
       let param_ = {
         channel: 10197,
