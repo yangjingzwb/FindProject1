@@ -60,8 +60,9 @@
       ></goods2>
       
     </section>
-    </div>
      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
+    </div>
+    
   </div>
 </template>
 
@@ -405,8 +406,10 @@ export default {
 @import "~@@/style/mixin";
 .content {
   // overflow: auto;
+  height: 95%;
   position: relative;
   top: 3rem;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 div.container::-webkit-scrollbar {
