@@ -37,19 +37,7 @@ axios.interceptors.request.use(config => {
             // 更换头部
             axios.defaults.headers.post['Content-Type'] = 'application/json;encoding=utf-8';
         } else {
-            // 和悦与唯品会－－－走测试环境
-            if(config.url.indexOf('queryGoodsByMerchant')>=0){ // 唯品会
-
-                config.url = "http://113.108.79.80:3020/rcServer/" + config.url
-
-            }else if(config.url.indexOf('topiclist.do')>=0){ // 和悦
-
-                config.url = "http://113.108.79.80:3020/rcServer/" + config.url + "?" + objPlan(config.data, 1)
-
-            }else{
-
-                config.url = urlObj.api + config.url + "?" + objPlan(config.data, 1)
-            }
+            config.url = urlObj.api + config.url + "?" + objPlan(config.data, 1)
         }
     }
 
