@@ -28,6 +28,7 @@
 import { fetchPoints,GetDistance,getUUID,setMd5HY,encodeJson } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
@@ -96,6 +97,12 @@ export default {
     },
     goDetail(event, obj, flag) {
       if (flag == 2) {
+        // 神策
+        sa.track('ZoneClick', {
+          subCategory: '好护士八月养生季',
+          topCategory: '发现',
+          locationOfZone: 'banner主图'
+        });
         fetchPoints(
           "010000000000", // 页面索引
           "010000000000K03", //事件标记
@@ -105,6 +112,12 @@ export default {
         );
       }
       if (flag == 4) {
+        // 神策
+        sa.track('ZoneClick', {
+          subCategory: '好护士八月养生季',
+          topCategory: '发现',
+          locationOfZone: '附图1，附图2，附图3'
+        });
         fetchPoints(
           "010000000000", // 页面索引
           "010000000000K03", //事件标记

@@ -20,7 +20,7 @@
         </div>
       </div>
     </section>
-    <!-- 秒杀 -->
+    <!-- 和包支付石油 -->
     <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2,'jd')">
       <img :src="jdBanner.marketingIcon" >
     </section>  
@@ -70,6 +70,7 @@
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 import {
   fetchPoints,
   GetDistance,
@@ -123,7 +124,20 @@ export default {
       this.init();
     }
   },
-  created() {},
+  created() {
+    //神策
+    //在页面头部以同步的方式加载 js 代码
+    var start_time = new Date();
+    //定义起始时间
+    var end_time = "" ;
+    //定义结束时间
+    window.onload = function(){
+      end_time = new Date();
+      sa.track('pageLoadTime',{
+        loadTime:end_time.getTime() -  start_time.getTime()
+      })   
+    }
+  },
 
   components: {
     Slider,
@@ -161,7 +175,7 @@ export default {
       "SETMIDDLE"
     ]),
     jdSKill() {
-      // 京东秒杀
+      // 和包支付石油
       axios
         .post("queryMarketing", {
           position: "MARKET",
@@ -230,14 +244,24 @@ export default {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
         if (channel == "jd") {
+          // 神策
+          sa.track('ZoneClick', {
+            contentName: '和包支付石油',
+            topCategory: '发现',
+          });
           fetchPoints(
             "010000000000",
             "010000000000K10",
             this.token.productNo,
-            "京东轮播banner",
+            "和包支付石油banner",
             this.token.session.replace(/\+/g, "%2B")
           );
         } else if (channel == "top") {
+          // 神策
+          sa.track('bannerClick', {
+            contentName: '顶部banner',
+            topCategory: '发现',
+          });
           // banner图埋点
           fetchPoints(
             "010000000000",

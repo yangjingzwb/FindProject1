@@ -75,6 +75,7 @@ import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
 import axios from "@@/plugins/rsa/axios";
 import BScroll from "better-scroll";
+import sa from'sa-sdk-javascript';
 import { GetDistance, fetchPoints } from "@@/service/util";
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
@@ -179,6 +180,11 @@ export default {
       }
     },
     cancel() {
+      // 神策
+      sa.track('clickSearch', {
+        operationType: '点击取消',
+        currentPage: '附近商家',
+      });
       fetchPoints(
         "030000000000", // 页面索引
         "030000000000K05", //事件标记

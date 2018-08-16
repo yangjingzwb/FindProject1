@@ -55,6 +55,7 @@ import {
 import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
 // import { baseUrl } from "@@/config/env"; // baseUrl
+import sa from'sa-sdk-javascript';
 
 export default {
   data() {
@@ -133,6 +134,11 @@ export default {
     },
 
     goDetail(event, obj, flag) {
+      // 神策
+      sa.track('clickShop', {
+        currentPage: '更多',
+        commodityName: '附近商户'
+      });
       fetchPoints(
         "020000000000", // 页面索引
         "020000000000K07", //事件标记

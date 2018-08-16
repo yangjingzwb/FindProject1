@@ -34,9 +34,9 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { fetchPoints, GetDistance } from "@@/service/util";
-
 import Scroll from "@@/components/scroll/scroll.vue";
 // import { baseUrl } from "@@/config/env"; // baseUrl
+import sa from'sa-sdk-javascript';
 
 export default {
   data() {
@@ -85,6 +85,11 @@ export default {
     },
 
     goDetail(event, obj, flag) {
+      // 神策
+      sa.track('clickShop', {
+        currentPage: '发现',
+        commodityName: '附近商户'
+      });
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K06", //事件标记
@@ -96,6 +101,11 @@ export default {
     },
     // 更多优惠
     goMorePer() {
+      // 神策
+      sa.track('buttonClick', {
+        topCategory: '发现',
+        subCategory: '更多>'
+      });
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K07", //事件标记

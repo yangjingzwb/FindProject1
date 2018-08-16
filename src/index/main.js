@@ -22,7 +22,29 @@ import FastClick from 'fastclick'
 import axios from "@@/plugins/rsa/axios";
 import AlertTip from '@@/components/common/alertTip'
 import {getLBS, goOldPlatform, unCertain, goNewPlatform, getFreeSign, checkUtil, animationProgress, geURLParam } from "@@/service/util"
-
+// 神策
+import sa from'sa-sdk-javascript';
+sa.init({
+    sdk_url: 'https://static.sensorsdata.cn/sdk/1.10.9/sensorsdata.min.js',
+    heatmap_url: 'https://static.sensorsdata.cn/sdk/1.10.9/heatmap.min.js',
+    name: 'sa',
+    //配置打通 App 与 H5 的参数
+    use_app_track: true,
+    use_client_time: true,
+    is_single_page: true,
+    web_url: 'https://hebaopay.cloud.sensorsdata.cn/',
+    server_url: 'https://hebaopay.cloud.sensorsdata.cn:4006/sa?token=e852cbf8dc40a8d1',
+    heatmap: {
+       //是否开启点击图，默认 default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭
+       clickmap:'not_collect',
+       //是否开启触达注意力图，默认 default 表示开启，自动采集 $WebStay 事件，可以设置 'not_collect' 表示关闭
+       scroll_notice_map:'not_collect'
+    }
+  });
+// sa.login(user_id);
+sa.quick('autoTrack', {
+    platForm:'h5'
+});
 
 // Vue.use(VueLazyload)
 // Vue.use(VueLazyload, {

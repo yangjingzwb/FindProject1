@@ -86,6 +86,7 @@ import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 // import Scroll from '@@/components/scroll/scroll.vue'
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 import {
   fetchPoints,
   GetDistance,
@@ -311,6 +312,11 @@ export default {
     done() {
       // 跳转到下一个页面
       this.$router.push("/mine");
+      // 神策
+      sa.track('clickSearch', {
+        operationType: '点击搜索框',
+        currentPage: '更多',
+      });
     },
     touchStart(e) {
       let touch = e.changedTouches[0];
@@ -344,6 +350,11 @@ export default {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
         if (channel == "top") {
+          // 神策
+          sa.track('bannerClick', {
+            contentName: '顶部banner',
+            topCategory: '更多'
+          });
           fetchPoints(
             "020000000000",
             "020000000000K01",
@@ -352,6 +363,11 @@ export default {
             this.token.session.replace(/\+/g, "%2B")
           );
         } else if (channel == "classify") {
+          // 神策
+          sa.track('buttonClick', {
+            buttonName: '美食，超市，加油站，药店，其他',
+            topCategory: '发现',
+          });
           fetchPoints(
             "020000000000",
             "020000000000K02",
