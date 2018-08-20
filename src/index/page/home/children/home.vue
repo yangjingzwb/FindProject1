@@ -247,7 +247,9 @@ export default {
           // 神策
           sa.track('ZoneClick', {
             contentName: '和包支付石油',
+            subCategory:'营销位',
             topCategory: '发现',
+            locationOfZone:'主图'
           });
           fetchPoints(
             "010000000000",

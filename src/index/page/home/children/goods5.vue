@@ -99,6 +99,7 @@ export default {
       if (flag == 2) {
         // 神策
         sa.track('ZoneClick', {
+          contentName:'好护士专题营销',
           subCategory: '好护士八月养生季',
           topCategory: '发现',
           locationOfZone: 'banner主图'
@@ -114,9 +115,10 @@ export default {
       if (flag == 4) {
         // 神策
         sa.track('ZoneClick', {
+          contentName:'好护士专题营销',
           subCategory: '好护士八月养生季',
           topCategory: '发现',
-          locationOfZone: '附图1，附图2，附图3'
+          locationOfZone: '附图'+obj.Name
         });
         fetchPoints(
           "010000000000", // 页面索引

@@ -58,9 +58,10 @@ export default {
     goDetail(event, obj, flag) {
       // 神策
       sa.track('ZoneClick', {
+        contentName:'为您推荐',
         subCategory: '为您推荐',
         topCategory: '发现',
-        locationOfZone: '商品'
+        locationOfZone: '商品-'+obj.marketingTitle
       });
       // 埋点-为你推荐
       fetchPoints(

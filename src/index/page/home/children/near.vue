@@ -135,9 +135,17 @@ export default {
 
     goDetail(event, obj, flag) {
       // 神策
+      // sa.track('clickShop', {
+      //   currentPage: '更多',
+      //   commodityName: '附近商户'
+      // });
       sa.track('clickShop', {
         currentPage: '更多',
-        commodityName: '附近商户'
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:false,
+        keyword:''
       });
       fetchPoints(
         "020000000000", // 页面索引

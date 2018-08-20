@@ -352,7 +352,8 @@ export default {
         if (channel == "top") {
           // 神策
           sa.track('bannerClick', {
-            contentName: '顶部banner',
+            contentName: '顶部banner点击',
+            bannerNumber:obj.marketingPosition || obj.marketingId,
             topCategory: '更多'
           });
           fetchPoints(
@@ -365,8 +366,9 @@ export default {
         } else if (channel == "classify") {
           // 神策
           sa.track('buttonClick', {
-            buttonName: '美食，超市，加油站，药店，其他',
+            buttonName: obj.marketingTitle,
             topCategory: '发现',
+            subCategory:'首页'
           });
           fetchPoints(
             "020000000000",

@@ -150,6 +150,14 @@ export default {
       // if (!event._constructed) {
       //   return;
       // }
+      sa.track('clickShop', {
+        currentPage: '附近商家',
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:true,
+        keyword:this.searchT
+      });
       fetchPoints(
         "030000000000", // 页面索引
         "030000000000K04", //事件标记
@@ -240,6 +248,10 @@ export default {
         });
     },
     clear() {
+      // sa.track('clickSearch', {
+      //   operationType: '删除所有',
+      //   currentPage: '附近商家',
+      // });
       fetchPoints(
         "030000000000", // 页面索引
         "030000000000K03", //事件标记
@@ -292,7 +304,7 @@ export default {
       //   this.SHOWLOADING(false);
       //   return;
       // }
-
+       
       // 埋点
       try {
         fetchPoints(
@@ -317,6 +329,10 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
+          sa.track('applySearch', {
+            keyword:this.search,
+            hasResult: res.data & res.data.length>0 
+          });
           this.SHOWLOADING(false);
           this.shopList = res.data;
           this.isFirstIn = 0;

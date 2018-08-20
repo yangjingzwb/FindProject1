@@ -98,6 +98,7 @@ export default {
       if (flag == 2) {
         // 神策
         sa.track('ZoneClick', {
+          contentName:'唯品会专题营销',
           subCategory: '唯品会会员福利月',
           topCategory: '发现',
           locationOfZone: 'banner主图'
@@ -113,9 +114,10 @@ export default {
       if (flag == 4) {
         // 神策
         sa.track('ZoneClick', {
+          contentName:'唯品会专题营销',
           subCategory: '唯品会会员福利月',
           topCategory: '发现',
-          locationOfZone: '附图1，附图2，附图3'
+          locationOfZone: '附图'+obj.Name
         });
         fetchPoints(
           "010000000000", // 页面索引

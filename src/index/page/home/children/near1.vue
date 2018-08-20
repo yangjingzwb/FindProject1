@@ -86,9 +86,13 @@ export default {
 
     goDetail(event, obj, flag) {
       // 神策
-      sa.track('clickShop', {
+     sa.track('clickShop', {
         currentPage: '发现',
-        commodityName: '附近商户'
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:false,
+        keyword:''
       });
       fetchPoints(
         "010000000000", // 页面索引
