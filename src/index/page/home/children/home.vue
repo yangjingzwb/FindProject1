@@ -207,10 +207,14 @@ export default {
               that.init();
               // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
             });
+
           } else {
-            this.SHOWLOADING(true);
+            this.SHOWLOADING(false);
           }
         });
+        setTimeout(()=>{
+          this.SHOWLOADING(false)
+        },20000)
       }
     },
     intervalCity() {
