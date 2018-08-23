@@ -208,9 +208,12 @@ export default {
               // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
             });
           } else {
-            this.SHOWLOADING(true);
+            this.SHOWLOADING(false);
           }
         });
+        // setTimeout(()=>{
+        //    this.SHOWLOADING(false)
+        //  },10000)
       }
     },
     intervalCity() {
@@ -436,7 +439,7 @@ div.container::-webkit-scrollbar {
   // text-align: center;
   width: 100%;
   height: 3rem;
-  font-size: 0.99rem !important;
+  font-size: 1.125rem !important;
   color: #13252e;
   font-family: PingFangSC-Regular !important;
   background: #ffffff;

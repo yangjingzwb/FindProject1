@@ -16,7 +16,7 @@
 			<router-view v-if="!$route.meta.keepAlive" class="router-v"></router-view>
 		</transition>
     <alert-tip alertTextFirst='请打开对和包的GPS授权' btnText='确认'  v-if="isShowAlert" @closeTip="closeAlert"/>
-    <vue-loading v-if="showLoading" type='beat' ></vue-loading>
+    <!-- <vue-loading v-if="showLoading" type='beat' ></vue-loading> -->
     </div>
 </template>
 
@@ -33,7 +33,7 @@ import vueLoading from 'vue-loading-template'
 export default {
   components: {
     // headTop
-    vueLoading
+    // vueLoading
   },
   mounted() {
     
@@ -50,11 +50,14 @@ export default {
       "isShowAlert",
       "btnText",
       "isAdmittance",
-      "showLoading"
+      // "showLoading"
     ])
   },
   methods: {
-    ...mapMutations(["ISSHOWALERT","SHOWLOADING"]),
+    ...mapMutations([
+      "ISSHOWALERT",
+      // "SHOWLOADING"
+      ]),
     async init() {},
     closeAlert() {
       //关闭弹窗
