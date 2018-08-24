@@ -35,25 +35,25 @@
         @goDetail="goDetail"
         >
       </near1>
-      <!-- 和悦专题营销位 -->
+      <!-- 专题营销位 -->
       <goods1
         @goDetail="goDetail"
-        :middle = "banner1"
+        :middle = "goods1"
       ></goods1>
       <!-- 卷皮专题营销位 -->
       <!--   <goods4
         @goDetail="goDetail"
       ></goods4> -->
       <!-- 唯品会专题营销位 -->
-      <goods6
+      <!-- <goods6
         @goDetail="goDetail"
         :middle = "banner1"
-      ></goods6>
+      ></goods6> -->
       <!-- 好护士专题营销位 -->
-      <goods5
+      <!-- <goods5
         @goDetail="goDetail"
         :middle = "banner1"
-      ></goods5>
+      ></goods5> -->
       <!-- 为你推荐 -->
       <goods2
         @goDetail="goDetail"
@@ -79,8 +79,6 @@ import {
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Goods1 from "./goods1.vue";
-import Goods6 from "./goods6.vue";
-import Goods5 from "./goods5.vue";
 import Goods2 from "./goods2.vue";
 import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
@@ -99,7 +97,7 @@ export default {
       slider_top_click: true,
       baseImg: baseUrl.img,
       jdBanner: {},
-      banner1:[]
+      goods1:[]
     };
   },
   computed: {},
@@ -129,9 +127,6 @@ export default {
     Slider,
     Near1,
     Goods1,
-    // Goods4,
-    Goods6,
-    Goods5,
     Goods2
   },
 
@@ -252,7 +247,7 @@ export default {
         }
       } catch (e) {}
 
-      let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
+      let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
       url = flag == 3 ? obj.detailUrl : url;
       url = flag == 4 ? obj.url : url;
       if (
@@ -383,17 +378,15 @@ export default {
     },
     // 获取运营banner位
     getMiddle() {
-      axios
-        .post("queryMarketing", {
-          position: "MIDDLE",
-          session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-        })
+      axios.get("market/queryMerchantInfo")
         .then(res => {
-          // 将middle的banner存储到vuex中
-          this.banner1 = res.data
-          this.SETMIDDLE(res.data)
-          // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
-          // this.banner = res.data[0];
+          if(res.code && res.data) {
+            const data = res.data
+            this.goods1 = data
+            // console.log(this.goods1)
+            // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
+            // this.banner = res.data[0];
+          }
         });
     },
     // initScroll() {},

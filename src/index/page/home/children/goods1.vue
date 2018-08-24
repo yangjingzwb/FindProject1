@@ -1,30 +1,30 @@
 <!--和悦商品接口-->
 <template>
 <div>
-    <div v-if="banner" class="banner" @click="goDetail($event,banner,2)">
-      <img :src="banner.marketingIcon" >
-    </div>
-    <div class="goods">
-      
-    <ul class="u1">
-      <li @click="goDetail($event,item,4)" v-for="item in data" :key="item.goodsId">
-        <ul class="u2">
-          <li class="icon">
-            <img :src="item.picurl">
-          </li>
-          <li class="text">
-            {{item.name}}
-          </li>
-          <li class="sub">
-            <span class="price">¥{{fenToyuan(item.price)}}</span>
-            <span class="linePrice">¥{{fenToyuan(item.marketPrice)}}</span>
+    <div v-for="(item, index) of middle">
+      <div v-if="banner" class="banner" @click="goDetail($event,item,2)">
+        <img :src="item.tbConductConfig.marketingIcon" >
+      </div>
+      <div class="goods">
+        <ul class="u1">
+          <li v-for="(itemson, index) of item.goodsVO" @click="goDetail($event,itemson,3)">
+            <ul class="u2">
+              <li class="icon">
+                <img :src="itemson.pic">
+              </li>
+              <li class="text">
+                {{itemson.name}}
+              </li>
+              <li class="sub">
+                <span class="price">¥{{(itemson.price)}}</span>
+                <span class="linePrice">¥{{(itemson.originalPrice)}}</span>
+              </li>
+            </ul>
           </li>
         </ul>
-      </li>
-    </ul>
-     
-  </div>
-   <div class="nullHeight"></div>
+      </div>
+      <div class="nullHeight"></div>
+    </div>
 </div>
    
 </template>
@@ -46,12 +46,7 @@ export default {
     };
   },
   props: {
-    middle: {
-      type: Array,
-      default() {
-        return [{},{},{}]
-      }
-    }
+    middle: Array
   },
   computed: {
     ...mapState(["token"]),
@@ -63,7 +58,7 @@ export default {
   mounted() {
     // alert(this.middle)
     // alert(this.banner)
-    this.init();
+    // this.init();
   },
   created() {},
 
@@ -106,7 +101,7 @@ export default {
           this.token.session.replace(/\+/g, "%2B")
         );
       }
-      if(flag==4){
+      if(flag==3){
         fetchPoints(
           "010000000000", // 页面索引
           "010000000000K04", //事件标记
