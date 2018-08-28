@@ -11,7 +11,7 @@
                 <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
-                        <a @click="goDetail($event,item,2,'top')" >
+                        <a @click="goDetail($event,item,1,'top')" >
                             <img :src="item.marketingIcon">
                         </a>
                     </div>
@@ -21,7 +21,7 @@
       </div>
     </section>
     <!-- 秒杀 -->
-    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2,'jd')">
+    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,1,'jd')">
       <img :src="jdBanner.marketingIcon" >
     </section>  
            
@@ -250,6 +250,7 @@ export default {
       let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
       url = flag == 3 ? obj.detailUrl : url;
       url = flag == 4 ? obj.url : url;
+      url = flag == 1 ? obj.marketingEventCotent : url;
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"

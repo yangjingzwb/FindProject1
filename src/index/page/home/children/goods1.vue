@@ -97,7 +97,7 @@ export default {
           "010000000000", // 页面索引
           "010000000000K04", //事件标记
           this.token.productNo,
-          "和悦专题营销位", // 事件名称
+          "专题营销位", // 事件名称
           this.token.session.replace(/\+/g, "%2B")
         );
       }
@@ -106,7 +106,7 @@ export default {
           "010000000000", // 页面索引
           "010000000000K04", //事件标记
           this.token.productNo,
-          "和悦专题营销位-"+obj.name, // 事件名称
+          "专题营销位-"+obj.name, // 事件名称
           this.token.session.replace(/\+/g, "%2B")
         );
       }

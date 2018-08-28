@@ -6,7 +6,7 @@
             <div class="t-4" @click="goMorePer()">更多</div>
             <div class="hr-1"></div>
         </div>
-        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,1)" >
+        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,0)" >
           <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
