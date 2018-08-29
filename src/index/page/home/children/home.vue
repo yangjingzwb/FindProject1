@@ -11,7 +11,7 @@
                 <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
-                        <a @click="goDetail($event,item,2,'top')" >
+                        <a @click="goDetail($event,item,1,'top')" >
                             <img :src="item.marketingIcon">
                         </a>
                     </div>
@@ -21,7 +21,7 @@
       </div>
     </section>
     <!-- 秒杀 -->
-    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,2,'jd')">
+    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,1,'jd')">
       <img :src="jdBanner.marketingIcon" >
     </section>  
            
@@ -35,25 +35,25 @@
         @goDetail="goDetail"
         >
       </near1>
-      <!-- 和悦专题营销位 -->
+      <!-- 专题营销位 -->
       <goods1
         @goDetail="goDetail"
-        :middle = "banner1"
+        :middle = "goods1"
       ></goods1>
       <!-- 卷皮专题营销位 -->
       <!--   <goods4
         @goDetail="goDetail"
       ></goods4> -->
       <!-- 唯品会专题营销位 -->
-      <goods6
+      <!-- <goods6
         @goDetail="goDetail"
         :middle = "banner1"
-      ></goods6>
+      ></goods6> -->
       <!-- 好护士专题营销位 -->
-      <goods5
+      <!-- <goods5
         @goDetail="goDetail"
         :middle = "banner1"
-      ></goods5>
+      ></goods5> -->
       <!-- 为你推荐 -->
       <goods2
         @goDetail="goDetail"
@@ -70,6 +70,7 @@
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 import {
   fetchPoints,
   GetDistance,
@@ -79,8 +80,6 @@ import {
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Goods1 from "./goods1.vue";
-import Goods6 from "./goods6.vue";
-import Goods5 from "./goods5.vue";
 import Goods2 from "./goods2.vue";
 import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
@@ -99,7 +98,7 @@ export default {
       slider_top_click: true,
       baseImg: baseUrl.img,
       jdBanner: {},
-      banner1:[]
+      goods1:[]
     };
   },
   computed: {},
@@ -123,15 +122,27 @@ export default {
       this.init();
     }
   },
-  created() {},
+  created() {
+    //神策
+    let startTime = new Date();
+    let endTime = "" ;
+    window.onload = function(){
+      endTime = new Date();
+      sa.track('loadDelay',{
+        currentBusinessLine:'发现频道',
+        currentActivity: '发现页面',
+        currentURL: window.location.href,
+        delayTime: endTime.getTime() -  startTime.getTime(),
+        endTime: endTime.getTime(),
+        startTime: startTime.getTime()
+      })   
+    }
+  },
 
   components: {
     Slider,
     Near1,
     Goods1,
-    // Goods4,
-    Goods6,
-    Goods5,
     Goods2
   },
 
@@ -161,7 +172,7 @@ export default {
       "SETMIDDLE"
     ]),
     jdSKill() {
-      // 京东秒杀
+      // 和包支付石油
       axios
         .post("queryMarketing", {
           position: "MARKET",
@@ -212,9 +223,10 @@ export default {
             this.SHOWLOADING(false);
           }
         });
-        setTimeout(()=>{
-          this.SHOWLOADING(false)
-        },20000)
+
+        // setTimeout(()=>{
+        //    this.SHOWLOADING(false)
+        //  },10000)
       }
     },
     intervalCity() {
@@ -234,14 +246,27 @@ export default {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
         if (channel == "jd") {
+          // 神策
+          sa.track('ZoneClick', {
+            contentName: '和包支付石油',
+            subCategory:'营销位',
+            topCategory: '发现',
+            locationOfZone:'主图'
+          });
           fetchPoints(
             "010000000000",
             "010000000000K10",
             this.token.productNo,
-            "京东轮播banner",
+            "和包支付石油banner",
             this.token.session.replace(/\+/g, "%2B")
           );
         } else if (channel == "top") {
+          // 神策
+          sa.track('bannerClick', {
+            contentName: '顶部banner',
+            topCategory: '发现',
+            locationOfZone: 'banner轮播' + obj.marketingTitle
+          });
           // banner图埋点
           fetchPoints(
             "010000000000",
@@ -253,9 +278,10 @@ export default {
         }
       } catch (e) {}
 
-      let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
+      let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
       url = flag == 3 ? obj.detailUrl : url;
       url = flag == 4 ? obj.url : url;
+      url = flag == 1 ? obj.marketingEventCotent : url;
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
@@ -348,6 +374,20 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
+          //神策
+          let startTime = new Date();
+          let endTime = "" ;
+          window.onload = function(){
+            endTime = new Date();
+            sa.track('loadDelay',{
+              currentBusinessLine:'发现频道',
+              currentActivity: '调用发现页附近商户getShopInfo接口',
+              currentURL: window.location.href,
+              delayTime: endTime.getTime() -  startTime.getTime(),
+              endTime: endTime.getTime(),
+              startTime: startTime.getTime()
+            })   
+          };
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
@@ -384,17 +424,15 @@ export default {
     },
     // 获取运营banner位
     getMiddle() {
-      axios
-        .post("queryMarketing", {
-          position: "MIDDLE",
-          session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-        })
+      axios.get("market/queryMerchantInfo")
         .then(res => {
-          // 将middle的banner存储到vuex中
-          this.banner1 = res.data
-          this.SETMIDDLE(res.data)
-          // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
-          // this.banner = res.data[0];
+          if(res.code && res.data) {
+            const data = res.data
+            this.goods1 = data
+            // console.log(this.goods1)
+            // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
+            // this.banner = res.data[0];
+          }
         });
     },
     // initScroll() {},
@@ -440,7 +478,7 @@ div.container::-webkit-scrollbar {
   // text-align: center;
   width: 100%;
   height: 3rem;
-  font-size: 0.99rem !important;
+  font-size: 1.125rem !important;
   color: #13252e;
   font-family: PingFangSC-Regular !important;
   background: #ffffff;

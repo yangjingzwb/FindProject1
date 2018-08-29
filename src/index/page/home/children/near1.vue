@@ -6,7 +6,7 @@
             <div class="t-4" @click="goMorePer()">更多</div>
             <div class="hr-1"></div>
         </div>
-        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,1)" >
+        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,0)" >
           <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
@@ -34,9 +34,9 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { fetchPoints, GetDistance } from "@@/service/util";
-
 import Scroll from "@@/components/scroll/scroll.vue";
 // import { baseUrl } from "@@/config/env"; // baseUrl
+import sa from'sa-sdk-javascript';
 
 export default {
   data() {
@@ -85,6 +85,15 @@ export default {
     },
 
     goDetail(event, obj, flag) {
+      // 神策
+     sa.track('clickShop', {
+        currentPage: '发现',
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:false,
+        keyword:''
+      });
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K06", //事件标记
@@ -96,6 +105,11 @@ export default {
     },
     // 更多优惠
     goMorePer() {
+      // 神策
+      sa.track('buttonClick', {
+        topCategory: '发现',
+        subCategory: '更多>'
+      });
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K07", //事件标记
