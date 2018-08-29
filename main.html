@@ -34,30 +34,36 @@
     window.CITYNAME = '';
     window.LBSINFO = {
     }
+    var isUseBaiDuLoc = false;
     try {
       if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
+        setTimeout(() => {
           // 苹果客户端定位
           window.getLocationInfo()
-      } else {
-        // android 客户端定位
-        LBSINFO.Longitude = window.goActivity.getLongitude();//查询经度信息
-        LBSINFO.Latitude = window.goActivity.getLatitude();//查询纬度
-        LBSINFO.CityName = window.goActivity.getCity();
+          }, 20)
+        } else {
+          // alert(2)
+          // alert(window.goActivity.getLongitude())
+          // alert(window.goActivity.getLatitude())
+          // android 客户端定位
+          window.LONGITUDE = window.goActivity.getLongitude();//查询经度信息
+          window.LATITUDE = window.goActivity.getLatitude();//查询纬度
+          window.CITYNAME = window.goActivity.getCityName();
+        }
+      } catch (e) {
+        isUseBaiDuLoc = true;
       }
-    } catch (e) {
-
-    }
 
     // ios客户端回调
     function callBackGetLocationInfo(json) {
       // ios
-      LONGITUDE = json.Longitude;
-      LATITUDE = json.Latitude;
-      LBSINFO = json;
-      CITYNAME = json.CityName;
+      window.LONGITUDE = json.Longitude;
+      window.LATITUDE = json.Latitude;
+      window.LBSINFO = json;
+      window.CITYNAME = json.CityName;
+      
     }
-    
-    if(!window.LATITUDE) {
+    if(isUseBaiDuLoc) {
       new BMap.Geolocation().getCurrentPosition(function (r) {
         // alert(31)
         if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态

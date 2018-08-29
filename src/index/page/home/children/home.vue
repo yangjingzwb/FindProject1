@@ -223,29 +223,6 @@ export default {
           }
         });
 
-        try {
-          if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
-              // 苹果客户端定位
-              window.getLocationInfo()
-          } else {
-            // android 客户端定位
-            LBSINFO.Longitude = window.goActivity.getLongitude();//查询经度信息
-            LBSINFO.Latitude = window.goActivity.getLatitude();//查询纬度
-            LBSINFO.CityName = window.goActivity.getCity();
-          }
-        } catch (e) {
-
-        }
-
-        // ios客户端回调
-        function callBackGetLocationInfo(json) {
-          // ios
-          LONGITUDE = json.Longitude;
-          LATITUDE = json.Latitude;
-          LBSINFO = json;
-          CITYNAME = json.CityName;
-        }
-        
         // setTimeout(()=>{
         //    this.SHOWLOADING(false)
         //  },10000)
@@ -287,6 +264,7 @@ export default {
           sa.track('bannerClick', {
             contentName: '顶部banner',
             topCategory: '发现',
+            locationOfZone: 'banner轮播' + obj.marketingTitle
           });
           // banner图埋点
           fetchPoints(

@@ -98,7 +98,7 @@ export default {
         sa.track('ZoneClick', {
           contentName:'专题营销',
           topCategory: '发现',
-          locationOfZone: 'banner主图'
+          locationOfZone: 'banner主图' + obj.tbConductConfig.marketingTitle
         });
         fetchPoints(
           "010000000000", // 页面索引
