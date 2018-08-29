@@ -25,6 +25,7 @@
 import { fetchPoints, GetDistance } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
@@ -55,6 +56,13 @@ export default {
         });
     },
     goDetail(event, obj, flag) {
+      // 神策
+      sa.track('ZoneClick', {
+        contentName:'为您推荐',
+        subCategory: '为您推荐',
+        topCategory: '发现',
+        locationOfZone: '商品-'+obj.marketingTitle
+      });
       // 埋点-为你推荐
       fetchPoints(
         "010000000000", // 页面索引

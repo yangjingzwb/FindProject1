@@ -22,7 +22,29 @@ import FastClick from 'fastclick'
 import axios from "@@/plugins/rsa/axios";
 import AlertTip from '@@/components/common/alertTip'
 import {getLBS, goOldPlatform, unCertain, goNewPlatform, getFreeSign, checkUtil, animationProgress, geURLParam } from "@@/service/util"
-
+// 神策
+import sa from'sa-sdk-javascript';
+sa.init({
+    sdk_url: 'https://static.sensorsdata.cn/sdk/1.10.9/sensorsdata.min.js',
+    heatmap_url: 'https://static.sensorsdata.cn/sdk/1.10.9/heatmap.min.js',
+    name: 'sa',
+    //配置打通 App 与 H5 的参数
+    use_app_track: true,
+    use_client_time: true,
+    is_single_page: true,
+    web_url: 'https://hebaopay.cloud.sensorsdata.cn/',
+    server_url: 'https://hebaopay.cloud.sensorsdata.cn:4006/sa?token=e852cbf8dc40a8d1',
+    heatmap: {
+       //是否开启点击图，默认 default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭
+       clickmap:'not_collect',
+       //是否开启触达注意力图，默认 default 表示开启，自动采集 $WebStay 事件，可以设置 'not_collect' 表示关闭
+       scroll_notice_map:'not_collect'
+    }
+  });
+// sa.login(user_id);
+sa.quick('autoTrack', {
+    platForm:'h5'
+});
 
 // Vue.use(VueLazyload)
 // Vue.use(VueLazyload, {
@@ -155,6 +177,20 @@ router.beforeEach((to, from, next) => {
     // store.commit('TOKEN', {"session":"TESTSSION","productNo":'13795442667'})
     axios.post('queryAccount', {
     }).then((res) => {
+        //神策
+        let startTime = new Date();
+        let endTime = "" ;
+        window.onload = function(){
+            endTime = new Date();
+            sa.track('loadDelay',{
+            currentBusinessLine:'发现频道',
+            currentActivity: '调用高阳queryAccount接口',
+            currentURL: window.location.href,
+            delayTime: endTime.getTime() -  startTime.getTime(),
+            endTime: endTime.getTime(),
+            startTime: startTime.getTime()
+            })   
+        };
         store.commit('TOKEN', res.data || {})
         if (!res.data || res.data.length <= 0) {
           

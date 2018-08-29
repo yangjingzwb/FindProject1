@@ -86,6 +86,7 @@ import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 // import Scroll from '@@/components/scroll/scroll.vue'
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 import {
   fetchPoints,
   GetDistance,
@@ -171,6 +172,20 @@ export default {
 
   mounted() {
     try {
+      //神策
+      let startTime = new Date();
+      let endTime = "" ;
+      window.onload = function(){
+        endTime = new Date();
+        sa.track('loadDelay',{
+          currentBusinessLine:'发现频道',
+          currentActivity: '更多页面',
+          currentURL: window.location.href,
+          delayTime: endTime.getTime() -  startTime.getTime(),
+          endTime: endTime.getTime(),
+          startTime: startTime.getTime()
+        })   
+      };
       fetchPoints(
         "home1",
         "event_3",
@@ -185,7 +200,8 @@ export default {
       this.init();
     }
   },
-  created() {},
+  created() {
+  },
 
   components: {
     Slider,
@@ -311,6 +327,11 @@ export default {
     done() {
       // 跳转到下一个页面
       this.$router.push("/mine");
+      // 神策
+      sa.track('clickSearch', {
+        operationType: '点击搜索框',
+        currentPage: '更多',
+      });
     },
     touchStart(e) {
       let touch = e.changedTouches[0];
@@ -344,6 +365,12 @@ export default {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
         if (channel == "top") {
+          // 神策
+          sa.track('bannerClick', {
+            contentName: '顶部banner点击',
+            bannerNumber:obj.marketingPosition || obj.marketingId,
+            topCategory: '更多'
+          });
           fetchPoints(
             "020000000000",
             "020000000000K01",
@@ -352,6 +379,12 @@ export default {
             this.token.session.replace(/\+/g, "%2B")
           );
         } else if (channel == "classify") {
+          // 神策
+          sa.track('buttonClick', {
+            buttonName: obj.marketingTitle,
+            topCategory: '发现',
+            subCategory:'首页'
+          });
           fetchPoints(
             "020000000000",
             "020000000000K02",
@@ -604,6 +637,20 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
+          //神策
+          let startTime = new Date();
+          let endTime = "" ;
+          window.onload = function(){
+            endTime = new Date();
+            sa.track('loadDelay',{
+              currentBusinessLine:'发现频道',
+              currentActivity: '调用更多页getShopInfo接口',
+              currentURL: window.location.href,
+              delayTime: endTime.getTime() -  startTime.getTime(),
+              endTime: endTime.getTime(),
+              startTime: startTime.getTime()
+            })   
+          };
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);

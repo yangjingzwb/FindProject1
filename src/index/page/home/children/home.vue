@@ -70,6 +70,7 @@
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 import {
   fetchPoints,
   GetDistance,
@@ -121,7 +122,22 @@ export default {
       this.init();
     }
   },
-  created() {},
+  created() {
+    //神策
+    let startTime = new Date();
+    let endTime = "" ;
+    window.onload = function(){
+      endTime = new Date();
+      sa.track('loadDelay',{
+        currentBusinessLine:'发现频道',
+        currentActivity: '发现页面',
+        currentURL: window.location.href,
+        delayTime: endTime.getTime() -  startTime.getTime(),
+        endTime: endTime.getTime(),
+        startTime: startTime.getTime()
+      })   
+    }
+  },
 
   components: {
     Slider,
@@ -156,7 +172,7 @@ export default {
       "SETMIDDLE"
     ]),
     jdSKill() {
-      // 京东秒杀
+      // 和包支付石油
       axios
         .post("queryMarketing", {
           position: "MARKET",
@@ -252,14 +268,26 @@ export default {
       //埋点 parent_title, sub_title,phone,remark, session
       try {
         if (channel == "jd") {
+          // 神策
+          sa.track('ZoneClick', {
+            contentName: '和包支付石油',
+            subCategory:'营销位',
+            topCategory: '发现',
+            locationOfZone:'主图'
+          });
           fetchPoints(
             "010000000000",
             "010000000000K10",
             this.token.productNo,
-            "京东轮播banner",
+            "和包支付石油banner",
             this.token.session.replace(/\+/g, "%2B")
           );
         } else if (channel == "top") {
+          // 神策
+          sa.track('bannerClick', {
+            contentName: '顶部banner',
+            topCategory: '发现',
+          });
           // banner图埋点
           fetchPoints(
             "010000000000",
@@ -367,6 +395,20 @@ export default {
           session: this.token.session.replace(/\+/g, "%2B")
         })
         .then(res => {
+          //神策
+          let startTime = new Date();
+          let endTime = "" ;
+          window.onload = function(){
+            endTime = new Date();
+            sa.track('loadDelay',{
+              currentBusinessLine:'发现频道',
+              currentActivity: '调用发现页附近商户getShopInfo接口',
+              currentURL: window.location.href,
+              delayTime: endTime.getTime() -  startTime.getTime(),
+              endTime: endTime.getTime(),
+              startTime: startTime.getTime()
+            })   
+          };
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);

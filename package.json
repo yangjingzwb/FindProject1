@@ -19,6 +19,7 @@
     "es6-promise": "^4.2.4",
     "fastclick": "^1.0.6",
     "iscroll": "^5.2.0",
+    "sa-sdk-javascript": "^1.10.8",
     "showdown": "^1.6.4",
     "vue": "^2.1.0",
     "vue-loading-template": "^0.1.7",

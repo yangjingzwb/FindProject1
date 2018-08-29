@@ -38,6 +38,7 @@ import {
 } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
@@ -93,6 +94,12 @@ export default {
     },
     goDetail(event, obj, flag) {
       if (flag == 2) {
+        // 神策
+        sa.track('ZoneClick', {
+          contentName:'专题营销',
+          topCategory: '发现',
+          locationOfZone: 'banner主图'
+        });
         fetchPoints(
           "010000000000", // 页面索引
           "010000000000K04", //事件标记
@@ -102,6 +109,12 @@ export default {
         );
       }
       if(flag==3){
+         // 神策
+        sa.track('ZoneClick', {
+          contentName:'专题营销',
+          topCategory: '发现',
+          locationOfZone: '附图'+ obj.name
+        });
         fetchPoints(
           "010000000000", // 页面索引
           "010000000000K04", //事件标记
