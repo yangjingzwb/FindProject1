@@ -5,9 +5,6 @@ npm run dev index 调试index项目
 npm run build index 发布index项目
 
 
-服务器：113.108.79.80
-账号信息：root/Rtck12345
-NGINX配置：/usr/local/nginx/conf/nginx.conf
 
 
 # demo项目布局
