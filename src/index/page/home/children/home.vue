@@ -80,7 +80,8 @@ import {
   GetDistance,
   setLItem,
   getLItem,
-  getCode
+  getCode,
+  formatDate_1
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Goods1 from "./goods1.vue";
@@ -136,8 +137,8 @@ export default {
       currentActivity: '发现页面',
       currentURL: window.location.href,
       delayTime: endTime - startTime,
-      endTime: this.formatDate(endTime.getTime()),
-      startTime: this.formatDate(startTime.getTime())
+      endTime: formatDate_1(endTime.getTime()),
+      startTime: formatDate_1(startTime.getTime())
     })   
   },
   components: {
@@ -173,27 +174,6 @@ export default {
       "OPENANDCLOSE",
       "SETMIDDLE"
     ]),
-    formatDate(time,format='YY-MM-DD hh:mm:ss'){
-      var date = new Date(time);
-      var year = date.getFullYear(),
-          month = date.getMonth()+1,//月份是从0开始的
-          day = date.getDate(),
-          hour = date.getHours(),
-          min = date.getMinutes(),
-          sec = date.getSeconds();
-      var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
-        return '0'+index;
-      });////开个长度为10的数组 格式为 00 01 02 03
-  
-      var newTime = format.replace(/YY/g,year)
-                          .replace(/MM/g,preArr[month]||month)
-                          .replace(/DD/g,preArr[day]||day)
-                          .replace(/hh/g,preArr[hour]||hour)
-                          .replace(/mm/g,preArr[min]||min)
-                          .replace(/ss/g,preArr[sec]||sec);
-  
-      return newTime;         
-    },
     jdSKill() {
       // 和包支付石油
       axios
@@ -416,8 +396,8 @@ export default {
             currentActivity: '调用发现页附近商户getShopInfo接口',
             currentURL: window.location.href,
             delayTime: endTime - startTime,
-            endTime: this.formatDate(endTime.getTime()),
-            startTime: this.formatDate(startTime.getTime())
+            endTime: formatDate_1(endTime.getTime()),
+            startTime: formatDate_1(startTime.getTime())
           })
 
           if (res.data && res.data.length > 0) {
