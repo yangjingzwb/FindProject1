@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <div class="header">发现</div>
+    <scroll
+    :scrollbar="scrollbar"
+    >
     <div class="content">
 
     
@@ -62,7 +65,7 @@
     </section>
      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
     </div>
-    
+    </scroll>
   </div>
 </template>
 
@@ -84,6 +87,7 @@ import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
 import Recommended from "./recommended.vue";
 import GoodThing from "./goodThing.vue"; // 好物
+import Scroll from "@@/components/scroll/scroll.vue";
 
 export default {
   data() {
@@ -98,7 +102,8 @@ export default {
       slider_top_click: true,
       baseImg: baseUrl.img,
       jdBanner: {},
-      goods1:[]
+      goods1:[],
+      scrollbar:false
     };
   },
   computed: {},
@@ -124,48 +129,23 @@ export default {
   },
   created() {
     //神策
-    function formatDate(time,format='YY-MM-DD hh:mm:ss'){
-      var date = new Date(time);
-      var year = date.getFullYear(),
-          month = date.getMonth()+1,//月份是从0开始的
-          day = date.getDate(),
-          hour = date.getHours(),
-          min = date.getMinutes(),
-          sec = date.getSeconds();
-      var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
-        return '0'+index;
-      });////开个长度为10的数组 格式为 00 01 02 03
-  
-      var newTime = format.replace(/YY/g,year)
-                          .replace(/MM/g,preArr[month]||month)
-                          .replace(/DD/g,preArr[day]||day)
-                          .replace(/hh/g,preArr[hour]||hour)
-                          .replace(/mm/g,preArr[min]||min)
-                          .replace(/ss/g,preArr[sec]||sec);
-  
-      return newTime;         
-    }
-    // console.log(formatDate(new Date().getTime()));
     let startTime = new Date();
-    let endTime = "" ;
-    window.onload = function(){
-      endTime = new Date();
-      sa.track('loadDelay',{
-        currentBusinessLine:'发现频道',
-        currentActivity: '发现页面',
-        currentURL: window.location.href,
-        delayTime: endTime - startTime,
-        endTime: formatDate(endTime.getTime()),
-        startTime: formatDate(startTime.getTime())
-      })   
-    }
+    let endTime = new Date() ;
+    sa.track('loadDelay',{
+      currentBusinessLine:'发现频道',
+      currentActivity: '发现页面',
+      currentURL: window.location.href,
+      delayTime: endTime - startTime,
+      endTime: this.formatDate(endTime.getTime()),
+      startTime: this.formatDate(startTime.getTime())
+    })   
   },
-
   components: {
     Near1,
     Slider,
     Goods1,
-    Goods2
+    Goods2,
+    Scroll
   },
 
   computed: {
@@ -193,6 +173,27 @@ export default {
       "OPENANDCLOSE",
       "SETMIDDLE"
     ]),
+    formatDate(time,format='YY-MM-DD hh:mm:ss'){
+      var date = new Date(time);
+      var year = date.getFullYear(),
+          month = date.getMonth()+1,//月份是从0开始的
+          day = date.getDate(),
+          hour = date.getHours(),
+          min = date.getMinutes(),
+          sec = date.getSeconds();
+      var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
+        return '0'+index;
+      });////开个长度为10的数组 格式为 00 01 02 03
+  
+      var newTime = format.replace(/YY/g,year)
+                          .replace(/MM/g,preArr[month]||month)
+                          .replace(/DD/g,preArr[day]||day)
+                          .replace(/hh/g,preArr[hour]||hour)
+                          .replace(/mm/g,preArr[min]||min)
+                          .replace(/ss/g,preArr[sec]||sec);
+  
+      return newTime;         
+    },
     jdSKill() {
       // 和包支付石油
       axios
@@ -210,45 +211,56 @@ export default {
     goToPage(index) {
       this.sliderIndex = index;
     },
+    // LBS_BD(){
+    //   let that = this
+    //   // 百度定位
+    //   new BMap.Geolocation().getCurrentPosition(function(r) {
+    //     if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+    //       // 判断状态
+    //       let pt = r.point;
+    //       new BMap.Geocoder().getLocation(pt, function(rs) {
+    //         if (rs.point) {
+    //           let addComp = rs.addressComponents;
+    //           window.LATITUDE = rs.point.lat;
+    //           window.LONGITUDE = rs.point.lng;
+    //           window.CITYNAME = addComp.city;
+    //           that.cityName1 = addComp.city;
+    //         } else {
+    //           window.LATITUDE = r.point.lat;
+    //           window.LONGITUDE = r.point.lng;
+    //           window.CITYNAME = r.address.city;
+    //           that.cityName1 = r.address.city;
+    //         }
+    //         that.init();
+    //         // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+    //       });
+
+    //     } else {
+    //       this.SHOWLOADING(true);
+    //     }
+    //   });
+    // },
     aginEnter() {
-      // alert(33)
       this.SHOWLOADING(true);
       let that = this;
       if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
         this.init();
       } else {
-        new BMap.Geolocation().getCurrentPosition(function(r) {
-          if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            // 判断状态
-            let pt = r.point;
-            // console.log(r);
-
-            new BMap.Geocoder().getLocation(pt, function(rs) {
-              // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              if (rs.point) {
-                let addComp = rs.addressComponents;
-                window.LATITUDE = rs.point.lat;
-                window.LONGITUDE = rs.point.lng;
-                window.CITYNAME = addComp.city;
-                that.cityName1 = addComp.city;
-              } else {
-                window.LATITUDE = r.point.lat;
-                window.LONGITUDE = r.point.lng;
-                window.CITYNAME = r.address.city;
-                that.cityName1 = r.address.city;
-              }
-              that.init();
-              // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
-            });
-
-          } else {
-            this.SHOWLOADING(true);
-          }
-        });
-
-        // setTimeout(()=>{
-        //    this.SHOWLOADING(false)
-        //  },10000)
+        window.LBS_GD.call(this,(rs)=>{
+          if (rs.point) {
+              let addComp = rs.addressComponents;
+              window.LATITUDE = rs.point.lat;
+              window.LONGITUDE = rs.point.lng;
+              window.CITYNAME = addComp.city;
+              that.cityName1 = addComp.city;
+            } else {
+              window.LATITUDE = r.point.lat;
+              window.LONGITUDE = r.point.lng;
+              window.CITYNAME = r.address.city;
+              that.cityName1 = r.address.city;
+            }
+            that.init();
+        })
       }
     },
     intervalCity() {
@@ -378,11 +390,11 @@ export default {
       // 单点登录
       // 请求banner1
       this.cityName1 = window.CITYNAME || "定位中";
-
       if (!window.LONGITUDE) {
         this.SHOWLOADING(false);
         return;
       }
+      let startTime = new Date();
       axios
         .post("getShopInfo", {
           longitude: window.LONGITUDE, // 经度
@@ -393,45 +405,21 @@ export default {
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 2,
-          session: this.token.session.replace(/\+/g, "%2B")
+          session: this.token.session.replace(/\+/g, "%2B"),
+          map_type:window.isUseBaiDuLoc
         })
         .then(res => {
           //神策
-          function formatDate(time,format='YY-MM-DD hh:mm:ss'){
-            var date = new Date(time);
-            var year = date.getFullYear(),
-                month = date.getMonth()+1,//月份是从0开始的
-                day = date.getDate(),
-                hour = date.getHours(),
-                min = date.getMinutes(),
-                sec = date.getSeconds();
-            var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
-              return '0'+index;
-            });////开个长度为10的数组 格式为 00 01 02 03
-        
-            var newTime = format.replace(/YY/g,year)
-                                .replace(/MM/g,preArr[month]||month)
-                                .replace(/DD/g,preArr[day]||day)
-                                .replace(/hh/g,preArr[hour]||hour)
-                                .replace(/mm/g,preArr[min]||min)
-                                .replace(/ss/g,preArr[sec]||sec);
-        
-            return newTime;         
-          }
-          // console.log(formatDate(new Date().getTime()));
-          let startTime = new Date();
-          let endTime = "" ;
-          window.onload = function(){
-            endTime = new Date();
-            sa.track('loadDelay',{
-              currentBusinessLine:'发现频道',
-              currentActivity: '调用发现页附近商户getShopInfo接口',
-              currentURL: window.location.href,
-              delayTime: endTime - startTime,
-              endTime: formatDate(endTime.getTime()),
-              startTime: formatDate(startTime.getTime())
-            })   
-          };
+          let endTime = new Date() ;
+          sa.track('loadDelay',{
+            currentBusinessLine:'发现频道',
+            currentActivity: '调用发现页附近商户getShopInfo接口',
+            currentURL: window.location.href,
+            delayTime: endTime - startTime,
+            endTime: this.formatDate(endTime.getTime()),
+            startTime: this.formatDate(startTime.getTime())
+          })
+
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);

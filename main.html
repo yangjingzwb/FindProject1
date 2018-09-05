@@ -34,42 +34,70 @@
     window.CITYNAME = '';
     window.LBSINFO = {
     }
-    var isUseBaiDuLoc = false;
-    try {
-      if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
-        setTimeout(() => {
-          // 苹果客户端定位
-          window.getLocationInfo()
-          }, 20)
-        } else {
-          // alert(2)
-          // alert(window.goActivity.getLongitude())
-          // alert(window.goActivity.getLatitude())
-          // android 客户端定位
-          window.LONGITUDE = window.goActivity.getLongitude();//查询经度信息
-          window.LATITUDE = window.goActivity.getLatitude();//查询纬度
-          window.CITYNAME = window.goActivity.getCityName();
-        }
-      } catch (e) {
-        isUseBaiDuLoc = true;
-      }
-
+    
+    window.isUseBaiDuLoc = 1; // 定位标记 1：高德 0:百度
     // ios客户端回调
-    function callBackGetLocationInfo(json) {
-      // ios
+    window.callBackGetLocationInfo = function (json) {
+      // 如果和包定位失败调用百度地图
+      if(!json||!json.Longitude){
+        window.LBS_BD(window.cb);
+        return;
+      }
       window.LONGITUDE = json.Longitude;
       window.LATITUDE = json.Latitude;
       window.LBSINFO = json;
       window.CITYNAME = json.CityName;
+      this.cityName1 = addComp.city;
+      if(this.init){
+        this.init();
+      }
       
     }
-    if(isUseBaiDuLoc) {
+    
+    /**
+     * 和包原生定位 
+     */
+    window.LBS_GD = function(cb) {
+      if(cb){
+        window.cb = cb;
+      }
+      try {
+        if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
+            // 苹果客户端定位
+          window.getLocationInfo()
+        } else {
+          // android 客户端定位
+          window.LONGITUDE = window.goActivity.getLongitude();//查询经度信息
+          window.LATITUDE = window.goActivity.getLatitude();//查询纬度
+          window.CITYNAME = window.goActivity.getCityName();
+         
+          if(!window.LONGITUDE){
+            window.LBS_BD(cb)
+          }else{
+            this.cityName1 = addComp.city;
+            if(this.init){
+              this.init();
+            }
+          }
+        }
+      } catch (e) {
+        window.LBS_BD(cb)
+      }
+    }
+
+    /**
+     * 百度LBS
+     */ 
+    window.LBS_BD = function(cb) {
+      window.isUseBaiDuLoc = 0; //标记为百度定位
       new BMap.Geolocation().getCurrentPosition(function (r) {
-        // alert(31)
         if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
-          console.log(r)
           new BMap.Geocoder().getLocation(r.point, function (rs) {
-            if (rs) {
+            if(typeof cb == 'function'){
+                cb(rs,r);
+                return;
+            }
+            if (rs.point) {
               var addComp = rs.addressComponents;
               // alert(JSON.stringify(rs))
               // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber); 
@@ -83,59 +111,15 @@
             }
           })
         } else {
-          // new BMap.LocalCity().get(function (e) {
-          //   LATITUDE = e.center.lat;
-          //   LONGITUDE = e.center.lng;
-          //   CITYNAME = e.center.name;
-          // });
+
         }
       })
     }
-      // new BMap.LocalCity().get(function (e) {
-      //       LATITUDE = LATITUDE || e.center.lat;
-      //       LONGITUDE = LONGITUDE || e.center.lng;
-      //       CITYNAME = CITYNAME || e.name;
-      //       console.log(e)
-      // });
-    //  window.onerror = function (a, b, c, d) {
-    //     var msg = 'name=SM&error=' + a + "\n" + 'url:' + b + "\n" + '行:' + c + "\n" + '列:' + d;
-    //     // alert(msg)
-    //     // if (location.protocol == 'http:') {
-    //     //   var myreg = new RegExp('timeout'); //匹配加载超时
-    //     //   if (myreg.test(msg)) {
-    //     //     alert('请求超时');
-    //     //     location.reload();
-    //     //   } else {
-    //     //     // alert(msg);
-    //     //   }
-    //     // } else {
-    //     //   // setTimeout(function () {
-    //     //   //   ajax('/error', msg, 'POST');
-    //     //   // }, 10);
-    //     // }
-    //   };
-      // dd
-      // var map = new BMap.Map("container");
-    //   var geolocation = new BMap.Geolocation()
-    //   geolocation.getCurrentPosition(function (r) {
-    //     if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
-    //       // var mk = new BMap.Marker(r.point);//创建一个地图标注
-    //       // map.addOverlay(mk);
-    //       // map.panTo(r.point);//转向获取的地理坐标所在位置
-    //       alert('您的位置：' + JSON.stringify(r.point));// r.point.lng + ',' + r.point.lat
-    //     } else {
-
-    //     }
-    //   })
-
-    //  alert("请打开GPS")
-    //  new BMap.LocalCity().get(function (e) {
-    //         alert(JSON.stringify(e));
-    //       });
+    window.LBS_GD()
+    
+    // window.LBS_GD();
   </script>
-  <!-- <script src="https://h5.bestpay.com.cn/common/js/bestpay.html5-2.0.js"></script> -->
   <!-- <script src="https://openaf.xwbank.com/XWsdk-2-min.js?v=1.0"></script> -->
-  <!-- <script src="/static/bestpay.html5.js"></script> -->
 </head>
 
 <body class="bd">

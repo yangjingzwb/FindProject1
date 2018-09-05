@@ -509,7 +509,8 @@ export default {
           // tixn_cnl: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B")
+          session: this.token.session.replace(/\+/g, "%2B"),
+          map_type:window.isUseBaiDuLoc
         })
         .then(res => {
           // this.shopList = res.STORES_REC;
@@ -634,7 +635,8 @@ export default {
           currentPage: this.CURRENTPAGE,
           mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B")
+          session: this.token.session.replace(/\+/g, "%2B"),
+          map_type:window.isUseBaiDuLoc
         })
         .then(res => {
           //神策

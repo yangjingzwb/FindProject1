@@ -21,9 +21,10 @@ import './config/rem'
 import FastClick from 'fastclick'
 import axios from "@@/plugins/rsa/axios";
 import AlertTip from '@@/components/common/alertTip'
-import {getLBS, goOldPlatform, unCertain, goNewPlatform, getFreeSign, checkUtil, animationProgress, geURLParam } from "@@/service/util"
+import {checkUtil, animationProgress,formatDate_1 } from "@@/service/util"
 // 神策
 import sa from'sa-sdk-javascript';
+
 sa.init({
     sdk_url: 'https://static.sensorsdata.cn/sdk/1.10.9/sensorsdata.min.js',
     heatmap_url: 'https://static.sensorsdata.cn/sdk/1.10.9/heatmap.min.js',
@@ -61,19 +62,13 @@ if ('addEventListener' in document) {
         FastClick.attach(document.body);
     }, false);
 }
-let isIPhone = /iP(ad|hone|od)/.test(navigator.userAgent)
+// let isIPhone = /iP(ad|hone|od)/.test(navigator.userAgent)
 // ios 防止select焦点跳动
 if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
     document.body.addEventListener('touchend', function (event) {
         console.log('touchend event caught and default prevented', event.target.tagName);
-        // alert(event.target.tagName.toLowerCase())
         if (event.target.tagName.toLowerCase() == 'input') {
-            //    return 
-            // console.log(event.target)
-            // document.body.focus();
-            // setTimeout(()=>{},20)
             event.target.click();
-            // event.preventDefault();
         }
     })
 }
@@ -106,118 +101,30 @@ router.beforeEach((to, from, next) => {
         next()
         return
     }
-    
-    // 获取gps信息
-    // latitude: '', // 当前位置纬度
-    // longitude: '', // 当前位置经度
-    // try {
-    //     // store.commit('ISSHOWALERT',true)
-    //     new BMap.Geolocation().getCurrentPosition(function (r) {
-    //         if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
-    //             console.log('您的位置：', r);// r.point.lng + ',' + r.point.lat
-    //             // try {
-    //             store.commit('LATITUDE', r.latitude)
-    //             store.commit('LONGITUDE', r.longitude)
-    //             store.commit('CITYNAME', r.address.city)
-    //             // } catch (e) {
-    //             //     store.commit('LATITUDE', "31.24916171")
-    //             //     store.commit('LONGITUDE', '121.48789949')
-    //             //     store.commit('CITYNAME', '上海')
-    //             // }
-
-    //         } else {
-    //             store.commit('ISSHOWALERT', true)
-    //             // alert("请打开GPS")
-    //             new BMap.LocalCity().get(function (e) {
-    //                 // try{
-    //                 store.commit('LATITUDE', e.center.lat)
-    //                 store.commit('LONGITUDE', e.center.lng)
-    //                 store.commit('CITYNAME', e.name)
-    //                 // }catch(e){
-    //                 //     store.commit('LATITUDE', "31.24916171")
-    //                 //     store.commit('LONGITUDE', '121.48789949')
-    //                 //     store.commit('CITYNAME', '上海')
-    //                 // }
-
-    //             });
-    //         }
-    //     })
-    // } catch (e) {
-    //     store.commit('ISSHOWALERT', true)
-    //     store.commit('LATITUDE', "31.24916171")
-    //     store.commit('LONGITUDE', '121.48789949')
-    //     store.commit('CITYNAME', '上海')
-    // }
-
-    // new BMap.LocalCity().get(function (e) {
-    //     alert(JSON.stringify(e))
-    //     try{
-    //         store.commit('LATITUDE', e.center.lat)
-    //         store.commit('LONGITUDE', e.center.lng)
-    //     }catch(e){
-    //         store.commit('LATITUDE', "31.24916171")
-    //         store.commit('LONGITUDE', '121.48789949')
-    //         store.commit('CITYNAME', '上海市')
-    //     }
-
-    // });
     let slider = 0;
     let slider1 = 0;
     let slider2 = 0;
-    // alert(33)
-    // alert(window.location)
-    // window.getLocationInfo()
-    // alert(99)
-    
-    // alert(getLBS().longitude)
-    // goActivity
+
     // 单点登录
     //?SERVICE=user_ssoservice&VERSION=1.0&PARTNER=80010003&SIGN_TYPE=MD5&CREDTENTIAL=1593305,1502335609,1502336209,1502335609,218.77.2.82,client.cmpay.com&SIGN_DATA=08229a7a638c243bb7ab0a0e67e6d81c&viewCode=html 
     // 测试临时添加
     // store.commit('TOKEN', {"session":"TESTSSION","productNo":'13795442667'})
-    let userId = '';
-    
+    // let userId = '';
+    let startTime = new Date();
     axios.post('queryAccount', {
     }).then((res) => {
-        userId = res.data.usrNo
+        // userId = res.data.usrNo
         //神策
-        function formatDate(time,format='YY-MM-DD hh:mm:ss'){
-            var date = new Date(time);
-            var year = date.getFullYear(),
-                month = date.getMonth()+1,//月份是从0开始的
-                day = date.getDate(),
-                hour = date.getHours(),
-                min = date.getMinutes(),
-                sec = date.getSeconds();
-            var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
-                return '0'+index;
-            });////开个长度为10的数组 格式为 00 01 02 03
-        
-            var newTime = format.replace(/YY/g,year)
-                                .replace(/MM/g,preArr[month]||month)
-                                .replace(/DD/g,preArr[day]||day)
-                                .replace(/hh/g,preArr[hour]||hour)
-                                .replace(/mm/g,preArr[min]||min)
-                                .replace(/ss/g,preArr[sec]||sec);
-        
-            return newTime;         
-        }
-        // console.log(formatDate(new Date().getTime()));
-
-        let startTime = new Date();
-        let endTime = "" ;
-        window.onload = function(){
-            endTime = new Date();
+        let endTime = new Date();
             sa.track('loadDelay',{
             currentBusinessLine:'发现频道',
             currentActivity: '调用高阳queryAccount接口',
             currentURL: window.location.href,
             currentURL: window.location.href,
             delayTime: endTime - startTime,
-            endTime: formatDate(endTime.getTime()),
-            startTime: formatDate(startTime.getTime())
-            })   
-        };
+            endTime: formatDate_1(endTime.getTime()),
+            startTime: formatDate_1(startTime.getTime())
+        })   
         store.commit('TOKEN', res.data || {})
         if (!res.data || res.data.length <= 0) {
             

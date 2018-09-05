@@ -41,7 +41,7 @@ $fc:#fff;
 @mixin ct {  
 	position: absolute;
 	top: 50%;
-    transform:  translateX(-50%) translateY(-50%)!important;
+    transform: translateX(-50%) translateY(-50%)!important;
 }
 @mixin activeborder($color){
 	content: " ";
@@ -169,7 +169,7 @@ input{
   }
 .null {
 	height: 4.5rem;
-	padding-top: 1.2rem;
+	// padding-top: 1.2rem;
 	font-size: 0.6875rem;
 	color: #afadadc4;
 	text-align: center;
