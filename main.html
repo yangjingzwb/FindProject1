@@ -39,7 +39,7 @@
     // ios客户端回调
     window.callBackGetLocationInfo = function (json) {
       // 如果和包定位失败调用百度地图
-      if(!json||!json.Longitude){
+      if(json=='-1'||!json||!json.Longitude){
         window.LBS_BD(window.cb);
         return;
       }
