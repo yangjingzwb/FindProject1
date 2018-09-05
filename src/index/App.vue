@@ -26,7 +26,7 @@ import { mapState, mapMutations } from "vuex";
 // import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 import { connector as api } from "@@/config/env";
-import vueLoading from 'vue-loading-template'
+// import vueLoading from 'vue-loading-template'
 
 // import { getUUID } from "@@/service/util";
 

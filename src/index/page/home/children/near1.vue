@@ -25,6 +25,7 @@
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
+          <vue-loading v-if="showLoading" type='beat' ></vue-loading>
           <li @click="aginEnter()" class="aa">请点击刷新试试</li>
         </ul>
         <div v-else class="nullHeight"></div>
@@ -35,6 +36,7 @@
 import { mapState, mapMutations } from "vuex";
 import { fetchPoints, GetDistance } from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
+import vueLoading from 'vue-loading-template';
 // import { baseUrl } from "@@/config/env"; // baseUrl
 import sa from'sa-sdk-javascript';
 
@@ -65,16 +67,21 @@ export default {
     }
   },
   computed: {
-    ...mapState(["token"])
+    ...mapState(["token","showLoading"])
   },
 
   mounted() {},
   created() {},
 
   components: {
-    Scroll
+    Scroll,
+    vueLoading
   },
   methods: {
+    ...mapMutations([
+      "ISSHOWALERT",
+      "SHOWLOADING"
+      ]),
     aginEnter() {
       this.$emit("aginEnter");
     },

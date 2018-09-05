@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import Near1 from "./near1.vue";
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
@@ -81,7 +82,6 @@ import {
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
-import Near1 from "./near1.vue";
 import Recommended from "./recommended.vue";
 import GoodThing from "./goodThing.vue"; // 好物
 
@@ -124,6 +124,28 @@ export default {
   },
   created() {
     //神策
+    function formatDate(time,format='YY-MM-DD hh:mm:ss'){
+      var date = new Date(time);
+      var year = date.getFullYear(),
+          month = date.getMonth()+1,//月份是从0开始的
+          day = date.getDate(),
+          hour = date.getHours(),
+          min = date.getMinutes(),
+          sec = date.getSeconds();
+      var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
+        return '0'+index;
+      });////开个长度为10的数组 格式为 00 01 02 03
+  
+      var newTime = format.replace(/YY/g,year)
+                          .replace(/MM/g,preArr[month]||month)
+                          .replace(/DD/g,preArr[day]||day)
+                          .replace(/hh/g,preArr[hour]||hour)
+                          .replace(/mm/g,preArr[min]||min)
+                          .replace(/ss/g,preArr[sec]||sec);
+  
+      return newTime;         
+    }
+    // console.log(formatDate(new Date().getTime()));
     let startTime = new Date();
     let endTime = "" ;
     window.onload = function(){
@@ -132,16 +154,16 @@ export default {
         currentBusinessLine:'发现频道',
         currentActivity: '发现页面',
         currentURL: window.location.href,
-        delayTime: endTime.getTime() -  startTime.getTime(),
-        endTime: endTime.getTime(),
-        startTime: startTime.getTime()
+        delayTime: endTime - startTime,
+        endTime: formatDate(endTime.getTime()),
+        startTime: formatDate(startTime.getTime())
       })   
     }
   },
 
   components: {
-    Slider,
     Near1,
+    Slider,
     Goods1,
     Goods2
   },
@@ -199,7 +221,7 @@ export default {
           if (this.getStatus() == BMAP_STATUS_SUCCESS) {
             // 判断状态
             let pt = r.point;
-            console.log(r);
+            // console.log(r);
 
             new BMap.Geocoder().getLocation(pt, function(rs) {
               // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
@@ -220,7 +242,7 @@ export default {
             });
 
           } else {
-            this.SHOWLOADING(false);
+            this.SHOWLOADING(true);
           }
         });
 
@@ -249,7 +271,7 @@ export default {
           // 神策
           sa.track('ZoneClick', {
             contentName: '和包支付石油',
-            subCategory:'营销位',
+            subCategory:'发现营销位',
             topCategory: '发现',
             locationOfZone:'主图'
           });
@@ -375,6 +397,28 @@ export default {
         })
         .then(res => {
           //神策
+          function formatDate(time,format='YY-MM-DD hh:mm:ss'){
+            var date = new Date(time);
+            var year = date.getFullYear(),
+                month = date.getMonth()+1,//月份是从0开始的
+                day = date.getDate(),
+                hour = date.getHours(),
+                min = date.getMinutes(),
+                sec = date.getSeconds();
+            var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
+              return '0'+index;
+            });////开个长度为10的数组 格式为 00 01 02 03
+        
+            var newTime = format.replace(/YY/g,year)
+                                .replace(/MM/g,preArr[month]||month)
+                                .replace(/DD/g,preArr[day]||day)
+                                .replace(/hh/g,preArr[hour]||hour)
+                                .replace(/mm/g,preArr[min]||min)
+                                .replace(/ss/g,preArr[sec]||sec);
+        
+            return newTime;         
+          }
+          // console.log(formatDate(new Date().getTime()));
           let startTime = new Date();
           let endTime = "" ;
           window.onload = function(){
@@ -383,15 +427,15 @@ export default {
               currentBusinessLine:'发现频道',
               currentActivity: '调用发现页附近商户getShopInfo接口',
               currentURL: window.location.href,
-              delayTime: endTime.getTime() -  startTime.getTime(),
-              endTime: endTime.getTime(),
-              startTime: startTime.getTime()
+              delayTime: endTime - startTime,
+              endTime: formatDate(endTime.getTime()),
+              startTime: formatDate(startTime.getTime())
             })   
           };
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
-            console.log(this.shopList);
+            // console.log(this.shopList);
             setTimeout(() => {
               this.SHOWLOADING(false);
             }, 300);
@@ -408,7 +452,7 @@ export default {
               this.isError = false;
               // }, 300);
             }
-            return;
+            return;``
           }
         })
         .catch(res => {

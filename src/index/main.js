@@ -41,7 +41,7 @@ sa.init({
        scroll_notice_map:'not_collect'
     }
   });
-// sa.login(user_id);
+sa.login('100375325411','first_id');
 sa.quick('autoTrack', {
     platForm:'h5'
 });
@@ -175,9 +175,35 @@ router.beforeEach((to, from, next) => {
     //?SERVICE=user_ssoservice&VERSION=1.0&PARTNER=80010003&SIGN_TYPE=MD5&CREDTENTIAL=1593305,1502335609,1502336209,1502335609,218.77.2.82,client.cmpay.com&SIGN_DATA=08229a7a638c243bb7ab0a0e67e6d81c&viewCode=html 
     // 测试临时添加
     // store.commit('TOKEN', {"session":"TESTSSION","productNo":'13795442667'})
+    let userId = '';
+    
     axios.post('queryAccount', {
     }).then((res) => {
+        userId = res.data.usrNo
         //神策
+        function formatDate(time,format='YY-MM-DD hh:mm:ss'){
+            var date = new Date(time);
+            var year = date.getFullYear(),
+                month = date.getMonth()+1,//月份是从0开始的
+                day = date.getDate(),
+                hour = date.getHours(),
+                min = date.getMinutes(),
+                sec = date.getSeconds();
+            var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
+                return '0'+index;
+            });////开个长度为10的数组 格式为 00 01 02 03
+        
+            var newTime = format.replace(/YY/g,year)
+                                .replace(/MM/g,preArr[month]||month)
+                                .replace(/DD/g,preArr[day]||day)
+                                .replace(/hh/g,preArr[hour]||hour)
+                                .replace(/mm/g,preArr[min]||min)
+                                .replace(/ss/g,preArr[sec]||sec);
+        
+            return newTime;         
+        }
+        // console.log(formatDate(new Date().getTime()));
+
         let startTime = new Date();
         let endTime = "" ;
         window.onload = function(){
@@ -186,16 +212,17 @@ router.beforeEach((to, from, next) => {
             currentBusinessLine:'发现频道',
             currentActivity: '调用高阳queryAccount接口',
             currentURL: window.location.href,
-            delayTime: endTime.getTime() -  startTime.getTime(),
-            endTime: endTime.getTime(),
-            startTime: startTime.getTime()
+            currentURL: window.location.href,
+            delayTime: endTime - startTime,
+            endTime: formatDate(endTime.getTime()),
+            startTime: formatDate(startTime.getTime())
             })   
         };
         store.commit('TOKEN', res.data || {})
         if (!res.data || res.data.length <= 0) {
-          
+            
         } else {
-
+            
         }
         
         // 请求banner1
@@ -232,11 +259,10 @@ router.beforeEach((to, from, next) => {
             // window.location.reload()
         })
     }).catch((res) => {
-       
+        
+    // }).then(() => {
+        // sa.login('userId');
     })
-
-
-
 })
 new Vue({
     router,
