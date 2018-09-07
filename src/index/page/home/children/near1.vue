@@ -115,7 +115,7 @@ export default {
       // 神策
       sa.track('buttonClick', {
         topCategory: '发现',
-        subCategory: '更多>'
+        subCategory: '发现：首页'
       });
       fetchPoints(
         "010000000000", // 页面索引

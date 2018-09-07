@@ -261,11 +261,9 @@ export default {
       try {
         if (channel == "jd") {
           // 神策
-          sa.track('ZoneClick', {
-            contentName: '和包支付石油',
-            subCategory:'发现营销位',
+          sa.track('bannerClick', {
+            contentName: '和包支付石油活动',
             topCategory: '发现',
-            locationOfZone:'主图'
           });
           fetchPoints(
             "010000000000",
@@ -277,9 +275,9 @@ export default {
         } else if (channel == "top") {
           // 神策
           sa.track('bannerClick', {
-            contentName: '顶部banner',
+            contentName: obj.marketingTitle,
             topCategory: '发现',
-            locationOfZone: 'banner轮播' + obj.marketingTitle
+            locationOfZone: '顶部banner'
           });
           // banner图埋点
           fetchPoints(

@@ -42,7 +42,7 @@ sa.init({
        scroll_notice_map:'not_collect'
     }
   });
-sa.login('100375325411','first_id');
+sa.login('100422801839');
 sa.quick('autoTrack', {
     platForm:'h5'
 });

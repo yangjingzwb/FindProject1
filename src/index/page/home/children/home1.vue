@@ -367,9 +367,9 @@ export default {
         if (channel == "top") {
           // 神策
           sa.track('bannerClick', {
-            contentName: '顶部banner点击',
-            bannerNumber:obj.marketingPosition || obj.marketingId,
-            topCategory: '更多'
+            contentName: obj.marketingTitle,
+            topCategory: '更多',
+            locationOfZone: '顶部banner'
           });
           fetchPoints(
             "020000000000",
@@ -383,7 +383,7 @@ export default {
           sa.track('buttonClick', {
             buttonName: obj.marketingTitle,
             topCategory: '发现',
-            subCategory:'首页'
+            subCategory:'发现：更多优惠'
           });
           fetchPoints(
             "020000000000",
