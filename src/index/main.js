@@ -20,7 +20,7 @@ import { routerMode } from './config/env'
 import './config/rem'
 import FastClick from 'fastclick'
 import axios from "@@/plugins/rsa/axios";
-import AlertTip from '@@/components/common/alertTip'
+// import AlertTip from '@@/components/common/alertTip'
 import {checkUtil, animationProgress,formatDate_1 } from "@@/service/util"
 // 神策
 import sa from'sa-sdk-javascript';
@@ -74,7 +74,7 @@ if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
 }
 
 //注册全局组件 弹窗
-Vue.component('alert-tip', AlertTip)
+// Vue.component('alert-tip', AlertTip)
 
 Vue.use(VueRouter)
 // Vue.use(bestpay)
@@ -122,6 +122,7 @@ router.beforeEach((to, from, next) => {
             currentURL: window.location.href,
             currentURL: window.location.href,
             delayTime: endTime - startTime,
+            offsetTime: 0,
             endTime: formatDate_1(endTime.getTime()),
             startTime: formatDate_1(startTime.getTime())
         })   

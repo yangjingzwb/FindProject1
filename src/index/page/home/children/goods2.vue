@@ -52,7 +52,7 @@ export default {
         })
         .then(res => {
           this.data = res.data;
-          console.log(this.data);
+          // console.log(this.data);
         });
     },
     goDetail(event, obj, flag) {

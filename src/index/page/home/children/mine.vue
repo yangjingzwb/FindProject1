@@ -332,8 +332,9 @@ export default {
         })
         .then(res => {
           sa.track('applySearch', {
-            keyword:this.search,
-            hasResult: res.data & res.data.length>0 
+            keyword:this.searchT,
+            hasResult: res.data.length>=1 ? 1 : 0
+            // hasResult: this.searchT.length>=1 ? 1 : 0
           });
           this.SHOWLOADING(false);
           this.shopList = res.data;

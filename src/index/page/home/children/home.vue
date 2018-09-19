@@ -29,6 +29,12 @@
     </section>  
            
     <section class="s_5 s" >
+      <!-- 优惠券 -->
+      <coupon
+        :couponList="couponList"
+        @goDetail="goDetail"
+        >
+      </coupon>
       <!-- 附近 -->
       <near1
         :latitude = 'latitude'
@@ -70,7 +76,6 @@
 </template>
 
 <script>
-import Near1 from "./near1.vue";
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
@@ -84,6 +89,8 @@ import {
   formatDate_1
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
+import Near1 from "./near1.vue";
+import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
 import Recommended from "./recommended.vue";
@@ -96,6 +103,7 @@ export default {
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       // defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
+      couponList: [],
       shopList: [],
       CURRENTPAGE: 0, // 页码
       PAGNUM: 2,
@@ -110,6 +118,8 @@ export default {
   computed: {},
 
   mounted() {
+    // 获取优惠券
+    this.getCoupon()
     // 获取运营banner
     this.getMiddle()
     try {
@@ -137,12 +147,14 @@ export default {
       currentActivity: '发现页面',
       currentURL: window.location.href,
       delayTime: endTime - startTime,
+      offsetTime: 0,
       endTime: formatDate_1(endTime.getTime()),
       startTime: formatDate_1(startTime.getTime())
-    })   
+    })
   },
   components: {
     Near1,
+    Coupon,
     Slider,
     Goods1,
     Goods2,
@@ -262,7 +274,8 @@ export default {
         if (channel == "jd") {
           // 神策
           sa.track('bannerClick', {
-            contentName: '和包支付石油活动',
+            contentName: '和包支付加油活动',
+            bannerNumber: String(obj.marketingNumber),
             topCategory: '发现',
           });
           fetchPoints(
@@ -276,8 +289,8 @@ export default {
           // 神策
           sa.track('bannerClick', {
             contentName: obj.marketingTitle,
+            bannerNumber: String(obj.marketingNumber),
             topCategory: '发现',
-            locationOfZone: '顶部banner'
           });
           // banner图埋点
           fetchPoints(
@@ -291,14 +304,19 @@ export default {
       } catch (e) {}
 
       let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
+      url = flag == 1 ? obj.marketingEventCotent : url;
       url = flag == 3 ? obj.detailUrl : url;
       url = flag == 4 ? obj.url : url;
-      url = flag == 1 ? obj.marketingEventCotent : url;
+      url = flag == 5 ? obj.couponEventContent : url;
+      url = flag == 6 ? obj.couponDetailsContent : url;
+      url = flag == 99 ? obj.couponDetailsContent : url;
+      console.log(888888);
+      console.log(url);
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 2 || flag == 3 || flag == 4) {
+        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 99) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -322,7 +340,7 @@ export default {
           );
         }
       } else {
-        if (flag == 2 || flag == 3 || flag == 4) {
+        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 99) {
           let url_2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -394,6 +412,7 @@ export default {
             currentActivity: '调用发现页附近商户getShopInfo接口',
             currentURL: window.location.href,
             delayTime: endTime - startTime,
+            offsetTime: 0,
             endTime: formatDate_1(endTime.getTime()),
             startTime: formatDate_1(startTime.getTime())
           })
@@ -418,7 +437,7 @@ export default {
               this.isError = false;
               // }, 300);
             }
-            return;``
+            return;
           }
         })
         .catch(res => {
@@ -432,11 +451,26 @@ export default {
       // 请求banner2
       // 请求品类
     },
+    // 获取优惠券
+    getCoupon() {
+      axios.post('queryCoupon',{
+        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      }).then(res => {
+          if(res.code === "0") {
+            let data = res.data.map((item)=>{
+              item.show = true
+              return item
+            })
+            this.couponList = data
+            console.log(this.couponList)
+          }
+        });
+    },
     // 获取运营banner位
     getMiddle() {
       axios.get("market/queryMerchantInfo")
         .then(res => {
-          if(res.code && res.data) {
+          if(res.code === "0") {
             const data = res.data
             this.goods1 = data
             // console.log(this.goods1)

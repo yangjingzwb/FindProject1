@@ -1,11 +1,10 @@
  <template>
-    <div class="alet_container">
+    <div class="alet_container" :showAlert="showAlert">
 	    <section class="tip_text_container">
             <div class='tip_text_box'>
-                <p class="tip_text">{{alertTextFirst}}</p>
-                <p class="tip_text">{{alertTextSecond}}</p>
+                <p class="tip_text">{{alertText}}</p>
             </div>
-            <div class="confrim" @click="closeTip">{{btnText}}</div>
+            <div class="confrim" @click="closeTip">确认</div>
         </section>
     </div>
 </template>
@@ -14,6 +13,7 @@
     export default {
     	data(){
             return{
+                showAlert: false,
                 positionY: 0,
                 timer: null
             }
@@ -22,10 +22,7 @@
       
         },
         props: {
-            alertTextFirst:{
-                type:String
-            },
-            alertTextSecond:{
+            alertText:{
                 type:String
             },
             btnText:{
@@ -66,7 +63,7 @@
         left:0;
         right:0;
         margin:auto;
-        top:11rem;
+        top:21rem;
         width: 17rem;
         height:9rem;
         animation: tipMove .4s ;

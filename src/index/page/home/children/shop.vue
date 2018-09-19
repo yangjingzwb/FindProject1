@@ -1,44 +1,50 @@
 <template>
-  <div >
-    <div class="nullHeight"></div>
-        <div class="t-2">
-            附近优惠
-            <div class="t-4" @click="goMorePer()">更多</div>
-            <div class="hr-1"></div>
-        </div>
-        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,0)" >
-          <!-- :key="item.TX_JRN" -->
-            <li class="left">
-                <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
-                <img v-else :src="'/static/img/error.png'" alt="">
-            </li>
-            <li class="right">
-                <div class="c1">{{item.STORES_NM}}</div>
-                <div class="c2">
-                    <span class="l">{{item.BUS_ADDR}}</span>
-                    <span class="r">{{GetDistance(latitude,longitude,item.LATITUDE,item.LONGITUDE)}}km</span>
-                </div>
-                <div class="c3">
-                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
-                </div>
-            </li>
-            <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
-        </ul>
-        <ul v-if = "!shopList || shopList.length<=0 ">
-          <vue-loading v-if="showLoading" type='beat' ></vue-loading>
-          <li @click="aginEnter()" class="aa">请点击刷新试试</li>
-        </ul>
-        <div v-else class="nullHeight"></div>
+  <div>
+    <section class="s_1">
+      <ul>
+        <router-link tag="li" class="l t" to="/">
+        </router-link>
+        <li class="l">
+          <span>爱客联盟</span>
+        </li>
+        <div class="hr-1"></div>
+      </ul>
+    </section>
+    <ul v-for="(item,index) in shopLists"  @click="goDetail($event,item,1)">
+      <!-- :key="item.TX_JRN" -->
+        <li class="left">
+            <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="">
+            <img v-else :src="'/static/img/error.png'" alt="">
+        </li>
+        <li class="right">
+            <div class="c1">{{item.STORES_NM}}</div>
+            <div class="c2">
+                <span class="l">{{item.BUS_ADDR}}</span>
+                <span class="r">{{GetDistance(latitude,longitude,item.LATITUDE,item.LONGITUDE)}}km</span>
+            </div>
+            <div class="c3">
+                <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
+            </div>
+        </li>
+        <li class="hr-1" :class="{height0:index == shopLists.length-1}"></li>
+    </ul>
+    <ul v-if = "!shopLists || shopLists.length<=0 ">
+      <li class="aa">您附近暂无优惠券适用商户</li>
+    </ul>
+    <!-- <div class="null"></div> -->
     </div>
 </template>
 
 <script>
+import {
+  fetchPoints,
+  GetDistance
+  //   setLItem,
+  //   getLItem,
+  //   getCode
+} from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
-import { fetchPoints, GetDistance } from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
-import vueLoading from 'vue-loading-template';
-// import { baseUrl } from "@@/config/env"; // baseUrl
-import sa from'sa-sdk-javascript';
 
 export default {
   data() {
@@ -52,79 +58,61 @@ export default {
   },
   props: {
     latitude: {
-      type: String,
+      type: Boolean,
       default: false
     },
     longitude: {
-      type: String,
+      type: Boolean,
       default: false
     },
-    shopList: {
+    shopLists: {
       type: Array,
       default: function() {
         return [];
       }
+    },
+    pullDownRefresh: {
+      type: null,
+      default: true
     }
+    // pullUpLoad: {
+    //   type: Boolean,
+    //   default: false
+    // }
   },
   computed: {
-    ...mapState(["token","showLoading"])
+    ...mapState(["token"])
   },
 
   mounted() {},
   created() {},
 
   components: {
-    Scroll,
-    vueLoading
+    Scroll
   },
-  methods: {
-    ...mapMutations([
-      "ISSHOWALERT",
-      "SHOWLOADING"
-      ]),
-    aginEnter() {
-      this.$emit("aginEnter");
-    },
 
+  methods: {
     GetDistance(a, b, c, d) {
       // alert(GetDistance(a, b, c, d))
       return GetDistance(a, b, c, d);
     },
 
     goDetail(event, obj, flag) {
-      // 神策
-     sa.track('clickShop', {
-        currentPage: '发现',
-        commodityID:obj.MERC_ID,
-        commodityName: obj.STORES_NM,
-        commodityType:obj.MERC_TRD_DESC,
-        is_FromSearch:false,
-        keyword:''
-      });
       fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K06", //事件标记
+        "020000000000", // 页面索引
+        "020000000000K07", //事件标记
         this.token.productNo,
         "附近商户-" + obj.STORES_NM, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
       this.$emit("goDetail", event, obj, flag);
     },
-    // 更多优惠
-    goMorePer() {
-      // 神策
-      sa.track('buttonClick', {
-        topCategory: '发现',
-        subCategory: '发现：首页'
-      });
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K07", //事件标记
-        this.token.productNo,
-        "更多优惠按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
-      this.$router.push("/home1");
+
+    onPullingDown() {
+      this.$emit("pullingDown");
+    },
+    onPullingUp() {
+      this.$emit("pullingUp");
     }
   }
 };
@@ -132,54 +120,37 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-.t-2 {
-  position: relative;
-  height: 2.875rem;
-  text-align: center;
-  position: relative;
-  color: #13252e;
-  line-height: 2.875rem;
-  font-family: PingFangSC-Regular;
-  font-size: 0.9375rem;
-}
-.t-4 {
-  // width: 1.125rem;
-  height: 100%;
-  font-family: PingFangSC-Regular;
-  font-size: 0.75rem;
-  position: absolute;
-  right: .5rem;
-  padding-right: 1.1rem;
-  color: #7E7E7E;
+.s_1
+ {
+  @include wh(100%, 3rem);
+  background: #ffffff;
+  position: sticky;
+  z-index: 100000000;
   top: 0;
-  background-image: url("/static/img/more_button.png");
-  background-repeat: no-repeat;
-  background-position: 100%;
-  background-position: 85% 50%;
-  background-size: auto 25%;
+  left: 0;
+  .l {
+    height: 100%;
+    line-height: 3rem;
+    padding-right: 3.5rem;
+    text-align: center;
+  }
+  .t {
+    color: #6c6c6c;
+    font-size: 0.9375rem;
+    width: 5.1875rem;
+    position: relative;
+    float: left;
+    text-align: left;
+    padding-left: 1.9375rem;
+    background-image: url(/static/img/back.png);
+    background-repeat: no-repeat;
+    background-position: 0.375rem 50%;
+    background-size: 1.1rem;
+    // padding-right: 0.6rem;
+    @include space();
+  }
 }
-.t-2:after {
-  @include onepx1(#d8d8d8);
-}
-.t-1 {
-  height: 100%;
-  line-height: 2.5625rem;
-  width: 9.375rem;
-  margin: 0 auto;
-  background-image: url("/static/img/2-5.png");
-  background-repeat: no-repeat;
-  background-position: 100%;
-}
-.t-3 {
-  height: 100%;
-  line-height: 2.5625rem;
-  width: 4.375rem;
-  color: #888888;
-  font-family: PingFangSC-Regular;
-  font-size: 0.75rem;
-  margin: 0 auto;
-  background: #fff;
-}
+
 .nullHeight {
   height: 0.5625rem;
   background: #f6f7f8;
@@ -382,11 +353,10 @@ export default {
   margin-top: 0.5625rem;
   margin-bottom: 1rem;
   ul {
-    height: 6.6875rem;
-    padding-top: 1rem;
+    height: 7.5rem;
+    padding-top: 1.625rem;
     position: relative;
     margin: 0 0.9375rem;
-    // border-bottom: 1px solid #E6E6E6;
   }
   // ul::after {
   //   @include onepx1(#d8d8d8);
@@ -419,7 +389,6 @@ export default {
     float: left;
     max-height: 5rem;
     overflow: hidden;
-    // border: 1px solid #D8D8D8;
     img {
       width: 100%;
       max-height: 5rem;
@@ -478,173 +447,13 @@ export default {
   }
 }
 
-.s_6 {
-  padding: 0 0.9375rem;
-  background: #fff;
-  margin-top: 0.5625rem;
-  ul {
-    // height: 7.5rem;
-    // padding-top: 1.625rem;
-  }
-  ul:nth-of-type(1) {
-    padding-top: 1.625rem;
-  }
-  .title {
-    position: relative;
-    height: 1.5625rem;
-    text-align: center;
-  }
-  .title:after {
-    @include onepx1(#d8d8d8);
-  }
-  .text {
-    position: relative;
-    width: 4rem;
-    padding: 0.3125rem 0.5rem;
-    top: 0.75rem;
-    background: #fff;
-    z-index: 10;
-    color: #444444;
-    font-size: 0.875rem;
-  }
-  img {
-    width: 100%;
-    height: auto;
-  }
-  .c-t {
-    color: #13252e;
-    font-size: 0.9375rem;
-    padding-bottom: 0.9375rem;
-  }
-}
-.slider-wrapper {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  a {
-    display: inline-block;
-    height: 100%;
-  }
-  img {
-    max-height: 10.625rem;
-  }
-}
 .scroll {
   height: 10.625rem;
-}
-.slide-content {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-  position: relative;
-  // margin: 0 .625rem .625rem;
-}
-.slider-item {
-  height: 100% !important;
-}
-.food-wrapper-banner {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 2.75rem);
-  overflow: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-.foods-wrapper {
-  width: 100%;
-  // padding-left: 0.9375rem;
-  // padding-right: 0.9375rem;
-  .title {
-    height: 2.8125rem;
-    font-size: 0.9375rem;
-    color: #929292;
-    position: relative;
-    line-height: 2.8125rem;
-    padding-left: 0.95rem;
-    padding-right: 0.16rem;
-  }
-  .icon {
-    height: 1.0625rem;
-    width: 1.0625rem;
-    vertical-align: middle;
-    position: absolute;
-    //left: -.3125rem;
-    left: 0;
-    top: 0.9375rem;
-  }
-  .content {
-    // padding-top:.875rem;
-    // padding-left: .625rem;
-  }
-  .title:before {
-    content: " ";
-    position: absolute;
-    left: 0.125rem;
-    top: 50%;
-    transform: translateY(-51%);
-    width: 0.25rem;
-    height: 0.9375rem;
-    background: #ff4b4b;
-  }
-  .foods-item {
-    height: 4.625rem;
-    padding-top: 0.875rem;
-    padding-left: 0.625rem;
-    position: relative;
-  }
-  .food-top {
-    height: 1.0625rem;
-    // margin-top: .9375rem;
-    padding-left: 1.5rem;
-    //padding-right: 0.5rem;
-    //position: relative;
-    .left {
-      float: left;
-      color: #272727;
-      font-size: 1rem;
-      line-height: 1.15rem;
-    }
-    .right {
-      float: right;
-      color: #ff4b4b;
-      font-size: 0.625rem;
-    }
-  }
-  .flag {
-    height: 1.2rem;
-    display: inline-block;
-    padding: 0rem 0.4rem;
-    color: #ff4b4b;
-    font-size: 0.625rem;
-    background: rgba(255, 75, 75, 0.1);
-    border-radius: 1rem;
-    border: 0.125rem solid #fff;
-    vertical-align: middle;
-    line-height: 1.2rem;
-    // margin-left: .375rem;
-  }
-  .food-bottom {
-    height: 0.8125rem;
-    font-size: 0.8125rem;
-    color: #929292;
-    margin-top: 0.5rem;
-    padding-left: 1.5rem;
-    padding-right: 0.5rem;
-  }
-  .foods-item:after {
-    @include onepx_top(#e9e9e9);
-  }
-}
-.end {
-  text-align: center;
-  font-size: 0.6875rem;
-  color: #999999;
-  padding-top: 0.3125rem;
 }
 .aa {
   position: relative;
   // width: 4rem;
-  padding: 0.3125rem 0.625rem;
+  padding: 6.3125rem 0.625rem;
   top: 0.75rem;
   background: #fff;
   z-index: 10;
@@ -671,9 +480,6 @@ export default {
 }
 .hr-1:nth-last-child(-1) {
   height: 0;
-}
-.hr-1.height0 {
-  height: 0 !important;
 }
 .null {
   height: 3rem;

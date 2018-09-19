@@ -10,6 +10,7 @@ const home1 = r => require.ensure([], () => r(require('../page/home/children/hom
 // const shop = r => require.ensure([], () => r(require('../page/home/children/shop')), 'shop')
 // 我的
 const mine = r => require.ensure([], () => r(require('../page/home/children/mine')), 'mine')
+const shop = r => require.ensure([], () => r(require('../page/home/children/shop')), 'shop')
 
 
 export default [{
@@ -70,7 +71,14 @@ export default [{
             meta:{
                 keepAlive:false
             }
-        }
+        },
+        {
+             path: 'shop', // 我的
+             component: shop,
+             meta:{
+                 keepAlive:false
+             }
+         }
        
         //常见问题模块
     ]

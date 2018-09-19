@@ -92,7 +92,8 @@ import {
   GetDistance,
   setLItem,
   getLItem,
-  getCode
+  getCode,
+  formatDate_1
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 // import BScroll from "better-scroll";
@@ -172,20 +173,6 @@ export default {
 
   mounted() {
     try {
-      //神策
-      let startTime = new Date();
-      let endTime = "" ;
-      window.onload = function(){
-        endTime = new Date();
-        sa.track('loadDelay',{
-          currentBusinessLine:'发现频道',
-          currentActivity: '更多页面',
-          currentURL: window.location.href,
-          delayTime: endTime.getTime() -  startTime.getTime(),
-          endTime: endTime.getTime(),
-          startTime: startTime.getTime()
-        })   
-      };
       fetchPoints(
         "home1",
         "event_3",
@@ -201,6 +188,18 @@ export default {
     }
   },
   created() {
+    //神策
+    let startTime = new Date();
+    let endTime = new Date() ;
+    sa.track('loadDelay',{
+      currentBusinessLine:'发现频道',
+      currentActivity: '更多页面',
+      currentURL: window.location.href,
+      delayTime: endTime - startTime,
+      offsetTime: 0,
+      endTime: formatDate_1(endTime.getTime()),
+      startTime: formatDate_1(startTime.getTime())
+    })
   },
 
   components: {
@@ -368,8 +367,8 @@ export default {
           // 神策
           sa.track('bannerClick', {
             contentName: obj.marketingTitle,
+            bannerNumber: String(obj.marketingNumber),
             topCategory: '更多',
-            locationOfZone: '顶部banner'
           });
           fetchPoints(
             "020000000000",
@@ -639,20 +638,6 @@ export default {
           map_type:window.isUseBaiDuLoc
         })
         .then(res => {
-          //神策
-          let startTime = new Date();
-          let endTime = "" ;
-          window.onload = function(){
-            endTime = new Date();
-            sa.track('loadDelay',{
-              currentBusinessLine:'发现频道',
-              currentActivity: '调用更多页getShopInfo接口',
-              currentURL: window.location.href,
-              delayTime: endTime.getTime() -  startTime.getTime(),
-              endTime: endTime.getTime(),
-              startTime: startTime.getTime()
-            })   
-          };
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
