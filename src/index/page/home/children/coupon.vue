@@ -1,6 +1,19 @@
 <template>
   <div>
     <div class="nullHeight"></div>
+    <div class="t-2">
+        领券专区
+        <div class="hr-1"></div>
+    </div>
+    <section>
+      <div v-for="(item, index) in couponMainList">
+        <!-- :key="item.marketingId -->
+          <a @click="goDetail()" >
+              <img :src="item.couponIcon">
+          </a>
+      </div>
+    </section>
+
     <ul v-for="(item,index) in couponList">
         <li class="left">
           <div class="c1">
@@ -28,11 +41,15 @@
           <div class="c2">
             <div class="l" v-show="item.isLook" @click="goDetail($event,item,6)">查看详情</div>
           </div>
+          <div class="c3">
+            <div v-show="item.bgIcon" class="bgIcon"></div>
+          </div>
         </li>
     </ul>
     <alert-tip 
       v-if="showAlert" 
       :alertText="alertText"
+      :alertIcon="alertIcon"
       @closeTip="showAlert = false">
     </alert-tip>
     <!-- <ul v-if = "!couponList || couponList.length<=0 ">
@@ -55,12 +72,19 @@ export default {
       showAlert: false,
       isCoupon: [],
       shopLists: [],
-      alertText: '',
+      // alertText: '',
       isLook: false,
-      show: true
+      show: true,
+      bgIcon: false
     };
   },
   props: {
+    couponMainList: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
     couponList: {
       type: Array,
       default: function() {
@@ -99,20 +123,33 @@ export default {
         if(res.code === "000000") {
           let data = res.data
           this.isCoupon = data
-          this.showAlert = true
+          this.alertIcon = "领取成功"
           this.alertText = "领取成功"
+          this.showAlert = true
+          data.bgIcon = true
           data.show = false
+          setTimeout(() => {
+              this.showAlert = false;
+            }, 1500); 
           // console.log(this.isCoupon)
         } else if(res.code === "900001") {
-          this.showAlert = true
-          data.isLook = true
           this.alertText = "领取数量已达上限"
-          data.show = false         
+          this.showAlert = true
+          data.bgIcon = true
+          data.isLook = true
+          data.show = false   
+          setTimeout(() => {
+              this.showAlert = false;
+            }, 1500);       
         } else {
           this.showAlert = true
-          data.isLook = true
           this.alertText = "领取失败"
-          data.show = false         
+          data.isLook = true
+          data.bgIcon = true
+          data.show = false
+          setTimeout(() => {
+              this.showAlert = false;
+            }, 1500); 
         }
         setTimeout(() => {
               flag = 0;
@@ -166,34 +203,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@@/style/mixin";
+// @import "~@@/style/mixin";
 .nullHeight {
-  height: 0.0625rem;
+  height: .5625rem;
   background: #f6f7f8;
 }
 .nullHeight2 {
-  height: 0.5625rem;
+  height: .5625rem;
   background: #fff;
 }
-.s {
+.t-2 {
   position: relative;
-  // margin-top: .625rem;
-  // background: #ffffff;
+  height: 2.875rem;
+  text-align: center;
+  position: relative;
+  color: #13252e;
+  line-height: 2.875rem;
+  font-family: PingFangSC-Regular;
+  font-size: 0.9375rem;
 }
-
+section {
+  div {
+    img {
+      width: 35%;
+    }
+  }
+}
 ul {
   width: 20.625rem;
   height: 5.625rem;
-  // padding-top: 0.875rem;
   position: relative;
-  margin: 0.9375rem auto;
+  margin: .9375rem auto;
   background: #fff;
-  box-shadow: 0 0 20px 0 rgba(0,0,0,0.10);
-  border-radius: 6px;
+  box-shadow: 0 0 .625rem 0 rgba(0,0,0,.1);
+  border-radius: .1875rem;
 }
-// ul::after {
-//   @include onepx1(#d8d8d8);
-// }
 ul:nth-last-child(1)::after {
   height: 0 !important;
 }
@@ -201,35 +245,31 @@ ul:nth-last-child(1)::after {
   width: 5rem;
   height: 100%;
   float: left;
-  // padding:15px;
   // min-width: 60%;
   // width: 72%;
   text-align: left;
   .c1 {
-    padding-left: 0.9375rem;
+    padding-left: .9375rem;
     line-height: 5.625rem;
     color: #ED196C;
     font-weight: bold;
     font-size: 1rem;
     .par {
       font-size: 1.875rem;
+      font-family: PingFangSC-Semibold;
     }
   }
 }
 .middle {
-  // width: 5.1875rem;
   height: 100%;
   float: left;
-  padding-top: 0.5625rem;
-  // padding:15px;
-  // min-width: 60%;
-  // width: 72%;
+  padding-top: .5625rem;
   text-align: left;
   color: #13252E;
+  font-family: PingFangSC-Regular;
   .c1 {
-    padding-left: 0;
     .l {
-      font-size: 0.875rem;
+      font-size: .875rem;
       font-weight: bold;
       font-family: PingFangSC-Semibold;
     }
@@ -237,24 +277,22 @@ ul:nth-last-child(1)::after {
   .c2 {
     height: 1.4375rem;
     .m {
-      font-size: 0.8125rem;
-      font-family: PingFangSC-Regular;
+      font-size: .8125rem;
     }
     .sl {
-      font-size: 0.75rem;
-      padding: 0.15rem;
+      font-size: .75rem;
+      margin-left: .3125rem;
+      padding: 0 .2rem;
       color: #E11A2F;
-      font-family: PingFangSC-Regular;
       background-color: #FFF0F1;
-      border: 0.0063rem solid #E11A2F;
+      border: .0063rem solid #E11A2F;
     }
   }
   .c3 {
-    padding-top: 0.3125rem;
+    padding-top: .3125rem;
     .b {
-      font-size: 0.6875rem;
+      font-size: .6875rem;
       color: #7E7E7E;
-      font-family: PingFangSC-Regular;
     }
   }
 }
@@ -262,20 +300,20 @@ ul:nth-last-child(1)::after {
   width: 6.4375rem;
   height: 100%;
   // float: left;
-  // padding:15px;
-  // min-width: 60%;
-  // width: 72%;
   text-align: left;
+  position: relative;
   padding-top: 1.875rem;
   padding-left: 1rem;
-  padding-right: 0.625rem;
-  border-left: 0.0625rem dashed #E6E6E6;
+  padding-right: .625rem;
+  border-left: .0625rem dashed #E6E6E6;
   .c1 {
     width: 4.5625rem;
     height: 1.875rem;
     background-image: linear-gradient(90deg, #E93357 0%, #F55B97 100%);
-    border-radius: 30px;
+    border-radius: .9375rem;
     color: #fff;
+    position: relative;
+    z-index: 99;
     .r {
       font-size: .75rem;
       font-family: PingFangSC-Regular;
@@ -286,12 +324,49 @@ ul:nth-last-child(1)::after {
   }
   .c2 {
     .l {
-      padding-top: 0.375rem;
-      padding-left: 0.875rem;
-      font-size: 0.6875rem;
+      padding-top: .375rem;
+      padding-left: 1rem;
+      font-size: .625rem;
       font-family: PingFangSC-Regular;
       color: #7E7E7E;
     }
   }
+  .c3 {
+    width: 3.75rem;
+    height: 3.4375rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    .bgIcon {
+      width: 100%;
+      height: 100%;
+      background: url(/static/img/receive.png) no-repeat 100% 0;
+      background-size: 3.75rem 3.4375rem;
+      z-index: 9;
+    }
+  }
+}
+.hr-1 {
+  display: block;
+  position: absolute;
+  height: 0.0625rem;
+  float: left;
+  width: 100%;
+  bottom: 0;
+  background-color: #e6e6e6;
+  -webkit-transform-origin: 0, 0;
+  transform-origin: 0, 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  // &::after {
+  //   @include onepx1(#d8d8d8);
+  // }
+}
+.hr-1:nth-last-child(-1) {
+  height: 0;
+}
+.hr-1.height0 {
+  height: 0 !important;
 }
 </style>

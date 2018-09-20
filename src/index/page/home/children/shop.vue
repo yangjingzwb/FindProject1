@@ -29,7 +29,8 @@
         <li class="hr-1" :class="{height0:index == shopLists.length-1}"></li>
     </ul>
     <ul v-if = "!shopLists || shopLists.length<=0 ">
-      <li class="aa">您附近暂无优惠券适用商户</li>
+      <li class="aa"></li>
+      <li class="tip">您所在的城市暂无该优惠券适用商户</li>
     </ul>
     <!-- <div class="null"></div> -->
     </div>
@@ -131,6 +132,9 @@ export default {
   .l {
     height: 100%;
     line-height: 3rem;
+    font-size: 1.125rem;
+    font-family: PingFangSC-Regular;
+    color: #13252E;
     padding-right: 3.5rem;
     text-align: center;
   }
@@ -450,15 +454,21 @@ export default {
 .scroll {
   height: 10.625rem;
 }
+ul {
+  position: relative;
+}
 .aa {
   position: relative;
-  // width: 4rem;
   padding: 6.3125rem 0.625rem;
-  top: 0.75rem;
-  background: #fff;
-  z-index: 10;
-  color: #444444;
-  font-size: 0.75rem;
+  top: 4.6875rem;
+  background: url(/static/img/tipIcon.png) no-repeat 50%;
+  background-size: 8.5625rem 8.5625rem;
+}
+.tip {
+  padding: 3.125rem 0.625rem;
+  font-family: PingFangSC-Regular;
+  color: #5A6164;
+  font-size: 0.875rem;
   text-align: center;
 }
 .hr-1 {

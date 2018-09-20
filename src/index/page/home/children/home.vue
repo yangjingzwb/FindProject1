@@ -31,6 +31,7 @@
     <section class="s_5 s" >
       <!-- 优惠券 -->
       <coupon
+        :couponMainList="couponMainList"
         :couponList="couponList"
         @goDetail="goDetail"
         >
@@ -103,6 +104,7 @@ export default {
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       // defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
+      couponMainList: [],
       couponList: [],
       shopList: [],
       CURRENTPAGE: 0, // 页码
@@ -119,6 +121,7 @@ export default {
 
   mounted() {
     // 获取优惠券
+    this.getMainCoupon()
     this.getCoupon()
     // 获取运营banner
     this.getMiddle()
@@ -333,7 +336,7 @@ export default {
           window.goActivity.goWeb(
             url.replace(
               /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+              "?hebaosso=true&SOURCE=DISCOVER&account=" +
                 this.token.productNo +
                 "&"
             )
@@ -359,7 +362,7 @@ export default {
             "activity://goWeb?url=" +
             url.replace(
               /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+              "?hebaosso=true&SOURCE=DISCOVER&account=" +
                 this.token.productNo +
                 "&"
             );
@@ -452,9 +455,20 @@ export default {
       // 请求品类
     },
     // 获取优惠券
+    getMainCoupon() {
+      axios.post('queryCouponMainStation',{
+        "session": this.token.session.replace(/\+/g, "%2B")   // 单点登录返回session
+      }).then(res => {
+        if(res.code === "0") {
+          let data = res.data
+          this.couponMainList = data
+          console.log(88888,this.couponMainList)
+        }
+      })
+    },
     getCoupon() {
       axios.post('queryCoupon',{
-        "session": this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+        "session": this.token.session.replace(/\+/g, "%2B") 
       }).then(res => {
           if(res.code === "0") {
             let data = res.data.map((item)=>{

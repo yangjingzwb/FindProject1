@@ -2,9 +2,10 @@
     <div class="alet_container" :showAlert="showAlert">
 	    <section class="tip_text_container">
             <div class='tip_text_box'>
+                <p class="tip_icon"></p>
                 <p class="tip_text">{{alertText}}</p>
             </div>
-            <div class="confrim" @click="closeTip">确认</div>
+            <!-- <div class="confrim" @click="closeTip">确认</div> -->
         </section>
     </div>
 </template>
@@ -52,7 +53,7 @@
         right: 0;
         bottom: 0;
         z-index: 200;
-        background-color: rgba(0,0,0,0.3);
+        // background-color: rgba(0,0,0,0.3);
     }
     .tip_text_container{
         position: absolute;
@@ -63,11 +64,12 @@
         left:0;
         right:0;
         margin:auto;
-        top:21rem;
-        width: 17rem;
-        height:9rem;
+        top: 21.875rem;
+        width: 9.375rem;
+        height: 4.6875rem;
         animation: tipMove .4s ;
-        background-color: rgba(255,255,255,1);
+        background-color: #000;
+        opacity: 0.8;
         border: 1px;
         //padding-top: .6rem;
         display: flex;
@@ -75,37 +77,29 @@
         //align-items: center;
         //flex-direction: column;
         border: 1px;
-        border-radius: 0.25rem;
-        .tip_icon{
-            @include wh(3rem, 3rem);
-            border: 0.15rem solid #f8cb86;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            span:nth-of-type(1){
-                @include wh(.12rem, 1.5rem);
-                background-color: #f8cb86;
-            }
-            span:nth-of-type(2){
-                @include wh(.2rem, .2rem);
-                border: 1px;
-                border-radius: 50%;
-                margin-top: .2rem;
-                background-color: #f8cb86;
-            }
-        }
+        border-radius: 0.3125rem;
         .tip_text_box{
-            height:6.5rem;
+            // height:6.5rem;
             display: flex;
             justify-content: center;
             width: 100%;
             align-items: center;
             flex-direction:column;
         }
+        .tip_icon{
+            width: 1.375rem;
+            height: 1.375rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: url(/static/img/fail_icon.png) no-repeat 50% 50%;
+            background-size: 1.375rem 1.375rem;
+        }
         .tip_text{
-            @include sc(.85rem, #333);
+            font-family: PingFangSC-Regular;
+            font-size: 0.875rem;
+            color: #fff;
             line-height: .9rem;
             text-align: center;
             //margin-top: .8rem;
