@@ -96,9 +96,10 @@ export default {
       if (flag == 2) {
         // 神策
         sa.track('ZoneClick', {
-          contentName:'专题营销',
+          contentName: '专题位-banner',
           topCategory: '发现',
-          locationOfZone: 'banner主图' + obj.tbConductConfig.marketingTitle
+          subCategory: obj.tbConductConfig.marketingTitle,
+          locationOfZone: '主图'
         });
         fetchPoints(
           "010000000000", // 页面索引
@@ -111,9 +112,10 @@ export default {
       if(flag==3){
          // 神策
         sa.track('ZoneClick', {
-          contentName:'专题营销',
+          contentName: obj.name,
           topCategory: '发现',
-          locationOfZone: '附图'+ obj.name
+          subCategory:  '专题位商品',
+          locationOfZone: '附图'
         });
         fetchPoints(
           "010000000000", // 页面索引
