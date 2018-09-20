@@ -66,13 +66,16 @@ var webpackConfig = merge(baseWebpackConfig, {
             template: 'main.html',
             inject: true,
             // chunks:['manifest','vendor','app'],
-            // minify: {
-            //     removeComments: true,
-            //     collapseWhitespace: true,
-            //     removeAttributeQuotes: true
-            //         // more options:
-            //         // https://github.com/kangax/html-minifier#options-quick-reference
-            // },
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeAttributeQuotes: true,
+                minifyCSS:true,
+                minifyJS:true,
+                
+                    // more options:
+                    // https://github.com/kangax/html-minifier#options-quick-reference
+            },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
         }),

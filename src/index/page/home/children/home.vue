@@ -80,7 +80,7 @@ import {
   GetDistance,
   setLItem,
   getLItem,
-  getCode,
+  // getCode,
   formatDate_1
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
@@ -121,7 +121,7 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
-    this.jdSKill();
+    this.jdSKill();// 请求广告位
     if (!window.LATITUDE) {
       this.aginEnter();
     } else {
@@ -139,7 +139,7 @@ export default {
       delayTime: endTime - startTime,
       endTime: formatDate_1(endTime.getTime()),
       startTime: formatDate_1(startTime.getTime())
-    })   
+    })
   },
   components: {
     Near1,

@@ -91,8 +91,7 @@ import {
   fetchPoints,
   GetDistance,
   setLItem,
-  getLItem,
-  getCode
+  getLItem
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 // import BScroll from "better-scroll";

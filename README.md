@@ -8,6 +8,16 @@ npm run build index 发布index项目
 http://113.108.79.80:3020/test1/?hebaosso=true&showtitle=false
 
 
+##发现频道优化
+1、删除冗余的代码 （0926）
+2、nginx配置
+    keepalive_timeout  60;
+    关闭gzip（etag发生冲突）
+    开启https
+    开启http2
+##首屏优化
+
+
 
 
 # demo项目布局
