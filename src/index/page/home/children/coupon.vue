@@ -6,12 +6,14 @@
         <div class="hr-1"></div>
     </div>
     <section>
-      <div v-for="(item, index) in couponMainList">
-        <!-- :key="item.marketingId -->
-          <a @click="goDetail()" >
-              <img :src="item.couponIcon">
+      <swiper :options="swiperOption">
+        <swiper-slide v-for="(item, index) in couponMainList">
+          <a @click="goDetail($event,item,7)" >
+            <img class="swiper-img" :src="item.couponIcon" />
           </a>
-      </div>
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
     </section>
 
     <ul v-for="(item,index) in couponList">
@@ -69,13 +71,22 @@ import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
+      swiperOption: {},
       showAlert: false,
       isCoupon: [],
       shopLists: [],
       // alertText: '',
       isLook: false,
       show: true,
-      bgIcon: false
+      bgIcon: false,
+      swiperOption: {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
+      }
     };
   },
   props: {
@@ -123,7 +134,6 @@ export default {
         if(res.code === "000000") {
           let data = res.data
           this.isCoupon = data
-          this.alertIcon = "领取成功"
           this.alertText = "领取成功"
           this.showAlert = true
           data.bgIcon = true
@@ -140,7 +150,7 @@ export default {
           data.show = false   
           setTimeout(() => {
               this.showAlert = false;
-            }, 1500);       
+            }, 1500);
         } else {
           this.showAlert = true
           this.alertText = "领取失败"
@@ -223,10 +233,34 @@ export default {
   font-size: 0.9375rem;
 }
 section {
-  div {
-    img {
-      width: 35%;
-    }
+  box-shadow: inset 0 -0.05rem 0 0 #E6E6E6;
+  padding: 1.25rem 0 0.5rem 0.9375rem;
+  .swiper-wrapper {
+    overflow-x: visible!important;
+  }
+  .swiper-slide {
+    width: 40%;
+  }
+  .swiper-slide:nth-child(2n) {
+    width: 40%;
+  }
+  .swiper-slide:nth-child(3n) {
+    width: 40%;
+  }
+  .swiper-slide:nth-child(4n) {
+    width: 40%;
+  }
+  .swiper-slide:nth-child(5n) {
+    width: 40%;
+  }
+  .swiper-slide:nth-child(6n) {
+    width: 40%;
+  }
+  .swiper-slide:nth-child(7n) {
+    width: 40%;
+  }
+  .swiper-img {
+    width: 100%;
   }
 }
 ul {

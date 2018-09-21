@@ -63,11 +63,11 @@
         //margin-left: -6rem;
         left:0;
         right:0;
-        margin:auto;
-        top: 21.875rem;
+        margin: auto;
+        top: 33.3rem;
         width: 9.375rem;
         height: 4.6875rem;
-        animation: tipMove .4s ;
+        animation: tipMove .4s;
         background-color: #000;
         opacity: 0.8;
         border: 1px;

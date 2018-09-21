@@ -14,7 +14,6 @@ import routes from './router/router'
 // import bestpay from '@@/service/bestpay'
 // import { getProduct, getSessionKey, system, setTopRightBar } from '@@/service/bestpay_'
 // import { getUUID,animationProgress } from '@@/service/util'
-
 import store from './store/'
 import { routerMode } from './config/env'
 import './config/rem'
@@ -22,8 +21,11 @@ import FastClick from 'fastclick'
 import axios from "@@/plugins/rsa/axios";
 // import AlertTip from '@@/components/common/alertTip'
 import {checkUtil, animationProgress,formatDate_1 } from "@@/service/util"
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 // 神策
 import sa from'sa-sdk-javascript';
+Vue.use(VueAwesomeSwiper)
 
 sa.init({
     sdk_url: 'https://static.sensorsdata.cn/sdk/1.10.9/sensorsdata.min.js',
