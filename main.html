@@ -22,8 +22,17 @@
       background-repeat: no-repeat;
     }
   </style>
+  
+</head>
+
+<body class="bd">
+  <div id="app" style="height:100%;overflow: hidden;">
+    <router-view></router-view>
+  </div>
+  <div id="container"></div>
   <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR"></script>
-  <script type="text/javascript" src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script> -->
+  <script type="text/javascript" src="static/polyfill.min.js"></script>
   <script>
     // 定位经纬度信息
     window.LATITUDE = '';
@@ -114,12 +123,5 @@
     }
     window.LBS_GD();
   </script>
-</head>
-
-<body class="bd">
-  <div id="app" style="height:100%;overflow: hidden;">
-    <router-view></router-view>
-  </div>
-  <div id="container"></div>
 </body>
 </html>

@@ -98,7 +98,10 @@ var webpackConfig = merge(baseWebpackConfig, {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest',
             chunks: ['vendor']
-        })
+        }),
+        // new CopyWebpackPlugin([
+        //     {from:path.join(__dirname,'../static/polyfill.min.js'),to:config.build.assetsRoot+'/static'}
+        // ])
     ]
 })
 // 开启gzip
