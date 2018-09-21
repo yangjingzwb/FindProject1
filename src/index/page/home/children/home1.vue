@@ -92,7 +92,6 @@ import {
   GetDistance,
   setLItem,
   getLItem,
-  getCode,
   formatDate_1
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl

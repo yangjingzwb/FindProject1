@@ -14,7 +14,7 @@
                 <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
-                        <a @click="goDetail($event,item,1,'top')" >
+                        <a @click="goDetail($event,item,2,'top')" >
                             <img :src="item.marketingIcon">
                         </a>
                     </div>
@@ -86,7 +86,7 @@ import {
   GetDistance,
   setLItem,
   getLItem,
-  getCode,
+  // getCode,
   formatDate_1
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
@@ -134,7 +134,7 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
-    this.jdSKill();
+    this.jdSKill();// 请求广告位
     if (!window.LATITUDE) {
       this.aginEnter();
     } else {

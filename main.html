@@ -11,7 +11,6 @@
   <meta name="full-screen" content="yes">
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="Cache-Control" content="no-cache" />
-  <!-- <link rel="apple-touch-startup-image" href="/static/img/error.png" /> -->
 
 
   <title>发现</title>
@@ -23,10 +22,17 @@
       background-repeat: no-repeat;
     }
   </style>
+  
+</head>
+
+<body class="bd">
+  <div id="app" style="height:100%;overflow: hidden;">
+    <router-view></router-view>
+  </div>
+  <div id="container"></div>
   <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR"></script>
-  <script type="text/javascript" src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>
-  <!-- <script src="https://openaf.xwbank.com/XWsdk-2-min.js?v=1.0"></script> -->
-  <!-- <script src="./static/polyfill.min.js"></script> -->
+  <!-- <script type="text/javascript" src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script> -->
+  <script type="text/javascript" src="static/polyfill.min.js"></script>
   <script>
     // 定位经纬度信息
     window.LATITUDE = '';
@@ -117,15 +123,5 @@
     }
     window.LBS_GD();
   </script>
-  <!-- <script src="https://openaf.xwbank.com/XWsdk-2-min.js?v=1.0"></script> -->
-</head>
-
-<body class="bd">
-  <div id="app" style="height:100%;overflow: hidden;">
-    <router-view></router-view>
-  </div>
-  <div id="container"></div>
 </body>
-
-
 </html>
