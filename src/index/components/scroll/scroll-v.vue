@@ -77,7 +77,7 @@ export default {
         eventPassthrough: "vertical",
         startX: 0,
         bounce: true,
-        stopPropagation: true, // this.stopPropagation
+        stopPropagation: false, // this.stopPropagation
         preventDefault: true
       };
       console.log('99999')

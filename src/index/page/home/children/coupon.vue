@@ -42,9 +42,9 @@
         </li>
         <li class="right">
           <div class="c1">
-            <div class="r" v-if="item.show" @click="receiveCoupon(item)">立即领取</div>
+            <button class="r" v-if="item.show" @click="receiveCoupon(item)" :disabled="isDisable">立即领取</button>
             <!-- <div class="r" v-else @click="goDetail($event,item,5)">去消费</div> -->
-            <div class="r" v-else @click="goShop(item)">去消费</div>
+            <button class="r" v-else @click="goShop(item)">去消费</button>
           </div>
           <div class="c2">
             <div class="l" v-show="item.isLook" @click="goDetail($event,item,6)">查看详情</div>
@@ -57,7 +57,6 @@
     <alert-tip 
       v-if="showAlert" 
       :alertText="alertText"
-      :alertIcon="alertIcon"
       @closeTip="showAlert = false">
     </alert-tip>
     <!-- <ul v-if = "!couponList || couponList.length<=0 ">
@@ -81,6 +80,7 @@ export default {
       isCoupon: [],
       shopLists: [],
       // alertText: '',
+      isDisable: false,
       isLook: false,
       show: true,
       bgIcon: false
@@ -114,10 +114,11 @@ export default {
   methods: {
     // 领取优惠券
     receiveCoupon(data) {
+      this.isDisable = true;
       console.log(data);
       let param_ = {
-        mbl_no: this.token.productNo, //用户手机号
-        // "mbl_no"  : "18390957487",                           // 用户手机号
+        // mbl_no: this.token.productNo, //用户手机号
+        mbl_no  : "18390957487",                           // 用户手机号
         merc_id: data.MERC_ID, // 商户编号
         mkt_id: data.MKT_ID, // 活动编号
         prd_id: data.PRD_ID, // 券别编号
@@ -137,6 +138,7 @@ export default {
           data.show = false;
           setTimeout(() => {
             this.showAlert = false;
+            this.isDisable = false;
           }, 1500);
           // console.log(this.isCoupon)
         } else if (res.code === "900001") {
@@ -147,6 +149,7 @@ export default {
           data.show = false;
           setTimeout(() => {
             this.showAlert = false;
+            this.isDisable = false;
           }, 1500);
         } else {
           this.showAlert = true;
@@ -156,6 +159,7 @@ export default {
           data.show = false;
           setTimeout(() => {
             this.showAlert = false;
+            this.isDisable = false;
           }, 1500);
         }
         setTimeout(() => {
@@ -229,7 +233,7 @@ export default {
   // width: 100%;
   // width: 200%;
   height:5.625rem;
-  margin: 1.25rem 0 .9375rem .9375rem;
+  margin: 1.25rem 0 .9375rem 0.625rem;
   // overflow-x:auto;
   // overflow-y: hidden;
   display: flex;
@@ -256,11 +260,12 @@ div.sw-option-end {
   margin: 0 auto;
   color: #aeafaf;
   font-family: PingFangSC-Regular;
-  font-size: 12px;
-  width: 20px;
-  line-height: 18px;
-  margin-right: 20px;
-  margin-left: 10px;
+  font-size: 0.75rem;
+  width: 1.25rem;
+  padding-top: 0.5rem;
+  line-height: 0.9375rem;
+  margin-right: 0.625rem;
+  margin-left: 0.625rem;
 }
 .t-2 {
   position: relative;
@@ -381,14 +386,15 @@ ul:nth-last-child(1)::after {
   padding-right: 0.625rem;
   border-left: 0.0625rem dashed #e6e6e6;
   .c1 {
-    width: 4.5625rem;
+    // width: 4.5625rem;
     height: 1.875rem;
-    background-image: linear-gradient(90deg, #e93357 0%, #f55b97 100%);
     border-radius: 0.9375rem;
     color: #fff;
     position: relative;
     z-index: 99;
     .r {
+      width: 4.75rem;
+      background-image: linear-gradient(90deg, #e93357 0%, #f55b97 100%);
       font-size: 0.75rem;
       font-family: PingFangSC-Regular;
       color: #fff;
