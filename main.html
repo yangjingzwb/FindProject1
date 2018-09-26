@@ -44,77 +44,40 @@
     window.CITYNAME = '';
     window.LBSINFO = {
     }
-    
-    window.isUseBaiDuLoc = 1; // 定位标记 1：高德 0:百度
-    // ios客户端回调
-    window.callBackGetLocationInfo = function (json) {
-      // 如果和包定位失败调用百度地图
-      if(json=='-1'||!json||!json.Longitude){
-        window.LBS_BD(window.cb);
-        return;
-      }
-      window.LONGITUDE = json.Longitude;
-      window.LATITUDE = json.Latitude;
-      window.LBSINFO = json;
-      window.CITYNAME = json.CityName;
-      this.cityName1 = addComp.city;
-      if(this.init){
-        this.init();
-      }
-      
-    }
-    
-    /**
-     * 和包原生定位 
-     */
-    window.LBS_GD = function(cb) {
-      if(cb){
-        window.cb = cb;
-      }
-      try {
-        if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
-            // 苹果客户端定位
-            // setTimeout(() => {
+    var isUseBaiDuLoc = false;
+    try {
+      if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
+        setTimeout(() => {
           // 苹果客户端定位
           window.getLocationInfo()
-          // },20)
-         
+          }, 20)
         } else {
           // android 客户端定位
           window.LONGITUDE = window.goActivity.getLongitude();//查询经度信息
           window.LATITUDE = window.goActivity.getLatitude();//查询纬度
           window.CITYNAME = window.goActivity.getCityName();
-         
-          if(!window.LONGITUDE){
-            window.LBS_BD(cb)
-          }else{
-            this.cityName1 = addComp.city;
-            if(this.init){
-              this.init();
-            }
-          }
         }
       } catch (e) {
-        window.LBS_BD(cb)
+        isUseBaiDuLoc = true;
       }
-    }
 
-    /**
-     * 百度LBS
-     */ 
-    window.LBS_BD = function(cb) {
-      window.isUseBaiDuLoc = 0; //标记为百度定位
+    // ios客户端回调
+    function callBackGetLocationInfo(json) {
+      // ios
+      window.LONGITUDE = json.Longitude;
+      window.LATITUDE = json.Latitude;
+      window.LBSINFO = json;
+      window.CITYNAME = json.CityName;
+      
+    }
+    if(isUseBaiDuLoc) {
       new BMap.Geolocation().getCurrentPosition(function (r) {
+        // alert(31)
         if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
+          console.log(r)
           new BMap.Geocoder().getLocation(r.point, function (rs) {
-            if(typeof cb == 'function'){
-                cb(rs,r);
-                return;
-            }
-            if (rs.point) {
+            if (rs) {
               var addComp = rs.addressComponents;
-              // alert(JSON.stringify(rs))
-              // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber); 
               window.LATITUDE = rs.point.lat;
               window.LONGITUDE = rs.point.lng;
               window.CITYNAME = addComp.city;
@@ -125,11 +88,10 @@
             }
           })
         } else {
-
+ 
         }
       })
     }
-    window.LBS_GD();
   </script>
 </body>
 </html>

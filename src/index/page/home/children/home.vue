@@ -221,26 +221,39 @@ export default {
     //   });
     // },
     aginEnter() {
+     // alert(33)
       this.SHOWLOADING(true);
       let that = this;
       if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
         this.init();
       } else {
-        window.LBS_GD.call(this,(rs)=>{
-          if (rs.point) {
-              let addComp = rs.addressComponents;
-              window.LATITUDE = rs.point.lat;
-              window.LONGITUDE = rs.point.lng;
-              window.CITYNAME = addComp.city;
-              that.cityName1 = addComp.city;
-            } else {
-              window.LATITUDE = r.point.lat;
-              window.LONGITUDE = r.point.lng;
-              window.CITYNAME = r.address.city;
-              that.cityName1 = r.address.city;
-            }
-            that.init();
-        })
+        new BMap.Geolocation().getCurrentPosition(function(r) {
+          if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            // 判断状态
+            let pt = r.point;
+            console.log(r);
+
+            new BMap.Geocoder().getLocation(pt, function(rs) {
+              // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+              if (rs.point) {
+                let addComp = rs.addressComponents;
+                window.LATITUDE = rs.point.lat;
+                window.LONGITUDE = rs.point.lng;
+                window.CITYNAME = addComp.city;
+                that.cityName1 = addComp.city;
+              } else {
+                window.LATITUDE = r.point.lat;
+                window.LONGITUDE = r.point.lng;
+                window.CITYNAME = r.address.city;
+                that.cityName1 = r.address.city;
+              }
+              that.init();
+              // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+            });
+          } else {
+            this.SHOWLOADING(false);
+          }
+        });
       }
     },
     intervalCity() {
