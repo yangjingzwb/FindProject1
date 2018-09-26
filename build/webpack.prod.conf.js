@@ -38,7 +38,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         new webpack.DefinePlugin({
             'process.env': env
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoEmitOnErrorsPlugin(),
         // new FriendlyErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
@@ -69,7 +69,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
-                removeAttributeQuotes: true,
+                // removeAttributeQuotes: true,
                 minifyCSS:true,
                 minifyJS:true,
                 

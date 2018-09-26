@@ -2,7 +2,7 @@
   <div class="home">
     <div class="header">发现</div>
     <scroll
-    :scrollbar="scrollbar"
+      :scrollbar="scrollbar"
     >
     <div class="content">
 
@@ -14,7 +14,7 @@
                 <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
-                        <a @click="goDetail($event,item,2,'top')" >
+                        <a @click="goDetail($event,item,5,'top')" >
                             <img :src="item.marketingIcon">
                         </a>
                     </div>
@@ -291,6 +291,7 @@ export default {
       } catch (e) {}
 
       let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
+      url = flag == 5 ? obj.marketingEventCotent : obj.MERC_URL;
       url = flag == 3 ? obj.detailUrl : url;
       url = flag == 4 ? obj.url : url;
       url = flag == 1 ? obj.marketingEventCotent : url;
@@ -298,7 +299,7 @@ export default {
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 2 || flag == 3 || flag == 4) {
+        if (flag == 2 || flag == 3 || flag == 4|| flag == 5) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -322,7 +323,7 @@ export default {
           );
         }
       } else {
-        if (flag == 2 || flag == 3 || flag == 4) {
+        if (flag == 2 || flag == 3 || flag == 4 || flag == 5) {
           let url_2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -372,6 +373,9 @@ export default {
         this.SHOWLOADING(false);
         return;
       }
+      setTimeout(()=>{
+        this.SHOWLOADING(false);
+      },2000)
       let startTime = new Date();
       axios
         .post("getShopInfo", {
