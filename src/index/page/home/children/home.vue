@@ -289,12 +289,15 @@ export default {
           );
         }
       } catch (e) {}
+      let url = (flag == 5 ? obj.marketingEventCotent : obj.MERC_URL)
+      url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
+  
+      url = (flag == 3 ? obj.detailUrl : url)
 
-      let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
-      url = flag == 5 ? obj.marketingEventCotent : obj.MERC_URL;
-      url = flag == 3 ? obj.detailUrl : url;
-      url = flag == 4 ? obj.url : url;
-      url = flag == 1 ? obj.marketingEventCotent : url;
+      url = (flag == 4 ? obj.url : url)
+
+      url = (flag == 1 ? obj.marketingEventCotent : url)
+
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
