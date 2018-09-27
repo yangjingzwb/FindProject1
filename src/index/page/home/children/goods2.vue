@@ -124,8 +124,8 @@ export default {
   }
   .price {
     font-size: 0.9375rem;
-    color: #c11325;
-    font-family: PingFangSC-Regular;
+    color: #ed1991;
+    font-family: PingFangSC-Medium;
     margin-top: 0.3125rem;
   }
   li.icon {

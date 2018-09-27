@@ -8,7 +8,7 @@
     <section class="sw">
       <scroll 
         :scrollX = true
-        :scrollbar=false
+        :scrollbar = false
         :data="couponMainList"
       >
         <div class="sw-box">
@@ -37,14 +37,17 @@
             <span  class="sl">可叠加</span>
           </div>
           <div class="c3">
-            <span class="b" >每日可领用一张{{item.RECEIVE_RULES}}</span>
+            <span class="b" >{{item.RECEIVE_RULES}}</span>
           </div>
         </li>
         <li class="right">
           <div class="c1">
             <button class="r" v-if="item.show" @click="receiveCoupon(item)" :disabled="isDisable">立即领取</button>
             <!-- <div class="r" v-else @click="goDetail($event,item,5)">去消费</div> -->
-            <button class="r" v-else @click="goShop(item)">去消费</button>
+            <button class="r" v-else @click="goShop(item)">
+              去消费
+              <span v-show="item.isCouponDetail" @click="goDetail($event,item,6)"></span>
+            </button>
           </div>
           <div class="c2">
             <div class="l" v-show="item.isLook" @click="goDetail($event,item,6)">查看详情</div>
@@ -56,6 +59,7 @@
     </ul>
     <alert-tip 
       v-if="showAlert" 
+      :isAlert="isAlert"
       :alertText="alertText"
       @closeTip="showAlert = false">
     </alert-tip>
@@ -78,12 +82,13 @@ export default {
     return {
       showAlert: false,
       isCoupon: [],
-      shopLists: [],
+      // shopLists: [],
       // alertText: '',
       isDisable: false,
       isLook: false,
       show: true,
-      bgIcon: false
+      bgIcon: false,
+      isCouponDetail: false
     };
   },
   props: {
@@ -101,7 +106,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(["token"])
+    ...mapState([
+      "token"
+      ])
   },
 
   mounted() {},
@@ -126,13 +133,12 @@ export default {
         session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       };
       // console.log(param_);
-      let flag = 0;
       axios.post("receiveCoupon", param_).then(res => {
-        let flag = 1;
-        if (res.code === "000000") {
+        if (res.code === "0") {
           let data = res.data;
           this.isCoupon = data;
           this.alertText = "领取成功";
+          this.isAlert = "tipIcon";
           this.showAlert = true;
           data.bgIcon = true;
           data.show = false;
@@ -154,6 +160,7 @@ export default {
         } else {
           this.showAlert = true;
           this.alertText = "领取失败";
+          this.isAlert = "alertIcon";
           data.isLook = true;
           data.bgIcon = true;
           data.show = false;
@@ -162,15 +169,16 @@ export default {
             this.isDisable = false;
           }, 1500);
         }
-        setTimeout(() => {
-          flag = 0;
-        }, 5000);
       });
     },
 
     goShop(data) {
       console.log(555555, data);
-      this.$router.push("/shop");
+      if(data.CONPON_TYPE === "1") {
+        this.$router.push("/couponShop");
+        } else {
+
+      }
       axios
         .post("getShopInfo", {
           longitude: window.LONGITUDE, // 经度

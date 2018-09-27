@@ -30,7 +30,8 @@ const state = {
 	cityName1:window.CITYNAME || "定位中",
 	slideIndex:0,
 	openAndClose:true,
-	middle:[]
+	middle:[],
+	shopLists:[]
 
 }
 

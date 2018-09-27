@@ -5,7 +5,7 @@
         <router-link tag="li" class="l t" to="/">
         </router-link>
         <li class="l">
-          <span>爱客联盟</span>
+          <span>优惠券适用商户</span>
         </li>
         <div class="hr-1"></div>
       </ul>
@@ -46,7 +46,7 @@ import {
 } from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
-
+import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
@@ -66,12 +66,12 @@ export default {
       type: Boolean,
       default: false
     },
-    shopLists: {
-      type: Array,
-      default: function() {
-        return [];
-      }
-    },
+    // shopLists: {
+    //   type: Array,
+    //   default: function() {
+    //     return [];
+    //   }
+    // },
     pullDownRefresh: {
       type: null,
       default: true
@@ -82,10 +82,15 @@ export default {
     // }
   },
   computed: {
-    ...mapState(["token"])
+    ...mapState([
+      "token",
+      "shopLists"
+      ])
   },
 
-  mounted() {},
+  mounted() {
+    // this.goShop()
+  },
   created() {},
 
   components: {
@@ -93,6 +98,30 @@ export default {
   },
 
   methods: {
+    // goShop(data) {
+    //   console.log(33333,data);
+    //   axios
+    //     .post("getShopInfo", {
+    //       longitude: window.LONGITUDE, // 经度
+    //       latitude: window.LATITUDE, // 维度
+    //       stores_nm: "", // 门店名称
+    //       merc_abbr: "", // 门店简称
+    //       mblno: this.token.productNo, //用户手机号
+    //       currentPage: this.CURRENTPAGE,
+    //       pagNum: this.PAGNUM || 4,
+    //       session: this.token.session.replace(/\+/g, "%2B"),
+    //       map_type: window.isUseBaiDuLoc,
+    //       merc_id: this.MERC_ID // 商户编号
+    //     })
+    //     .then(res => {
+    //       console.log(res.data);
+    //       if (res.code === "0") {
+    //         let data = res.data
+    //         this.shopLists = data;
+    //         console.log(this.shopLists);
+    //       }
+    //     });
+    // },
     GetDistance(a, b, c, d) {
       // alert(GetDistance(a, b, c, d))
       return GetDistance(a, b, c, d);

@@ -2,7 +2,7 @@
     <div class="alet_container" :showAlert="showAlert">
 	    <section class="tip_text_container">
             <div class='tip_text_box'>
-                <p class="tip_icon"></p>
+                <p :class="isAlert?'alertIcon':'tipIcon'"></p>
                 <p class="tip_text">{{alertText}}</p>
             </div>
             <!-- <div class="confrim" @click="closeTip">确认</div> -->
@@ -26,9 +26,10 @@
             alertText:{
                 type:String
             },
-            btnText:{
+            isAlert:{
                 type:String
             },
+            alertIcon: String
         },
         methods: {
             closeTip(){
@@ -86,7 +87,7 @@
             align-items: center;
             flex-direction:column;
         }
-        .tip_icon{
+        .alertIcon{
             width: 1.375rem;
             height: 1.375rem;
             display: flex;
@@ -94,6 +95,16 @@
             align-items: center;
             flex-direction: column;
             background: url(/static/img/fail_icon.png) no-repeat 50% 50%;
+            background-size: 1.375rem 1.375rem;
+        }
+        .tipIcon{
+            width: 1.375rem;
+            height: 1.375rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: url(/static/img/success_icon.png) no-repeat 50% 50%;
             background-size: 1.375rem 1.375rem;
         }
         .tip_text{

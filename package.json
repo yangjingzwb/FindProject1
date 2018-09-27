@@ -67,6 +67,7 @@
     "shelljs": "^0.7.4",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
+    "vconsole-webpack-plugin": "^1.4.2",
     "vue-lazyload": "^1.2.3",
     "vue-loader": "^10.0.0",
     "vue-style-loader": "^1.0.0",
