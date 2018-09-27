@@ -2,7 +2,7 @@
     <div class="alet_container" :showAlert="showAlert">
 	    <section class="tip_text_container">
             <div class='tip_text_box'>
-                <p :class="isAlert?'alertIcon':'tipIcon'"></p>
+                <p :class="[isAlert]"></p>
                 <p class="tip_text">{{alertText}}</p>
             </div>
             <!-- <div class="confrim" @click="closeTip">确认</div> -->
@@ -16,24 +16,24 @@
             return{
                 showAlert: false,
                 positionY: 0,
-                timer: null
+                timer: null,
+                isAlert: ""
             }
         },
         mounted(){
-      
+           this.init();
         },
         props: {
             alertText:{
                 type:String
-            },
-            isAlert:{
-                type:String
-            },
-            alertIcon: String
+            }
         },
         methods: {
             closeTip(){
                 this.$emit('closeTip')
+            },
+            init() {
+                this.isAlert = this.alertText === "领取失败" ? "alertIcon" : "tipIcon"
             }
         }
     }

@@ -177,7 +177,7 @@ export default {
       if(data.CONPON_TYPE === "1") {
         this.$router.push("/couponShop");
         } else {
-
+          this.$emit("goDetail", event, obj, flag);
       }
       axios
         .post("getShopInfo", {
@@ -204,7 +204,7 @@ export default {
         "010000000000", // 页面索引
         "010000000000K06", // 事件标记
         this.token.productNo,
-        "优惠券-" + obj.MKT_NM, // 事件名称
+        // "优惠券-" + obj.MKT_NM, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
       this.$emit("goDetail", event, obj, flag);
@@ -285,37 +285,6 @@ div.sw-option-end {
   font-family: PingFangSC-Regular;
   font-size: 0.9375rem;
 }
-// section {
-//   box-shadow: inset 0 -0.05rem 0 0 #E6E6E6;
-//   padding: 1.25rem 0 0.5rem 0.9375rem;
-//   .swiper-wrapper {
-//     overflow-x: visible!important;
-//   }
-//   .swiper-slide {
-//     width: 40%;
-//   }
-//   .swiper-slide:nth-child(2n) {
-//     width: 40%;
-//   }
-//   .swiper-slide:nth-child(3n) {
-//     width: 40%;
-//   }
-//   .swiper-slide:nth-child(4n) {
-//     width: 40%;
-//   }
-//   .swiper-slide:nth-child(5n) {
-//     width: 40%;
-//   }
-//   .swiper-slide:nth-child(6n) {
-//     width: 40%;
-//   }
-//   .swiper-slide:nth-child(7n) {
-//     width: 40%;
-//   }
-//   .swiper-img {
-//     width: 100%;
-//   }
-// }
 ul {
   width: 20.625rem;
   height: 5.625rem;
