@@ -314,6 +314,7 @@ export default {
       url = flag == 5 ? obj.couponEventContent : url;
       url = flag == 6 ? obj.couponDetailsContent : url;
       url = flag == 7 ? obj.couponEventCotent : url;
+      url = flag == 8 ? obj.couponDetailsContent : url;
       url = flag == 99 ? obj.couponDetailsContent : url;
       console.log(888888);
       console.log(url);
@@ -321,7 +322,7 @@ export default {
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 0 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 99) {
+        if (flag == 0 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 99) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -345,7 +346,7 @@ export default {
           );
         }
       } else {
-        if (flag == 0 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 99) {
+        if (flag == 0 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 99) {
           let url_2 =
             url.indexOf("?") > 0
               ? url.replace(

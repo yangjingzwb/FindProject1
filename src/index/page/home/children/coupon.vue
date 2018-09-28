@@ -44,9 +44,9 @@
           <div class="c1">
             <button class="r" v-if="item.show" @click="receiveCoupon(item)" :disabled="isDisable">立即领取</button>
             <!-- <div class="r" v-else @click="goDetail($event,item,5)">去消费</div> -->
-            <button class="r" v-else @click="goShop(item)">
+            <button class="r" v-else @click="goShop($event,item,8)">
               去消费
-              <span v-show="item.isCouponDetail" @click="goDetail($event,item,6)"></span>
+              <!-- <span v-show="item.isCouponDetail" @click="goDetail($event,item,6)"></span> -->
             </button>
           </div>
           <div class="c2">
@@ -59,7 +59,6 @@
     </ul>
     <alert-tip 
       v-if="showAlert" 
-      :isAlert="isAlert"
       :alertText="alertText"
       @closeTip="showAlert = false">
     </alert-tip>
@@ -138,7 +137,6 @@ export default {
           let data = res.data;
           this.isCoupon = data;
           this.alertText = "领取成功";
-          this.isAlert = "tipIcon";
           this.showAlert = true;
           data.bgIcon = true;
           data.show = false;
@@ -160,7 +158,6 @@ export default {
         } else {
           this.showAlert = true;
           this.alertText = "领取失败";
-          this.isAlert = "alertIcon";
           data.isLook = true;
           data.bgIcon = true;
           data.show = false;
@@ -172,9 +169,9 @@ export default {
       });
     },
 
-    goShop(data) {
-      console.log(555555, data);
-      if(data.CONPON_TYPE === "1") {
+    goShop(event,obj,flag) {
+      console.log(555555, obj);
+      if(obj.CONPON_TYPE === "1") {
         this.$router.push("/couponShop");
         } else {
           this.$emit("goDetail", event, obj, flag);
@@ -190,7 +187,7 @@ export default {
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc,
-          merc_id: data.MERC_ID // 商户编号
+          merc_id: obj.MERC_ID // 商户编号
         })
         .then(res => {
           if (res.data && res.data.length > 0) {
