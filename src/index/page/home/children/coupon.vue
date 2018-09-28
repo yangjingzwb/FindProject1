@@ -43,11 +43,7 @@
         <li class="right">
           <div class="c1">
             <button class="r" v-if="item.show" @click="receiveCoupon(item)" :disabled="isDisable">立即领取</button>
-            <!-- <div class="r" v-else @click="goDetail($event,item,5)">去消费</div> -->
-            <button class="r" v-else @click="goShop($event,item,8)">
-              去消费
-              <!-- <span v-show="item.isCouponDetail" @click="goDetail($event,item,6)"></span> -->
-            </button>
+            <button class="r" v-else @click="goShop($event,item,8)">去消费</button>
           </div>
           <div class="c2">
             <div class="l" v-show="item.isLook" @click="goDetail($event,item,6)">查看详情</div>

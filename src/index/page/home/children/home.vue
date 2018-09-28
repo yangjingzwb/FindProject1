@@ -14,7 +14,7 @@
                 <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
                     <div v-for="item in slider2">
                       <!-- :key="item.marketingId -->
-                        <a @click="goDetail($event,item,0,'top')" >
+                        <a @click="goDetail($event,item,11,'top')" >
                             <img :src="item.marketingIcon">
                         </a>
                     </div>
@@ -307,14 +307,14 @@ export default {
       } catch (e) {}
 
       let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
-      url = flag == 0 ? obj.marketingEventCotent : url;
+      url = flag == 11 ? obj.marketingEventCotent : url;
       url = flag == 1 ? obj.marketingEventCotent : url;
       url = flag == 3 ? obj.detailUrl : url;
       url = flag == 4 ? obj.url : url;
       url = flag == 5 ? obj.couponEventContent : url;
       url = flag == 6 ? obj.couponDetailsContent : url;
       url = flag == 7 ? obj.couponEventCotent : url;
-      url = flag == 8 ? obj.couponDetailsContent : url;
+      url = flag == 8 ? obj.couponEventContent  : url;
       url = flag == 99 ? obj.couponDetailsContent : url;
       console.log(888888);
       console.log(url);
@@ -322,7 +322,7 @@ export default {
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 0 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 99) {
+        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 99) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -346,7 +346,7 @@ export default {
           );
         }
       } else {
-        if (flag == 0 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 99) {
+        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 99) {
           let url_2 =
             url.indexOf("?") > 0
               ? url.replace(
