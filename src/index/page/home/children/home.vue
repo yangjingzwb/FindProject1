@@ -404,7 +404,7 @@ export default {
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 2,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc
+          map_type:window.isUseBaiDuLoc?0:1
         })
         .then(res => {
           //神策
