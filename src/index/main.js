@@ -34,7 +34,10 @@ sa.init({
     use_client_time: true,
     is_single_page: true,
     web_url: 'https://hebaopay.cloud.sensorsdata.cn/',
-    server_url: 'https://hebaopay.cloud.sensorsdata.cn:4006/sa?token=e852cbf8dc40a8d1',
+    // 测试地址
+    // server_url: 'https://hebaopay.cloud.sensorsdata.cn:4006/sa?token=e852cbf8dc40a8d1',
+    // 正式地址
+    server_url: 'https://uba.cmpay.com:8106/sa?project=production',
     heatmap: {
        //是否开启点击图，默认 default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭
        clickmap:'not_collect',
@@ -42,7 +45,7 @@ sa.init({
        scroll_notice_map:'not_collect'
     }
   });
-sa.login('100422801839');
+// sa.login('100422801839');
 sa.quick('autoTrack', {
     platForm:'h5'
 });
@@ -113,8 +116,9 @@ router.beforeEach((to, from, next) => {
     let startTime = new Date();
     axios.post('queryAccount', {
     }).then((res) => {
-        // userId = res.data.usrNo
         //神策
+        sa.login(res.data.usrNo);
+        console.log("sa.login登录成功");
         let endTime = new Date();
             sa.track('loadDelay',{
             currentBusinessLine:'发现频道',
@@ -167,8 +171,7 @@ router.beforeEach((to, from, next) => {
         })
     }).catch((res) => {
         
-    // }).then(() => {
-        // sa.login('userId');
+   
     })
 })
 new Vue({
