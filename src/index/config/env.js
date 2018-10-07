@@ -11,7 +11,7 @@ let baseUrl = {}; // // 环境
 let routerMode = 'hash'; // hash history
 let imgBaseUrl = '';
 console.log(process.env.NODE_ENV)
-const debug = 1 // process.env.NODE_ENV !== 'production'
+const debug = 3 // process.env.NODE_ENV !== 'production'
 
 
 // 配置环境
