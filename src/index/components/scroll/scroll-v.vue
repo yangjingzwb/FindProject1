@@ -1,11 +1,11 @@
 <template>
-  <div ref="wrapper" class="list-wrapper">
-    <div class="scroll-content">
-      <div class="aa" ref="listWrapper">
+  <div ref="wrapper" class="list-wrapper-v">
+    <!-- <div class="scroll-content"> -->
+      <!-- <div class="aa" ref="listWrapper"> -->
         <slot>
         </slot>
-      </div>
-    </div>
+      <!-- </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -33,15 +33,18 @@ export default {
     return {};
   },
   computed: {},
-  created() {},
+  created() {
+
+  },
   mounted() {
-    setTimeout(() => {
+    // setTimeout(() => {
       this.initScroll();
-    }, 20);
+    // }, 20);
   },
   methods: {
     initSetWidth(){
-      this.children = this.$refs.listWrapper.children[0].children;
+      console.log(this.$refs.wrapper.children[0])
+      this.children = this.$refs.wrapper.children[0].children;
       let width = 0;
 
       let size = this.data.length<=2 ? 2 :this.data.length;
@@ -68,19 +71,21 @@ export default {
       this.initSetWidth()
 
       let options = {
-        probeType: 0,
+        probeType: 3,
         click: true,
         scrollY: false,
         scrollX: true,
-        momentum: false,
+        // momentum: false,
         scrollbar: false,
-        eventPassthrough: "vertical",
+        mouseWheel:false,
+        // eventPassthrough: "vertical",
         startX: 0,
         bounce: true,
+        useTransition:false,
         stopPropagation: false, // this.stopPropagation
         preventDefault: true
       };
-      console.log('99999')
+      // console.log('99999')
       if (!this.scroll) {
         this.scroll = new BScroll(this.$refs.wrapper, options);
       } else {
@@ -97,27 +102,30 @@ export default {
 </script>
 
 <style lang="scss">
-.list-wrapper {
+.list-wrapper-v {
   position: relative;
-  height: 100%;
+  height: 126px;
+  // height: 100%;
+  width: 375px;
   overflow: hidden;
+  // overflow: hidden;
   background: #fff;
 
-  .scroll-content {
-    position: relative;
-    z-index: 1;
-  }
-  .list-content {
-    position: relative;
-    z-index: 10;
-    background: #fff;
-    .list-item {
-      height: 60px;
-      line-height: 60px;
-      font-size: 18px;
-      padding-left: 20px;
-      border-bottom: 1px solid #e5e5e5;
-    }
-  }
+  // .scroll-content {
+  //   position: relative;
+  //   z-index: 1;
+  // }
+  // .list-content {
+  //   position: relative;
+  //   z-index: 10;
+  //   background: #fff;
+  //   .list-item {
+  //     height: 60px;
+  //     line-height: 60px;
+  //     font-size: 18px;
+  //     padding-left: 20px;
+  //     border-bottom: 1px solid #e5e5e5;
+  //   }
+  // }
 }
 </style>
