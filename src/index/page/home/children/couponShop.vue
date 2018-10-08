@@ -11,7 +11,7 @@
     <div class="nullHeight"></div>
     </section>
     <section class="s_2">
-      <ul v-for="(item,index) in shopLists"  @click="goDetail($event,item,2)">
+      <ul v-for="(item,index) in shopLists"  @click="goDetail($event,item,0)">
       <!-- :key="item.TX_JRN" -->
         <li class="left">
             <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="">

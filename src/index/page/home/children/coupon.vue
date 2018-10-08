@@ -25,19 +25,19 @@
     <ul v-for="(item,index) in couponList" :key="'ul'+index" >
         <li class="left">
           <div class="c1">
-            <span>¥ <i class="par">{{item.ISS_BILL_AMT}}</i></span>
+            <span>¥ <i class="par">{{item.issBillAmt}}</i></span>
           </div>
         </li>
         <li class="middle">
           <div class="c1">
-            <span class="l">{{item.MKT_NM}}</span>
+            <span class="l">{{item.mktNm}}</span>
           </div>
           <div class="c2">
             <span class="m">满50元使用</span>
             <span  class="sl">可叠加</span>
           </div>
           <div class="c3">
-            <span class="b" >{{item.RECEIVE_RULES}}</span>
+            <span class="b" >{{item.receiveRules}}</span>
           </div>
         </li>
         <li class="right">
@@ -53,6 +53,9 @@
           </div>
         </li>
     </ul>
+    <div v-if="couponList.length > 4" @click="changeFoldState" class="more">
+         <span>{{showAll?'展开':'收起'}}</span>
+    </div>
     <alert-tip 
       v-if="showAlert" 
       :alertText="alertText"
@@ -79,6 +82,8 @@ export default {
       isCoupon: [],
       // shopLists: [],
       // alertText: '',
+      showAll: true,
+      changeFoldState: false,
       isDisable: false,
       isLook: false,
       show: true,
@@ -101,9 +106,7 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      "token"
-      ])
+    ...mapState(["token"]),
   },
 
   mounted() {},
@@ -121,10 +124,10 @@ export default {
       let param_ = {
         // mbl_no: this.token.productNo, //用户手机号
         mbl_no  : "18390957487",                           // 用户手机号
-        merc_id: data.MERC_ID, // 商户编号
-        mkt_id: data.MKT_ID, // 活动编号
-        prd_id: data.PRD_ID, // 券别编号
-        mamt: data.ISS_BILL_AMT, // 发券面额
+        merc_id: data.mercId, // 商户编号
+        mkt_id: data.mktId, // 活动编号
+        prd_id: data.prdId, // 券别编号
+        mamt: data.issBillAmt, // 发券面额
         session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       };
       // console.log(param_);
@@ -166,8 +169,8 @@ export default {
     },
 
     goShop(event,obj,flag) {
-      let params = obj.MERC_ID;
-      if(obj.CONPON_TYPE === "1") {
+      let params = obj.mercId;
+      if(obj.conponType === "1") {
         this.$router.push({
           path: "/couponShop",
           query: {
@@ -404,5 +407,9 @@ ul:nth-last-child(1)::after {
 }
 .hr-1.height0 {
   height: 0 !important;
+}
+.more {
+  float: right;
+  padding-right: 2rem;
 }
 </style>
