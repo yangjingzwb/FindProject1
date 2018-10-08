@@ -22,7 +22,7 @@
     </section>
     
 
-    <ul v-for="(item,index) in couponList" :key="'ul'+index">
+    <ul v-for="(item,index) in couponList" :key="'ul'+index" >
         <li class="left">
           <div class="c1">
             <span>¥ <i class="par">{{item.ISS_BILL_AMT}}</i></span>
@@ -166,31 +166,17 @@ export default {
     },
 
     goShop(event,obj,flag) {
-      console.log(555555, obj);
+      let params = obj.MERC_ID;
       if(obj.CONPON_TYPE === "1") {
-        this.$router.push("/couponShop");
-        } else {
+        this.$router.push({
+          path: "/couponShop",
+          query: {
+            params: params
+          }
+        })
+      } else {
           this.$emit("goDetail", event, obj, flag);
       }
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 门店简称
-          mblno: this.token.productNo, //用户手机号
-          currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc,
-          merc_id: obj.MERC_ID // 商户编号
-        })
-        .then(res => {
-          if (res.data && res.data.length > 0) {
-            this.shopLists = this.filterObj(res.data);
-            console.log(this.shopLists);
-          }
-        });
     },
     goDetail(event, obj, flag) {
       fetchPoints(

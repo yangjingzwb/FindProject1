@@ -1,5 +1,6 @@
  <template>
     <div class="alet_container" :showAlert="showAlert">
+	    <section class="tip_container"></section>
 	    <section class="tip_text_container">
             <div class='tip_text_box'>
                 <p :class="[isAlert]"></p>
@@ -65,7 +66,7 @@
         left:0;
         right:0;
         margin: auto;
-        top: 33.3rem;
+        top: 54rem;
         width: 9.375rem;
         height: 4.6875rem;
         animation: tipMove .4s;

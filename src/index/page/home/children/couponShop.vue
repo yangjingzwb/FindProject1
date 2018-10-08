@@ -7,10 +7,11 @@
         <li class="l">
           <span>优惠券适用商户</span>
         </li>
-        <div class="hr-1"></div>
       </ul>
+    <div class="nullHeight"></div>
     </section>
-    <ul v-for="(item,index) in shopLists"  @click="goDetail($event,item,1)">
+    <section class="s_2">
+      <ul v-for="(item,index) in shopLists"  @click="goDetail($event,item,2)">
       <!-- :key="item.TX_JRN" -->
         <li class="left">
             <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="">
@@ -27,13 +28,13 @@
             </div>
         </li>
         <li class="hr-1" :class="{height0:index == shopLists.length-1}"></li>
-    </ul>
-    <ul v-if = "!shopLists || shopLists.length<=0 ">
-      <li class="aa"></li>
-      <li class="tip">您所在的城市暂无该优惠券适用商户</li>
-    </ul>
-    <!-- <div class="null"></div> -->
-    </div>
+      </ul>
+      <div v-if = "!shopLists || shopLists.length<=0" class="error">
+        <li class="aa"></li>
+        <li class="tip">您所在的城市暂无该优惠券适用商户</li>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -66,12 +67,12 @@ export default {
       type: Boolean,
       default: false
     },
-    // shopLists: {
-    //   type: Array,
-    //   default: function() {
-    //     return [];
-    //   }
-    // },
+    shopLists: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
     pullDownRefresh: {
       type: null,
       default: true
@@ -83,13 +84,12 @@ export default {
   },
   computed: {
     ...mapState([
-      "token",
-      "shopLists"
+      "token"
       ])
   },
 
   mounted() {
-    // this.goShop()
+    this.goShopDetail()
   },
   created() {},
 
@@ -98,30 +98,30 @@ export default {
   },
 
   methods: {
-    // goShop(data) {
-    //   console.log(33333,data);
-    //   axios
-    //     .post("getShopInfo", {
-    //       longitude: window.LONGITUDE, // 经度
-    //       latitude: window.LATITUDE, // 维度
-    //       stores_nm: "", // 门店名称
-    //       merc_abbr: "", // 门店简称
-    //       mblno: this.token.productNo, //用户手机号
-    //       currentPage: this.CURRENTPAGE,
-    //       pagNum: this.PAGNUM || 4,
-    //       session: this.token.session.replace(/\+/g, "%2B"),
-    //       map_type: window.isUseBaiDuLoc,
-    //       merc_id: this.MERC_ID // 商户编号
-    //     })
-    //     .then(res => {
-    //       console.log(res.data);
-    //       if (res.code === "0") {
-    //         let data = res.data
-    //         this.shopLists = data;
-    //         console.log(this.shopLists);
-    //       }
-    //     });
-    // },
+    goShopDetail() {
+      let params = this.$route.query.params;
+      console.log(33333,params);
+      axios
+        .post("getShopInfo", {
+          longitude: window.LONGITUDE, // 经度
+          latitude: window.LATITUDE, // 维度
+          stores_nm: "", // 门店名称
+          merc_abbr: "", // 门店简称
+          mblno: this.token.productNo, //用户手机号
+          currentPage: this.CURRENTPAGE,
+          pagNum: this.PAGNUM || 4,
+          session: this.token.session.replace(/\+/g, "%2B"),
+          map_type: window.isUseBaiDuLoc,
+          merc_id: params // 商户编号
+        })
+        .then(res => {
+          console.log(res.data);
+          if (res.code === "0") {
+            this.shopLists = this.filterObj(res.data);
+            console.log(this.shopLists);
+          }
+        });
+    },
     GetDistance(a, b, c, d) {
       // alert(GetDistance(a, b, c, d))
       return GetDistance(a, b, c, d);
@@ -137,6 +137,14 @@ export default {
       );
       this.$emit("goDetail", event, obj, flag);
     },
+    filterObj(obj) {
+      for (let i = 0; i < obj.length; i++) {
+        if (obj[i].PIC_URL_1) {
+          obj[i].PIC_URL_1 = this.baseImg + obj[i].PIC_URL_1;
+        }
+      }
+      return obj;
+    },
 
     onPullingDown() {
       this.$emit("pullingDown");
@@ -150,6 +158,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
+div {
+    background: #f6f7f8;
+}
 .s_1
  {
   @include wh(100%, 3rem);
@@ -186,59 +197,12 @@ export default {
 
 .nullHeight {
   height: 0.5625rem;
-  background: #f6f7f8;
-}
-.refresh {
-  text-align: center;
-  padding: 1.25rem 0;
-  color: #999999;
-  background-image: url("/static/img/refresh.gif");
-  background-size: 40%;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  padding-top: 6.875rem;
-  position: absolute;
-  top: 3.125rem;
-  width: 100%;
-  height: 3.125rem;
-}
-.home {
-  // transition: all 0.3s;
-  // -webkit-transition: all 0.3s;
-  // transform: translateZ(0);
-  // -webkit-transform: translateZ(0);
-  position: absolute;
-  z-index: 1;
-  top: 3rem;
-  left: 0;
-  width: 100%;
-  // position: relative;
-  height: 100%;
-  // background: #f0f1f2;
-  overflow: hidden;
-}
-.home1 {
-  // margin-top: 4.25rem;
-  height: 100%;
-  overflow: hidden;
-  // z-index: 19;
-}
-.content {
-  // height: auto;
-}
-.s {
-  position: relative;
-  // margin-top: .625rem;
-  // background: #ffffff;
-}
-.s_8 {
-  @include wh(100%, 3rem);
-  // padding-top: 1.25rem;
+  background: red;
 }
 .s_1 {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
-  background: #ffffff;
+  background: #fff;
   position: fixed;
   z-index: 21;
   .title {
@@ -326,65 +290,8 @@ export default {
   }
 }
 .s_2 {
-  @include wh(100%, 10.625rem);
-  overflow: hidden;
-  background-color: #fff;
-  ul,
-  li {
-    height: 100%;
-    width: 100%;
-  }
-  img {
-    width: 100%;
-  }
-  // background-image:url('/static/img/banner.jpg');
-  // background-repeat: no-repeat;
-  // background-position: 50%;
-  // background-size: 100% auto;
-}
-
-.s_3 {
-  @include wh(100%, 4.875rem);
-  text-align: center;
-  background-color: #fff;
-  .icon {
-    height: 1.75rem;
-    width: auto;
-    display: inline-block;
-    padding: 0.84375rem 0 0.25rem 0;
-  }
-  .text {
-    display: block;
-    color: #13252e;
-    font-size: 0.75rem;
-  }
-
-  ul {
-    display: flex;
-    height: 100%;
-    li {
-      height: 100%;
-      flex: 1;
-    }
-  }
-}
-.s_4 {
-  @include wh(100%, 7.125rem);
-  padding-top: 0.25rem;
-  padding-bottom: 0.625rem;
-  overflow: hidden;
-  img {
-    width: 100%;
-    height: auto;
-    max-height: 6.125rem;
-  }
-}
-
-.s_5 {
-  // padding: 0 0.9375rem;
-  // background: #fff;
-  margin-top: 0.5625rem;
-  margin-bottom: 1rem;
+    margin-top: 3.5rem;
+    background: #fff;
   ul {
     height: 7.5rem;
     padding-top: 1.625rem;
@@ -439,6 +346,7 @@ export default {
     font-size: 0.8125rem;
     color: #13252e;
     max-width: 100%;
+    background: #fff;
     @include space();
   }
   .c2 {
@@ -446,6 +354,7 @@ export default {
     color: #999999;
     padding-top: 0.5625rem;
     max-width: 90%;
+    background: #fff;
     @include space();
     .l {
       overflow: hidden;
@@ -461,6 +370,7 @@ export default {
     padding-top: 0.5625rem;
     letter-spacing: -0.00375rem;
     max-width: 70%;
+    background: #fff;
     @include space();
     div {
       @include space();
@@ -479,26 +389,21 @@ export default {
     margin-right: 0.1875rem;
   }
 }
-
-.scroll {
-  height: 10.625rem;
-}
-ul {
-  position: relative;
-}
-.aa {
-  position: relative;
-  padding: 6.3125rem 0.625rem;
-  top: 4.6875rem;
-  background: url(/static/img/tipIcon.png) no-repeat 50%;
-  background-size: 8.5625rem 8.5625rem;
-}
-.tip {
-  padding: 3.125rem 0.625rem;
-  font-family: PingFangSC-Regular;
-  color: #5A6164;
-  font-size: 0.875rem;
-  text-align: center;
+.error {
+  .aa {
+    position: relative;
+    padding: 6.3125rem 0.625rem;
+    top: 4.6875rem;
+    background: url(/static/img/tipIcon.png) no-repeat 50%;
+    background-size: 8.5625rem 8.5625rem;
+  }
+  .tip {
+    padding: 3.125rem 0.625rem;
+    font-family: PingFangSC-Regular;
+    color: #5A6164;
+    font-size: 0.875rem;
+    text-align: center;
+  } 
 }
 .hr-1 {
   display: block;
