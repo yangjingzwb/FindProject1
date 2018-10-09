@@ -196,7 +196,7 @@ div {
 }
 
 .nullHeight {
-  height: 0.5625rem;
+  height: 0.625rem;
   background: red;
 }
 .s_1 {

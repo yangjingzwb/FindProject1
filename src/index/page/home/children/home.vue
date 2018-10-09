@@ -5,72 +5,70 @@
     :scrollbar="scrollbar"
     >
     <div class="content">
-
-    
-    <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
-      <div class="scroll slide-content">
-        <div>
-            <div class="slider-wrapper">
-                <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
-                    <div v-for="item in slider2">
-                      <!-- :key="item.marketingId -->
-                        <a @click="goDetail($event,item,11,'top')" >
-                            <img :src="item.marketingIcon">
-                        </a>
-                    </div>
-                </slider>
-            </div>
+      <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
+        <div class="scroll slide-content">
+          <div>
+              <div class="slider-wrapper">
+                  <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
+                      <div v-for="item in slider2">
+                        <!-- :key="item.marketingId -->
+                          <a @click="goDetail($event,item,11,'top')" >
+                              <img :src="item.marketingIcon">
+                          </a>
+                      </div>
+                  </slider>
+              </div>
+          </div>
         </div>
-      </div>
-    </section>
-    <!-- 秒杀 -->
-    <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,1,'jd')">
-      <img :src="jdBanner.marketingIcon" >
-    </section>  
-           
-    <section class="s_5 s" >
-      <!-- 优惠券 -->
-      <coupon
-        :couponMainList="couponMainList"
-        :couponList="couponList"
-        @goDetail="goDetail"
-        >
-      </coupon>
-      <!-- 附近 -->
-      <near1
-        :latitude = 'latitude'
-        :longitude = 'longitude'
-        :shopList="shopList"
-        @aginEnter = "aginEnter"
-        @goDetail="goDetail"
-        >
-      </near1>
-      <!-- 专题营销位 -->
-      <goods1
-        @goDetail="goDetail"
-        :middle = "goods1"
-      ></goods1>
-      <!-- 卷皮专题营销位 -->
-      <!--   <goods4
-        @goDetail="goDetail"
-      ></goods4> -->
-      <!-- 唯品会专题营销位 -->
-      <!-- <goods6
-        @goDetail="goDetail"
-        :middle = "banner1"
-      ></goods6> -->
-      <!-- 好护士专题营销位 -->
-      <!-- <goods5
-        @goDetail="goDetail"
-        :middle = "banner1"
-      ></goods5> -->
-      <!-- 为你推荐 -->
-      <goods2
-        @goDetail="goDetail"
-      ></goods2>
-      
-    </section>
-     <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
+      </section>
+      <!-- 秒杀 -->
+      <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,1,'jd')">
+        <img :src="jdBanner.marketingIcon" >
+      </section>  
+            
+      <section class="s_5 s" >
+        <!-- 优惠券 -->
+        <coupon
+          :couponMainList="couponMainList"
+          :couponList="couponList"
+          @goDetail="goDetail"
+          >
+        </coupon>
+        <!-- 附近 -->
+        <near1
+          :latitude = 'latitude'
+          :longitude = 'longitude'
+          :shopList="shopList"
+          @aginEnter = "aginEnter"
+          @goDetail="goDetail"
+          >
+        </near1>
+        <!-- 专题营销位 -->
+        <goods1
+          @goDetail="goDetail"
+          :middle = "goods1"
+        ></goods1>
+        <!-- 卷皮专题营销位 -->
+        <!--   <goods4
+          @goDetail="goDetail"
+        ></goods4> -->
+        <!-- 唯品会专题营销位 -->
+        <!-- <goods6
+          @goDetail="goDetail"
+          :middle = "banner1"
+        ></goods6> -->
+        <!-- 好护士专题营销位 -->
+        <!-- <goods5
+          @goDetail="goDetail"
+          :middle = "banner1"
+        ></goods5> -->
+        <!-- 为你推荐 -->
+        <goods2
+          @goDetail="goDetail"
+        ></goods2>
+        
+      </section>
+      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
     </div>
     </scroll>
   </div>
@@ -277,7 +275,7 @@ export default {
         if (channel == "jd") {
           // 神策
           sa.track('bannerClick', {
-            contentName: '和包支付加油活动',
+            contentName: '异形banner活动',
             bannerNumber: String(obj.marketingNumber),
             topCategory: '发现',
           });
@@ -285,7 +283,7 @@ export default {
             "010000000000",
             "010000000000K10",
             this.token.productNo,
-            "和包支付石油banner",
+            "异形banner活动",
             this.token.session.replace(/\+/g, "%2B")
           );
         } else if (channel == "top") {

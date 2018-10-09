@@ -20,9 +20,8 @@
       </scroll>
       <div class="hr-1"></div>
     </section>
-    
 
-    <ul v-for="(item,index) in couponList" :key="'ul'+index" >
+    <ul v-for="(item,index) in dataList" :key="'ul'+index" >
         <li class="left">
           <div class="c1">
             <span>¥ <i class="par">{{item.issBillAmt}}</i></span>
@@ -53,8 +52,9 @@
           </div>
         </li>
     </ul>
-    <div v-if="couponList.length > 4" @click="changeFoldState" class="more">
-         <span>{{showAll?'展开':'收起'}}</span>
+    <div @click="showAll = !showAll" class="more">
+      <span v-if="showAll==false" class="down">展开</span>
+      <span v-else class="up">收起</span>
     </div>
     <alert-tip 
       v-if="showAlert" 
@@ -80,9 +80,8 @@ export default {
     return {
       showAlert: false,
       isCoupon: [],
-      // shopLists: [],
       // alertText: '',
-      showAll: true,
+      showAll: false,
       changeFoldState: false,
       isDisable: false,
       isLook: false,
@@ -107,6 +106,21 @@ export default {
   },
   computed: {
     ...mapState(["token"]),
+    dataList() {
+      if (this.showAll == false) { //当数据不需要完全显示的时候
+        var dataList = [];　　　　　//定义一个空数组
+        if (this.couponList.length > 4) {　//这里我们先显示前四个
+          for (var i = 0; i < 4; i++) {
+            dataList.push(this.couponList[i])
+          }
+        } else {
+          dataList = this.couponList
+        }
+        return dataList;　//返回当前数组
+      } else {
+        return this.couponList
+      }
+    }
   },
 
   mounted() {},
@@ -410,6 +424,21 @@ ul:nth-last-child(1)::after {
 }
 .more {
   float: right;
-  padding-right: 2rem;
+  height: 100%;
+  font-size: 0.75rem;
+  padding-bottom: 1rem;
+  color: #7E7E7E;
+  .down {
+    display: inline-block;
+    width: 4rem;
+    background: url(/static/img/down.png) no-repeat 50% 50%;
+    background-size: auto 80%;
+  }
+  .up {
+    display: inline-block;
+    width: 4rem;
+    background: url(/static/img/up.png) no-repeat 50% 50%;
+    background-size: auto 80%;
+  }
 }
 </style>
