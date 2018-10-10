@@ -86,13 +86,8 @@ import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 // import Scroll from '@@/components/scroll/scroll.vue'
 import axios from "@@/plugins/rsa/axios";
-import sa from'sa-sdk-javascript';
-import {
-  fetchPoints,
-  GetDistance,
-  setLItem,
-  getLItem
-} from "@@/service/util";
+import sa from "sa-sdk-javascript";
+import { fetchPoints, GetDistance, setLItem, getLItem } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 // import BScroll from "better-scroll";
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -173,17 +168,17 @@ export default {
     try {
       //神策
       let startTime = new Date();
-      let endTime = "" ;
-      window.onload = function(){
+      let endTime = "";
+      window.onload = function() {
         endTime = new Date();
-        sa.track('loadDelay',{
-          currentBusinessLine:'发现频道',
-          currentActivity: '更多页面',
+        sa.track("loadDelay", {
+          currentBusinessLine: "发现频道",
+          currentActivity: "更多页面",
           currentURL: window.location.href,
-          delayTime: endTime.getTime() -  startTime.getTime(),
+          delayTime: endTime.getTime() - startTime.getTime(),
           endTime: endTime.getTime(),
           startTime: startTime.getTime()
-        })   
+        });
       };
       fetchPoints(
         "home1",
@@ -194,13 +189,12 @@ export default {
       );
     } catch (e) {}
     if (!window.LATITUDE) {
-      this.aginEnter();
+      // this.aginEnter();
     } else {
       this.init();
     }
   },
-  created() {
-  },
+  created() {},
 
   components: {
     Slider,
@@ -278,33 +272,35 @@ export default {
       if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
         this.init();
       } else {
-        new BMap.Geolocation().getCurrentPosition(function(r) {
-          if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            // 判断状态
-            let pt = r.point;
-            console.log(r);
+        try {
+          new BMap.Geolocation().getCurrentPosition(function(r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+              // 判断状态
+              let pt = r.point;
+              console.log(r);
 
-            new BMap.Geocoder().getLocation(pt, function(rs) {
-              // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              if (rs.point) {
-                let addComp = rs.addressComponents;
-                window.LATITUDE = rs.point.lat;
-                window.LONGITUDE = rs.point.lng;
-                window.CITYNAME = addComp.city;
-                that.cityName1 = addComp.city;
-              } else {
-                window.LATITUDE = r.point.lat;
-                window.LONGITUDE = r.point.lng;
-                window.CITYNAME = r.address.city;
-                that.cityName1 = r.address.city;
-              }
-              that.init();
-              // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
-            });
-          } else {
-            this.SHOWLOADING(true);
-          }
-        });
+              new BMap.Geocoder().getLocation(pt, function(rs) {
+                // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                if (rs.point) {
+                  let addComp = rs.addressComponents;
+                  window.LATITUDE = rs.point.lat;
+                  window.LONGITUDE = rs.point.lng;
+                  window.CITYNAME = addComp.city;
+                  that.cityName1 = addComp.city;
+                } else {
+                  window.LATITUDE = r.point.lat;
+                  window.LONGITUDE = r.point.lng;
+                  window.CITYNAME = r.address.city;
+                  that.cityName1 = r.address.city;
+                }
+                that.init();
+                // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+              });
+            } else {
+              this.SHOWLOADING(true);
+            }
+          });
+        } catch (e) {}
       }
     },
     intervalCity() {
@@ -327,9 +323,9 @@ export default {
       // 跳转到下一个页面
       this.$router.push("/mine");
       // 神策
-      sa.track('clickSearch', {
-        operationType: '点击搜索框',
-        currentPage: '更多',
+      sa.track("clickSearch", {
+        operationType: "点击搜索框",
+        currentPage: "更多"
       });
     },
     touchStart(e) {
@@ -365,10 +361,10 @@ export default {
       try {
         if (channel == "top") {
           // 神策
-          sa.track('bannerClick', {
+          sa.track("bannerClick", {
             contentName: obj.marketingTitle,
-            topCategory: '更多',
-            locationOfZone: '顶部banner'
+            topCategory: "更多",
+            locationOfZone: "顶部banner"
           });
           fetchPoints(
             "020000000000",
@@ -379,10 +375,10 @@ export default {
           );
         } else if (channel == "classify") {
           // 神策
-          sa.track('buttonClick', {
+          sa.track("buttonClick", {
             buttonName: obj.marketingTitle,
-            topCategory: '发现',
-            subCategory:'发现：更多优惠'
+            topCategory: "发现",
+            subCategory: "发现：更多优惠"
           });
           fetchPoints(
             "020000000000",
@@ -509,7 +505,7 @@ export default {
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc?0:1
+          map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
           // this.shopList = res.STORES_REC;
@@ -635,22 +631,22 @@ export default {
           mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc
         })
         .then(res => {
           //神策
           let startTime = new Date();
-          let endTime = "" ;
-          window.onload = function(){
+          let endTime = "";
+          window.onload = function() {
             endTime = new Date();
-            sa.track('loadDelay',{
-              currentBusinessLine:'发现频道',
-              currentActivity: '调用更多页getShopInfo接口',
+            sa.track("loadDelay", {
+              currentBusinessLine: "发现频道",
+              currentActivity: "调用更多页getShopInfo接口",
               currentURL: window.location.href,
-              delayTime: endTime.getTime() -  startTime.getTime(),
+              delayTime: endTime.getTime() - startTime.getTime(),
               endTime: endTime.getTime(),
               startTime: startTime.getTime()
-            })   
+            });
           };
           if (res.data && res.data.length > 0) {
             this.isError = true;
@@ -778,6 +774,14 @@ export default {
     closeAlert() {},
     goBack() {
       this.$router.go(-1);
+    }
+  },
+  watch:{
+    latitude(curVal,oldVal){
+      if(curVal&&curVal!=""){
+        this.init()
+      }
+      
     }
   }
   // props:['activeIcon']

@@ -7,8 +7,8 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-	latitude: '31.24916171', // 当前位置纬度
-	longitude: '121.48789949', // 当前位置经度
+	latitude: '', // 当前位置纬度31.24916171
+	longitude: '', // 当前位置经度121.48789949
 	cityname:'上海',//CITYNAME
 	token:{}, // 老平台获取到的token
 	flag: 0, // 是否做过分流判断

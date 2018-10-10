@@ -26,7 +26,7 @@
       background-repeat: no-repeat;
     }
   </style>
-  
+
 </head>
 
 <body class="bd">
@@ -34,22 +34,25 @@
     <router-view></router-view>
   </div>
   <div id="container"></div>
-  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR"></script>
+  <!-- <script type="text/javascript" async src="https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR"></script> -->
   <!-- <script type="text/javascript" src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script> -->
   <script type="text/javascript" src="static/polyfill.min.js"></script>
   <script>
+
     // 定位经纬度信息
     window.LATITUDE = '';
     window.LONGITUDE = '';
     window.CITYNAME = '';
     window.LBSINFO = {
     }
-    var isUseBaiDuLoc = false;
-    try {
-      if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
-        setTimeout(() => {
-          // 苹果客户端定位
-          window.getLocationInfo()
+    window.isUseBaiDuLoc = false;
+    LBS();
+    function LBS() {
+      try {
+        if (/iP(ad|hone|od)/.test(navigator.userAgent)) {
+          setTimeout(() => {
+            // 苹果客户端定位
+            window.getLocationInfo()
           }, 20)
         } else {
           // android 客户端定位
@@ -58,8 +61,9 @@
           window.CITYNAME = window.goActivity.getCityName();
         }
       } catch (e) {
-        isUseBaiDuLoc = true;
+        window.isUseBaiDuLoc = true;
       }
+    }
 
     // ios客户端回调
     function callBackGetLocationInfo(json) {
@@ -68,30 +72,42 @@
       window.LATITUDE = json.Latitude;
       window.LBSINFO = json;
       window.CITYNAME = json.CityName;
-      
     }
-    if(isUseBaiDuLoc) {
-      new BMap.Geolocation().getCurrentPosition(function (r) {
-        // alert(31)
-        if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
-          console.log(r)
-          new BMap.Geocoder().getLocation(r.point, function (rs) {
-            if (rs) {
-              var addComp = rs.addressComponents;
-              window.LATITUDE = rs.point.lat;
-              window.LONGITUDE = rs.point.lng;
-              window.CITYNAME = addComp.city;
-            } else {
-              window.LATITUDE = r.point.lat;
-              window.LONGITUDE = r.point.lng;
-              window.CITYNAME = r.address.city;
+
+    function LBSBD(isUseBaiDuLoc,cb) {
+      if(typeof cb !="undefined" && window.LATITUDE){
+        cb(window.LATITUDE);
+      }
+      window.isUseBaiDuLoc = !!isUseBaiDuLoc;
+      if (window.isUseBaiDuLoc) {
+        try {
+          new BMap.Geolocation().getCurrentPosition(function (r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
+              console.log(r)
+              new BMap.Geocoder().getLocation(r.point, function (rs) {
+                if (rs) {
+                  var addComp = rs.addressComponents;
+                  window.LATITUDE = rs.point.lat;
+                  window.LONGITUDE = rs.point.lng;
+                  window.CITYNAME = addComp.city;
+                } else {
+                  window.LATITUDE = r.point.lat;
+                  window.LONGITUDE = r.point.lng;
+                  window.CITYNAME = r.address.city;
+                }
+                if(typeof cb !="undefined"){
+                  cb(window.LATITUDE);
+                }
+              })
             }
           })
-        } else {
- 
+        } catch (e) {
+          console.log("百度地图还没有加载好")
         }
-      })
+      }
     }
+
   </script>
 </body>
+
 </html>

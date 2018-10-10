@@ -1,8 +1,12 @@
-import md5 from 'blueimp-md5'
-import store from '@@/store/'
+import md5 from "blueimp-md5";
+import store from "@@/store/";
 import axios from "@@/plugins/rsa/axios";
 // console.log(11111)
-console.log(md5('ct001fb8ada5237c5ae97978ff07fc7471d20{"contenttype":"article","startindex":0,"endindex":10}'));
+console.log(
+  md5(
+    'ct001fb8ada5237c5ae97978ff07fc7471d20{"contenttype":"article","startindex":0,"endindex":10}'
+  )
+);
 
 /**
  * 工具方法
@@ -12,96 +16,143 @@ console.log(md5('ct001fb8ada5237c5ae97978ff07fc7471d20{"contenttype":"article","
  * 计算两个经纬度之间的距离
  */
 export const GetDistance = (lat1, lng1, lat2, lng2) => {
-    lat1 = window.LATITUDE || window.LBSINFO.Latitude; // 维度
-    lng1 = window.LONGITUDE || window.LBSINFO.Longitude;
-    // console.log(lat1)
-    // console.log(lng1)
-            
-    var radLat1 = lat1 * Math.PI / 180.0;
-    var radLat2 = lat2 * Math.PI / 180.0;
-    var a = radLat1 - radLat2;
-    var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
-    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
-        Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
-    s = s * 6378.137;// EARTH_RADIUS;
-    s = (Math.round(s * 10000) / 10000).toFixed(1);
-    // alert(s)
-    // if(s > 10){
-    //     return 10 + Math.random().toFixed(2)
-    // }
-    return s+'';
-}
-export const formatDate_1 = (time,format='YY-MM-DD hh:mm:ss')=>{
-    var date = new Date(time);
-    var year = date.getFullYear(),
-        month = date.getMonth()+1,//月份是从0开始的
-        day = date.getDate(),
-        hour = date.getHours(),
-        min = date.getMinutes(),
-        sec = date.getSeconds();
-    var preArr = Array.apply(null,Array(10)).map(function(elem, index) {
-        return '0'+index;
-    });////开个长度为10的数组 格式为 00 01 02 03
+  lat1 = window.LATITUDE || window.LBSINFO.Latitude; // 维度
+  lng1 = window.LONGITUDE || window.LBSINFO.Longitude;
+  // console.log(lat1)
+  // console.log(lng1)
 
-    var newTime = format.replace(/YY/g,year)
-                        .replace(/MM/g,preArr[month]||month)
-                        .replace(/DD/g,preArr[day]||day)
-                        .replace(/hh/g,preArr[hour]||hour)
-                        .replace(/mm/g,preArr[min]||min)
-                        .replace(/ss/g,preArr[sec]||sec);
+  var radLat1 = (lat1 * Math.PI) / 180.0;
+  var radLat2 = (lat2 * Math.PI) / 180.0;
+  var a = radLat1 - radLat2;
+  var b = (lng1 * Math.PI) / 180.0 - (lng2 * Math.PI) / 180.0;
+  var s =
+    2 *
+    Math.asin(
+      Math.sqrt(
+        Math.pow(Math.sin(a / 2), 2) +
+          Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
+      )
+    );
+  s = s * 6378.137; // EARTH_RADIUS;
+  s = (Math.round(s * 10000) / 10000).toFixed(1);
+  // alert(s)
+  // if(s > 10){
+  //     return 10 + Math.random().toFixed(2)
+  // }
+  return s + "";
+};
+export const formatDate_1 = (time, format = "YY-MM-DD hh:mm:ss") => {
+  var date = new Date(time);
+  var year = date.getFullYear(),
+    month = date.getMonth() + 1, //月份是从0开始的
+    day = date.getDate(),
+    hour = date.getHours(),
+    min = date.getMinutes(),
+    sec = date.getSeconds();
+  var preArr = Array.apply(null, Array(10)).map(function(elem, index) {
+    return "0" + index;
+  }); ////开个长度为10的数组 格式为 00 01 02 03
 
-    return newTime;         
-}
-// 
-export const setMd5 = (data)=>{
-    let d = 'ct001fb8ada5237c5ae97978ff07fc7471d20'+JSON.stringify(data);
-    return "ct001;"+md5(d);
-}
-export const setMd5HY = (data)=>{
-    let se = 'CE59E262D7AD716E24BA3D613DC617EB' //md5秘钥
-    let d = ''+data.channel+data.requestId+se
-    return md5(d).toUpperCase();
-}
+  var newTime = format
+    .replace(/YY/g, year)
+    .replace(/MM/g, preArr[month] || month)
+    .replace(/DD/g, preArr[day] || day)
+    .replace(/hh/g, preArr[hour] || hour)
+    .replace(/mm/g, preArr[min] || min)
+    .replace(/ss/g, preArr[sec] || sec);
 
-export const fetchPoints = (parent_title, sub_title, phone, remark, session) => {
-   
-    axios.post('collectOpera', {
-        "channel": /iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android", // 渠道> android、ios、html5
-        "parent_title": parent_title, // 父标题
-        "sub_title": sub_title, //子 标题
-        "phone": phone, // 手机号
-        "remark": remark, // 备注
-        "session": session
+  return newTime;
+};
+//
+export const setMd5 = data => {
+  let d = "ct001fb8ada5237c5ae97978ff07fc7471d20" + JSON.stringify(data);
+  return "ct001;" + md5(d);
+};
+export const setMd5HY = data => {
+  let se = "CE59E262D7AD716E24BA3D613DC617EB"; //md5秘钥
+  let d = "" + data.channel + data.requestId + se;
+  return md5(d).toUpperCase();
+};
+
+export const fetchPoints = (
+  parent_title,
+  sub_title,
+  phone,
+  remark,
+  session
+) => {
+  axios
+    .post("collectOpera", {
+      channel: /iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android", // 渠道> android、ios、html5
+      parent_title: parent_title, // 父标题
+      sub_title: sub_title, //子 标题
+      phone: phone, // 手机号
+      remark: remark, // 备注
+      session: session
     })
-        .then((res) => {
-            console.log("埋点成功")
-        })
-        .catch(() => {
-            console.log("异常")
-        })
-}
+    .then(res => {
+      console.log("埋点成功");
+    })
+    .catch(() => {
+      console.log("异常");
+    });
+};
 /**
  * 获取当前页面的url参数，并处理
  * @param  {[type]} name [description]
  * @return {[type]}      [description]
  */
-export const geURLParam = (name) => {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-    var r = window.location.search.substr(1).replace(/\$/g, "=").replace(/@/g, "&").match(reg); //获取get参数字窜，与正在匹配
-    if (r !== null) {
-        return decodeURI(r[2]);
-    } else {
-        return null; //传递中文参数时候，需要使用encodeURI()进行编码
-    }
-}
+export const geURLParam = name => {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  var r = window.location.search
+    .substr(1)
+    .replace(/\$/g, "=")
+    .replace(/@/g, "&")
+    .match(reg); //获取get参数字窜，与正在匹配
+  if (r !== null) {
+    return decodeURI(r[2]);
+  } else {
+    return null; //传递中文参数时候，需要使用encodeURI()进行编码
+  }
+};
+/**
+ * 异步加载JS
+ * @param {*} url 
+ * @param {*} callBack 
+ */
+export const asyncLoaded = function(url, callBack) {
+  /*url为js的链接，callBack为url的js中的函数（该函数调用应该写到匿名函数中，如function(){console.log(div.getScrollOffset())}）*/
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  /*if else 这几句话必须要写到这位置处，不能放最后，因为if中js加载中script.readyState存在好几种状态，
+只有状态改变‘readystatechange’事件才会触发，但现在浏览器加载速度很快，当解析到该事件时JS有可能已经加载完，
+所以事件根本不会触发，所以要写到前面*/
+  if (script.readystate) {
+    //兼容IE
+    script.onreadystatechange = function() {
+      //状态改变事件才触发
+      if (script.readyState == "loaded" || script.readyState == "complete") {
+          console.log('hello')
+        callBack();
+        script.onreadystatechange = null;
+      }
+    };
+  } else {
+    script.onload = function(e) {
+      callBack();
+    };
+  }
+  script.src = url;
+  document.body.appendChild(script);
+};
 
-export const encodeJson = (obj)=>{
-    let res="";
-    for(let k in obj){
-     res +=k+"="+obj[k]+"&"
-    }
-    return res.substr(0,res.length-1);
-}
+export const encodeJson = obj => {
+  let res = "";
+  for (let k in obj) {
+    res += k + "=" + obj[k] + "&";
+  }
+  return res.substr(0, res.length - 1);
+};
 
 /**
  * 格式化日期
@@ -110,137 +161,143 @@ export const encodeJson = (obj)=>{
  * @returns {*}
  */
 export const formatDate = (fmt, date) => {
-    if (!(date instanceof Date)) {
-        return date
+  if (!(date instanceof Date)) {
+    return date;
+  }
+  const o = {
+    "M+": date.getMonth() + 1,
+    "d+": date.getDate(),
+    "h+": date.getHours(),
+    "m+": date.getMinutes(),
+    "s+": date.getSeconds(),
+    "q+": Math.floor((date.getMonth() + 3) / 3),
+    S: date.getMilliseconds()
+  };
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(
+      RegExp.$1,
+      `${date.getFullYear()}`.substr(4 - RegExp.$1.length)
+    );
+  }
+  for (let k in o) {
+    if (new RegExp(`(${k})`).test(fmt)) {
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length === 1 ? o[k] : `00${o[k]}`.substr(`${o[k]}`.length)
+      );
     }
-    const o = {
-        'M+': date.getMonth() + 1,
-        'd+': date.getDate(),
-        'h+': date.getHours(),
-        'm+': date.getMinutes(),
-        's+': date.getSeconds(),
-        'q+': Math.floor((date.getMonth() + 3) / 3),
-        'S': date.getMilliseconds()
-    }
-    if (/(y+)/.test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, (`${date.getFullYear()}`).substr(4 - RegExp.$1.length))
-    }
-    for (let k in o) {
-        if (new RegExp(`(${k})`).test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (`00${o[k]}`.substr(`${o[k]}`.length)))
-        }
-    }
-    return fmt
-}
+  }
+  return fmt;
+};
 /**
  * 数组去重
- * @param {数组} arrOld 
+ * @param {数组} arrOld
  * eg :removeReapt([1,2,3,6,5,2,2,5,6,2,1]) // [1, 2, 3, 6, 5]
  */
-export const removeReapt = (arrOld) => {
-    var arr = [];
-    for (var i = 0, len = arrOld.length; i < len; i++) {
-        if (arr.indexOf(arrOld[i]) == -1) {
-            arr.push(arrOld[i]);
-        }
+export const removeReapt = arrOld => {
+  var arr = [];
+  for (var i = 0, len = arrOld.length; i < len; i++) {
+    if (arr.indexOf(arrOld[i]) == -1) {
+      arr.push(arrOld[i]);
     }
-    return arr;
-}
+  }
+  return arr;
+};
 
 /**
  * 数组最大值
- * @param {*} arr 
+ * @param {*} arr
  * maxArr([1,4,65,843,2,1,4]) // 843
  */
-export const maxArr = (arr) => {
-    return Math.max.apply(null, arr);
-}
+export const maxArr = arr => {
+  return Math.max.apply(null, arr);
+};
 
 /**
  * 数组最小值
- * @param {*} arr 
+ * @param {*} arr
  * minArr([1,4,65,843,2,10,4]) // 1
  */
-export const minArr = (arr) => {
-    return Math.min.apply(null, arr);
-}
+export const minArr = arr => {
+  return Math.min.apply(null, arr);
+};
 
 /**
  * 数组求和
- * @param {*} arr 
+ * @param {*} arr
  * sumArr([1,4,65,843,2,1,4]) // 920
  */
-export const sumArr = (arr) => {
-    var sumText = 0;
-    for (var i = 0, len = arr.length; i < len; i++) {
-        sumText += arr[i];
-    }
-    return sumText
-}
+export const sumArr = arr => {
+  var sumText = 0;
+  for (var i = 0, len = arr.length; i < len; i++) {
+    sumText += arr[i];
+  }
+  return sumText;
+};
 
 /**
  * 数组求和
- * @param {} arr 
+ * @param {} arr
  * covArr([1,4,65,843,2,1,4]) // 131.42857142857142
  */
-export const covArr = (arr) => {
-    var sumText = sumArr(arr);
-    var covText = sumText / arr.length;
-    return covText
-}
+export const covArr = arr => {
+  var sumText = sumArr(arr);
+  var covText = sumText / arr.length;
+  return covText;
+};
 /**
  * 数组中获取随机数
- * @param {*} arr 
+ * @param {*} arr
  * randomOne([1,2,3,6,8,5,4,2,6]) // 1
  */
-export const randomOne = (arr) => {
-    return arr[Math.floor(Math.random() * arr.length)];
-}
+export const randomOne = arr => {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
 /**
  * 返回对应元素在数组中的下标
- * @param {*} arr 
- * @param {*} value 
+ * @param {*} arr
+ * @param {*} value
  * isHasElementOne([1,2,3,4,5],3) // 2
  */
 export const isHasElementOne = (arr, value) => {
-    for (var i = 0, vlen = arr.length; i < vlen; i++) {
-        if (arr[i] == value) {
-            return i;
-        }
+  for (var i = 0, vlen = arr.length; i < vlen; i++) {
+    if (arr[i] == value) {
+      return i;
     }
-    return -1;
-}
+  }
+  return -1;
+};
 /**
  * 返回数组（字符串）一个元素出现的次数
- * @param {*} obj 
- * @param {*} ele 
+ * @param {*} obj
+ * @param {*} ele
  * getEleCount('asd56+asdasdwqe','a') // 3
  * getEleCount([1,2,3,4,5,66,77,22,55,22],22) // 2
  */
 export const getEleCount = (obj, ele) => {
-    var num = 0;
-    for (var i = 0, len = obj.length; i < len; i++) {
-        if (ele == obj[i]) {
-            num++;
-        }
+  var num = 0;
+  for (var i = 0, len = obj.length; i < len; i++) {
+    if (ele == obj[i]) {
+      num++;
     }
-    return num;
-}
+  }
+  return num;
+};
 /**
  * 得到n1-n2下标的数组，即返回数组下标arr[n1]到数组arr[n2]的值
- * @param {*} arr 
- * @param {*} n1 
- * @param {*} n2 
+ * @param {*} arr
+ * @param {*} n1
+ * @param {*} n2
  * getArrayNum([0,1,2,3,4,5,6,7,8,9],5,9) // [5, 6, 7, 8, 9]
  */
 export const getArrayNum = (arr, n1, n2) => {
-    var arr1 = [],
-        len = n2 || arr.length - 1;
-    for (var i = n1; i <= len; i++) {
-        arr1.push(arr[i])
-    }
-    return arr1;
-}
+  var arr1 = [],
+    len = n2 || arr.length - 1;
+  for (var i = n1; i <= len; i++) {
+    arr1.push(arr[i]);
+  }
+  return arr1;
+};
 
 /* arr:要进行操作的数组
  * val:要删除的值
@@ -249,320 +306,319 @@ export const getArrayNum = (arr, n1, n2) => {
  * removeArrayForValue(['test','test1','test2','test','aaa'],'test') // ["test1", "test2", "aaa"]
  */
 export const removeArrayForValue = (arr, val, type) => {
-    return arr.filter(function (item) {
-        return type ? item.indexOf(val) === -1 : item !== val
-    })
-}
+  return arr.filter(function(item) {
+    return type ? item.indexOf(val) === -1 : item !== val;
+  });
+};
 
 /**
  * 获取日子跟踪号
  */
 export const getUUID = () => {
-    var s = [];
-    var hexDigits = "0123456789abcdef";
-    for (var i = 0; i < 36; i++) {
-        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-    }
-    s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-    s[8] = s[13] = s[18] = s[23] = "-";
+  var s = [];
+  var hexDigits = "0123456789abcdef";
+  for (var i = 0; i < 36; i++) {
+    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+  }
+  s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+  s[8] = s[13] = s[18] = s[23] = "-";
 
-    var uuid = s.join("");
-    return uuid;
-}
-
+  var uuid = s.join("");
+  return uuid;
+};
 
 export const checkUtil = (slider, slider1, slider2, next) => {
-    if (slider && slider1 && slider2) {
-        try{
-            setTimeout(()=>{
-                document.body.className = '';// 重置body加载动画
-            },400)
-            
-        }catch(e){
-
-        }
-        store.commit("FLAG", 1)
-        next()
-    }
-}
+  if (slider && slider1 && slider2) {
+    try {
+      setTimeout(() => {
+        document.body.className = ""; // 重置body加载动画
+      }, 400);
+    } catch (e) {}
+    store.commit("FLAG", 1);
+    next();
+  }
+};
 
 export const animationProgress = (to, from, next, history, historyCount) => {
-    const toIndex = store.state.animation[to.path] /// tab/home  undefined
-    // history.getItem(to.path);
-    const fromIndex = store.state.animation[from.path] // / 0
-    console.log('to.path', to.path, toIndex)
-    console.log('from.path', from.path, fromIndex)
-    // history.getItem(from.path);
-    if (toIndex) {
-        if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
-            store.commit('DIRECTION', 'forward')
-        } else {
-            store.commit('DIRECTION', 'reverse')
-        }
+  const toIndex = store.state.animation[to.path]; /// tab/home  undefined
+  // history.getItem(to.path);
+  const fromIndex = store.state.animation[from.path]; // / 0
+  console.log("to.path", to.path, toIndex);
+  console.log("from.path", from.path, fromIndex);
+  // history.getItem(from.path);
+  if (toIndex) {
+    if (
+      !fromIndex ||
+      parseInt(toIndex, 10) > parseInt(fromIndex, 10) ||
+      (toIndex === "0" && fromIndex === "0")
+    ) {
+      store.commit("DIRECTION", "forward");
     } else {
-        // ++historyCount;
-        store.commit('HISTORYCOUNT', store.state.historyCount + 1)
-        console.log('store.state.historyCount', store.state.historyCount + 1)
-
-
-        store.commit('ANIMATION', { key: 'count', value: store.state.historyCount })
-        console.log(store.state.animation)
-        // history.setItem('count', historyCount);
-        to.path !== '/' && store.commit('ANIMATION', {
-            key: to.path,
-            value: store.state.historyCount
-        })
-        // history.setItem(to.path, historyCount);
-        // alert(89)
-        store.commit('DIRECTION', 'forward')
-        console.log('store.state.direction', store.state.direction)
+      store.commit("DIRECTION", "reverse");
     }
-    // alert(store.state.flag)
+  } else {
+    // ++historyCount;
+    store.commit("HISTORYCOUNT", store.state.historyCount + 1);
+    console.log("store.state.historyCount", store.state.historyCount + 1);
 
-
-}
+    store.commit("ANIMATION", {
+      key: "count",
+      value: store.state.historyCount
+    });
+    console.log(store.state.animation);
+    // history.setItem('count', historyCount);
+    to.path !== "/" &&
+      store.commit("ANIMATION", {
+        key: to.path,
+        value: store.state.historyCount
+      });
+    // history.setItem(to.path, historyCount);
+    // alert(89)
+    store.commit("DIRECTION", "forward");
+    console.log("store.state.direction", store.state.direction);
+  }
+  // alert(store.state.flag)
+};
 
 export const animationInit = () => {
-    // const history = window.sessionStorage;
-    // history.clear()
-    store.commit('ANIMATION', null)
-    store.commit('HISTORYCOUNT', store.state.animation.count ? store.state.animation.count * 1 : 0)
-    // let historyCount = history.getItem('count') * 1 || 0;
-    store.commit('ANIMATION', {
-        key: '/',
-        value: 0
-    })
-    // history.setItem('/', 0);
-    // return {
-    //     history,
-    //     historyCount
-    // }
-}
+  // const history = window.sessionStorage;
+  // history.clear()
+  store.commit("ANIMATION", null);
+  store.commit(
+    "HISTORYCOUNT",
+    store.state.animation.count ? store.state.animation.count * 1 : 0
+  );
+  // let historyCount = history.getItem('count') * 1 || 0;
+  store.commit("ANIMATION", {
+    key: "/",
+    value: 0
+  });
+  // history.setItem('/', 0);
+  // return {
+  //     history,
+  //     historyCount
+  // }
+};
 
 /**
  * [fenToyuan]
  * 分转化元的工具函数。
  * */
-export const fenToyuan = (val) => {
-    val = val || "0";
-    var result, re = /^[\+|-]?[0-9]+$/;
-    if (typeof (val) != "string") {
-        val = val.toString()
-    }
-    return (re.test(val)) ? (parseFloat(val) / 100).toFixed(2) : "0.00";
-}
+export const fenToyuan = val => {
+  val = val || "0";
+  var result,
+    re = /^[\+|-]?[0-9]+$/;
+  if (typeof val != "string") {
+    val = val.toString();
+  }
+  return re.test(val) ? (parseFloat(val) / 100).toFixed(2) : "0.00";
+};
 /**获取当前时间
  */
 export const getCustomerTime = (flag, isMill) => {
-    var date = new Date();
-    var yy, MM, dd, hh, mm, ss, ms;
-    yy = flag ? (date.getFullYear() + "") : (date.getYear() + "").substr(1, 2);
+  var date = new Date();
+  var yy, MM, dd, hh, mm, ss, ms;
+  yy = flag ? date.getFullYear() + "" : (date.getYear() + "").substr(1, 2);
 
-    MM = (date.getMonth() + 1) + "";
-    MM = MM.length < 2 ? "0" + MM : MM;
+  MM = date.getMonth() + 1 + "";
+  MM = MM.length < 2 ? "0" + MM : MM;
 
-    dd = (date.getDate()) + "";
-    dd = dd.length < 2 ? "0" + dd : dd;
+  dd = date.getDate() + "";
+  dd = dd.length < 2 ? "0" + dd : dd;
 
-    hh = date.getHours() + "";
-    hh = hh.length < 2 ? "0" + hh : hh;
+  hh = date.getHours() + "";
+  hh = hh.length < 2 ? "0" + hh : hh;
 
-    mm = date.getMinutes() + "";
-    mm = mm.length < 2 ? "0" + mm : mm;
+  mm = date.getMinutes() + "";
+  mm = mm.length < 2 ? "0" + mm : mm;
 
-    ss = date.getSeconds() + "";
-    ss = ss.length < 2 ? "0" + ss : ss;
+  ss = date.getSeconds() + "";
+  ss = ss.length < 2 ? "0" + ss : ss;
 
-    ms = date.getMilliseconds() + "";
-    if (isMill) {
-        var _msLength = (ms + "").length;
-        if (_msLength == 0) {
-            ms == "000";
-        } else if (_msLength == 1) {
-            ms = "00" + ms;
-        } else if (_msLength == 2) {
-            ms = "0" + ms;
-        }
-        return yy + MM + dd + hh + mm + ss + ms;
+  ms = date.getMilliseconds() + "";
+  if (isMill) {
+    var _msLength = (ms + "").length;
+    if (_msLength == 0) {
+      ms == "000";
+    } else if (_msLength == 1) {
+      ms = "00" + ms;
+    } else if (_msLength == 2) {
+      ms = "0" + ms;
     }
-    return yy + MM + dd + hh + mm + ss;
-    return (re.test(val)) ? (parseFloat(val) / 100).toFixed(2) : "0.00";
-}
-
-
+    return yy + MM + dd + hh + mm + ss + ms;
+  }
+  return yy + MM + dd + hh + mm + ss;
+  return re.test(val) ? (parseFloat(val) / 100).toFixed(2) : "0.00";
+};
 
 /**
  * [billFormatDate]
  * 日期格式化工具
  * 将后端传过来的日期调整格式。
  * */
-export const billDateYear = (datestr) => {
-    if (!datestr) {
-        return '';
-    }
-    var datehtml = '';
-    var dateArr = datestr.split("-");
-    if (dateArr[1].substring(0, 1) === "0") {
-        datehtml += dateArr[0] + '年' + dateArr[1].substring(1, 2) + '月';
-        // console.log(datehtml)
-        if (dateArr[2].substring(0, 1) === "0") {
-            datehtml += dateArr[2].substring(1, 2) + '日';
-        } else {
-            datehtml += dateArr[2] + '日';
-        }
+export const billDateYear = datestr => {
+  if (!datestr) {
+    return "";
+  }
+  var datehtml = "";
+  var dateArr = datestr.split("-");
+  if (dateArr[1].substring(0, 1) === "0") {
+    datehtml += dateArr[0] + "年" + dateArr[1].substring(1, 2) + "月";
+    // console.log(datehtml)
+    if (dateArr[2].substring(0, 1) === "0") {
+      datehtml += dateArr[2].substring(1, 2) + "日";
     } else {
-        datehtml += dateArr[0] + '年' + dateArr[1] + '月';
-        if (dateArr[2].substring(0, 1) === "0") {
-            datehtml += dateArr[2].substring(1, 2) + '日';
-        } else {
-            datehtml += dateArr[2] + '日';
-        }
+      datehtml += dateArr[2] + "日";
     }
-    return datehtml;
-}
-
+  } else {
+    datehtml += dateArr[0] + "年" + dateArr[1] + "月";
+    if (dateArr[2].substring(0, 1) === "0") {
+      datehtml += dateArr[2].substring(1, 2) + "日";
+    } else {
+      datehtml += dateArr[2] + "日";
+    }
+  }
+  return datehtml;
+};
 
 /**
  * [billDate]
  * 日期格式化工具
  * 将后端传过来的日期调整格式。
  * */
-export const billDate = (datestr) => {
-    if (!datestr) {
-        return '';
-    }
-    var datehtml = '';
-    var dateArr = datestr.split("-");
-    if (dateArr[1].substring(0, 1) === "0") {
-        datehtml += dateArr[1].substring(1, 2) + '月';
-        if (dateArr[2].substring(0, 1) === "0") {
-            datehtml += dateArr[2].substring(1, 2) + '日';
-        } else {
-            datehtml += dateArr[2] + '日';
-        }
+export const billDate = datestr => {
+  if (!datestr) {
+    return "";
+  }
+  var datehtml = "";
+  var dateArr = datestr.split("-");
+  if (dateArr[1].substring(0, 1) === "0") {
+    datehtml += dateArr[1].substring(1, 2) + "月";
+    if (dateArr[2].substring(0, 1) === "0") {
+      datehtml += dateArr[2].substring(1, 2) + "日";
     } else {
-        datehtml += dateArr[1] + '月';
-        if (dateArr[2].substring(0, 1) === "0") {
-            datehtml += dateArr[2].substring(1, 2) + '日';
-        } else {
-            datehtml += dateArr[2] + '日';
-        }
+      datehtml += dateArr[2] + "日";
     }
-    return datehtml;
-}
+  } else {
+    datehtml += dateArr[1] + "月";
+    if (dateArr[2].substring(0, 1) === "0") {
+      datehtml += dateArr[2].substring(1, 2) + "日";
+    } else {
+      datehtml += dateArr[2] + "日";
+    }
+  }
+  return datehtml;
+};
 
 /**总的订单状态订单状态
  * 只有两种状态 0 和 1
  * [judgebillstate]
- * @param {} billstate 
+ * @param {} billstate
  */
-export const judgebillstate = (billstate) => {
-    if (billstate === '0') {
-        return `正常`
-    } else if (billstate === '1') {
-        return `已逾期`
-    }
-}
+export const judgebillstate = billstate => {
+  if (billstate === "0") {
+    return `正常`;
+  } else if (billstate === "1") {
+    return `已逾期`;
+  }
+};
 
 /**总的订单状态订单状态
  * 只有两种状态 0 和 1
  * [judgebillstate]
- * @param {} billstate 
+ * @param {} billstate
  */
-export const billdetailstate = (billstate) => {
-    if (billstate === '0') {
-        return `待还款`
-    } else if (billstate === '1') {
-        return `已还款`
-    } else if (billstate === '2') {
-        return `已逾期`
-    }
-}
+export const billdetailstate = billstate => {
+  if (billstate === "0") {
+    return `待还款`;
+  } else if (billstate === "1") {
+    return `已还款`;
+  } else if (billstate === "2") {
+    return `已逾期`;
+  }
+};
 
 //随意借sign生成
 export const getFreeSign = (arg, freeToken) => {
-    let data = arg
-    for (var key in data) {
-        if (data[key] == null || data[key] == undefined) {
-            data[key] = "";
-        }
+  let data = arg;
+  for (var key in data) {
+    if (data[key] == null || data[key] == undefined) {
+      data[key] = "";
     }
-    var sign, newArgStr, sendDate = {};
-    var token = freeToken || ""; //随意借token
-    newArgStr = JSON.stringify(keysort(arg));
-    try {
-        sign = MessageDigest.digest("md5", newArgStr + token);
-    } catch (e) {
-    }
-    return sign;
-}
+  }
+  var sign,
+    newArgStr,
+    sendDate = {};
+  var token = freeToken || ""; //随意借token
+  newArgStr = JSON.stringify(keysort(arg));
+  try {
+    sign = MessageDigest.digest("md5", newArgStr + token);
+  } catch (e) {}
+  return sign;
+};
 
-export const objPlan = (data) => {
-    let res = ""
-    for (let d in data) {
-        res += d + '=' + data[d] + '&'
-    }
-    if (res) {
-        res = res.substr(0,res.length-1)
-    }
-    return res
-}
+export const objPlan = data => {
+  let res = "";
+  for (let d in data) {
+    res += d + "=" + data[d] + "&";
+  }
+  if (res) {
+    res = res.substr(0, res.length - 1);
+  }
+  return res;
+};
 export const setLItem = (key, value) => {
-    var curTime = new Date().getTime();
-    try {
-        localStorage.setItem(key, JSON.stringify({ data: value, time: curTime }));
-    } catch (e) {
-        console.log('没有对象')
-    }
-}
+  var curTime = new Date().getTime();
+  try {
+    localStorage.setItem(key, JSON.stringify({ data: value, time: curTime }));
+  } catch (e) {
+    console.log("没有对象");
+  }
+};
 export const getLItem = (key, exp) => {
-    try {
-        var data = localStorage.getItem(key);
-        if (!data) {
-            return false
-        }
-        var dataObj = JSON.parse(data);
-        if (new Date().getTime() - dataObj.time > exp) {
-            localStorage.removeItem(key);
-            console.log('信息已过期');
-            //alert("信息已过期")
-        } else {
-            //console.log("data="+dataObj.data);
-            //console.log(JSON.parse(dataObj.data));
-            var dataObjDatatoJson = JSON.parse(dataObj.data)
-            return dataObjDatatoJson;
-        }
-    } catch (e) {
-        return false
+  try {
+    var data = localStorage.getItem(key);
+    if (!data) {
+      return false;
     }
-
-}
+    var dataObj = JSON.parse(data);
+    if (new Date().getTime() - dataObj.time > exp) {
+      localStorage.removeItem(key);
+      console.log("信息已过期");
+      //alert("信息已过期")
+    } else {
+      //console.log("data="+dataObj.data);
+      //console.log(JSON.parse(dataObj.data));
+      var dataObjDatatoJson = JSON.parse(dataObj.data);
+      return dataObjDatatoJson;
+    }
+  } catch (e) {
+    return false;
+  }
+};
 
 /**
  * 获取和包客户端的LBS
  */
 export const getLBS = () => {
-
-  let longitude = window.goActivity.getLongitude();//查询经度信息
-  let latitude = window.goActivity.getLatitude();//查询纬度
+  let longitude = window.goActivity.getLongitude(); //查询经度信息
+  let latitude = window.goActivity.getLatitude(); //查询纬度
   let city = window.goActivity.getCity();
-//   alert(longitude)
-//   alert(latitude)
-//   alert(city)
+  //   alert(longitude)
+  //   alert(latitude)
+  //   alert(city)
 
   return {
     longitude,
     latitude,
     city
-  }
-}
-
-
+  };
+};
 
 /**
  * 根据省市信息获取城市code
- * 
+ *
  * @param pr
  *            省份名称
  * @param city

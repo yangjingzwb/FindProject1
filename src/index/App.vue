@@ -28,7 +28,7 @@ import axios from "@@/plugins/rsa/axios";
 import { connector as api } from "@@/config/env";
 // import vueLoading from 'vue-loading-template'
 
-// import { getUUID } from "@@/service/util";
+// import { asyncLoaded } from "@@/service/util";
 
 export default {
   components: {
@@ -36,8 +36,21 @@ export default {
     // vueLoading
   },
   mounted() {
-    
-    // alert(this.direction)
+    // let that = this
+    // // 百度地图成功回调用函数
+    // window.LBSBD_1=function(){
+    //   window.LBSBD(true,()=>{
+    //     that.LATITUDE(window.LATITUDE+'')
+    //     that.LONGITUDE(window.LONGITUDE+'')
+    //   })
+    // }
+    // // 异步加载百度地图
+    // asyncLoaded(
+    //   "https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR&callback=window.LBSBD_1",
+    //   () => {
+       
+    //   }
+    // );
   },
 
   beforeCreate() {},
@@ -49,15 +62,16 @@ export default {
       "alertTextSecond",
       "isShowAlert",
       "btnText",
-      "isAdmittance",
+      "isAdmittance"
       // "showLoading"
     ])
   },
   methods: {
     ...mapMutations([
       "ISSHOWALERT",
+    
       // "SHOWLOADING"
-      ]),
+    ]),
     async init() {},
     closeAlert() {
       //关闭弹窗
@@ -83,7 +97,6 @@ export default {
       //   );
       // }
       this.ISSHOWALERT(false);
-    
 
       // this.isShowAlert = false;
     }
@@ -93,11 +106,10 @@ export default {
 
 <style lang="scss">
 @import "./style/common";
-.app{
-  height: 100%; 
+.app {
+  height: 100%;
   width: 100%;
 }
-
 
 // .vux-pop-out-leave-active,
 // .vux-pop-in-leave-active {
@@ -112,46 +124,44 @@ export default {
 //   perspective: 1000;
 // }
 .vux-pop-out-enter-active,
-.vux-pop-in-enter-active,
-{
-  will-change:  transform, opacity;;
-  transition: all .1s ease;
+.vux-pop-in-enter-active {
+  will-change: transform, opacity;
+  transition: all 0.1s ease;
   // transition: all 200ms ease;
   height: 100%;
   top: 0;
   position: absolute;
   backface-visibility: visible;
-  -webkit-backface-visibility:visible;
+  -webkit-backface-visibility: visible;
   perspective: 1000;
 }
 
 .vux-pop-out-enter {
-  
   opacity: 0.5;
- transform: translate3d(-100px, 0,0);
+  transform: translate3d(-100px, 0, 0);
   // transform: translate3d(-100%, 0, 0);
 }
 
 .vux-pop-out-leave-active {
   opacity: 0.5;
-  transform: translate3d(100px, 0,0);
+  transform: translate3d(100px, 0, 0);
   // transform: translate3d(100%, 0, 0);
 }
 
 .vux-pop-in-enter {
   opacity: 0.5;
-  transform: translate3d(50px, 0,0);
+  transform: translate3d(50px, 0, 0);
   // transform: translate3d(100%, 0, 0);
 }
 
 .vux-pop-in-leave-active {
   opacity: 0.5;
-  transform: translate3d(-50px, 0,0);
+  transform: translate3d(-50px, 0, 0);
   // transform: translate3d(-100%, 0, 0);
 }
-.router-v{
+.router-v {
   width: 100%;
-  min-height:100%;
+  min-height: 100%;
   overflow: hidden;
   // position: absolute;
   // transition: all .1s cubic-bezier(.55,0,.1,1); ;
