@@ -125,7 +125,7 @@ export default {
       default: false
     },
     bounce: {
-      default: true
+      default: false
     },
     zoom: {
       default: false
@@ -379,6 +379,7 @@ export default {
   .scroll-content {
     position: relative;
     z-index: 1;
+    background: #fff;
   }
   .list-content {
     position: relative;

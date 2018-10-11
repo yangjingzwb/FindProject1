@@ -39,8 +39,6 @@ if (debug == 1) { //生产
     
 }
 
-
-
 export {
     baseUrl,
     routerMode,

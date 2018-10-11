@@ -127,6 +127,8 @@ export default {
     } else {
       this.init();
     }
+    // 隐藏进度条
+    document.getElementById("pg").style.display="none";
   },
   created() {
     //神策
