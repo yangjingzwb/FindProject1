@@ -475,7 +475,7 @@ export default {
   },
   watch:{
     latitude(curVal,oldVal){
-      if(curVal&&curVal!="" && this.shopList.length>0){
+      if(curVal&&curVal!="" && this.shopList.length<=0){
         this.init()
       }
       

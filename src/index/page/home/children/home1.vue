@@ -631,7 +631,7 @@ export default {
           mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
           //神策
@@ -778,7 +778,7 @@ export default {
   },
   watch:{
     latitude(curVal,oldVal){
-      if(curVal&&curVal!="" && this.shopList.length>0){
+      if(curVal&&curVal!="" && this.shopList.length<=0){
         this.init()
       }
       
