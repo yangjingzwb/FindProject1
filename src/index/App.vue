@@ -28,7 +28,7 @@ import axios from "@@/plugins/rsa/axios";
 import { connector as api } from "@@/config/env";
 // import vueLoading from 'vue-loading-template'
 
-// import { asyncLoaded } from "@@/service/util";
+import { asyncLoaded } from "@@/service/util";
 
 export default {
   components: {
@@ -36,23 +36,20 @@ export default {
     // vueLoading
   },
   mounted() {
-    // let that = this
-    // // 百度地图成功回调用函数
-    // window.LBSBD_1=function(){
-    //   window.LBSBD(true,()=>{
-    //     that.LATITUDE(window.LATITUDE+'')
-    //     that.LONGITUDE(window.LONGITUDE+'')
-    //   })
-    // }
-    // // 异步加载百度地图
-    // asyncLoaded(
-    //   "https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR&callback=window.LBSBD_1",
-    //   () => {
-       
-    //   }
-    // );
+    let that = this
+    // 百度地图成功回调用函数
+    window.LBSBD_1=function(){
+      window.LBSBD(true,()=>{
+        that.LATITUDE(window.LATITUDE+'')
+        that.LONGITUDE(window.LONGITUDE+'')
+      })
+    }
+    // 异步加载百度地图
+    asyncLoaded(
+      "https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR&callback=window.LBSBD_1",
+      () => {}
+    );
   },
-
   beforeCreate() {},
   created() {},
   computed: {
@@ -69,7 +66,8 @@ export default {
   methods: {
     ...mapMutations([
       "ISSHOWALERT",
-    
+      "LATITUDE",
+      "LONGITUDE"
       // "SHOWLOADING"
     ]),
     async init() {},

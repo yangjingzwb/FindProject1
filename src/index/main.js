@@ -187,20 +187,20 @@ router.beforeEach((to, from, next) => {
     })
     .catch(res => {});
 });
- // 百度地图成功回调用函数
- window.LBSBD_1=function(){
-    window.LBSBD(true,()=>{
-    store.commit("LATITUDE", window.LATITUDE+'');
-    store.commit("LONGITUDE", window.LONGITUDE+'');
-    })
-  }
-  // 异步加载百度地图
-  asyncLoaded(
-    "https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR&callback=window.LBSBD_1",
-    () => {
+//  // 百度地图成功回调用函数
+//  window.LBSBD_1=function(){
+//     window.LBSBD(true,()=>{
+//     store.commit("LATITUDE", window.LATITUDE+'');
+//     store.commit("LONGITUDE", window.LONGITUDE+'');
+//     })
+//   }
+//   // 异步加载百度地图
+//   asyncLoaded(
+//     "https://api.map.baidu.com/api?v=2.0&ak=wrkfH0yCNoWEHrXm0L9A5KdGaU8To9dR&callback=window.LBSBD_1",
+//     () => {
      
-    }
-  );
+//     }
+//   );
 
 new Vue({
   router,
