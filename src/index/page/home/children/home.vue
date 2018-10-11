@@ -475,6 +475,7 @@ export default {
     goToApply() {},
     closeAlert() {}
   },
+ 
   watch:{
     latitude(curVal,oldVal){
       if(curVal&&curVal!="" && this.shopList.length<=0){

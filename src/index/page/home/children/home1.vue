@@ -18,6 +18,7 @@
         :data = "shopList"
         :scrollbar='tabScrollbar'
         :pullDownRefresh='pullDownRefresh'
+        :refreshNow = 'refreshNow'
         :scrollY = "scrollYOther"
         :pullUpLoad= "pullUpLoad_near"
         @pullingDown="onPullingDown"
@@ -121,6 +122,7 @@ export default {
       tabLoop: false,
       tabScrollbar: false,
       showDot: true,
+      refreshNow:true,
       dots: ["附近", "推荐", "世界杯专区"], //['附近','推荐','世界杯专区','咨询'],
       // autoPlay:,
       // defaultIcon: "",
@@ -775,6 +777,11 @@ export default {
     goBack() {
       this.$router.go(-1);
     }
+  },
+  activated(){
+    console.log(2323)
+    // alert()
+    this.refreshNow = !this.refreshNow
   },
   watch:{
     latitude(curVal,oldVal){

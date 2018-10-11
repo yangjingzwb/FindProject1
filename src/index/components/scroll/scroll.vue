@@ -68,6 +68,10 @@ export default {
       type: Boolean,
       default: false
     },
+    refreshNow:{
+      type: Boolean,
+      default: true
+    },
     stopPropagation: {
       type: Boolean,
       default: false
@@ -179,7 +183,7 @@ export default {
       }
 
       let options = {
-        probeType: this.probeType,
+        // probeType: this.probeType,
         click: this.click,
         scrollY: true,//this.scrollY, //true,//this.freeScroll || this.direction === DIRECTION_V,
         scrollX: false,
@@ -337,21 +341,22 @@ export default {
         this.forceUpdate(true);
       }, this.refreshDelay);
     },
-    scrollY() {
-      console.log(this.scrollY+'---------')
-      if(this.scrollY){
-        this.scroll.enable();
-      }else{
-        this.scroll.disable()
-      }
-      
-      // this.update();
+    // scrollY() {
+    //   console.log(this.scrollY+'---------')
+    //   if(this.scrollY){
+    //     this.scroll.enable();
+    //   }else{
+    //     this.scroll.disable()
+    //   }
+    // },
+    refreshNow(){
+      console.log(2345)
+      this.refresh()
     },
     data1(){
       // this.isPullingDown = false;
       // this.pullUpTxt = '没有更多数据了'
       // this.refresh();
-      console.log(36)
       setTimeout(() => {
         this.forceUpdate(false);
       }, 300);
