@@ -52,7 +52,9 @@
           </div>
         </li>
     </ul>
-    <div @click="showAll = !showAll" class="more">
+    <div v-if="showMore = couponList.length>4 ? true : false" 
+         @click="showAll = !showAll" 
+         class="more">
       <span v-if="showAll==false" class="down">展开</span>
       <span v-else class="up">收起</span>
     </div>
@@ -82,6 +84,7 @@ export default {
       isCoupon: [],
       // alertText: '',
       showAll: false,
+      showMore: false,
       changeFoldState: false,
       isDisable: false,
       isLook: false,
@@ -107,16 +110,16 @@ export default {
   computed: {
     ...mapState(["token"]),
     dataList() {
-      if (this.showAll == false) { //当数据不需要完全显示的时候
-        var dataList = [];　　　　　//定义一个空数组
-        if (this.couponList.length > 4) {　//这里我们先显示前四个
+      if (this.showAll == false) {
+        var dataList = [];
+        if (this.couponList.length > 4) {
           for (var i = 0; i < 4; i++) {
             dataList.push(this.couponList[i])
           }
         } else {
           dataList = this.couponList
         }
-        return dataList;　//返回当前数组
+        return dataList;
       } else {
         return this.couponList
       }

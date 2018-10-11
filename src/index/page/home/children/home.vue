@@ -78,7 +78,7 @@
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
-import sa from'sa-sdk-javascript';
+import sa from "sa-sdk-javascript";
 import {
   fetchPoints,
   GetDistance,
@@ -111,18 +111,13 @@ export default {
       slider_top_click: true,
       baseImg: baseUrl.img,
       jdBanner: {},
-      goods1:[],
-      scrollbar:false
+      goods1: [],
+      scrollbar: false
     };
   },
   computed: {},
 
   mounted() {
-    // 获取优惠券
-    this.getMainCoupon()
-    this.getCoupon()
-    // 获取运营banner
-    this.getMiddle()
     try {
       fetchPoints(
         "010000000000", // 页面索引
@@ -132,7 +127,12 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
-    this.jdSKill();// 请求广告位
+    this.jdSKill(); // 请求广告位
+    // 获取优惠券
+    this.getMainCoupon();
+    this.getCoupon();
+    // 获取运营banner
+    this.getMiddle();
     if (!window.LATITUDE) {
       this.aginEnter();
     } else {
@@ -143,9 +143,9 @@ export default {
     //神策
     let startTime = new Date();
     let endTime = new Date() ;
-    sa.track('loadDelay',{
-      currentBusinessLine:'发现频道',
-      currentActivity: '发现页面',
+    sa.track("loadDelay",{
+      currentBusinessLine: "发现频道",
+      currentActivity: "发现页面",
       currentURL: window.location.href,
       delayTime: endTime - startTime,
       offsetTime: 0,
@@ -164,9 +164,9 @@ export default {
 
   computed: {
     ...mapState([
+      "slider2",
       "slider",
       "slider1",
-      "slider2",
       "products",
       "token",
       "latitude",
@@ -274,10 +274,10 @@ export default {
       try {
         if (channel == "jd") {
           // 神策
-          sa.track('bannerClick', {
-            contentName: '异形banner活动',
+          sa.track("bannerClick", {
+            contentName: "异形banner活动",
             bannerNumber: String(obj.marketingNumber),
-            topCategory: '发现',
+            topCategory: "发现",
           });
           fetchPoints(
             "010000000000",
@@ -288,10 +288,10 @@ export default {
           );
         } else if (channel == "top") {
           // 神策
-          sa.track('bannerClick', {
+          sa.track("bannerClick", {
             contentName: obj.marketingTitle,
             bannerNumber: String(obj.marketingNumber),
-            topCategory: '发现',
+            topCategory: "发现",
           });
           // banner图埋点
           fetchPoints(
@@ -406,14 +406,14 @@ export default {
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 2,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc
         })
         .then(res => {
           //神策
           let endTime = new Date() ;
-          sa.track('loadDelay',{
-            currentBusinessLine:'发现频道',
-            currentActivity: '调用发现页附近商户getShopInfo接口',
+          sa.track("loadDelay",{
+            currentBusinessLine: "发现频道",
+            currentActivity: "调用发现页附近商户getShopInfo接口",
             currentURL: window.location.href,
             delayTime: endTime - startTime,
             offsetTime: 0,
@@ -457,27 +457,27 @@ export default {
     },
     // 获取优惠券
     getMainCoupon() {
-      axios.post('queryCouponMainStation',{
+      axios.post("queryCouponMainStation",{
         "session": this.token.session.replace(/\+/g, "%2B")   // 单点登录返回session
       }).then(res => {
         if(res.code === "0") {
-          let data = res.data
-          this.couponMainList = data
-          console.log(88888,this.couponMainList)
+          let data = res.data;
+          this.couponMainList = data;
+          // console.log(88888,this.couponMainList);
         }
       })
     },
     getCoupon() {
       axios.post('queryCoupon',{
-        "session": this.token.session.replace(/\+/g, "%2B") 
+        "session": this.token.session.replace(/\+/g, "%2B")
       }).then(res => {
           if(res.code === "0") {
             let data = res.data.map((item)=>{
-              item.show = true
-              return item
+              item.show = true;
+              return item;
             })
-            this.couponList = data
-            console.log(this.couponList)
+            this.couponList = data;
+            console.log(this.couponList);
           }
         });
     },
@@ -486,9 +486,9 @@ export default {
       axios.get("market/queryMerchantInfo")
         .then(res => {
           if(res.code === "0") {
-            const data = res.data
-            this.goods1 = data
-            // console.log(this.goods1)
+            const data = res.data;
+            this.goods1 = data;
+            // console.log(this.goods1);
             // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
             // this.banner = res.data[0];
           }
@@ -554,7 +554,7 @@ div.container::-webkit-scrollbar {
 .home {
   width: 100%;
   height: 100%;
-  // overflow: hidden;
+  overflow: hidden;
 }
 
 .content {

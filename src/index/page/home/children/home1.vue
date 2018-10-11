@@ -86,7 +86,7 @@ import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 // import Scroll from '@@/components/scroll/scroll.vue'
 import axios from "@@/plugins/rsa/axios";
-import sa from'sa-sdk-javascript';
+import sa from "sa-sdk-javascript";
 import {
   fetchPoints,
   GetDistance,
@@ -100,7 +100,7 @@ import Scroll from "@@/components/scroll/scroll.vue";
 
 import Near from "./near.vue";
 import Recommended from "./recommended.vue";
-// import Consulting from "./consulting.vue" // 咨询
+// import Consulting from "./consulting.vue"; // 咨询
 import GoodThing from "./goodThing.vue"; // 好物
 
 // console.log(axios);
@@ -190,9 +190,9 @@ export default {
     //神策
     let startTime = new Date();
     let endTime = new Date() ;
-    sa.track('loadDelay',{
-      currentBusinessLine:'发现频道',
-      currentActivity: '更多页面',
+    sa.track("loadDelay",{
+      currentBusinessLine: "发现频道",
+      currentActivity: "更多页面",
       currentURL: window.location.href,
       delayTime: endTime - startTime,
       offsetTime: 0,
@@ -326,9 +326,9 @@ export default {
       // 跳转到下一个页面
       this.$router.push("/mine");
       // 神策
-      sa.track('clickSearch', {
-        operationType: '点击搜索框',
-        currentPage: '更多',
+      sa.track("clickSearch", {
+        operationType: "点击搜索框",
+        currentPage: "更多",
       });
     },
     touchStart(e) {
@@ -364,10 +364,10 @@ export default {
       try {
         if (channel == "top") {
           // 神策
-          sa.track('bannerClick', {
+          sa.track("bannerClick", {
             contentName: obj.marketingTitle,
             bannerNumber: String(obj.marketingNumber),
-            topCategory: '更多',
+            topCategory: "更多",
           });
           fetchPoints(
             "020000000000",
@@ -378,10 +378,10 @@ export default {
           );
         } else if (channel == "classify") {
           // 神策
-          sa.track('buttonClick', {
+          sa.track("buttonClick", {
             buttonName: obj.marketingTitle,
-            topCategory: '发现',
-            subCategory:'发现：更多优惠'
+            topCategory: "发现",
+            subCategory: "发现：更多优惠"
           });
           fetchPoints(
             "020000000000",

@@ -4,14 +4,12 @@ import App from '@@/App'
 // const tab = r => require.ensure([], () => r(require('../page/home/tab')), 'tab')
 // 首页
 const home = r => require.ensure([], () => r(require('../page/home/children/home')), 'home')
-
 const home1 = r => require.ensure([], () => r(require('../page/home/children/home1')), 'home1')
 // 贷款超市
 // const shop = r => require.ensure([], () => r(require('../page/home/children/shop')), 'shop')
 // 我的
 const mine = r => require.ensure([], () => r(require('../page/home/children/mine')), 'mine')
 const couponShop = r => require.ensure([], () => r(require('../page/home/children/couponShop')), 'couponShop')
-
 
 export default [{
     path: '/',
