@@ -2,7 +2,7 @@
   <div class="home">
     <div class="header">发现</div>
     <scroll
-    :scrollbar="scrollbar"
+      :scrollbar="scrollbar"
     >
     <div class="content">
       <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
@@ -134,16 +134,18 @@ export default {
     // 获取运营banner
     this.getMiddle();
     if (!window.LATITUDE) {
-      this.aginEnter();
+      // this.aginEnter();
     } else {
       this.init();
     }
+    // 隐藏进度条
+    document.getElementById("pg").style.display="none";
   },
   created() {
     //神策
     let startTime = new Date();
     let endTime = new Date() ;
-    sa.track("loadDelay",{
+    sa.track("loadDelay", {
       currentBusinessLine: "发现频道",
       currentActivity: "发现页面",
       currentURL: window.location.href,
@@ -151,7 +153,7 @@ export default {
       offsetTime: 0,
       endTime: formatDate_1(endTime.getTime()),
       startTime: formatDate_1(startTime.getTime())
-    })
+    });
   },
   components: {
     Near1,
@@ -234,26 +236,41 @@ export default {
     //   });
     // },
     aginEnter() {
+      // alert(33)
       this.SHOWLOADING(true);
       let that = this;
       if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
         this.init();
       } else {
-        window.LBS_GD.call(this,(rs)=>{
-          if (rs.point) {
-              let addComp = rs.addressComponents;
-              window.LATITUDE = rs.point.lat;
-              window.LONGITUDE = rs.point.lng;
-              window.CITYNAME = addComp.city;
-              that.cityName1 = addComp.city;
+        try {
+          new BMap.Geolocation().getCurrentPosition(function(r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+              // 判断状态
+              let pt = r.point;
+              console.log(r);
+
+              new BMap.Geocoder().getLocation(pt, function(rs) {
+                // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                if (rs.point) {
+                  let addComp = rs.addressComponents;
+                  window.LATITUDE = rs.point.lat;
+                  window.LONGITUDE = rs.point.lng;
+                  window.CITYNAME = addComp.city;
+                  that.cityName1 = addComp.city;
+                } else {
+                  window.LATITUDE = r.point.lat;
+                  window.LONGITUDE = r.point.lng;
+                  window.CITYNAME = r.address.city;
+                  that.cityName1 = r.address.city;
+                }
+                that.init();
+                // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+              });
             } else {
-              window.LATITUDE = r.point.lat;
-              window.LONGITUDE = r.point.lng;
-              window.CITYNAME = r.address.city;
-              that.cityName1 = r.address.city;
+              this.SHOWLOADING(false);
             }
-            that.init();
-        })
+          });
+        } catch (e) {}
       }
     },
     intervalCity() {
@@ -394,6 +411,9 @@ export default {
         this.SHOWLOADING(false);
         return;
       }
+      setTimeout(() => {
+        this.SHOWLOADING(false);
+      }, 2000);
       let startTime = new Date();
       axios
         .post("getShopInfo", {
@@ -419,7 +439,7 @@ export default {
             offsetTime: 0,
             endTime: formatDate_1(endTime.getTime()),
             startTime: formatDate_1(startTime.getTime())
-          })
+          });
 
           if (res.data && res.data.length > 0) {
             this.isError = true;
@@ -483,22 +503,30 @@ export default {
     },
     // 获取运营banner位
     getMiddle() {
-      axios.get("market/queryMerchantInfo")
-        .then(res => {
-          if(res.code === "0") {
-            const data = res.data;
-            this.goods1 = data;
-            // console.log(this.goods1);
-            // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
-            // this.banner = res.data[0];
-          }
-        });
+      axios.get("market/queryMerchantInfo").then(res => {
+        if (res.code && res.data) {
+          const data = res.data;
+          this.goods1 = data;
+          // console.log(this.goods1)
+          // this.banner = res.data.length >= 1 ? res.data[0] : res.data[0];
+          // this.banner = res.data[0];
+        }
+      });
     },
     // initScroll() {},
     // _calcHeight() {
     // },
     goToApply() {},
     closeAlert() {}
+  },
+ 
+  watch:{
+    latitude(curVal,oldVal){
+      if(curVal&&curVal!="" && this.shopList.length<=0){
+        this.init()
+      }
+      
+    }
   }
 };
 </script>

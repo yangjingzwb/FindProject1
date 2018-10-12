@@ -18,6 +18,7 @@
         :data = "shopList"
         :scrollbar='tabScrollbar'
         :pullDownRefresh='pullDownRefresh'
+        :refreshNow = 'refreshNow'
         :scrollY = "scrollYOther"
         :pullUpLoad= "pullUpLoad_near"
         @pullingDown="onPullingDown"
@@ -127,6 +128,7 @@ export default {
       tabLoop: false,
       tabScrollbar: false,
       showDot: true,
+      refreshNow:true,
       dots: ["附近", "推荐", "世界杯专区"], //['附近','推荐','世界杯专区','咨询'],
       // autoPlay:,
       // defaultIcon: "",
@@ -181,7 +183,7 @@ export default {
       );
     } catch (e) {}
     if (!window.LATITUDE) {
-      this.aginEnter();
+      // this.aginEnter();
     } else {
       this.init();
     }
@@ -277,33 +279,35 @@ export default {
       if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
         this.init();
       } else {
-        new BMap.Geolocation().getCurrentPosition(function(r) {
-          if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            // 判断状态
-            let pt = r.point;
-            console.log(r);
+        try {
+          new BMap.Geolocation().getCurrentPosition(function(r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+              // 判断状态
+              let pt = r.point;
+              console.log(r);
 
-            new BMap.Geocoder().getLocation(pt, function(rs) {
-              // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              if (rs.point) {
-                let addComp = rs.addressComponents;
-                window.LATITUDE = rs.point.lat;
-                window.LONGITUDE = rs.point.lng;
-                window.CITYNAME = addComp.city;
-                that.cityName1 = addComp.city;
-              } else {
-                window.LATITUDE = r.point.lat;
-                window.LONGITUDE = r.point.lng;
-                window.CITYNAME = r.address.city;
-                that.cityName1 = r.address.city;
-              }
-              that.init();
-              // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
-            });
-          } else {
-            this.SHOWLOADING(true);
-          }
-        });
+              new BMap.Geocoder().getLocation(pt, function(rs) {
+                // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                if (rs.point) {
+                  let addComp = rs.addressComponents;
+                  window.LATITUDE = rs.point.lat;
+                  window.LONGITUDE = rs.point.lng;
+                  window.CITYNAME = addComp.city;
+                  that.cityName1 = addComp.city;
+                } else {
+                  window.LATITUDE = r.point.lat;
+                  window.LONGITUDE = r.point.lng;
+                  window.CITYNAME = r.address.city;
+                  that.cityName1 = r.address.city;
+                }
+                that.init();
+                // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+              });
+            } else {
+              this.SHOWLOADING(true);
+            }
+          });
+        } catch (e) {}
       }
     },
     intervalCity() {
@@ -328,7 +332,7 @@ export default {
       // 神策
       sa.track("clickSearch", {
         operationType: "点击搜索框",
-        currentPage: "更多",
+        currentPage: "更多"
       });
     },
     touchStart(e) {
@@ -367,7 +371,7 @@ export default {
           sa.track("bannerClick", {
             contentName: obj.marketingTitle,
             bannerNumber: String(obj.marketingNumber),
-            topCategory: "更多",
+            topCategory: "更多"
           });
           fetchPoints(
             "020000000000",
@@ -508,7 +512,7 @@ export default {
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
           // this.shopList = res.STORES_REC;
@@ -634,7 +638,7 @@ export default {
           mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
           if (res.data && res.data.length > 0) {
@@ -763,6 +767,19 @@ export default {
     closeAlert() {},
     goBack() {
       this.$router.go(-1);
+    }
+  },
+  activated(){
+    console.log(2323)
+    // alert()
+    this.refreshNow = !this.refreshNow
+  },
+  watch:{
+    latitude(curVal,oldVal){
+      if(curVal&&curVal!="" && this.shopList.length<=0){
+        this.init()
+      }
+      
     }
   }
   // props:['activeIcon']
