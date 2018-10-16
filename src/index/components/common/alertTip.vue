@@ -1,12 +1,10 @@
  <template>
-    <div class="alet_container" :showAlert="showAlert">
-	    <section class="tip_container"></section>
+    <div class="alet_container" @touchmove.prevent :showAlert="showAlert">
 	    <section class="tip_text_container">
             <div class='tip_text_box'>
                 <p :class="[isAlert]"></p>
                 <p class="tip_text">{{alertText}}</p>
             </div>
-            <!-- <div class="confrim" @click="closeTip">确认</div> -->
         </section>
     </div>
 </template>
@@ -30,11 +28,19 @@
             }
         },
         methods: {
-            closeTip(){
-                this.$emit('closeTip')
+            stop(){
+                let mo=function(e){e.preventDefault()};
+                document.body.style.overflow='hidden';
+                document.addEventListener("touchmove", mo, false);//禁止页面滑动
+            },
+            move(){
+                let mo=function(e){e.preventDefault()};
+                document.body.style.overflow='';//出现滚动条
+                document.removeEventListener("touchmove", mo, false);
             },
             init() {
-                this.isAlert = this.alertText === "领取失败" ? "alertIcon" : "tipIcon"
+                this.isAlert = this.alertText === "领取失败" ? "alertIcon" : "tipIcon";
+                this.stop();
             }
         }
     }
@@ -54,8 +60,10 @@
         left: 0;
         right: 0;
         bottom: 0;
+        width:100%;
         z-index: 200;
-        // background-color: rgba(0,0,0,0.3);
+        background-color: rgba(0,0,0,0.3);
+        overflow: hidden;
     }
     .tip_text_container{
         position: absolute;
@@ -74,6 +82,7 @@
         opacity: 0.8;
         border: 1px;
         //padding-top: .6rem;
+        overflow:auto;
         display: flex;
         //justify-content: center;
         //align-items: center;
