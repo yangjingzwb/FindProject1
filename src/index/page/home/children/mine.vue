@@ -224,7 +224,7 @@ export default {
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
           // this.shopList = res.STORES_REC;
@@ -328,7 +328,7 @@ export default {
           pagNum: this.PAGNUM, // 没页条
           // TTXN_CNL: "ROYTEL", // 固定值
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type:window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
           sa.track('applySearch', {

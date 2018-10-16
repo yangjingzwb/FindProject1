@@ -52,17 +52,18 @@
           </div>
         </li>
     </ul>
+    <alert-tip 
+      v-if="showAlert" 
+      :alertText="alertText"
+      @closeTip="showAlert = false">
+    </alert-tip>
     <div v-if="showMore = couponList.length>4 ? true : false" 
          @click="showAll = !showAll" 
          class="more">
       <span v-if="showAll==false" class="down">展开</span>
       <span v-else class="up">收起</span>
     </div>
-    <alert-tip 
-      v-if="showAlert" 
-      :alertText="alertText"
-      @closeTip="showAlert = false">
-    </alert-tip>
+    
     <!-- <ul v-if = "!couponList || couponList.length<=0 ">
       <li class="aa">加载中···</li>
     </ul> -->
@@ -137,10 +138,10 @@ export default {
     // 领取优惠券
     receiveCoupon(data) {
       this.isDisable = true;
-      console.log(data);
+      // console.log(data);
       let param_ = {
-        // mbl_no: this.token.productNo, //用户手机号
-        mbl_no  : "18390957487",                           // 用户手机号
+        mbl_no: this.token.productNo, //用户手机号
+        // mbl_no  : "18390957487",
         merc_id: data.mercId, // 商户编号
         mkt_id: data.mktId, // 活动编号
         prd_id: data.prdId, // 券别编号

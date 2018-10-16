@@ -90,7 +90,7 @@ import axios from "@@/plugins/rsa/axios";
 import sa from "sa-sdk-javascript";
 import {
   fetchPoints,
-  GetDistance,
+  // GetDistance,
   setLItem,
   getLItem,
   formatDate_1
@@ -316,10 +316,10 @@ export default {
     defaultIconF(i) {
       this.shopList[i].PIC_URL_1 = "/static/img/error.png";
     },
-    GetDistance(a, b, c, d) {
-      // alert(GetDistance(a, b, c, d))
-      return GetDistance(a, b, c, d);
-    },
+    // GetDistance(a, b, c, d) {
+    //   // alert(GetDistance(a, b, c, d))
+    //   return GetDistance(a, b, c, d);
+    // },
     detail(url) {
       window.location = url;
     },

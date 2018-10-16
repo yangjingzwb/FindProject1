@@ -81,7 +81,7 @@ import axios from "@@/plugins/rsa/axios";
 import sa from "sa-sdk-javascript";
 import {
   fetchPoints,
-  GetDistance,
+  // GetDistance,
   setLItem,
   getLItem,
   // getCode,
@@ -279,9 +279,9 @@ export default {
     defaultIcon(i) {
       this.shopList[i].PIC_URL_1 = "/static/img/error.png";
     },
-    GetDistance(a, b, c, d) {
-      return GetDistance(a, b, c, d);
-    },
+    // GetDistance(a, b, c, d) {
+    //   return GetDistance(a, b, c, d);
+    // },
     detail(url) {
       window.location = url;
     },
@@ -426,7 +426,7 @@ export default {
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 2,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc
+          map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
           //神策
@@ -497,7 +497,7 @@ export default {
               return item;
             })
             this.couponList = data;
-            console.log(this.couponList);
+            // console.log(this.couponList);
           }
         });
     },

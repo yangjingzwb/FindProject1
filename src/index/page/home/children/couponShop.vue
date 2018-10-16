@@ -21,7 +21,7 @@
             <div class="c1">{{item.STORES_NM}}</div>
             <div class="c2">
                 <span class="l">{{item.BUS_ADDR}}</span>
-                <span class="r">{{GetDistance(latitude,longitude,item.LATITUDE,item.LONGITUDE)}}km</span>
+                <span class="r">{{item.distance}}km</span>
             </div>
             <div class="c3">
                 <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
@@ -39,8 +39,8 @@
 
 <script>
 import {
-  fetchPoints,
-  GetDistance
+  fetchPoints
+  // GetDistance
   //   setLItem,
   //   getLItem,
   //   getCode
@@ -100,7 +100,7 @@ export default {
   methods: {
     goShopDetail() {
       let params = this.$route.query.params;
-      console.log(33333,params);
+      // console.log(33333,params);
       axios
         .post("getShopInfo", {
           longitude: window.LONGITUDE, // 经度
@@ -111,21 +111,21 @@ export default {
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc,
+          map_type: window.isUseBaiDuLoc ? 0 : 1,
           merc_id: params // 商户编号
         })
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.code === "0") {
             this.shopLists = this.filterObj(res.data);
-            console.log(this.shopLists);
+            // console.log(this.shopLists);
           }
         });
     },
-    GetDistance(a, b, c, d) {
-      // alert(GetDistance(a, b, c, d))
-      return GetDistance(a, b, c, d);
-    },
+    // GetDistance(a, b, c, d) {
+    //   // alert(GetDistance(a, b, c, d))
+    //   return GetDistance(a, b, c, d);
+    // },
 
     goDetail(event, obj, flag) {
       fetchPoints(
