@@ -41,14 +41,15 @@ export const GetDistance = (lat1, lng1, lat2, lng2) => {
   // }
   return s + "";
 };
-export const formatDate_1 = (time, format = "YY-MM-DD hh:mm:ss") => {
+export const formatDate_1 = (time, format = "YY-MM-DD hh:mm:ss.SSS") => {
   var date = new Date(time);
   var year = date.getFullYear(),
     month = date.getMonth() + 1, //月份是从0开始的
     day = date.getDate(),
     hour = date.getHours(),
     min = date.getMinutes(),
-    sec = date.getSeconds();
+    sec = date.getSeconds(),
+    Msec = date.getMilliseconds();
   var preArr = Array.apply(null, Array(10)).map(function(elem, index) {
     return "0" + index;
   }); ////开个长度为10的数组 格式为 00 01 02 03
@@ -59,7 +60,8 @@ export const formatDate_1 = (time, format = "YY-MM-DD hh:mm:ss") => {
     .replace(/DD/g, preArr[day] || day)
     .replace(/hh/g, preArr[hour] || hour)
     .replace(/mm/g, preArr[min] || min)
-    .replace(/ss/g, preArr[sec] || sec);
+    .replace(/ss/g, preArr[sec] || sec)
+    .replace(/SSS/g, preArr[Msec] || Msec);
 
   return newTime;
 };
