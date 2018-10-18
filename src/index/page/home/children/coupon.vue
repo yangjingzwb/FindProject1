@@ -12,7 +12,7 @@
         :data="couponMainList"
       >
         <div class="sw-box">
-          <div class="sw-option" v-for="(item,index) in couponMainList" :key="'li'+index" @click="goDetail($event,item,7)">
+          <div class="sw-option" v-for="(item,index) in couponMainList" @click="goDetail($event,item,7)">
               <img :class="{'p2':couponMainList.length>2}" :src="item.couponIcon" />
           </div>
           <div v-if="couponMainList.length>2" class="sw-option sw-option-end">已经到底啦</div>
@@ -202,9 +202,9 @@ export default {
     goDetail(event, obj, flag) {
       fetchPoints(
         "010000000000", // 页面索引
-        "010000000000K06", // 事件标记
+        "010000000000K03", // 事件标记
         this.token.productNo,
-        // "优惠券-" + obj.MKT_NM, // 事件名称
+        "优惠券主站-" + obj.couponName, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
       this.$emit("goDetail", event, obj, flag);

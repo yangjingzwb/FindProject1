@@ -2,22 +2,26 @@
   <div class="home">
     <div class="header">发现</div>
     <scroll
+      :data1 ="data1"
+      :data ="jdList"
       :scrollbar="scrollbar"
+      :pullUpLoad= "pullUpLoad_near"
+      @pullingUp="onPullingUp"
     >
     <div class="content">
       <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
         <div class="scroll slide-content">
           <div>
-              <div class="slider-wrapper">
-                  <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
-                      <div v-for="item in slider2">
-                        <!-- :key="item.marketingId -->
-                          <a @click="goDetail($event,item,11,'top')" >
-                              <img :src="item.marketingIcon">
-                          </a>
-                      </div>
-                  </slider>
-              </div>
+            <div class="slider-wrapper">
+              <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
+                  <div v-for="item in slider2">
+                    <!-- :key="item.marketingId -->
+                      <a @click="goDetail($event,item,11,'top')" >
+                        <img :src="item.marketingIcon">
+                      </a>
+                  </div>
+              </slider>
+            </div>
           </div>
         </div>
       </section>
@@ -48,27 +52,18 @@
           @goDetail="goDetail"
           :middle = "goods1"
         ></goods1>
-        <!-- 卷皮专题营销位 -->
-        <!--   <goods4
-          @goDetail="goDetail"
-        ></goods4> -->
-        <!-- 唯品会专题营销位 -->
-        <!-- <goods6
-          @goDetail="goDetail"
-          :middle = "banner1"
-        ></goods6> -->
-        <!-- 好护士专题营销位 -->
-        <!-- <goods5
-          @goDetail="goDetail"
-          :middle = "banner1"
-        ></goods5> -->
         <!-- 为你推荐 -->
         <goods2
           @goDetail="goDetail"
         ></goods2>
-        
+        <!-- 京东资讯 -->
+        <goods3
+          :jdList="jdList"
+          @goDetail="goDetail"
+        ></goods3>
+
       </section>
-      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
+      <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
     </div>
     </scroll>
   </div>
@@ -92,6 +87,7 @@ import Near1 from "./near1.vue";
 import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
+import Goods3 from "./goods3.vue";
 import Recommended from "./recommended.vue";
 import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -99,19 +95,29 @@ import Scroll from "@@/components/scroll/scroll.vue";
 export default {
   data() {
     return {
+      pullUpLoad: false,
+      pullUpLoad_near: true,
+      data1: false,
+      flag: false,
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       // defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       couponMainList: [],
       couponList: [],
       shopList: [],
-      CURRENTPAGE: 0, // 页码
+      jdList: [],
+      jdTotal: 0,
+      isLoad: true,
+      CURRENTPAGE: 0, // 商户页码
       PAGNUM: 2,
       cityName1: window.CITYNAME || "定位中",
       slider_top_click: true,
       baseImg: baseUrl.img,
       jdBanner: {},
       goods1: [],
+      PAGENUM: 0, // jd页码
+      PAGESIZE: 4, // jd页码数量
+      jdFlag: false,
       scrollbar: false
     };
   },
@@ -133,6 +139,7 @@ export default {
     this.getCoupon();
     // 获取运营banner
     this.getMiddle();
+    this.getJD();
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -161,6 +168,7 @@ export default {
     Slider,
     Goods1,
     Goods2,
+    Goods3,
     Scroll
   },
 
@@ -206,6 +214,88 @@ export default {
     goToPage(index) {
       this.sliderIndex = index;
     },
+    onPullingUp() {
+      this.jdloadMore();
+    },
+    jdloadMore() {
+      if (this.jdFlag) {
+        return;
+      }
+      this.PAGENUM += 1;
+      // console.log("*************", this.CURRENTPAGE);
+      let params_ = {
+        pageNum: this.PAGENUM,
+        pageSize: this.PAGESIZE || 4,
+        session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      };
+      axios.post("queryPageJdInformation", params_).then(res => {
+          this.jdList.push.apply(this.jdList, this.dealData(res.data));
+          // console.log(this.jdList);
+          if (res.data.length < this.PAGESIZE) {
+            this.jdFlag = true;
+            this.data1 = true;
+            console.log("xxxxxxxxxx",this.jdFlag);
+            // 数组没有更多了
+          } else {
+            this.jdFlag = false;
+            this.data1 = false;
+            // console.log("yyyyyyyyyy",this.jdFlag);
+          }
+        }); 
+    },
+    dealData(data) {
+      let res = [];
+      let obj = {};
+      for (let i = 0; i < data.length; i++) {
+        obj = data[i];
+        obj.imageUrls = obj.imageUrls.replace(/,$/, "").split(",");
+        res.push(obj);
+      }
+      // console.log(res);
+      return res;
+    },
+    getJD(flag) {
+      this.PAGENUM = 1;
+      let params_ = {
+        pageNum: this.PAGENUM,
+        pageSize: this.PAGESIZE || 4,
+        session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      };
+      // 京东
+      axios
+        .post("queryPageJdInformation", params_)
+        .then(res => {
+          if (res.data && res.data.length > 0) {
+            this.isLoad = true;
+            this.jdList = this.dealData(res.data);
+          } else {
+            this.isLoad = true;
+            this.jdTotal++;
+            if (this.jdTotal <= 5) {
+              this.getJD();
+            } else {
+              this.jdList = [];
+              this.isLoad = false;
+              if (flag) {
+                this.initScroll();
+              } else {
+                this.initScroll();
+              }
+            }
+            return;
+          }
+          if (res.data.length < this.PAGESIZE) {
+            this.jdFlag = true;
+            this.data1 = true;
+            //没有更多了
+          } else {
+            this.jdFlag = false;
+            this.data1 = false;
+          }
+
+        });
+    },
+    
     // LBS_BD(){
     //   let that = this
     //   // 百度定位
@@ -285,7 +375,6 @@ export default {
     detail(url) {
       window.location = url;
     },
-
     goDetail(event, obj, flag, channel = "default") {
       //埋点 parent_title, sub_title,phone,remark, session
       try {

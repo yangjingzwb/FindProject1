@@ -1,49 +1,42 @@
 <template>
     <div class="goods-3">
-              <div class="nullHeight"></div>
-               <div class="title">
-                <div class="t-text">资讯</div>
-              </div>
-              <ul class="u1">
-                <li @click="goDetail($event,item,3)" v-for="item in data" :key="item.id">
-                  <ul v-if="item.imageUrls.length == 1" class="u2">
-                    <li class="icon">
-                      <img :src="item.imageUrls[0]">
-                    </li>
-                    <li class="text">
-                         {{item.title}}
-                    </li>
-                  </ul>
-                  <ul v-else class="u2">
-                    <li class="icon">
-                      <ul>
-                        <li class="left">
-                          <img :src="item.imageUrls[0]">
-                        </li>
-                        <li class="right">
-                          <img :src="item.imageUrls[1]">
-                          <img class="i2" :src="item.imageUrls[2]">
-                        </li>
-                      </ul>
-                      
-                    </li>
-                    <li class="text">
-                        {{item.title}}
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+      <div class="nullHeight"></div>
+      <div class="title">
+        <div class="t-text">资讯</div>
+        <div class="hr-1"></div>
+      </div>
+
+     <div class="goods">
+        <ul class="u1">
+          <li>
+            <ul class="u2" v-for="(item, index) of jdList" :key="'ul'+index">
+              <div class="hr-2"></div>
+              <li class="text">
+                {{item.title}}
+              </li>
+              <li class="icon" @click="goDetail($event,item,3)">
+                <img :src="item.imageUrls[0]">
+                <img :src="item.imageUrls[1]">
+                <img :src="item.imageUrls[2]">
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- <ul v-if = "!jdList || jdList.length<=0 ">
+          <li @click="aginEnter()" class="aa">加载中...</li>
+        </ul> -->
+      </div>
+    </div>
 </template>
 
 <script>
-import { fetchPoints, GetDistance, setMd5 } from "@@/service/util";
+import { fetchPoints } from "@@/service/util";
 import { mapState } from "vuex";
-import axios from "@@/plugins/rsa/axios";
+// import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
-      data: []
+      // jdList: [],
     };
   },
   computed: {
@@ -51,37 +44,34 @@ export default {
   },
 
   mounted() {
-    this.init();
+    // this.init();
   },
   props: {
-    middle: {
+    jdList: {
       type: Array,
       default() {
-        return [{},{},{}]
+        return [];
       }
     }
   },
   created() {},
 
-  components: {},
+  components: {
+  },
 
   methods: {
     init() {
       let params_ = {
-        contentType: "GOODS",
-        startIndex: 0,
-        endIndex: 10
+        pageNum: 1,
+        pageSize: 4,
+        session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       };
       // 京东
       axios
-        .post("http://yys-open.jd.com/content/getContent", params_, {
-          headers: {
-            "j-auth": setMd5(params_),
-            "Content-Type": "application/json;encoding=utf-8"
-          }
-        })
+        .post("queryPageJdInformation", params_)
         .then(res => {
-          this.data = this.dealData(res.result);
+          this.jdList = this.dealData(res.data);
+          // console.log(this.jdList);
         });
     },
     // 处理数据
@@ -93,19 +83,17 @@ export default {
         obj.imageUrls = obj.imageUrls.replace(/,$/, "").split(",");
         res.push(obj);
       }
-      console.log("99998888");
-      console.log(res);
+      // console.log(res);
       return res;
     },
     goDetail(event, obj, flag) {
       fetchPoints(
         "010000000000", // 页面索引
-        "010000000000K10", //事件标记
+        "010000000000K09", //事件标记
         this.token.productNo,
         "京东咨询-" + obj.title, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
-
       this.$emit("goDetail", event, obj, flag);
     }
   }
@@ -114,62 +102,95 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-
+.hr-1 {
+  display: block;
+  position: absolute;
+  height: 0.0625rem;
+  float: left;
+  width: 100%;
+  bottom: 0;
+  background-color: #e6e6e6;
+  -webkit-transform-origin: 0, 0;
+  transform-origin: 0, 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.hr-2 {
+  height: 0.0625rem;
+  width: 90%;
+  margin: 0 auto;
+  background: #f6f7f8;
+}
 .goods-3 {
   clear: both;
   .title {
     height: 3.0625rem;
+    position: relative;
     line-height: 3.0625rem;
     text-align: center;
-    background-image: url("/static/img/2-5.png");
-    background-repeat: no-repeat;
-    background-position: 100%;
-    background-size: 100% auto;
-    margin: auto 1rem;
+
   }
   .t-text {
+    font-size: 0.9375rem;
     width: 5rem;
     margin: 0 auto;
     background-color: #fff;
   }
-  .icon {
-    height: 12.5rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-  .left {
-    width: 70%;
-    float: left;
+  .u1 {
+    padding: 0 !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0.6875rem;
+    .u2 {
+      position: relative;
+    }
+    li {
+        width: 100%;
+    }
+    li.icon {
+      max-height: 6.75rem;
+      height: 6.75rem;
+      display: flex;
+      margin-bottom: 1rem;
+    }
     img {
-      height: 12.5rem;
-      padding-right: 0;
+      flex: 3;
+      display: block;
+      margin-right: 0.25rem;
+      max-width: 6.75rem;
+      max-height: 6.75rem;
+      position: relative;
+      top: 50%;
+      left: 20%;
+      transform: translate(-50%, -50%);
+      // border: 1px solid #D8D8D8;
+    }
+    .text {
+      width: 80%;
+      color: #13252e;
+      font-size: 0.9375rem;
+      line-height: 0.9375rem;
+      font-family: PingFangSC-Regular;
+      padding-left: 0.9375rem;
+      margin-top: 1rem;
+      margin-bottom: 0.625rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
-  .right {
-    width: 30%;
-    float: right;
-    img {
-      height: 6.1875rem;
-      padding-left: 0.125rem;
-    }
-    img.i2 {
-      margin-top: 0.125rem;
-    }
-  }
-  img {
-    display: -webkit-box;
-    width: 100%;
-    height: 12.5rem;
-    border-radius: 0.3125rem;
-    box-sizing: border-box;
-  }
-  .text {
-    color: #13252e;
-    font-size: 0.9375rem;
-    font-family: PingFangSC-Regular;
-    padding-left: 0.75rem;
-    margin-top: 0.3125rem;
-    margin-bottom: 0.9375rem;
+    .aa {
+      position: relative;
+      height: 5rem;
+      padding: 0.3125rem 0.625rem;
+      top: 0.75rem;
+      background: #fff;
+      z-index: 10;
+      color: #444444;
+      font-size: 0.75rem;
+      text-align: center;
   }
 }
 </style>

@@ -46,14 +46,14 @@
             <ul>
               <li v-for="item in slider1"  @click="goDetail($event,item, undefined, 'classify')">
                 <!-- :key="item.id" -->
-                <img :src="item.marketingIcon" :onerror='defaultIcon'  class="icon" >
+                <img :src="item.marketingIcon" :onerror='defaultIcon' class="icon">
                 <span class="text">{{item.marketingTitle}}</span>
               </li>
             </ul>
           </section>
 
           <div class="nullHeight"></div>
-          <section class="s_5 s" >
+          <section class="s_5 s">
               <near
                 :data1 = "data1"
                 :latitude = 'latitude'
@@ -501,6 +501,7 @@ export default {
         return;
       }
       this.CURRENTPAGE += 1;
+      // console.log("*************", this.CURRENTPAGE);
       axios
         .post("getShopInfo", {
           longitude: window.LONGITUDE, // 经度
