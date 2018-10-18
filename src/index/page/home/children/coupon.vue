@@ -208,6 +208,7 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
       this.$emit("goDetail", event, obj, flag);
+      // cosole.log(event.target);
     },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {

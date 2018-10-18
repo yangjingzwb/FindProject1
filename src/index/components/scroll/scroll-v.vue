@@ -51,14 +51,14 @@ export default {
       console.log(size);
       for (let i = 0; i < size; i++) {
         // let child = this.children[i];
-        width += 150;
+        width += 9;
       }
 
       // this.$refs.listWrapper.children[0].style.width=width+'px'
       // this.$refs.listWrapper.style.width=width+'px'
       if(size>2){
-        width+=60
-        width+='px';
+        width+=5
+        width+='rem';
       }else{
         width='100%'
       }
@@ -72,7 +72,7 @@ export default {
 
       let options = {
         probeType: 3,
-        click: true,
+        click: false,
         scrollY: false,
         scrollX: true,
         // momentum: false,
