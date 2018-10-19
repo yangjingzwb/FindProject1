@@ -51,6 +51,7 @@ import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
+      shopLists: [],
       stopPropagation: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       pullUpLoad: {
@@ -66,12 +67,6 @@ export default {
     longitude: {
       type: Boolean,
       default: false
-    },
-    shopLists: {
-      type: Array,
-      default: function() {
-        return [];
-      }
     },
     pullDownRefresh: {
       type: null,
