@@ -28,7 +28,7 @@
                 <div class="c1">{{item.STORES_NM}}</div>
                 <div class="c2">
                     <span class="l">{{item.BUS_ADDR}}</span>
-                    <span class="r">{{GetDistance(latitude,longitude,item.LATITUDE,item.LONGITUDE)}}km</span>
+                    <span class="r">{{item.distance}}km</span>
                 </div>
                 <div class="c3" >
                     <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
@@ -46,8 +46,8 @@
 
 <script>
 import {
-  fetchPoints,
-  GetDistance
+  fetchPoints
+  // GetDistance
   //   setLItem,
   //   getLItem,
   //   getCode
@@ -128,10 +128,10 @@ export default {
       this.$emit("aginEnter");
     },
 
-    GetDistance(a, b, c, d) {
-      // alert(GetDistance(a, b, c, d))
-      return GetDistance(a, b, c, d);
-    },
+    // GetDistance(a, b, c, d) {
+    //   // alert(GetDistance(a, b, c, d))
+    //   return GetDistance(a, b, c, d);
+    // },
 
     goDetail(event, obj, flag) {
       // 神策
