@@ -74,6 +74,7 @@ import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
 import sa from "sa-sdk-javascript";
+// import VueLazyload from "vue-lazyload"
 import {
   fetchPoints,
   // GetDistance,
@@ -234,7 +235,7 @@ export default {
           if (res.data.length < this.PAGESIZE) {
             this.jdFlag = true;
             this.data1 = true;
-            console.log("xxxxxxxxxx",this.jdFlag);
+            // console.log("xxxxxxxxxx",this.jdFlag);
             // 数组没有更多了
           } else {
             this.jdFlag = false;

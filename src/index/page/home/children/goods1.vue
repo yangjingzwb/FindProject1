@@ -1,16 +1,16 @@
 <!--和悦商品接口-->
 <template>
 <div>
-    <div v-for="(item, index) of middle">
+    <div v-for="(item, index) of middle" :key="'good1_1_'+index">
       <div v-if="banner" class="banner" @click="goDetail($event,item,2)">
-        <img :src="item.tbConductConfig.marketingIcon" >
+        <img v-lazy="item.tbConductConfig.marketingIcon"/>
       </div>
       <div class="goods">
         <ul class="u1">
-          <li v-for="(itemson, index) of item.goodsVO" @click="goDetail($event,itemson,3)">
+          <li v-for="(itemson, index) of item.goodsVO" @click="goDetail($event,itemson,3)" :key="'good1_'+index">
             <ul class="u2">
               <li class="icon">
-                <img :src="itemson.pic">
+                <img v-lazy="itemson.pic"/>
               </li>
               <li class="text">
                 {{itemson.name}}

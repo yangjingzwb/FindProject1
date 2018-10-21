@@ -9,7 +9,7 @@ import Vue from "vue";
 // import Vue from "vue";
 // import App from "./App";
 import VueRouter from "vue-router";
-// import VueLazyload from "vue-lazyload";
+import VueLazyload from "vue-lazyload";
 import routes from "./router/router";
 // import bestpay from "@@/service/bestpay";
 // import { getProduct, getSessionKey, system, setTopRightBar } from "@@/service/bestpay_";
@@ -47,14 +47,14 @@ sa.quick("autoTrack", {
     platForm: "h5"
 });
 
-// Vue.use(VueLazyload)
-// Vue.use(VueLazyload, {
-//     preLoad: 1.3,
-//     error: require('@@/images/error.png'),
-//     // loading: require('@@/images/error.png'),
-//     attempt: 1,
-//     // listenEvents: [ 'animationend' ]
-// })
+Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+    preLoad: 0.5,
+    error: require('@@/images/tipIcon.png'),
+    loading: require('@@/images/tipIcon.png'),
+    attempt: 1,
+    // listenEvents: [ 'animationend' ]
+})
 
 // 延迟点击
 if ("addEventListener" in document) {

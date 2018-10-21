@@ -9,15 +9,15 @@
      <div class="goods">
         <ul class="u1">
           <li>
-            <ul class="u2" v-for="(item, index) of jdList" :key="'ul'+index">
+            <ul class="u2" v-for="(item, index) of jdList" :key="'good3_'+index">
               <div class="hr-2"></div>
               <li class="text">
                 {{item.title}}
               </li>
               <li class="icon" @click="goDetail($event,item,3)">
-                <img :src="item.imageUrls[0]">
-                <img :src="item.imageUrls[1]">
-                <img :src="item.imageUrls[2]">
+                <img v-lazy="item.imageUrls[0]"/>
+                <img v-lazy="item.imageUrls[1]"/>
+                <img v-lazy="item.imageUrls[2]"/>
               </li>
             </ul>
           </li>

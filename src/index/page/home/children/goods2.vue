@@ -4,10 +4,10 @@
                 为你推荐
               </div>
               <ul class="u1">
-                <li v-for="item in data" :key="item.url" @click="goDetail($event,item,11)" >
+                <li v-for="(item,index) in data" :key="'good2_1_'+ index" @click="goDetail($event,item,11)" >
                   <ul class="u2">
                     <li class="icon">
-                      <img :src="item.marketingIcon">
+                      <img v-lazy="item.marketingIcon"/>
                     </li>
                     <li class="text" style="-webkit-box-orient: vertical;">
                       {{item.marketingTitle}}
