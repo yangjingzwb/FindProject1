@@ -12,6 +12,7 @@ const home1 = r => require.ensure([], () => r(require('../page/home/children/hom
 // 我的
 const mine = r => require.ensure([], () => r(require('../page/home/children/mine')), 'mine')
 const couponShop = r => require.ensure([], () => r(require('../page/home/children/couponShop')), 'couponShop')
+const shopDetail = r => require.ensure([], () => r(require('../page/home/children/shopDetail')), 'shopDetail')
 
 export default [{
     path: '/',
@@ -22,14 +23,14 @@ export default [{
             path: '',
             component: home,
             meta:{
-                keepAlive:true
+                keepAlive: true
             }
         },
         {
-            path: 'home', // 随意借首页
+            path: 'home',
             component: home,
             meta:{
-                keepAlive:true
+                keepAlive: true
             }
             // beforeEnter: (to, from, next) => {
             //     // 请求banner1
@@ -46,10 +47,10 @@ export default [{
             // },
         },
         {
-            path: 'home1', // 随意借首页
+            path: 'home1',
             component: home1,
             meta:{
-                keepAlive:true
+                keepAlive: true
             }
             // beforeEnter: (to, from, next) => {
             //     // 请求banner1
@@ -66,19 +67,26 @@ export default [{
             // },
         },
        {
-            path: 'mine', // 我的
+            path: 'mine', 
             component: mine,
             meta:{
-                keepAlive:false
+                keepAlive: true
             }
         },
         {
-             path: 'couponShop', // 我的
+             path: 'couponShop', 
              component: couponShop,
              meta:{
-                 keepAlive:false
+                 keepAlive: true
              }
-         }
+         },
+         {
+              path: 'shopDetail', 
+              component: shopDetail,
+              meta:{
+                  keepAlive: true
+              }
+          }
        
         //常见问题模块
     ]

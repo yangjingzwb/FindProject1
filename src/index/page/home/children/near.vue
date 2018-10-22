@@ -18,20 +18,26 @@
             </div>
             <div class="hr-1"></div>
         </div>
-        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,1)" >
+        <ul v-for="(item,index) in shopList"  @click="goShopDetail()" >
           <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
                 <img v-else :src="'/static/img/error.png'" alt="">
             </li>
-            <li class="right">
+            <li class="middle">
                 <div class="c1">{{item.STORES_NM}}</div>
                 <div class="c2">
                     <span class="l">{{item.BUS_ADDR}}</span>
                     <span class="r">{{item.distance}}km</span>
+                    
                 </div>
                 <div class="c3" >
                     <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
+                </div>
+            </li>
+            <li class="right">
+                <div class="c4">
+                    <span class="btn">立即消费</span>
                 </div>
             </li>
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
@@ -132,7 +138,21 @@ export default {
     //   // alert(GetDistance(a, b, c, d))
     //   return GetDistance(a, b, c, d);
     // },
-
+    goShopDetail() {
+      // 神策
+      sa.track('buttonClick', {
+        topCategory: '发现',
+        subCategory: '发现：附近页'
+      });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K07", //事件标记
+        this.token.productNo,
+        "立即消费按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
+      this.$router.push("/shopDetail");
+    },
     goDetail(event, obj, flag) {
       // 神策
       // sa.track('clickShop', {
@@ -440,11 +460,11 @@ export default {
       min-height: 4.5625rem;
     }
   }
-  .right {
+  .middle {
     float: left;
     padding-left: 0.5625rem;
-    min-width: 60%;
-    width: 75%;
+    min-width: 50%;
+    width: 50%;
     text-align: left;
   }
   .c1 {
@@ -464,8 +484,9 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       display: inline-block;
-      max-width: 70%;
-    }
+      // max-width: 70%;
+    } 
+    
   }
   .c3 {
     font-size: 0.75rem;
@@ -480,6 +501,7 @@ export default {
   }
   .r {
     position: absolute;
+    top: 1.5rem;
     right: 0;
   }
   .b {
@@ -489,6 +511,29 @@ export default {
     border-radius: 0.125rem;
     padding: 0.05rem 0.225rem;
     margin-right: 0.1875rem;
+  }
+  .right {
+    float: left;
+    position: absolute;
+    top: 2.8125rem;
+    right: 0;
+  }
+  .c4 {
+    position: relative;
+    height: 1.875rem;
+    color: #ed196c;
+    font-family: PingFangSC-Regular;
+    font-size: 0.75rem;
+    text-align: center;
+    z-index: 99;
+    .btn {
+      display: inline-block;
+      width: 4.75rem;
+      height: 1.875rem;
+      border: 0.0625rem solid #ed196c;
+      border-radius: 0.9375rem;
+      line-height: 1.875rem;
+    }
   }
 }
 
