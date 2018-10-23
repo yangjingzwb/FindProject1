@@ -338,7 +338,7 @@ ul:nth-last-child(1)::after {
     }
     .sl {
       font-size: 0.75rem;
-      margin-left: 0.3125rem;
+      margin-left: 0.4125rem;
       padding: 0 0.2rem;
       color: #e11a2f;
       background-color: #fff0f1;

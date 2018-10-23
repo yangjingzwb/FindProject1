@@ -1,10 +1,19 @@
 <template>
-  <div >
+  <div>
+    <header>
+      <ul>
+        <router-link tag="li" class="l t" to="/"></router-link>
+        <li class="l">
+            <span>附近优惠</span>
+        </li>
+      </ul>
+      <div class="hr-1"></div>
+    </header>
     <section class="s_1">
       <ul>
-        <router-link tag="li" class="l t" to="/"> <!--@click="goBack()"-->
+        <li class="l t"> <!--@click="goBack()"-->
           {{cityName1}}
-        </router-link>
+        </li>
         <li class="l i" @click="done()">
           <span class="icon"><img src="/static/img/1-20.png"></span>
             <button>搜一搜：请输入商户名称</button>
@@ -817,7 +826,7 @@ export default {
   // -webkit-transform: translateZ(0);
   position: absolute;
   z-index: 1;
-  top: 3rem;
+  top: 6rem;
   left: 0;
   width: 100%;
   // position: relative;
@@ -842,6 +851,37 @@ export default {
 .s_8 {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
+}
+header {
+  @include wh(100%, 3rem);
+  background: #ffffff;
+  position: sticky;
+  z-index: 100000000;
+  top: 0;
+  left: 0;
+  .l {
+    height: 100%;
+    line-height: 3rem;
+    font-size: 1.125rem;
+    font-family: PingFangSC-Regular;
+    color: #13252e;
+    padding-right: 3.5rem;
+    text-align: center;
+  }
+  .t {
+    color: #6c6c6c;
+    font-size: 0.9375rem;
+    height: 3rem;
+    position: relative;
+    float: left;
+    text-align: left;
+    background-image: url(/static/img/back.png);
+    background-repeat: no-repeat;
+    background-position: 0.375rem 50%;
+    background-size: 1.1rem;
+    // padding-right: 0.6rem;
+    @include space();
+  }
 }
 .s_1,
 .s_5_1 {
@@ -916,12 +956,11 @@ export default {
   .t {
     color: #6c6c6c;
     font-size: 0.9375rem;
-    width: 5.1875rem;
+    width: 4.0625rem;
     position: relative;
     float: left;
     text-align: left;
-    padding-left: 1.9375rem;
-    background-image: url(/static/img/back.png);
+    padding-left: 0.9375rem;
     background-repeat: no-repeat;
     background-position: 0.375rem 50%;
     background-size: 1.1rem;

@@ -6,7 +6,7 @@
             <div class="t-4" @click="goMorePer()">更多</div>
             <div class="hr-1"></div>
         </div>
-        <ul v-for="(item,index) in shopList"  @click="goDetail($event,item,0)" :key="item.id">
+        <ul v-for="(item,index) in shopList"  @click="goSeller(item)" :key="item.id">
           <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
@@ -90,10 +90,25 @@ export default {
     //   // alert(GetDistance(a, b, c, d))
     //   return GetDistance(a, b, c, d);
     // },
-
-    goDetail(event, obj, flag) {
+    goSeller(obj) {
+      let params = {
+        latitude: this.latitude,
+        longitude: this.longitude,
+        mbl_no: this.token.productNo,
+        merc_id: obj.MERC_ID,
+        session: this.token.session.replace(/\+/g, "%2B"),
+        merc_latitude: obj.LATITUDE,
+        merc_longitude: obj.LONGITUDE
+      };
+      console.log(params);
+      this.$router.push({
+        path: "/shopDetail",
+        query: {
+            params: params
+          }
+      });
       // 神策
-     sa.track('clickShop', {
+      sa.track('clickShop', {
         currentPage: '发现',
         commodityID:obj.MERC_ID,
         commodityName: obj.STORES_NM,
@@ -108,7 +123,6 @@ export default {
         "附近商户-" + obj.STORES_NM, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
-      this.$emit("goDetail", event, obj, flag);
     },
     // 更多优惠
     goMorePer() {

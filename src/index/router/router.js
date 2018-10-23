@@ -13,6 +13,7 @@ const home1 = r => require.ensure([], () => r(require('../page/home/children/hom
 const mine = r => require.ensure([], () => r(require('../page/home/children/mine')), 'mine')
 const couponShop = r => require.ensure([], () => r(require('../page/home/children/couponShop')), 'couponShop')
 const shopDetail = r => require.ensure([], () => r(require('../page/home/children/shopDetail')), 'shopDetail')
+const hebaoInfo = r => require.ensure([], () => r(require('../page/home/children/hebaoInfo')), 'hebaoInfo')
 
 export default [{
     path: '/',
@@ -84,9 +85,16 @@ export default [{
               path: 'shopDetail', 
               component: shopDetail,
               meta:{
-                  keepAlive: true
+                  keepAlive: false
               }
-          }
+          },
+          {
+               path: 'hebaoInfo', 
+               component: hebaoInfo,
+               meta:{
+                   keepAlive: false
+               }
+           }
        
         //常见问题模块
     ]
