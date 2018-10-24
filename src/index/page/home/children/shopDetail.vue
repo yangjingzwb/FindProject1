@@ -12,12 +12,19 @@
 
     <article>
       <!--商家详情-->
+      <scroll
+        :scrollY = "scrollYOther"
+        :scrollbar ='tabScrollbar'
+        :pullDownRefresh ='pullDownRefresh'
+        :refreshNow = 'refreshNow'
+        :pullUpLoad= "pullUpLoad_near"
+        >
       <section class="s_2">
         <div class="seller">
           <ul>
             <li class="left">
-              <div class="seller-name">千惠便利店（湘春路店）</div>
-              <div class="seller-time">营业时间: 9:00-22:00</div>
+              <div class="seller-name">{{data.mercAbbr}}</div>
+              <div class="seller-time">营业时间: 9:00-22:00{{data.businessHour}}</div>
             </li>
             <li class="right">
               <button class="go-buy-btn" @click="payKHD()">去买单</button>
@@ -29,7 +36,7 @@
           <div class="address-info">
             <div class="left" @click="jumpMap()">
               <img src="/static/img/seller_address_icon.png"/>
-              <a>湖南省长沙市湘江中路一段160号</a>
+              <a>{{data.busAddr}}</a>
             </div>
             <div class="right">
               <a href="tel:18774882955"><img src="/static/img/seller_phone_button.png"/></a>
@@ -55,7 +62,7 @@
           <div class="hr-2"></div>
         </div>
         <div class="seller-coupon">
-          <ul>
+          <ul v-for="(item,index) in data">
             <li class="left">
               <div class="c1">
                 <span>¥ <i class="par">20</i></span>
@@ -88,11 +95,11 @@
           <p>优惠活动</p>
           <div class="hr-2"></div>
         </div>
-        <div class="address">
+        <div class="address" v-for="(item, index) of data.rec">
           <div class="address-info" @click="jumpInfo(this)">
             <div class="left">
               <span class="list-flg">满减</span>
-              <span class="activity">和包风暴随机立减活动</span>
+              <span class="activity">和包风暴折减活动: {{item.GME_NM}}</span>
             </div>
             <div class="right">
               <img class="special" src="/static/img/more_button.png"/>
@@ -107,29 +114,39 @@
              <div class="hr-2"></div>
         </div>
         <div class="seller-info">
-          <div>预包装食品、乳制品、熟食、粮油、烟草制品、广告制作服务</div>
+          <div>预包装食品、乳制品、熟食、粮油、烟草制品、广告制作服务{{data.mercBriefDesc}}</div>
         </div>
       </section>
       <div class="nullHeight"></div>
+      </scroll>
     </article>
   </div>
 </template>
 
 <script>
 import {
-  fetchPoints
-  // GetDistance
-  //   setLItem,
-  //   getLItem,
-  //   getCode
+  fetchPoints,
+  AppFlag
 } from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
+import Scroll from "@@/components/scroll/scroll.vue";
 import axios from "@@/plugins/rsa/axios";
 import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
-
+      data: [{}],
+      tabScrollbar: false,
+      scrollYOther: true,
+      startY: 0,
+      threshold: 0.2,
+      refreshNow:true,
+      pullUpLoad: false,
+      pullUpLoad_near: true,
+      pullDownRefresh: {
+        threshold: 120,
+        stop: 60
+      }
     };
   },
   props: {
@@ -145,41 +162,46 @@ export default {
     document.getElementById("pg").style.display="none";
   },
   created() {},
-
+  components: {
+    Scroll
+  },
   methods: {
     init() {
       let params = this.$route.query.params;
-      console.log(33333,params);
+      // console.log(参数接收,params);
       axios.post("getShopInfoDetail", params).then(res => {
-          console.log(res.data);
           if (res.code === "0") {
-            this.shopLists = this.res.data;
-            console.log(this.shopLists);
+            this.data = res.data;
+            console.log(this.data);
           }
       });
     },
     payKHD() {
       event.stopPropagation();
       // 客户端 跳转链接
-      if (bwjudgeAppFlag() === '1') {
+      if (AppFlag() === '1') {
           window.location.href = "activity://GTF";
-      } else if (bwjudgeAppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.goTopSpeed) === 'function') {
+      } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.goTopSpeed) === 'function') {
           window.goActivity.goTopSpeed();
       }
+    },
+    usableEta(obj) {
+      window.location.href = "/mkmweb/query_nearmerc_bon.xhtml" + '?ACTID=arrondMerc&MERC_ID=' + this.merc_id + '&showtitle=false';
     },
     jumpMap(){
       let sName = '', // 出发地名
           dName = '', // 目的地名
           city = '',  // 城市
-          LONGITUDE = GetQueryString('LONGITUDE'), // 出发地经度
-          LATITUDE = GetQueryString('LATITUDE'), // 出发地纬度
-          MERC_LONGITUDE = GetQueryString('MERC_LONGITUDE'), // 目的地经度
-          MERC_LATITUDE = GetQueryString('MERC_LATITUDE'); // 目的地纬度
+          LONGITUDE = this.longitude, // 出发地经度
+          LATITUDE = this.latitude, // 出发地纬度
+          MERC_LONGITUDE = this.LONGITUDE, // 目的地经度
+          MERC_LATITUDE = this.LATITUDE; // 目的地纬度
       let BUS_ADDR = "长沙市湘江中路" || item.busAddr;
       // 客户端 跳转链接  安卓 0  苹果 1
-      if (bwjudgeAppFlag() === '1' && typeof(CmpOpenMapLocation) !== 'undefined' && typeof(CmpOpenMapLocation) === 'function') {
+      console.log(LONGITUDE,MERC_LONGITUDE,MERC_LATITUDE,BUS_ADDR)
+      if (AppFlag() === '1' && typeof(CmpOpenMapLocation) !== 'undefined' && typeof(CmpOpenMapLocation) === 'function') {
           CmpOpenMapLocation(sName, dName, LATITUDE, LONGITUDE, MERC_LATITUDE, MERC_LONGITUDE);
-      } else if (bwjudgeAppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.openNavigation) === 'function') {
+      } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.openNavigation) === 'function') {
           window.goActivity.openNavigation('', LATITUDE, LONGITUDE, BUS_ADDR, MERC_LATITUDE, MERC_LONGITUDE, city);
       } else {
           // 非客户端 
@@ -224,7 +246,13 @@ export default {
       }
       return obj;
     },
-  }
+  },
+  
+  activated(){
+    console.log(2323)
+    // alert()
+    this.refreshNow = !this.refreshNow
+  },
 };
 </script>
 

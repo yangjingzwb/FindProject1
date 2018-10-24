@@ -117,6 +117,17 @@ export const geURLParam = name => {
     return null; //传递中文参数时候，需要使用encodeURI()进行编码
   }
 };
+// 区分 安卓 0  苹果 1
+export const AppFlag = () => {
+  var u = navigator.userAgent,
+      isAppFlag = '';
+  if (u.indexOf('iPhone') > -1 || u.indexOf('iPad') > -1 || u.indexOf('iPod') > -1) {
+      isAppFlag = '1'; // ios
+  } else if (u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 || u.indexOf('Linux') > -1) {
+      isAppFlag = '0'; // Android
+  }
+  return isAppFlag;
+};
 /**
  * 异步加载JS
  * @param {*} url 
