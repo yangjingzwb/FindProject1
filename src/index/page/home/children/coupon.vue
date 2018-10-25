@@ -12,13 +12,13 @@
         :data="couponMainList"
       >
         <div class="sw-box">
-          <div class="sw-option" v-for="(item,index) in couponMainList" @click="goDetail($event,item,7)">
+          <div class="sw-option" v-for="(item,index) in couponMainList" @click="goDetail($event,item,7)" :key="'coupon'+index">
               <img :class="{'p2':couponMainList.length>2}" :src="item.couponIcon" />
           </div>
           <div v-if="couponMainList.length>2" class="sw-option sw-option-end">已经到底啦</div>
         </div>
       </scroll>
-      <div class="hr-1"></div>
+      <!-- <div class="hr-1"></div> -->
     </section>
 
     <ul v-for="(item,index) in dataList" :key="'ul'+index" >
@@ -52,11 +52,6 @@
           </div>
         </li>
     </ul>
-    <alert-tip 
-      v-if="showAlert" 
-      :alertText="alertText"
-      @closeTip="showAlert = false">
-    </alert-tip>
     <div v-if="showMore = couponList.length>4 ? true : false" 
          @click="showAll = !showAll" 
          class="more">
@@ -128,13 +123,19 @@ export default {
   },
 
   mounted() {},
-  created() {},
+  created() {
+    // this.ISSHOWALERT(true)
+  },
 
   components: {
     Scroll,
     AlertTip
   },
   methods: {
+    ...mapMutations([
+      'ISSHOWALERT',
+      'ALERTTEXTFIRST'
+    ]),
     // 领取优惠券
     receiveCoupon(data) {
       this.isDisable = true;
@@ -153,33 +154,35 @@ export default {
         if (res.code === "0") {
           let data = res.data;
           this.isCoupon = data;
-          this.alertText = "领取成功";
-          this.showAlert = true;
+          this.ALERTTEXTFIRST("领取成功");
+          this.ISSHOWALERT(true)
+          // this.alertText = "领取成功";
+          // this.showAlert = true;
           data.bgIcon = true;
           data.show = false;
           setTimeout(() => {
-            this.showAlert = false;
+            this.ISSHOWALERT(false)
             this.isDisable = false;
           }, 1500);
           // console.log(this.isCoupon)
         } else if (res.code === "900001") {
-          this.alertText = "领取数量已达上限";
-          this.showAlert = true;
+          this.ALERTTEXTFIRST("领取数量已达上限");
+          this.ISSHOWALERT(true)
           data.bgIcon = true;
           data.isLook = true;
           data.show = false;
           setTimeout(() => {
-            this.showAlert = false;
+            this.ISSHOWALERT(false)
             this.isDisable = false;
           }, 1500);
         } else {
-          this.showAlert = true;
-          this.alertText = "领取失败";
+          this.ALERTTEXTFIRST("领取失败");
+          this.ISSHOWALERT(true)
           data.isLook = true;
           data.bgIcon = true;
           data.show = false;
           setTimeout(() => {
-            this.showAlert = false;
+            this.ISSHOWALERT(false)
             this.isDisable = false;
           }, 1500);
         }
@@ -236,10 +239,8 @@ export default {
   position: relative;
   // white-space: nowrap;
   // overflow-x: auto;
-  // border:1px solid #999;
 }
 .sw-box {
-  // width: 100%;
   // width: 200%;
   height:5.625rem;
   margin: 1.25rem 0 .9375rem 0.625rem;

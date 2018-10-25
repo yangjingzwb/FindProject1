@@ -106,7 +106,7 @@ export default {
   position: relative;
   height: 126px;
   // height: 100%;
-  width: 375px;
+  // width: 375px;
   overflow: hidden;
   // overflow: hidden;
   background: #fff;

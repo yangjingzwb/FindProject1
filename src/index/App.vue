@@ -15,7 +15,7 @@
         <!-- router-fade -->
 			<router-view v-if="!$route.meta.keepAlive" class="router-v"></router-view>
 		</transition>
-    <alert-tip alertTextFirst='请打开对和包的GPS授权' btnText='确认'  v-if="isShowAlert" @closeTip="closeAlert"/>
+    <alert-tip :alertText='alertTextFirst' v-if="isShowAlert" @closeTip="closeAlert"/>
     <!-- <vue-loading v-if="showLoading" type='beat' ></vue-loading> -->
     </div>
 </template>
