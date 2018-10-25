@@ -140,20 +140,20 @@ export default {
     // },
     goSeller(obj) {
       let params = {
-        // latitude: this.latitude,
-        // longitude: this.longitude,
-        // mbl_no: this.token.productNo,
-        // merc_id: obj.MERC_ID,
-        // merc_latitude: obj.LATITUDE,
-        // merc_longitude: obj.LONGITUDE,
-        // session: this.token.session.replace(/\+/g, "%2B")
-        latitude: "31.24916171",
-        longitude: "121.48789949",
-        mbl_no: "15111427793",
-        merc_id: "888009941110054",
-        merc_latitude: "1.249162",
-        merc_longitude: "121.487899",
-        session: this.token.session.replace(/\+/g, "%2B"),
+        latitude: this.latitude,
+        longitude: this.longitude,
+        mbl_no: this.token.productNo,
+        merc_id: obj.MERC_ID,
+        merc_latitude: obj.LATITUDE,
+        merc_longitude: obj.LONGITUDE,
+        session: this.token.session.replace(/\+/g, "%2B")
+        // latitude: "31.24916171",
+        // longitude: "121.48789949",
+        // mbl_no: "15111427793",
+        // merc_id: "888009941110054",
+        // merc_latitude: "1.249162",
+        // merc_longitude: "121.487899",
+        // session: this.token.session.replace(/\+/g, "%2B"),
       };
       console.log(params);
       this.$router.push({
@@ -497,7 +497,7 @@ export default {
   }
   .c2 {
     font-size: 0.6875rem;
-    color: #999999;
+    color: #999;
     padding-top: 0.5625rem;
     max-width: 90%;
     @include space();

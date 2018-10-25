@@ -12,7 +12,7 @@
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
                 <img v-else :src="'/static/img/error.png'" alt="">
             </li>
-            <li class="right">
+            <li class="middle">
                 <div class="c1">{{item.STORES_NM}}</div>
                 <div class="c2">
                     <span class="l">{{item.BUS_ADDR}}</span>
@@ -22,6 +22,11 @@
                     <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
                 </div>
             </li>
+            <li class="right">
+                 <div class="c4">
+                     <span class="btn">立即消费</span>
+                 </div>
+             </li>
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
@@ -440,11 +445,11 @@ export default {
       min-height: 4.5625rem;
     }
   }
-  .right {
+  .middle {
     float: left;
     padding-left: 0.5625rem;
-    min-width: 60%;
-    width: 75%;
+    min-width: 50%;
+    width: 50%;
     text-align: left;
   }
   .c1 {
@@ -455,7 +460,7 @@ export default {
   }
   .c2 {
     font-size: 0.6875rem;
-    color: #999999;
+    color: #999;
     padding-top: 0.5625rem;
     max-width: 90%;
     @include space();
@@ -472,7 +477,7 @@ export default {
     color: #e11a2f;
     padding-top: 0.5625rem;
     letter-spacing: -0.00375rem;
-    max-width: 70%;
+    max-width: 80%;
     @include space();
     div {
       @include space();
@@ -480,6 +485,7 @@ export default {
   }
   .r {
     position: absolute;
+    top: 1rem;
     right: 0;
   }
   .b {
@@ -490,6 +496,29 @@ export default {
     padding: 0.05rem 0.225rem;
     margin-right: 0.1875rem;
   }
+    .right {
+     float: left;
+     position: absolute;
+     top: 2.375rem;
+     right: 0;
+   }
+   .c4 {
+     position: relative;
+     height: 1.875rem;
+     color: #ed196c;
+     font-family: PingFangSC-Regular;
+     font-size: 0.75rem;
+     text-align: center;
+     z-index: 99;
+     .btn {
+       display: inline-block;
+       width: 4.75rem;
+       height: 1.875rem;
+       border: 0.0625rem solid #ed196c;
+       border-radius: 0.9375rem;
+       line-height: 1.875rem;
+     }
+   }
 }
 
 .s_6 {

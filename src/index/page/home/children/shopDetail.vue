@@ -1,6 +1,6 @@
 <template>
-  <div class="content-wrapper">
-    <header class="s_1">
+  <div class="home">
+    <div class="s_1">
       <ul>
         <router-link tag="li" class="l t" to="/home1"></router-link>
         <li class="l">
@@ -8,153 +8,208 @@
         </li>
       </ul>
       <div class="hr-1"></div>
-    </header>
+    </div>
 
-    <article>
-      <!--商家详情-->
-      <scroll
-        :scrollY = "scrollYOther"
-        :scrollbar ='tabScrollbar'
-        :pullDownRefresh ='pullDownRefresh'
-        :refreshNow = 'refreshNow'
-        :pullUpLoad= "pullUpLoad_near"
-        >
-      <section class="s_2">
-        <div class="seller">
-          <ul>
-            <li class="left">
-              <div class="seller-name">{{data.mercAbbr}}</div>
-              <div class="seller-time">营业时间: 9:00-22:00{{data.businessHour}}</div>
-            </li>
-            <li class="right">
-              <button class="go-buy-btn" @click="payKHD()">去买单</button>
-            </li>
-            <li class="hr-2"></li>
-          </ul>
-        </div>
-        <div class="address">
-          <div class="address-info">
-            <div class="left" @click="jumpMap()">
-              <img src="/static/img/seller_address_icon.png"/>
-              <a>{{data.busAddr}}</a>
+    <scroll
+      :scrollbar="scrollbar"
+    >
+      <div class="content">
+        <section class="s_2">
+          <div class="seller">
+            <ul>
+              <li class="left">
+                <div class="seller-name">良品铺子(步步高梅溪新天地一店)</div>
+                <div class="seller-time">营业时间: 9:00-22:00</div>
+              </li>
+              <li class="right">
+                <button class="go-buy-btn" @click="payKHD()">去买单</button>
+              </li>
+              <li class="hr-2"></li>
+            </ul>
+          </div>
+          <div class="address">
+            <div class="address-info">
+              <div class="left" @click="jumpMap()">
+                <img src="/static/img/seller_address_icon.png"/>
+                <a>岳麓区岳麓大道与麓景路交汇处</a>
+              </div>
+              <div class="right">
+                <a href="tel:18774882955"><img src="/static/img/seller_phone_button.png"/></a>
+              </div>
+              <div class="hr-2"></div>
             </div>
-            <div class="right">
-              <a href="tel:18774882955"><img src="/static/img/seller_phone_button.png"/></a>
+
+            <div class="address-info" @click="usableEta()">
+              <div class="left">
+                <img src="/static/img/seller_voucher_icon.png"/>
+                <a>支持本店消费的和包券</a>
+              </div>
+              <div class="right">
+                <img class="special" src="/static/img/more_button.png"/>
+              </div>
             </div>
+          </div>
+        </section>
+        <div class="nullHeight"></div>
+        <section class="s_3">
+          <div class="title">
+            <p>商铺优惠券</p>
             <div class="hr-2"></div>
           </div>
-
-          <div class="address-info" @click="usableEta()">
-            <div class="left">
-              <img src="/static/img/seller_voucher_icon.png"/>
-              <a>支持本店消费的和包券</a>
-            </div>
-            <div class="right">
-              <img class="special" src="/static/img/more_button.png"/>
+          <div class="seller-coupon">
+            <!-- <ul v-for="(item,index) in shopData.mktrec"> -->
+            <ul>
+              <li class="left">
+                <div class="c1">
+                  <span>¥ <i class="par">20</i></span>
+                </div>
+              </li>
+              <li class="middle">
+                <div class="c1">
+                  <span class="m">满50元使用</span>
+                  <span  class="sl">可叠加</span>
+                </div>
+                <div class="c2">
+                  <span class="b" >有效期至：2018-10-31</span>
+                </div>
+              </li>
+              <li class="right">
+                <div class="c1">
+                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
+                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
+                </div>
+                <div class="c3">
+                  <div class="bgIcon"></div>
+                </div>
+              </li>
+            </ul><ul>
+              <li class="left">
+                <div class="c1">
+                  <span>¥ <i class="par">20</i></span>
+                </div>
+              </li>
+              <li class="middle">
+                <div class="c1">
+                  <span class="m">满50元使用</span>
+                  <span  class="sl">可叠加</span>
+                </div>
+                <div class="c2">
+                  <span class="b" >有效期至：2018-10-31</span>
+                </div>
+              </li>
+              <li class="right">
+                <div class="c1">
+                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
+                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
+                </div>
+                <div class="c3">
+                  <div class="bgIcon"></div>
+                </div>
+              </li>
+            </ul><ul>
+              <li class="left">
+                <div class="c1">
+                  <span>¥ <i class="par">20</i></span>
+                </div>
+              </li>
+              <li class="middle">
+                <div class="c1">
+                  <span class="m">满50元使用</span>
+                  <span  class="sl">可叠加</span>
+                </div>
+                <div class="c2">
+                  <span class="b" >有效期至：2018-10-31</span>
+                </div>
+              </li>
+              <li class="right">
+                <div class="c1">
+                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
+                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
+                </div>
+                <div class="c3">
+                  <div class="bgIcon"></div>
+                </div>
+              </li>
+            </ul><ul>
+              <li class="left">
+                <div class="c1">
+                  <span>¥ <i class="par">20</i></span>
+                </div>
+              </li>
+              <li class="middle">
+                <div class="c1">
+                  <span class="m">满50元使用</span>
+                  <span  class="sl">可叠加</span>
+                </div>
+                <div class="c2">
+                  <span class="b" >有效期至：2018-10-31</span>
+                </div>
+              </li>
+              <li class="right">
+                <div class="c1">
+                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
+                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
+                </div>
+                <div class="c3">
+                  <div class="bgIcon"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <div class="nullHeight"></div>
+        <section class="s_4">
+          <div class="title">
+            <p>优惠活动</p>
+            <div class="hr-2"></div>
+          </div>
+          <div class="address">
+            <div class="address-info" @click="jumpInfo(this)">
+              <div class="left">
+                <span class="list-flg">满减</span>
+                <span class="activity">和包风暴折减活动: 随机立减</span>
+              </div>
+              <div class="right">
+                <img class="special" src="/static/img/more_button.png"/>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      <div class="nullHeight"></div>
-      <section class="s_3">
-        <div class="title">
-          <p>商铺优惠券</p>
-          <div class="hr-2"></div>
-        </div>
-        <div class="seller-coupon">
-          <ul v-for="(item,index) in data">
-            <li class="left">
-              <div class="c1">
-                <span>¥ <i class="par">20</i></span>
-              </div>
-            </li>
-            <li class="middle">
-              <div class="c1">
-                <span class="m">满50元使用</span>
-                <span  class="sl">可叠加</span>
-              </div>
-              <div class="c2">
-                <span class="b" >有效期至：2018-10-31</span>
-              </div>
-            </li>
-            <li class="right">
-              <div class="c1">
-                <button class="r" @click="receiveCoupon(item)">立即领取</button>
-                <button class="r" @click="goDetail($event,item,6)">查看详情</button>
-              </div>
-              <div class="c3">
-                <div class="bgIcon"></div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <div class="nullHeight"></div>
-      <section class="s_4">
-        <div class="title">
-          <p>优惠活动</p>
-          <div class="hr-2"></div>
-        </div>
-        <div class="address" v-for="(item, index) of data.rec">
-          <div class="address-info" @click="jumpInfo(this)">
-            <div class="left">
-              <span class="list-flg">满减</span>
-              <span class="activity">和包风暴折减活动: {{item.GME_NM}}</span>
-            </div>
-            <div class="right">
-              <img class="special" src="/static/img/more_button.png"/>
-            </div>
+        </section>
+        <div class="nullHeight"></div>
+        <section class="s_5">
+          <div class="title">
+              <p>商家简介</p>
+              <div class="hr-2"></div>
           </div>
-        </div>
-      </section>
-      <div class="nullHeight"></div>
-      <section class="s_5">
-        <div class="title">
-            <p>商家简介</p>
-             <div class="hr-2"></div>
-        </div>
-        <div class="seller-info">
-          <div>预包装食品、乳制品、熟食、粮油、烟草制品、广告制作服务{{data.mercBriefDesc}}</div>
-        </div>
-      </section>
-      <div class="nullHeight"></div>
-      </scroll>
-    </article>
+          <div class="seller-info">
+            <div>预包装食品、乳制品、熟食、粮油、烟草制品、广告制作服务</div>
+          </div>
+        </section>
+        <div class="nullHeight"></div>
+        <div class="null">&nbsp;&nbsp;</div>
+      </div>
+    </scroll>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+import axios from "@@/plugins/rsa/axios";
 import {
   fetchPoints,
-  AppFlag
+  AppFlag,
 } from "@@/service/util";
-import { mapState, mapMutations } from "vuex";
+import { baseUrl } from "@@/config/env"; // baseUrl
 import Scroll from "@@/components/scroll/scroll.vue";
-import axios from "@@/plugins/rsa/axios";
-import sa from'sa-sdk-javascript';
+
 export default {
   data() {
     return {
-      data: [{}],
-      tabScrollbar: false,
-      scrollYOther: true,
-      startY: 0,
-      threshold: 0.2,
-      refreshNow:true,
-      pullUpLoad: false,
-      pullUpLoad_near: true,
-      pullDownRefresh: {
-        threshold: 120,
-        stop: 60
-      }
+      shopData: {},
+      scrollbar:false
     };
   },
-  props: {
-
-  },
-  computed: {
-    ...mapState(["token"])
-  },
+  computed: {},
 
   mounted() {
     this.init();
@@ -165,14 +220,22 @@ export default {
   components: {
     Scroll
   },
+
+  computed: {
+    ...mapState([
+      "token",
+      "sliderScroll",
+    ])
+  },
+
   methods: {
     init() {
       let params = this.$route.query.params;
       // console.log(参数接收,params);
       axios.post("getShopInfoDetail", params).then(res => {
           if (res.code === "0") {
-            this.data = res.data;
-            console.log(this.data);
+            this.shopData = res.data;
+            console.log(this.shopData);
           }
       });
     },
@@ -246,18 +309,34 @@ export default {
       }
       return obj;
     },
-  },
-  
-  activated(){
-    console.log(2323)
-    // alert()
-    this.refreshNow = !this.refreshNow
-  },
+    changeIscrollY(flag) {
+      this.scrollY = flag;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
+.content {
+  // overflow: auto;
+  height: 95%;
+  position: relative;
+  top: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.home {
+  width: 100%;
+  height: 100%;
+  // overflow: hidden;
+}
+.s {
+  position: relative;
+  // margin-top: .625rem;
+  // background: #ffffff;
+}
 
 .content-wrapper {
   background: #F6F7F8;
@@ -410,6 +489,7 @@ ul {
     border: 0.0625rem solid #f992bb;
     box-shadow: 0 0 0.625rem 0 rgba(0, 0, 0, 0.1);
     border-radius: 0.1875rem;
+    margin-bottom: 0.625rem;
   }
   ul:nth-last-child(1)::after {
     height: 0 !important;
@@ -421,7 +501,7 @@ ul {
     text-align: left;
     .c1 {
       padding-left: 0.625rem;
-      line-height: 4.5rem;
+      line-height: 4.8rem;
       color: #ed196c;
       font-weight: bold;
       font-size: 1rem;
@@ -523,6 +603,9 @@ ul {
   padding: 1.0625rem 0 1.0625rem 0;
   line-height: 0.9375rem;
 }
+.null {
+  background: #F6F7F8;
+}
 .hr-1 {
   display: block;
   position: absolute;
@@ -558,4 +641,5 @@ ul {
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
+
 </style>
