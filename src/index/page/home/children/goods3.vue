@@ -10,7 +10,6 @@
         <ul class="u1">
           <li>
             <ul class="u2" v-for="(item, index) of jdList" :key="'good3_'+index">
-              <div class="hr-2"></div>
               <li class="text">
                 {{item.title}}
               </li>
@@ -19,6 +18,7 @@
                 <img v-lazy="item.imageUrls[1]"/>
                 <img v-lazy="item.imageUrls[2]"/>
               </li>
+              <div class="hr-2"></div>
             </ul>
           </li>
         </ul>

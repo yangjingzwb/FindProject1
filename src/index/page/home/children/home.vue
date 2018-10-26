@@ -63,7 +63,6 @@
         ></goods3>
 
       </section>
-      <div class="null">&nbsp;</div>
       <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
     </div>
     </scroll>
@@ -1157,9 +1156,6 @@ div.container::-webkit-scrollbar {
   color: #444444;
   font-size: 0.75rem;
   text-align: center;
-}
-.null {
-  height: 1.875rem;
 }
 .hr-1 {
   display: block;

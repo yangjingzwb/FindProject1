@@ -24,7 +24,8 @@
     <ul v-for="(item,index) in dataList" :key="'ul'+index" >
         <li class="left">
           <div class="c1">
-            <span>¥ <i class="par">{{item.issBillAmt}}</i></span>
+            <span class="i">¥ </span>
+            <span><i class="par">{{item.issBillAmt}}</i></span>
           </div>
         </li>
         <li class="middle">
