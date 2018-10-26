@@ -11,7 +11,7 @@
     <div class="nullHeight"></div>
     </section>
     <section class="s_2">
-      <ul v-for="(item,index) in shopLists"  @click="goDetail($event,item,0)">
+      <ul v-for="(item,index) in shopLists"  @click="goDetail($event,item,1)">
       <!-- :key="item.TX_JRN" -->
         <li class="left">
             <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="">
@@ -29,7 +29,7 @@
         </li>
         <li class="hr-1" :class="{height0:index == shopLists.length-1}"></li>
       </ul>
-      <div v-if = "!shopLists || shopLists.length<=0" class="error">
+      <div v-show="isList" class="error">
         <li class="aa"></li>
         <li class="tip">您所在的城市暂无该优惠券适用商户</li>
       </div>
@@ -53,6 +53,7 @@ export default {
     return {
       shopLists: [],
       stopPropagation: false,
+      isList: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       pullUpLoad: {
         threshold: -50
@@ -86,7 +87,10 @@ export default {
   mounted() {
     this.goShopDetail()
   },
-  created() {},
+  created() {
+    
+    
+  },
 
   components: {
     Scroll
@@ -94,6 +98,7 @@ export default {
 
   methods: {
     goShopDetail() {
+      document.getElementById("pg").style.display="block";
       let params = this.$route.query.params;
       // console.log(33333,params);
       axios
@@ -112,8 +117,12 @@ export default {
         .then(res => {
           // console.log(res.data);
           if (res.code === "0") {
+            document.getElementById("pg").style.display="none";
             this.shopLists = this.filterObj(res.data);
             // console.log(this.shopLists);
+          } else {
+              document.getElementById("pg").style.display="none";
+              this.isList = true;
           }
         });
     },
@@ -130,7 +139,61 @@ export default {
         "附近商户-" + obj.STORES_NM, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
-      this.$emit("goDetail", event, obj, flag);
+      let url = flag == 1 ? obj.MERC_URL : url;
+      // console.log(url);
+      if (
+        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+        "android"
+      ) {
+        if (flag == 1) {
+          let url2 =
+            url.indexOf("?") > 0
+              ? url.replace(
+                  /\?/,
+                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo;
+          window.goActivity.goWeb(url2);
+        } else {
+          window.goActivity.goWeb(
+            url.replace(
+              /\?/,
+              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo +
+                "&"
+            )
+          );
+        }
+      } else {
+        if (flag == 1) {
+          let url_2 =
+            url.indexOf("?") > 0
+              ? url.replace(
+                  /\?/,
+                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo;
+          // console.log(url_2);
+          window.location = "activity://goWeb?url=" + url_2;
+        } else {
+          window.location =
+            "activity://goWeb?url=" +
+            url.replace(
+              /\?/,
+              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                this.token.productNo +
+                "&"
+            );
+        }
+      }
     },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {
