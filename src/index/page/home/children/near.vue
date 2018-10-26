@@ -472,7 +472,7 @@ export default {
     color: #e11a2f;
     padding-top: 0.5625rem;
     letter-spacing: -0.00375rem;
-    max-width: 70%;
+    max-width: 80%;
     @include space();
     div {
       @include space();

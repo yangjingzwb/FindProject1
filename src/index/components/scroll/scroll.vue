@@ -358,9 +358,9 @@ export default {
       // this.isPullingDown = false;
       // this.pullUpTxt = '没有更多数据了'
       this.refresh();
-      // setTimeout(() => {
-      //   this.forceUpdate(false);
-      // }, 300);
+      setTimeout(() => {
+        this.forceUpdate(false);
+      }, 300);
     }
   },
   components: {
