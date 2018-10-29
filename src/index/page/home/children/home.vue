@@ -63,6 +63,7 @@
         ></goods3>
 
       </section>
+      <div class="null">&nbsp;</div>
       <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
     </div>
     </scroll>
@@ -1139,6 +1140,9 @@ div.container::-webkit-scrollbar {
   .foods-item:after {
     @include onepx_top(#e9e9e9);
   }
+}
+.null {
+  height: 2rem;
 }
 .end {
   text-align: center;
