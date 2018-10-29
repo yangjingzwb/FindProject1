@@ -11,7 +11,7 @@ const home1 = r => require.ensure([], () => r(require('../page/home/children/hom
 // const shop = r => require.ensure([], () => r(require('../page/home/children/shop')), 'shop')
 // 我的
 const mine = r => require.ensure([], () => r(require('../page/home/children/mine')), 'mine')
-const couponShop = r => require.ensure([], () => r(require('../page/home/children/couponShop')), 'couponShop')
+const shopList = r => require.ensure([], () => r(require('../page/home/children/shopList')), 'shopList')
 
 export default [{
     path: '/',
@@ -73,8 +73,8 @@ export default [{
             }
         },
         {
-             path: 'couponShop', // 我的
-             component: couponShop,
+             path: 'shopList', // 我的
+             component: shopList,
              meta:{
                  keepAlive:false
              }

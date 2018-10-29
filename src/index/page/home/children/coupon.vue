@@ -194,7 +194,7 @@ export default {
       let params = obj.mercId;
       if(obj.conponType === "1") {
         this.$router.push({
-          path: "/couponShop",
+          path: "/shopList",
           query: {
             params: params
           }

@@ -19,7 +19,7 @@
                     <span class="r">{{item.distance}}km</span>
                 </div>
                 <div class="c3">
-                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
+                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
                 </div>
             </li>
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
