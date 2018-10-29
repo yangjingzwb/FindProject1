@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="header">发现</div>
+    <div :class="isShow">发现</div>
     <scroll
       :data1 ="data1"
       :data ="jdList"
@@ -8,7 +8,7 @@
       :pullUpLoad= "pullUpLoad_near"
       @pullingUp="onPullingUp"
     >
-    <div class="content">
+    <div :class="isShow2">
       <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
         <div class="scroll slide-content">
           <div>
@@ -63,6 +63,7 @@
         ></goods3>
 
       </section>
+      <div class="null">&nbsp;</div>
       <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
     </div>
     </scroll>
@@ -96,6 +97,8 @@ import Scroll from "@@/components/scroll/scroll.vue";
 export default {
   data() {
     return {
+      isShow: "",
+      isShow2: "",
       pullUpLoad: false,
       pullUpLoad_near: true,
       data1: false,
@@ -134,10 +137,6 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
-    this.jdSKill(); // 请求广告位
-    // 获取优惠券
-    this.getMainCoupon();
-    this.getCoupon();
     // 获取运营banner
     this.getMiddle();
     this.getJD();
@@ -150,6 +149,11 @@ export default {
     document.getElementById("pg").style.display="none";
   },
   created() {
+    this.initShow(); //控制标题头
+    this.jdSKill(); // 请求广告位
+    // 获取优惠券
+    this.getMainCoupon();
+    this.getCoupon();
     //神策
     let startTime = new Date();
     let endTime = new Date() ;
@@ -178,6 +182,7 @@ export default {
       "slider2",
       "slider",
       "slider1",
+      "topTitle",
       "products",
       "token",
       "latitude",
@@ -198,6 +203,11 @@ export default {
       "OPENANDCLOSE",
       "SETMIDDLE"
     ]),
+    initShow() {
+       // 首页标题头 0 隐藏  1显示
+       this.isShow = this.topTitle === "1" ? "header" : "headerHidden";
+       this.isShow2 = this.topTitle === "1" ? "content" : "contentMove";
+     },
     jdSKill() {
       // 和包支付石油
       axios
@@ -631,6 +641,14 @@ export default {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
+.contentMove {
+   // overflow: auto;
+   height: 95%;
+   position: relative;
+   top: 0;
+   overflow-y: auto;
+   -webkit-overflow-scrolling: touch;
+ }
 div.container::-webkit-scrollbar {
   display: none;
 }
@@ -668,7 +686,9 @@ div.container::-webkit-scrollbar {
   text-align: center;
   line-height: 3rem;
 }
-
+.headerHidden {
+  display: none;
+ }
 .home {
   width: 100%;
   height: 100%;
@@ -1137,6 +1157,9 @@ div.container::-webkit-scrollbar {
   font-size: 0.75rem;
   text-align: center;
 }
+.null {
+   height: 2rem;
+ }
 .hr-1 {
   display: block;
   position: absolute;

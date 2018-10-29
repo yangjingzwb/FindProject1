@@ -11,14 +11,14 @@
     </header>
     <section class="s_4">
       <div class="title">
-        <p>和包风暴随机立减活动</p>
+        <p>{{data.gmeNm}}</p>
         <div class="hr-2"></div>
       </div>
       <div class="content">
         <div class="content-info" @click="jumpInfo(this)">
-          <div class="list-info">活动时间：2018-10-01到2018-10-31</div>
+          <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
           <div class="list-info">参与时间：09:00到23:59</div>
-          <div class="list-info">活动省份：湖南</div>
+          <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
           <div class="list-info">参与用户范围：客户端新老用户</div>
           <div class="list-info">
             <span class="left">参与条件：</span>
@@ -28,7 +28,7 @@
             </ul>
           </div>
           <div class="list-info">活动方式：满减</div>
-          <table class="deal-menu">
+          <table class="deal-menu" v-for="(item,index) in data.gmeRec">
             <tbody>
               <tr>
                   <th class="name">订单金额区间（元）</th>
@@ -36,9 +36,9 @@
                   <th class="amount">最高享受</th>
               </tr>
               <tr>
-                  <td class="price">0-999999</td>
+                  <td class="price">{{item.ruleAmtMin}}-{{item.ruleAmtMax}}</td>
                   <td class="amount"> 随机立减</td>
-                  <td class="subtotal">0.5</td>
+                  <td class="subtotal">{{item.drawAmtMax}}</td>
               </tr>
             </tbody>
           </table>
@@ -62,7 +62,7 @@ import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
-
+      data: {}
     };
   },
   props: {
@@ -73,13 +73,23 @@ export default {
   },
 
   mounted() {
+    this.init();
     // 隐藏进度条
     document.getElementById("pg").style.display="none";
   },
   created() {},
 
   methods: {
-    
+    init() {
+      let params = this.$route.query.params;
+      // console.log(参数接收,params);
+      axios.post("getRecInfoDetail", params).then(res => {
+          if (res.code === "0") {
+            this.data = res.data;
+            console.log(this.data);
+          }
+      });
+    },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {
         if (obj[i].PIC_URL_1) {

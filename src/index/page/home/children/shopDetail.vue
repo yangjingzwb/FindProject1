@@ -18,7 +18,7 @@
           <div class="seller">
             <ul>
               <li class="left">
-                <div class="seller-name">良品铺子(步步高梅溪新天地一店)</div>
+                <div class="seller-name">{{shopData.mercAbbr}}</div>
                 <div class="seller-time">营业时间: 9:00-22:00</div>
               </li>
               <li class="right">
@@ -31,7 +31,7 @@
             <div class="address-info">
               <div class="left" @click="jumpMap()">
                 <img src="/static/img/seller_address_icon.png"/>
-                <a>岳麓区岳麓大道与麓景路交汇处</a>
+                <a>{{shopData.busAddr}}</a>
               </div>
               <div class="right">
                 <a href="tel:18774882955"><img src="/static/img/seller_phone_button.png"/></a>
@@ -58,100 +58,28 @@
           </div>
           <div class="seller-coupon">
             <!-- <ul v-for="(item,index) in shopData.mktrec"> -->
-            <ul>
+            <ul v-for="(item,index) in couponList" :key="'ul'+index">
               <li class="left">
                 <div class="c1">
-                  <span>¥ <i class="par">20</i></span>
+                  <span>¥ <i class="par">{{item.issBillAmt}}</i></span>
                 </div>
               </li>
               <li class="middle">
                 <div class="c1">
-                  <span class="m">满50元使用</span>
+                  <span class="m">{{item.mktNm}}</span>
                   <span  class="sl">可叠加</span>
                 </div>
                 <div class="c2">
-                  <span class="b" >有效期至：2018-10-31</span>
+                  <span class="b" >有效期至：{{item.issEffDt}}</span>
                 </div>
               </li>
               <li class="right">
                 <div class="c1">
-                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
-                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
+                  <button class="r" v-if="item.show" @click="receiveCoupon(item)" :disabled="isDisable">立即领取</button>
+                  <button class="r" v-else @click="goDetail($event,item,1)">查看详情</button>
                 </div>
                 <div class="c3">
-                  <div class="bgIcon"></div>
-                </div>
-              </li>
-            </ul><ul>
-              <li class="left">
-                <div class="c1">
-                  <span>¥ <i class="par">20</i></span>
-                </div>
-              </li>
-              <li class="middle">
-                <div class="c1">
-                  <span class="m">满50元使用</span>
-                  <span  class="sl">可叠加</span>
-                </div>
-                <div class="c2">
-                  <span class="b" >有效期至：2018-10-31</span>
-                </div>
-              </li>
-              <li class="right">
-                <div class="c1">
-                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
-                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
-                </div>
-                <div class="c3">
-                  <div class="bgIcon"></div>
-                </div>
-              </li>
-            </ul><ul>
-              <li class="left">
-                <div class="c1">
-                  <span>¥ <i class="par">20</i></span>
-                </div>
-              </li>
-              <li class="middle">
-                <div class="c1">
-                  <span class="m">满50元使用</span>
-                  <span  class="sl">可叠加</span>
-                </div>
-                <div class="c2">
-                  <span class="b" >有效期至：2018-10-31</span>
-                </div>
-              </li>
-              <li class="right">
-                <div class="c1">
-                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
-                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
-                </div>
-                <div class="c3">
-                  <div class="bgIcon"></div>
-                </div>
-              </li>
-            </ul><ul>
-              <li class="left">
-                <div class="c1">
-                  <span>¥ <i class="par">20</i></span>
-                </div>
-              </li>
-              <li class="middle">
-                <div class="c1">
-                  <span class="m">满50元使用</span>
-                  <span  class="sl">可叠加</span>
-                </div>
-                <div class="c2">
-                  <span class="b" >有效期至：2018-10-31</span>
-                </div>
-              </li>
-              <li class="right">
-                <div class="c1">
-                  <button class="r" @click="receiveCoupon(item)">立即领取</button>
-                  <button class="r" @click="goDetail($event,item,6)">查看详情</button>
-                </div>
-                <div class="c3">
-                  <div class="bgIcon"></div>
+                  <div v-show="item.bgIcon" class="bgIcon"></div>
                 </div>
               </li>
             </ul>
@@ -163,15 +91,16 @@
             <p>优惠活动</p>
             <div class="hr-2"></div>
           </div>
-          <div class="address">
-            <div class="address-info" @click="jumpInfo(this)">
+          <div class="address" v-for="(item,index) in shopData.rec" @click="jumpInfo(item)">
+            <div class="address-info">
               <div class="left">
                 <span class="list-flg">满减</span>
-                <span class="activity">和包风暴折减活动: 随机立减</span>
+                <span class="activity">{{item.GME_NM}}：{{item.GME_ABBR}}</span>
               </div>
               <div class="right">
                 <img class="special" src="/static/img/more_button.png"/>
               </div>
+              <div class="hr-2"></div>
             </div>
           </div>
         </section>
@@ -182,11 +111,11 @@
               <div class="hr-2"></div>
           </div>
           <div class="seller-info">
-            <div>预包装食品、乳制品、熟食、粮油、烟草制品、广告制作服务</div>
+            <div>{{shopData.mercBriefDesc}}</div>
           </div>
         </section>
-        <div class="nullHeight"></div>
-        <div class="null">&nbsp;&nbsp;</div>
+        <div class="null"></div>
+        <!-- <div class="null">&nbsp;&nbsp;</div> -->
       </div>
     </scroll>
   </div>
@@ -206,17 +135,40 @@ export default {
   data() {
     return {
       shopData: {},
-      scrollbar:false
+      couponList: [],
+      scrollbar:false,
+      isDisable: false,
+      bgIcon: false,
+      show: true
     };
   },
-  computed: {},
+  computed: {
+    ...mapState(["token"]),
+    dataList() {
+      if (this.showAll == false) {
+        var dataList = [];
+        if (this.couponList.length > 4) {
+          for (var i = 0; i < 4; i++) {
+            dataList.push(this.couponList[i])
+          }
+        } else {
+          dataList = this.couponList
+        }
+        return dataList;
+      } else {
+        return this.couponList
+      }
+    }
+  },
 
   mounted() {
-    this.init();
     // 隐藏进度条
     document.getElementById("pg").style.display="none";
   },
-  created() {},
+  created() {
+    this.init();
+    this.getCoupon();
+  },
   components: {
     Scroll
   },
@@ -229,6 +181,10 @@ export default {
   },
 
   methods: {
+    ...mapMutations([
+       'ISSHOWALERT',
+       'ALERTTEXTFIRST'
+     ]),
     init() {
       let params = this.$route.query.params;
       // console.log(参数接收,params);
@@ -272,16 +228,17 @@ export default {
     },
     jumpInfo(obj) {
       let params = {
-        gmeId: "18092605",
+        gmeId: obj.GME_ID,
         latitude: this.latitude,
         longitude: this.longitude,
         mbl_no: this.token.productNo,
-        merc_id: obj.MERC_ID,
+        merc_id: obj.mercId,
         session: this.token.session.replace(/\+/g, "%2B"),
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE
       };
-      console.log(params);
+      console.log("222222222",params);
+      console.log("222222222",obj);
       this.$router.push({
         path: "/hebaoInfo",
         query: {
@@ -300,6 +257,133 @@ export default {
         "和包满减活动", // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       )
+    },
+    getCoupon() {
+      axios.post('queryCoupon',{
+        "session": this.token.session.replace(/\+/g, "%2B")
+      }).then(res => {
+          if(res.code === "0") {
+            let data = res.data.map((item)=>{
+              item.show = true;
+              return item;
+            })
+            this.couponList = data;
+            console.log(this.couponList);
+          }
+        });
+    },
+    receiveCoupon(data) {
+      this.isDisable = true;
+      // console.log(data);
+      let param_ = {
+        mbl_no: this.token.productNo, //用户手机号
+        merc_id: data.mercId, // 商户编号
+        mkt_id: data.mktId, // 活动编号
+        prd_id: data.prdId, // 券别编号
+        mamt: data.issBillAmt, // 发券面额
+        session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
+      };
+      console.log("XXXXXXXXXXXXXXXXXXXXXXX");
+      console.log(param_);
+      axios.post("receiveCoupon", param_).then(res => {
+        if (res.code === "0") {
+          let data = res.data;
+          this.isCoupon = data;
+          this.ALERTTEXTFIRST("领取成功");
+          this.ISSHOWALERT(true);
+          data.bgIcon = true;
+          data.show = false;
+          setTimeout(() => {
+            this.ISSHOWALERT(false);
+            this.isDisable = false;
+          }, 1500);
+          // console.log(this.isCoupon)
+        } else if (res.code === "900001") {
+          this.ALERTTEXTFIRST("领取数量已达上限");
+          this.ISSHOWALERT(true);
+          data.bgIcon = true;
+          data.isLook = true;
+          data.show = false;
+          setTimeout(() => {
+            this.ISSHOWALERT(false);
+            this.isDisable = false;
+          }, 1500);
+        } else {
+          this.ALERTTEXTFIRST("领取失败");
+          this.ISSHOWALERT(true);
+          data.isLook = true;
+          data.bgIcon = true;
+          data.show = false;
+          setTimeout(() => {
+            this.ISSHOWALERT(false);
+            this.isDisable = false;
+          }, 1500);
+        }
+      });
+    },
+    goDetail(event, obj, flag) {
+      fetchPoints(
+        "020000000000", // 页面索引
+        "020000000000K07", //事件标记
+        this.token.productNo,
+        "附近商户-" + obj.STORES_NM, // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
+      let url = flag == 1 ? obj.couponDetailsContent : url;
+       // console.log(url);
+       if (
+         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+         "android"
+       ) {
+         if (flag == 1) {
+           let url2 =
+             url.indexOf("?") > 0
+               ? url.replace(
+                   /\?/,
+                   "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                     this.token.productNo +
+                     "&"
+                 )
+               : url +
+                 "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                 this.token.productNo;
+           window.goActivity.goWeb(url2);
+         } else {
+           window.goActivity.goWeb(
+             url.replace(
+               /\?/,
+               "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                 this.token.productNo +
+                 "&"
+             )
+           );
+         }
+       } else {
+         if (flag == 1) {
+           let url_2 =
+             url.indexOf("?") > 0
+               ? url.replace(
+                   /\?/,
+                   "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                     this.token.productNo +
+                     "&"
+                 )
+               : url +
+                 "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                 this.token.productNo;
+           // console.log(url_2);
+           window.location = "activity://goWeb?url=" + url_2;
+         } else {
+           window.location =
+             "activity://goWeb?url=" +
+             url.replace(
+               /\?/,
+               "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                 this.token.productNo +
+                 "&"
+             );
+         }
+       }
     },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {
@@ -427,8 +511,12 @@ ul {
     position: relative;
     height: 2.8125rem;
     .left {
+      width: 80%;
       height: 100%;
       position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       img {
         width: 1.375rem;
         height: 1.375rem;
@@ -512,6 +600,7 @@ ul {
     }
   }
   .middle {
+    width: 9.375rem;
     height: 100%;
     float: left;
     padding-top: 0.9375rem;
@@ -520,6 +609,9 @@ ul {
     font-family: PingFangSC-Regular;
     .c1 {
       height: 1.4375rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       .m {
         font-size: 0.875rem;
       }
@@ -604,6 +696,7 @@ ul {
   line-height: 0.9375rem;
 }
 .null {
+  height: 10.5625rem;
   background: #F6F7F8;
 }
 .hr-1 {

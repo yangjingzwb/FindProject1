@@ -5,6 +5,7 @@ import {
 	SLIDER,
 	SLIDER1,
 	SLIDER2,
+	TOPTITLE,
 	PRODUCTS,
 	ERROR,
 	LATITUDE,
@@ -54,6 +55,9 @@ export default {
 	},
 	[SLIDER2](state,data){
 		state.slider2 = data
+	},
+	[TOPTITLE](state,data){
+		state.topTitle = data
 	},
 	[PRODUCTS](state,data){
 		state.products = data

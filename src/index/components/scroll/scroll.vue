@@ -86,7 +86,7 @@ export default {
     },
     listenScroll: {
       type: Boolean,
-      default: true
+      default: false
     },
     scrollY: {
       type: Boolean,
@@ -183,21 +183,20 @@ export default {
       }
 
       let options = {
-        // probeType: this.probeType,
+        probeType: this.probeType,
         click: this.click,
         scrollY: true,//this.scrollY, //true,//this.freeScroll || this.direction === DIRECTION_V,
         scrollX: false,
         scrollbar: false, //this.scrollbar,
         // pullDownRefresh: this.pullDownRefresh,
         pullUpLoad: this.pullUpLoad,
-
         startY: this.startY,
-        // freeScroll: this.freeScroll,
-        mouseWheel: this.mouseWheel,
-        bounce: this.bounce,
-        // zoom: this.zoom,
+        mouseWheel: false,
+        useTransition: false,
+        bounce: false, //this.bounce
         stopPropagation: false, // this.stopPropagation
         preventDefault: true
+        // deceleration:0.002
         // directionLockThreshold:10
       };
 
@@ -337,6 +336,8 @@ export default {
   },
   watch: {
     data() {
+      // this.refresh()
+      console.log(898934)
       setTimeout(() => {
         this.forceUpdate(true);
       }, this.refreshDelay);
@@ -350,13 +351,13 @@ export default {
     //   }
     // },
     refreshNow(){
-      console.log(2345)
+      // console.log(2345)
       this.refresh()
     },
     data1(){
       // this.isPullingDown = false;
       // this.pullUpTxt = '没有更多数据了'
-      // this.refresh();
+      this.refresh();
       setTimeout(() => {
         this.forceUpdate(false);
       }, 300);
@@ -417,7 +418,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px 0;
-  margin-bottom: 90px;
+  padding-top: 55px;
+  padding-bottom: 6rem;
+  // margin-bottom: 30px;
 }
 </style>

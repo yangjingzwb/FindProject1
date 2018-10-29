@@ -2,7 +2,7 @@
     <div class="alet_container" @touchmove.prevent :showAlert="showAlert">
 	    <section class="tip_text_container">
             <div class='tip_text_box'>
-                <p :class="[isAlert]"></p>
+                <p :class="isAlert"></p>
                 <p class="tip_text">{{alertText}}</p>
             </div>
         </section>
@@ -63,7 +63,7 @@
         left:0;
         right:0;
         margin: auto;
-        top: 54rem;
+        top: 50%;
         width: 9.375rem;
         height: 4.6875rem;
         animation: tipMove .4s;

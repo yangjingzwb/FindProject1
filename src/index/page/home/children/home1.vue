@@ -1074,7 +1074,7 @@ header {
   // padding: 0 0.9375rem;
   // background: #fff;
   // margin-top: 0.5625rem;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
   // height: 56.25rem;
   ul {
     height: 7.5rem;

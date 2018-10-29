@@ -32,7 +32,7 @@
                     
                 </div>
                 <div class="c3" >
-                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_NM}}</span>
+                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
                 </div>
             </li>
             <li class="right">
@@ -155,7 +155,7 @@ export default {
         // merc_longitude: "121.487899",
         // session: this.token.session.replace(/\+/g, "%2B"),
       };
-      console.log(params);
+      console.log("~~~~~~~~~~~~",params);
       this.$router.push({
         path: "/shopDetail",
         query: {

@@ -10,7 +10,6 @@
         <ul class="u1">
           <li>
             <ul class="u2" v-for="(item, index) of jdList" :key="'good3_'+index">
-              <div class="hr-2"></div>
               <li class="text">
                 {{item.title}}
               </li>
@@ -19,12 +18,10 @@
                 <img v-lazy="item.imageUrls[1]"/>
                 <img v-lazy="item.imageUrls[2]"/>
               </li>
+              <div class="hr-2"></div>
             </ul>
           </li>
         </ul>
-        <!-- <ul v-if = "!jdList || jdList.length<=0 ">
-          <li @click="aginEnter()" class="aa">加载中...</li>
-        </ul> -->
       </div>
     </div>
 </template>
@@ -60,32 +57,6 @@ export default {
   },
 
   methods: {
-    init() {
-      let params_ = {
-        pageNum: 1,
-        pageSize: 4,
-        session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
-      };
-      // 京东
-      axios
-        .post("queryPageJdInformation", params_)
-        .then(res => {
-          this.jdList = this.dealData(res.data);
-          // console.log(this.jdList);
-        });
-    },
-    // 处理数据
-    dealData(data) {
-      let res = [];
-      let obj = {};
-      for (let i = 0; i < data.length; i++) {
-        obj = data[i];
-        obj.imageUrls = obj.imageUrls.replace(/,$/, "").split(",");
-        res.push(obj);
-      }
-      // console.log(res);
-      return res;
-    },
     goDetail(event, obj, flag) {
       fetchPoints(
         "010000000000", // 页面索引
@@ -159,7 +130,8 @@ export default {
     img {
       flex: 3;
       display: block;
-      margin-right: 0.25rem;
+      padding-left: 0.2rem;
+      padding-right: 0.2rem;
       max-width: 6.75rem;
       max-height: 6.75rem;
       position: relative;
