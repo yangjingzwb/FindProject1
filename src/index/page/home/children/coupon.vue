@@ -373,11 +373,12 @@ ul:nth-last-child(1)::after {
     }
     .sl {
       font-size: 0.75rem;
-      margin-left: 0.3125rem;
-      padding: 0 0.2rem;
+      margin-left: 0.5rem;
+      padding: 0 0.25rem;
       color: #e11a2f;
       background-color: #fff0f1;
       border: 0.0063rem solid #e11a2f;
+      border: thin solid rgba(224, 24, 45, 0.2);
     }
   }
   .c3 {
