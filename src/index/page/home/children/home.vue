@@ -431,8 +431,7 @@ export default {
       url = flag == 7 ? obj.couponEventCotent : url;
       url = flag == 8 ? obj.couponEventContent  : url;
       url = flag == 99 ? obj.couponDetailsContent : url;
-      console.log(888888);
-      console.log(url);
+      // console.log("url输出",url);
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
