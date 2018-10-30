@@ -29,6 +29,7 @@
 <script>
 import { fetchPoints } from "@@/service/util";
 import { mapState } from "vuex";
+import sa from'sa-sdk-javascript';
 // import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
@@ -58,6 +59,13 @@ export default {
 
   methods: {
     goDetail(event, obj, flag) {
+      // 神策
+      sa.track('ZoneClick', {
+        topCategory: '发现',
+        subCategory:  '京东资讯',
+        locationOfZone: '附图',
+        contentName: obj.title
+      });
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K09", //事件标记
