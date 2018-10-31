@@ -138,6 +138,18 @@ export default {
      ]),
     // 领取优惠券
     receiveCoupon(data) {
+      // 神策
+      sa.track('buttonClick', {
+      topCategory: '发现',
+      subCategory: '优惠券副站：立即领取'
+      });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K04", //事件标记
+        this.token.productNo,
+        "优惠券副站：立即领取按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       this.isDisable = true;
       // console.log(data);
       let param_ = {
@@ -188,6 +200,11 @@ export default {
     },
 
     goShop(event,obj,flag) {
+      // 神策
+      sa.track('buttonClick', {
+      topCategory: '发现',
+      subCategory: '优惠券副站：去消费'
+      });
       let params = obj.mercId;
       if(obj.conponType === "1") {
         this.$router.push({
@@ -201,13 +218,29 @@ export default {
       }
     },
     goDetail(event, obj, flag) {
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K03", // 事件标记
-        this.token.productNo,
-        "优惠券主站-" + obj.couponName, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
+      // 神策
+      if(flag==7){
+        sa.track('ZoneClick', {
+          topCategory: '发现',
+          subCategory:  '领券专区',
+          locationOfZone: '主站',
+          contentName: obj.couponName
+        });
+        fetchPoints(
+          "010000000000", // 页面索引
+          "010000000000K03", // 事件标记
+          this.token.productNo,
+          "优惠券主站-" + obj.couponName, // 事件名称
+          this.token.session.replace(/\+/g, "%2B")
+        );
+      }
+      if(flag==6){
+        // 神策
+        sa.track('buttonClick', {
+        topCategory: '发现',
+        subCategory: '优惠券副站：查看详情'
+        });
+      }
       this.$emit("goDetail", event, obj, flag);
       // cosole.log(event.target);
     },

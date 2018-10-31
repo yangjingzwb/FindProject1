@@ -431,7 +431,6 @@ export default {
       url = flag == 7 ? obj.couponEventCotent : url;
       url = flag == 8 ? obj.couponEventContent  : url;
       url = flag == 99 ? obj.couponDetailsContent : url;
-      console.log(888888);
       console.log(url);
       if (
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
@@ -515,20 +514,18 @@ export default {
         this.SHOWLOADING(false);
       }, 2000);
       let startTime = new Date();
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 门店简称
-          mblno: this.token.productNo, //用户手机号
-          // tixn_cnl: "ROYTEL", // 固定值
-          currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 2,
-          session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc ? 0 : 1
-        })
-        .then(res => {
+      axios.post("getShopInfo", {
+        longitude: window.LONGITUDE, // 经度
+        latitude: window.LATITUDE, // 维度
+        stores_nm: "", // 门店名称
+        merc_abbr: "", // 门店简称
+        mblno: this.token.productNo, //用户手机号
+        // tixn_cnl: "ROYTEL", // 固定值
+        currentPage: this.CURRENTPAGE,
+        pagNum: this.PAGNUM || 2,
+        session: this.token.session.replace(/\+/g, "%2B"),
+        map_type: window.isUseBaiDuLoc ? 0 : 1
+        }).then(res => {
           //神策
           let endTime = new Date() ;
           sa.track("loadDelay",{

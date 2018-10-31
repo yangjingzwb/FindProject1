@@ -43,7 +43,8 @@
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
-          <li @click="aginEnter()" class="aa">请点击刷新试试</li>
+          <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading>
+          <li @click="aginEnter()" class="aa">{{loadText}}</li>
         </ul>
     <!-- </scroll> -->
     <!-- <div class="null"></div> -->
@@ -60,12 +61,14 @@ import {
 } from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
+import vueLoading from 'vue-loading-template';
 // import { baseUrl } from "@@/config/env"; // baseUrl
 import sa from'sa-sdk-javascript';
 
 export default {
   data() {
     return {
+      loadText: "",
       stopPropagation: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       pullUpLoad: {
@@ -110,17 +113,23 @@ export default {
     // }
   },
   computed: {
-    ...mapState(["token"])
+    ...mapState(["token","showLoading"])
   },
 
-  mounted() {},
+  mounted() {
+    this.init();
+  },
   created() {},
 
   components: {
-    Scroll
+    Scroll,
+    vueLoading
   },
 
   methods: {
+    ...mapMutations([
+      "SHOWLOADING"
+    ]),
     scrollListen(pos) {
       console.log("near");
       console.log(pos);
@@ -129,6 +138,12 @@ export default {
       // }else{
       //   this.$emit('changeIscrollY',false)
       // }
+    },
+    init() {
+      this.loadText = "加载中"
+      setTimeout(() => {
+        this.loadText = "请点击刷新"
+      }, 6000);
     },
     aginEnter() {
       this.$emit("aginEnter");
@@ -440,8 +455,8 @@ export default {
   margin-top: 0.5625rem;
   margin-bottom: 1rem;
   ul {
-    height: 7.5rem;
-    padding-top: 1.625rem;
+    height: 6.6875rem;
+    padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
   }
@@ -499,13 +514,10 @@ export default {
     font-size: 0.6875rem;
     color: #999;
     padding-top: 0.5625rem;
-    max-width: 90%;
     @include space();
     .l {
-      overflow: hidden;
       width: 100%;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      @include space();
       display: inline-block;
       // max-width: 70%;
     } 
@@ -514,7 +526,7 @@ export default {
   .c3 {
     font-size: 0.75rem;
     color: #e11a2f;
-    padding-top: 0.5625rem;
+    padding-top: 0.5rem;
     letter-spacing: -0.00375rem;
     max-width: 80%;
     @include space();
@@ -524,7 +536,7 @@ export default {
   }
   .r {
     position: absolute;
-    top: 1.5rem;
+    top: 1rem;
     right: 0;
   }
   .b {
@@ -538,7 +550,7 @@ export default {
   .right {
     float: left;
     position: absolute;
-    top: 2.8125rem;
+    top: 2.375rem;
     right: 0;
   }
   .c4 {
@@ -551,7 +563,7 @@ export default {
     z-index: 99;
     .btn {
       display: inline-block;
-      width: 4.75rem;
+      width: 4.5625rem;
       height: 1.875rem;
       border: 0.0625rem solid #ed196c;
       border-radius: 0.9375rem;
@@ -727,7 +739,7 @@ export default {
   position: relative;
   // width: 4rem;
   padding: 0.3125rem 0.625rem;
-  top: 0.75rem;
+  top: 3.4375rem;
   background: #fff;
   z-index: 10;
   color: #444444;

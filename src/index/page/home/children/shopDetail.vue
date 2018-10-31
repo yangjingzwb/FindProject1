@@ -34,12 +34,12 @@
                 <a>{{shopData.busAddr}}</a>
               </div>
               <div class="right">
-                <a href="tel:18774882955"><img src="/static/img/seller_phone_button.png"/></a>
+                <a :href="'tel:'+shopData.mercHl"><img src="/static/img/seller_phone_button.png"/></a>
               </div>
               <div class="hr-2"></div>
             </div>
 
-            <div class="address-info" @click="usableEta()">
+            <div class="address-info" @click="goDetail($event,shopData,2)">
               <div class="left">
                 <img src="/static/img/seller_voucher_icon.png"/>
                 <a>支持本店消费的和包券</a>
@@ -130,6 +130,7 @@ import {
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Scroll from "@@/components/scroll/scroll.vue";
+import sa from "sa-sdk-javascript";
 
 export default {
   data() {
@@ -191,7 +192,8 @@ export default {
       axios.post("getShopInfoDetail", params).then(res => {
           if (res.code === "0") {
             this.shopData = res.data;
-            console.log(this.shopData);
+            this.mercHl = res.data.mercHl;
+            // console.log("shop",this.shopData);
           }
       });
     },
@@ -204,9 +206,6 @@ export default {
           window.goActivity.goTopSpeed();
       }
     },
-    usableEta(obj) {
-      window.location.href = "/mkmweb/query_nearmerc_bon.xhtml" + '?ACTID=arrondMerc&MERC_ID=' + this.merc_id + '&showtitle=false';
-    },
     jumpMap(){
       let sName = '', // 出发地名
           dName = '', // 目的地名
@@ -217,7 +216,7 @@ export default {
           MERC_LATITUDE = this.LATITUDE; // 目的地纬度
       let BUS_ADDR = "长沙市湘江中路" || item.busAddr;
       // 客户端 跳转链接  安卓 0  苹果 1
-      console.log(LONGITUDE,MERC_LONGITUDE,MERC_LATITUDE,BUS_ADDR)
+      // console.log(LONGITUDE,MERC_LONGITUDE,MERC_LATITUDE,BUS_ADDR);
       if (AppFlag() === '1' && typeof(CmpOpenMapLocation) !== 'undefined' && typeof(CmpOpenMapLocation) === 'function') {
           CmpOpenMapLocation(sName, dName, LATITUDE, LONGITUDE, MERC_LATITUDE, MERC_LONGITUDE);
       } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.openNavigation) === 'function') {
@@ -237,8 +236,8 @@ export default {
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE
       };
-      console.log("222222222",params);
-      console.log("222222222",obj);
+      // console.log("222222222",params);
+      // console.log("222222222",obj);
       this.$router.push({
         path: "/hebaoInfo",
         query: {
@@ -330,12 +329,13 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
       let url = flag == 1 ? obj.couponDetailsContent : url;
-       // console.log(url);
+      url = flag == 2 ? obj.recUrl : url;
+      console.log(url);
        if (
          (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
          "android"
        ) {
-         if (flag == 1) {
+         if (flag == 1 || flag == 2) {
            let url2 =
              url.indexOf("?") > 0
                ? url.replace(
@@ -359,7 +359,7 @@ export default {
            );
          }
        } else {
-         if (flag == 1) {
+         if (flag == 1 || flag == 2) {
            let url_2 =
              url.indexOf("?") > 0
                ? url.replace(
@@ -371,7 +371,7 @@ export default {
                : url +
                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
                  this.token.productNo;
-           // console.log(url_2);
+          //  console.log(url_2);
            window.location = "activity://goWeb?url=" + url_2;
          } else {
            window.location =
@@ -696,7 +696,7 @@ ul {
   line-height: 0.9375rem;
 }
 .null {
-  height: 10.5625rem;
+  height: 15.5625rem;
   background: #F6F7F8;
 }
 .hr-1 {

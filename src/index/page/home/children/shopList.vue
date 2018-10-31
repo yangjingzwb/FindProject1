@@ -48,6 +48,7 @@ import {
 import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
 import axios from "@@/plugins/rsa/axios";
+import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
@@ -129,11 +130,20 @@ export default {
     // },
 
     goDetail(event, obj, flag) {
+      // 神策
+      sa.track('clickShop', {
+        currentPage: '优惠券商户页',
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:false,
+        keyword:''
+      });
       fetchPoints(
-        "020000000000", // 页面索引
-        "020000000000K07", //事件标记
+        "040000000000", // 页面索引
+        "040000000000K01", //事件标记
         this.token.productNo,
-        "附近商户-" + obj.STORES_NM, // 事件名称
+        "优惠券商户-" + obj.STORES_NM, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
       let url = flag == 1 ? obj.MERC_URL : url;

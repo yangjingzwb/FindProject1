@@ -511,20 +511,18 @@ export default {
       }
       this.CURRENTPAGE += 1;
       // console.log("*************", this.CURRENTPAGE);
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 商户简称
-          mblno: this.token.productNo, //用户手机号
-          // tixn_cnl: "ROYTEL", // 固定值
-          currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc ? 0 : 1
-        })
-        .then(res => {
+      axios.post("getShopInfo", {
+        longitude: window.LONGITUDE, // 经度
+        latitude: window.LATITUDE, // 维度
+        stores_nm: "", // 门店名称
+        merc_abbr: "", // 商户简称
+        mblno: this.token.productNo, //用户手机号
+        // tixn_cnl: "ROYTEL", // 固定值
+        currentPage: this.CURRENTPAGE,
+        pagNum: this.PAGNUM || 4,
+        session: this.token.session.replace(/\+/g, "%2B"),
+        map_type: window.isUseBaiDuLoc ? 0 : 1
+        }).then(res => {
           // this.shopList = res.STORES_REC;
           // 合并数组
           this.shopList.push.apply(this.shopList, this.filterObj(res.data));
@@ -637,20 +635,18 @@ export default {
         this.SHOWLOADING(false);
         return;
       }
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 门店简称
-          // tixn_cnl: "ROYTEL", // 固定值
-          currentPage: this.CURRENTPAGE,
-          mblno: this.token.productNo, //用户手机号
-          pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc ? 0 : 1
-        })
-        .then(res => {
+      axios.post("getShopInfo", {
+        longitude: window.LONGITUDE, // 经度
+        latitude: window.LATITUDE, // 维度
+        stores_nm: "", // 门店名称
+        merc_abbr: "", // 门店简称
+        // tixn_cnl: "ROYTEL", // 固定值
+        currentPage: this.CURRENTPAGE,
+        mblno: this.token.productNo, //用户手机号
+        pagNum: this.PAGNUM || 4,
+        session: this.token.session.replace(/\+/g, "%2B"),
+        map_type: window.isUseBaiDuLoc ? 0 : 1
+        },{timeout: 6000}).then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);

@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <header class="s_1">
       <ul>
-        <router-link tag="li" class="l t" to="/shopDetail"></router-link>
+        <router-link tag="li" class="l t" to="/home1"></router-link>
         <li class="l">
             <span>活动规则详情</span>
         </li>
@@ -15,7 +15,7 @@
         <div class="hr-2"></div>
       </div>
       <div class="content">
-        <div class="content-info" @click="jumpInfo(this)">
+        <div class="content-info">
           <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
           <div class="list-info">参与时间：09:00到23:59</div>
           <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
@@ -23,11 +23,11 @@
           <div class="list-info">
             <span class="left">参与条件：</span>
             <ul class="right">
-              <li>1. 中国移动用户</li>
+              <li>1. {{ruleFlgText}}</li>
               <li>2. 用户已绑定银行卡</li>
             </ul>
           </div>
-          <div class="list-info">活动方式：满减</div>
+          <div class="list-info">活动方式：{{ruleText}}</div>
           <table class="deal-menu" v-for="(item,index) in data.gmeRec">
             <tbody>
               <tr>
@@ -37,11 +37,12 @@
               </tr>
               <tr>
                   <td class="price">{{item.ruleAmtMin}}-{{item.ruleAmtMax}}</td>
-                  <td class="amount"> 随机立减</td>
+                  <td class="amount"> {{mjrTypText}}</td>
                   <td class="subtotal">{{item.drawAmtMax}}</td>
               </tr>
             </tbody>
           </table>
+          <div class="list-info">活动规则：{{data.gmeRule}}</div>
           <div class="list-info">注：活动具体规则由开展方制定，参与方式详询活动开展方</div>
         </div>
       </div>
@@ -52,17 +53,16 @@
 <script>
 import {
   fetchPoints
-  // GetDistance
-  //   setLItem,
-  //   getLItem,
-  //   getCode
 } from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 export default {
   data() {
     return {
-      data: {}
+      data: {},
+      ruleText: "",
+      ruleFlgText: "",
+      mjrTypText: ""
     };
   },
   props: {
@@ -86,7 +86,27 @@ export default {
       axios.post("getRecInfoDetail", params).then(res => {
           if (res.code === "0") {
             this.data = res.data;
-            console.log(this.data);
+            this.rule = res.data.gmeRec[0].drawRuleTyp;
+            this.usrFlg = res.data.usrFlg2;
+            this.mjrTyp = res.data.mjrTyp;
+            // console.log(this.data);
+            if(this.rule == "1") {
+              this.ruleText = "满减"
+            } else if(this.rule == "0") {
+              this.ruleText = "折扣"
+            } else {
+              this.ruleText = "直减"
+            };
+            if(this.usrFlg == "1") {
+              this.ruleFlgText = "全网用户"
+            } else {
+              this.ruleFlgText = "中国移动用户"
+            };
+            if(this.mjrTyp == "1") {
+              this.mjrTypText = "随机立减"
+            } else {
+              this.mjrTypText = "普通立减"
+            };
           }
       });
     },
