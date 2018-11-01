@@ -1,12 +1,8 @@
 <template>
   <div class="home">
-    <div :class="isShow">发现</div>
+    <div :class="isShow">优惠</div>
     <scroll
-      :data1 ="data1"
-      :data ="jdList"
       :scrollbar="scrollbar"
-      :pullUpLoad= "pullUpLoad_near"
-      @pullingUp="onPullingUp"
     >
     <div :class="isShow2">
       <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
@@ -57,14 +53,14 @@
           @goDetail="goDetail"
         ></goods2>
         <!-- 京东资讯 -->
-        <goods3
+        <!-- <goods3
           :jdList="jdList"
           @goDetail="goDetail"
-        ></goods3>
+        ></goods3> -->
 
       </section>
-      <div class="null">&nbsp;</div>
-      <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
+      <!-- <div class="null">&nbsp;</div> -->
+      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
     </div>
     </scroll>
   </div>
@@ -89,7 +85,7 @@ import Near1 from "./near1.vue";
 import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
-import Goods3 from "./goods3.vue";
+// import Goods3 from "./goods3.vue";
 import Recommended from "./recommended.vue";
 import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -173,7 +169,7 @@ export default {
     Slider,
     Goods1,
     Goods2,
-    Goods3,
+    // Goods3,
     Scroll
   },
 
@@ -1140,9 +1136,9 @@ div.container::-webkit-scrollbar {
     @include onepx_top(#e9e9e9);
   }
 }
-.null {
+/* .null {
   height: 2rem;
-}
+} */
 .end {
   text-align: center;
   font-size: 0.6875rem;
