@@ -161,16 +161,10 @@ export default {
         merc_id: obj.MERC_ID,
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
-        session: this.token.session.replace(/\+/g, "%2B")
-        // latitude: "31.24916171",
-        // longitude: "121.48789949",
-        // mbl_no: "15111427793",
-        // merc_id: "888009941110054",
-        // merc_latitude: "1.249162",
-        // merc_longitude: "121.487899",
-        // session: this.token.session.replace(/\+/g, "%2B"),
+        session: this.token.session.replace(/\+/g, "%2B"),
+        mercHl: obj.MERC_HOT_LIN 
       };
-      console.log("~~~~~~~~~~~~",params);
+      // console.log("~~~~~~~~~~~~",params);
       this.$router.push({
         path: "/shopDetail",
         query: {

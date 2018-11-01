@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div :class="isShow">发现</div>
+    <div :class="isShow">优惠</div>
     <scroll
       :data1 ="data1"
       :data ="jdList"

@@ -822,11 +822,13 @@ export default {
   // -webkit-transform: translateZ(0);
   position: absolute;
   z-index: 1;
-  top: 6rem;
+  top: 3rem;
   left: 0;
   width: 100%;
   // position: relative;
   height: 100%;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
   // background: #f0f1f2;
   overflow: hidden;
 }

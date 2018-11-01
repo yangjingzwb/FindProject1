@@ -33,7 +33,8 @@
                 <img src="/static/img/seller_address_icon.png"/>
                 <a>{{shopData.busAddr}}</a>
               </div>
-              <div class="right">
+              <div v-if="showTel" 
+                   class="right">
                 <a :href="'tel:'+shopData.mercHl"><img src="/static/img/seller_phone_button.png"/></a>
               </div>
               <div class="hr-2"></div>
@@ -137,6 +138,7 @@ export default {
     return {
       shopData: {},
       couponList: [],
+      showTel: false,
       scrollbar:false,
       isDisable: false,
       bgIcon: false,
@@ -192,8 +194,8 @@ export default {
       axios.post("getShopInfoDetail", params).then(res => {
           if (res.code === "0") {
             this.shopData = res.data;
-            this.mercHl = res.data.mercHl;
             // console.log("shop",this.shopData);
+            this.showTel = this.shopData.mercHl.length>2 ? true : false
           }
       });
     },

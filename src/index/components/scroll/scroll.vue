@@ -418,8 +418,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 55px;
-  padding-bottom: 6rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
   // margin-bottom: 30px;
 }
 </style>
