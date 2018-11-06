@@ -140,7 +140,7 @@ export default {
     this.getCoupon();
     // 获取运营banner
     this.getMiddle();
-    this.getJD();
+    // this.getJD();
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -222,7 +222,7 @@ export default {
       this.sliderIndex = index;
     },
     onPullingUp() {
-      this.jdloadMore();
+      // this.jdloadMore();
     },
     jdloadMore() {
       if (this.jdFlag) {
