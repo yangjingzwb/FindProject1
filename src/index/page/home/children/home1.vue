@@ -822,6 +822,7 @@ export default {
   width: 100%;
   // position: relative;
   height: 100%;
+  padding-bottom: 2rem;
   // background: #f0f1f2;
   overflow: hidden;
 }

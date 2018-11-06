@@ -398,8 +398,8 @@ export default {
   margin-top: 0.5625rem;
   margin-bottom: 1rem;
   ul {
-    height: 7.5rem;
-    padding-top: 1.625rem;
+    height: 6.6875rem;
+    padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
   }
@@ -470,7 +470,7 @@ export default {
   .c3 {
     font-size: 0.75rem;
     color: #e11a2f;
-    padding-top: 0.375rem;
+    padding-top: 0.5rem;
     letter-spacing: -0.00375rem;
     max-width: 80%;
     @include space();

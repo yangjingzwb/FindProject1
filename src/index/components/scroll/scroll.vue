@@ -418,7 +418,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px 0;
-  margin-bottom: 30px;
+  padding: 20px 0;
+  // margin-bottom: 20px;
 }
 </style>

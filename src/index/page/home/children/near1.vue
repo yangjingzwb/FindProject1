@@ -456,7 +456,7 @@ export default {
   .c3 {
     font-size: 0.75rem;
     color: #e11a2f;
-    padding-top: 0.375rem;
+    padding-top: 0.5rem;
     letter-spacing: -0.00375rem;
     max-width: 80%;
     @include space();

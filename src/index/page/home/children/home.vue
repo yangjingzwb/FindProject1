@@ -1,12 +1,8 @@
 <template>
   <div class="home">
-    <div :class="isShow">发现</div>
+    <div :class="isShow">优惠</div>
     <scroll
-      :data1 ="data1"
-      :data ="jdList"
       :scrollbar="scrollbar"
-      :pullUpLoad= "pullUpLoad_near"
-      @pullingUp="onPullingUp"
     >
     <div :class="isShow2">
       <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
@@ -63,8 +59,8 @@
         ></goods3> -->
 
       </section>
-      <div class="null">&nbsp;</div>
-      <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
+      <!-- <div class="null">&nbsp;</div> -->
+      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
     </div>
     </scroll>
   </div>
@@ -144,7 +140,7 @@ export default {
     this.getCoupon();
     // 获取运营banner
     this.getMiddle();
-    this.getJD();
+    // this.getJD();
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -226,7 +222,7 @@ export default {
       this.sliderIndex = index;
     },
     onPullingUp() {
-      this.jdloadMore();
+      // this.jdloadMore();
     },
     jdloadMore() {
       if (this.jdFlag) {
@@ -441,12 +437,12 @@ export default {
             url.indexOf("?") > 0
               ? url.replace(
                   /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  "?SOURCE=DISCOVER&account=" +
                     this.token.productNo +
                     "&"
                 )
               : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           window.goActivity.goWeb(url2);
         } else {
@@ -465,12 +461,12 @@ export default {
             url.indexOf("?") > 0
               ? url.replace(
                   /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  "?SOURCE=DISCOVER&account=" +
                     this.token.productNo +
                     "&"
                 )
               : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           // console.log(url_2);
           window.location = "activity://goWeb?url=" + url_2;
@@ -1140,9 +1136,9 @@ div.container::-webkit-scrollbar {
     @include onepx_top(#e9e9e9);
   }
 }
-.null {
+/* .null {
   height: 2rem;
-}
+} */
 .end {
   text-align: center;
   font-size: 0.6875rem;
