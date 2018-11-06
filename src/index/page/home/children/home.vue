@@ -57,10 +57,10 @@
           @goDetail="goDetail"
         ></goods2>
         <!-- 京东资讯 -->
-        <goods3
+        <!-- <goods3
           :jdList="jdList"
           @goDetail="goDetail"
-        ></goods3>
+        ></goods3> -->
 
       </section>
       <div class="null">&nbsp;</div>
@@ -89,7 +89,7 @@ import Near1 from "./near1.vue";
 import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
-import Goods3 from "./goods3.vue";
+// import Goods3 from "./goods3.vue";
 import Recommended from "./recommended.vue";
 import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -173,7 +173,7 @@ export default {
     Slider,
     Goods1,
     Goods2,
-    Goods3,
+    // Goods3,
     Scroll
   },
 
