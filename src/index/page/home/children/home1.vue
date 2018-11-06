@@ -514,6 +514,7 @@ export default {
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
+          // map_type: window.isUseBaiDuLoc
         })
         .then(res => {
           // this.shopList = res.STORES_REC;
@@ -640,6 +641,7 @@ export default {
           pagNum: this.PAGNUM || 4,
           session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
+          // map_type: window.isUseBaiDuLoc
         })
         .then(res => {
           if (res.data && res.data.length > 0) {

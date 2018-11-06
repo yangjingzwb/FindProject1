@@ -522,6 +522,7 @@ export default {
           pagNum: this.PAGNUM || 2,
           session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
+          // map_type: window.isUseBaiDuLoc
         })
         .then(res => {
           //神策
