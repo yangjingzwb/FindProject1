@@ -437,12 +437,12 @@ export default {
             url.indexOf("?") > 0
               ? url.replace(
                   /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  "?SOURCE=DISCOVER&account=" +
                     this.token.productNo +
                     "&"
                 )
               : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           window.goActivity.goWeb(url2);
         } else {
@@ -461,12 +461,12 @@ export default {
             url.indexOf("?") > 0
               ? url.replace(
                   /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  "?SOURCE=DISCOVER&account=" +
                     this.token.productNo +
                     "&"
                 )
               : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           // console.log(url_2);
           window.location = "activity://goWeb?url=" + url_2;
