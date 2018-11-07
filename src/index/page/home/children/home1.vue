@@ -521,7 +521,8 @@ export default {
         currentPage: this.CURRENTPAGE,
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
-        map_type: window.isUseBaiDuLoc ? 0 : 1
+        map_type: window.isUseBaiDuLoc ? 0 : 1,
+        merc_trd_cls: 1300
         }).then(res => {
           // this.shopList = res.STORES_REC;
           // 合并数组
@@ -645,7 +646,8 @@ export default {
         mblno: this.token.productNo, //用户手机号
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
-        map_type: window.isUseBaiDuLoc ? 0 : 1
+        map_type: window.isUseBaiDuLoc ? 0 : 1,
+        merc_trd_cls: 1300
         },{timeout: 6000}).then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;

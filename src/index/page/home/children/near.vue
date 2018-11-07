@@ -43,7 +43,8 @@
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
-          <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading>
+          <loading></loading>
+          <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
           <li @click="aginEnter()" class="aa">{{loadText}}</li>
         </ul>
     <!-- </scroll> -->
@@ -61,7 +62,8 @@ import {
 } from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
-import vueLoading from 'vue-loading-template';
+import Loading from "@@/components/loading/loading.vue";
+// import vueLoading from 'vue-loading-template';
 // import { baseUrl } from "@@/config/env"; // baseUrl
 import sa from'sa-sdk-javascript';
 
@@ -123,7 +125,7 @@ export default {
 
   components: {
     Scroll,
-    vueLoading
+    Loading
   },
 
   methods: {
@@ -140,10 +142,9 @@ export default {
       // }
     },
     init() {
-      this.loadText = "加载中"
       setTimeout(() => {
         this.loadText = "请点击刷新"
-      }, 6000);
+      }, 8000);
     },
     aginEnter() {
       this.$emit("aginEnter");

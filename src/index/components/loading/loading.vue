@@ -1,21 +1,26 @@
 <template>
-  <div class="mf-loading-container">
-    <img src="./loading.gif">
+  <div class="loading">
+    <img width="50" height="50" src="./loading.gif">
+    <div style="font-size:12px" class="desc">{{title}}</div>
   </div>
 </template>
-<script>
-  const COMPONENT_NAME = 'loading'
-
+<script type="text/ecmascript-6">
   export default {
-    name: COMPONENT_NAME
+    props: {
+      title: {
+        type: String,
+        default: '加载中'
+      }
+    }
   }
 </script>
 <style lang="scss">
-  .mf-loading-container{
-    img{
-      width: 20px;
-      height: 20px;
-      display: block;
+  .loading{
+    width: 100%;
+    text-align: center;
+    desc{
+      line-height: 16px;
+      color: rgba(255, 255, 255, 0.5);
     }
   }
 </style>

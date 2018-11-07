@@ -31,6 +31,11 @@ import { connector as api } from "@@/config/env";
 import { asyncLoaded } from "@@/service/util";
 
 export default {
+  data(){
+    return {
+       isRouterAlive:true
+    }
+  },
   components: {
     // headTop
     // vueLoading
@@ -70,6 +75,12 @@ export default {
       "LONGITUDE"
       // "SHOWLOADING"
     ]),
+    reload (){
+       this.isRouterAlive = false
+       this.$nextTick(function(){
+          this.isRouterAlive = true
+       })
+    },
     async init() {},
     closeAlert() {
       //关闭弹窗
