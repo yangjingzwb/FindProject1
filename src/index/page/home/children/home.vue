@@ -86,8 +86,8 @@ import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
 // import Goods3 from "./goods3.vue";
-import Recommended from "./recommended.vue";
-import GoodThing from "./goodThing.vue"; // 好物
+// import Recommended from "./recommended.vue";
+// import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
 
 export default {
@@ -449,7 +449,7 @@ export default {
           window.goActivity.goWeb(
             url.replace(
               /\?/,
-              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+              "?SOURCE=DISCOVER&account=" +
                 this.token.productNo +
                 "&"
             )
@@ -475,7 +475,7 @@ export default {
             "activity://goWeb?url=" +
             url.replace(
               /\?/,
-              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+              "?SOURCE=DISCOVER&account=" +
                 this.token.productNo +
                 "&"
             );
