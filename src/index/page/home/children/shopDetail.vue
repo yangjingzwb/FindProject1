@@ -166,7 +166,7 @@ export default {
 
   mounted() {
     // 隐藏进度条
-    document.getElementById("pg").style.display="none";
+    // document.getElementById("pg").style.display="none";
   },
   created() {
     this.init();

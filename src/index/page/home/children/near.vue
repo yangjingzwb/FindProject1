@@ -1,24 +1,12 @@
 <template>
   <div >
-    <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <!-- <scroll
-        :data1 ="data1"
-        :data = "shopList"
-        :scrollbar='tabScrollbar'
-        :pullDownRefresh='pullDownRefresh'
-        :stopPropagation="stopPropagation"
-        :scrollY = "scrollY"
-        :pullUpLoad= "pullUpLoad"
-        @scroll="scrollListen"
-        @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp"> -->
+    <div class="nullHeight"></div>
         <div class="t-2">
-          <div class="t-1">
-            <div class="t-3">美食</div>
-            </div>
+            附近优惠
+            <div class="t-4" @click="goMorePer()">更多</div>
             <div class="hr-1"></div>
         </div>
-        <ul v-for="(item,index) in shopList"  @click="goSeller(item)" >
+        <ul v-for="(item,index) in shopList"  @click="goSeller(item)" :key="item.id">
           <!-- :key="item.TX_JRN" -->
             <li class="left">
                 <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
@@ -29,17 +17,16 @@
                 <div class="c2">
                     <span class="l">{{item.BUS_ADDR}}</span>
                     <span class="r">{{item.distance}}km</span>
-                    
                 </div>
-                <div class="c3" >
+                <div class="c3">
                     <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
                 </div>
             </li>
             <li class="right">
-                <div class="c4">
-                    <span class="btn">立即消费</span>
-                </div>
-            </li>
+                 <div class="c4">
+                     <span class="btn">立即消费</span>
+                 </div>
+             </li>
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
@@ -47,23 +34,16 @@
           <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
           <li @click="aginEnter()" class="aa">{{loadText}}</li>
         </ul>
-    <!-- </scroll> -->
-    <!-- <div class="null"></div> -->
+        <div v-else class="nullHeight"></div>
     </div>
 </template>
 
 <script>
-import {
-  fetchPoints
-  // GetDistance
-  //   setLItem,
-  //   getLItem,
-  //   getCode
-} from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
+import { fetchPoints} from "@@/service/util";
 import Scroll from "@@/components/scroll/scroll.vue";
-import Loading from "@@/components/loading/loading.vue";
 // import vueLoading from 'vue-loading-template';
+import Loading from "@@/components/loading/loading.vue";
 // import { baseUrl } from "@@/config/env"; // baseUrl
 import sa from'sa-sdk-javascript';
 
@@ -83,14 +63,6 @@ export default {
       type: String,
       default: false
     },
-    data1: {
-      type: Boolean,
-      default: false
-    },
-    scrollY: {
-      type: Boolean,
-      default: false
-    },
     longitude: {
       type: String,
       default: false
@@ -100,19 +72,7 @@ export default {
       default: function() {
         return [];
       }
-    },
-    tabScrollbar: {
-      type: Boolean,
-      default: false
-    },
-    pullDownRefresh: {
-      type: null,
-      default: true
     }
-    // pullUpLoad: {
-    //   type: Boolean,
-    //   default: false
-    // }
   },
   computed: {
     ...mapState(["token","showLoading"])
@@ -127,20 +87,11 @@ export default {
     Scroll,
     Loading
   },
-
   methods: {
     ...mapMutations([
+      "ISSHOWALERT",
       "SHOWLOADING"
     ]),
-    scrollListen(pos) {
-      console.log("near");
-      console.log(pos);
-      // if(Math.abs(pos.y)<5){
-      //   this.$emit('changeIscrollY',true)
-      // }else{
-      //   this.$emit('changeIscrollY',false)
-      // }
-    },
     init() {
       setTimeout(() => {
         this.loadText = "请点击刷新"
@@ -160,12 +111,11 @@ export default {
         longitude: this.longitude,
         mbl_no: this.token.productNo,
         merc_id: obj.MERC_ID,
-        merc_latitude: obj.LATITUDE,
-        merc_longitude: obj.LONGITUDE,
         session: this.token.session.replace(/\+/g, "%2B"),
-        mercHl: obj.MERC_HOT_LIN 
+        merc_latitude: obj.LATITUDE,
+        merc_longitude: obj.LONGITUDE
       };
-      // console.log("~~~~~~~~~~~~",params);
+      console.log(params);
       this.$router.push({
         path: "/shopDetail",
         query: {
@@ -173,26 +123,8 @@ export default {
           }
       });
       // 神策
-      sa.track('buttonClick', {
-        topCategory: '发现',
-        subCategory: '发现：附近页'
-      });
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K07", //事件标记
-        this.token.productNo,
-        "立即消费按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      )
-    },
-    goDetail(event, obj, flag) {
-      // 神策
-      // sa.track('clickShop', {
-      //   currentPage: '更多',
-      //   commodityName: '附近商户'
-      // });
       sa.track('clickShop', {
-        currentPage: '更多',
+        currentPage: '发现',
         commodityID:obj.MERC_ID,
         commodityName: obj.STORES_NM,
         commodityType:obj.MERC_TRD_DESC,
@@ -200,20 +132,28 @@ export default {
         keyword:''
       });
       fetchPoints(
-        "020000000000", // 页面索引
-        "020000000000K07", //事件标记
+        "010000000000", // 页面索引
+        "010000000000K06", //事件标记
         this.token.productNo,
         "附近商户-" + obj.STORES_NM, // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
-      this.$emit("goDetail", event, obj, flag);
     },
-
-    onPullingDown() {
-      this.$emit("pullingDown");
-    },
-    onPullingUp() {
-      this.$emit("pullingUp");
+    // 更多优惠
+    goMorePer() {
+      // 神策
+      sa.track('buttonClick', {
+        topCategory: '发现',
+        subCategory: '发现：首页'
+      });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K07", //事件标记
+        this.token.productNo,
+        "更多优惠按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
+      this.$router.push("/home1");
     }
   }
 };
@@ -222,9 +162,30 @@ export default {
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
 .t-2 {
-  height: 2.5625rem;
+  position: relative;
+  height: 2.875rem;
   text-align: center;
   position: relative;
+  color: #13252e;
+  line-height: 2.875rem;
+  font-family: PingFangSC-Regular;
+  font-size: 0.9375rem;
+}
+.t-4 {
+  // width: 1.125rem;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  font-size: 0.75rem;
+  position: absolute;
+  right: .5rem;
+  padding-right: 1.1rem;
+  color: #7E7E7E;
+  top: 0;
+  background-image: url("/static/img/more_button.png");
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-position: 85% 50%;
+  background-size: auto 25%;
 }
 .t-2:after {
   @include onepx1(#d8d8d8);
@@ -454,6 +415,7 @@ export default {
     padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
+    // border-bottom: 1px solid #E6E6E6;
   }
   // ul::after {
   //   @include onepx1(#d8d8d8);
@@ -486,6 +448,7 @@ export default {
     float: left;
     max-height: 5rem;
     overflow: hidden;
+    // border: 1px solid #D8D8D8;
     img {
       width: 100%;
       max-height: 5rem;
@@ -512,16 +475,14 @@ export default {
     @include space();
     .l {
       width: 100%;
-      @include space();
       display: inline-block;
-      // max-width: 70%;
-    } 
-    
+      @include space();
+    }
   }
   .c3 {
     font-size: 0.75rem;
     color: #e11a2f;
-    padding-top: 0.5rem;
+    padding-top: 0.3125rem;
     letter-spacing: -0.00375rem;
     max-width: 80%;
     @include space();
@@ -542,29 +503,29 @@ export default {
     padding: 0.05rem 0.225rem;
     margin-right: 0.1875rem;
   }
-  .right {
-    float: left;
-    position: absolute;
-    top: 2.375rem;
-    right: 0;
-  }
-  .c4 {
-    position: relative;
-    height: 1.875rem;
-    color: #ed196c;
-    font-family: PingFangSC-Regular;
-    font-size: 0.75rem;
-    text-align: center;
-    z-index: 99;
-    .btn {
-      display: inline-block;
-      width: 4.5625rem;
-      height: 1.875rem;
-      border: 0.0625rem solid #ed196c;
-      border-radius: 0.9375rem;
-      line-height: 1.875rem;
-    }
-  }
+    .right {
+     float: left;
+     position: absolute;
+     top: 38px;
+     right: 0;
+   }
+   .c4 {
+     position: relative;
+     height: 1.875rem;
+     color: #ed196c;
+     font-family: PingFangSC-Regular;
+     font-size: 0.75rem;
+     text-align: center;
+     z-index: 99;
+     .btn {
+       display: inline-block;
+       width: 4.75rem;
+       height: 1.875rem;
+       border: 0.0625rem solid #ed196c;
+       border-radius: 0.9375rem;
+       line-height: 1.875rem;
+     }
+   }
 }
 
 .s_6 {
@@ -760,6 +721,9 @@ export default {
 }
 .hr-1:nth-last-child(-1) {
   height: 0;
+}
+.hr-1.height0 {
+  height: 0 !important;
 }
 .null {
   height: 3rem;

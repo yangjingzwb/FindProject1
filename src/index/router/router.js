@@ -14,6 +14,11 @@ const mine = r => require.ensure([], () => r(require('../page/home/children/mine
 const shopList = r => require.ensure([], () => r(require('../page/home/children/shopList')), 'shopList')
 const shopDetail = r => require.ensure([], () => r(require('../page/home/children/shopDetail')), 'shopDetail')
 const hebaoInfo = r => require.ensure([], () => r(require('../page/home/children/hebaoInfo')), 'hebaoInfo')
+const near1 = r => require.ensure([], () => r(require('../page/home/children/near1')), 'near1')
+const near2 = r => require.ensure([], () => r(require('../page/home/children/near2')), 'near2')
+const near3 = r => require.ensure([], () => r(require('../page/home/children/near3')), 'near3')
+const near4 = r => require.ensure([], () => r(require('../page/home/children/near4')), 'near4')
+const near5 = r => require.ensure([], () => r(require('../page/home/children/near5')), 'near5')
 
 export default [{
     path: '/',
@@ -50,6 +55,14 @@ export default [{
         {
             path: 'home1',
             component: home1,
+            redirect: 'home1/near1',
+            children: [
+                {path: 'near1', component: near1},
+                {path: 'near2', component: near2},
+                {path: 'near3', component: near3},
+                {path: 'near4', component: near4},
+                {path: 'near5', component: near5}
+            ],
             meta:{
                 keepAlive: true
             }

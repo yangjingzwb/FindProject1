@@ -2,11 +2,7 @@
   <div class="home">
     <div :class="isShow">优惠</div>
     <scroll
-      :data1 ="data1"
-      :data ="jdList"
       :scrollbar="scrollbar"
-      :pullUpLoad= "pullUpLoad_near"
-      @pullingUp="onPullingUp"
     >
     <div :class="isShow2">
       <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
@@ -39,14 +35,14 @@
           >
         </coupon>
         <!-- 附近 -->
-        <near1
+        <near
           :latitude = 'latitude'
           :longitude = 'longitude'
           :shopList="shopList"
           @aginEnter = "aginEnter"
           @goDetail="goDetail"
           >
-        </near1>
+        </near>
         <!-- 专题营销位 -->
         <goods1
           @goDetail="goDetail"
@@ -57,14 +53,14 @@
           @goDetail="goDetail"
         ></goods2>
         <!-- 京东资讯 -->
-        <goods3
+        <!-- <goods3
           :jdList="jdList"
           @goDetail="goDetail"
-        ></goods3>
+        ></goods3> -->
 
       </section>
-      <div class="null">&nbsp;</div>
-      <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
+      <!-- <div class="null">&nbsp;</div> -->
+      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
     </div>
     </scroll>
   </div>
@@ -85,13 +81,13 @@ import {
   formatDate_1
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
-import Near1 from "./near1.vue";
+import Near from "./near.vue";
 import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
-import Goods3 from "./goods3.vue";
-import Recommended from "./recommended.vue";
-import GoodThing from "./goodThing.vue"; // 好物
+// import Goods3 from "./goods3.vue";
+// import Recommended from "./recommended.vue";
+// import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
 
 export default {
@@ -139,7 +135,7 @@ export default {
     } catch (e) {}
     // 获取运营banner
     this.getMiddle();
-    this.getJD();
+    // this.getJD();
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -168,12 +164,12 @@ export default {
     });
   },
   components: {
-    Near1,
+    Near,
     Coupon,
     Slider,
     Goods1,
     Goods2,
-    Goods3,
+    // Goods3,
     Scroll
   },
 
@@ -209,7 +205,7 @@ export default {
        this.isShow2 = this.topTitle === "1" ? "content" : "contentMove";
      },
     jdSKill() {
-      // 和包支付石油
+      // 异形banner
       axios
         .post("queryMarketing", {
           position: "MARKET",
@@ -226,7 +222,7 @@ export default {
       this.sliderIndex = index;
     },
     onPullingUp() {
-      this.jdloadMore();
+      // this.jdloadMore();
     },
     jdloadMore() {
       if (this.jdFlag) {
@@ -441,19 +437,19 @@ export default {
             url.indexOf("?") > 0
               ? url.replace(
                   /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  "?SOURCE=DISCOVER&account=" +
                     this.token.productNo +
                     "&"
                 )
               : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           window.goActivity.goWeb(url2);
         } else {
           window.goActivity.goWeb(
             url.replace(
               /\?/,
-              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+              "?SOURCE=DISCOVER&account=" +
                 this.token.productNo +
                 "&"
             )
@@ -465,12 +461,12 @@ export default {
             url.indexOf("?") > 0
               ? url.replace(
                   /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  "?SOURCE=DISCOVER&account=" +
                     this.token.productNo +
                     "&"
                 )
               : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           // console.log(url_2);
           window.location = "activity://goWeb?url=" + url_2;
@@ -479,7 +475,7 @@ export default {
             "activity://goWeb?url=" +
             url.replace(
               /\?/,
-              "?hebaosso=true&SOURCE=DISCOVER&account=" +
+              "?SOURCE=DISCOVER&account=" +
                 this.token.productNo +
                 "&"
             );
@@ -1154,9 +1150,9 @@ div.container::-webkit-scrollbar {
   font-size: 0.75rem;
   text-align: center;
 }
-.null {
-   height: 2rem;
- }
+// .null {
+//    height: 2rem;
+//  }
 .hr-1 {
   display: block;
   position: absolute;

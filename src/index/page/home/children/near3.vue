@@ -1,485 +1,195 @@
 <template>
-  <div>
-    <header>
-      <ul>
-        <router-link tag="li" class="l t" to="/"></router-link>
-        <li class="l">
-            <span>附近优惠</span>
-        </li>
-      </ul>
-      <div class="hr-1"></div>
-    </header>
-    <section class="s_1">
-      <ul>
-        <li class="l t"> <!--@click="goBack()"-->
-          {{cityName1}}
-        </li>
-        <li class="l i" @click="done()">
-          <span class="icon"><img src="/static/img/1-20.png"></span>
-            <button>搜一搜：请输入商户名称</button>
-        </li>
-      </ul>
-    </section>
-
-    <div class="home">
-      <!-- <scroll
+  <div >
+    <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
+    <scroll
         :data1 ="data1"
         :data = "shopList"
-        :scrollbar='tabScrollbar'
-        :pullDownRefresh='pullDownRefresh'
-        :refreshNow = 'refreshNow'
-        :scrollY = "scrollYOther"
-        :pullUpLoad= "pullUpLoad_near"
+        :pullUpLoad= "pullUpLoad"
+        :scrollbar="scrollbar"
+        @scroll="scrollListen"
         @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp"
-        > -->
-        <div class="content">
-          <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
-            <div class="scroll content slide-content">
-              <div>
-                  <div class="slider-wrapper">
-                      <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
-                          <div v-for="item in slider">
-                            <!-- :key="item.marketingId -->
-                              <a  @click="goDetail($event,item,2,'top')" >
-                                  <img :src="item.marketingIcon">
-                              </a>
-                          </div>
-                      </slider>
-                  </div>
-              </div>
+        @pullingUp="onPullingUp">
+        <div class="t-2">
+          <div class="t-1">
+            <div class="t-3">加油站</div>
             </div>
-          </section>
-          <tab></tab>
-          <div class="nullHeight"></div>
-          <section class="s_5 s">
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
-          </section>
+            <div class="hr-1"></div>
         </div>
-      <!-- </scroll> -->
-     </div>
-  </div>
+        <ul v-for="(item,index) in shopList"  @click="goSeller(item)" >
+          <!-- :key="item.TX_JRN" -->
+            <li class="left">
+                <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
+                <img v-else :src="'/static/img/error.png'" alt="">
+            </li>
+            <li class="middle">
+                <div class="c1">{{item.STORES_NM}}</div>
+                <div class="c2">
+                    <span class="l">{{item.BUS_ADDR}}</span>
+                    <span class="r">{{item.distance}}km</span>
+                    
+                </div>
+                <div class="c3" >
+                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
+                </div>
+            </li>
+            <li class="right">
+                <div class="c4">
+                    <span class="btn">立即消费</span>
+                </div>
+            </li>
+            <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
+        </ul>
+        <ul v-if = "!shopList || shopList.length<=0 ">
+          <loading></loading>
+          <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
+          <li @click="aginEnter()" class="aa">{{loadText}}</li>
+        </ul>
+    </scroll>
+    <router-view></router-view>
+    <!-- <div class="null"></div> -->
+    </div>
 </template>
 
 <script>
-// import headTop from "@@/components/header/head";
-// import footGuide from '@@/components/footer/footGuide'
-// import SlideRender from '@@/components/page-render/slide-render'
-import { mapState, mapMutations } from "vuex";
-import Tab from "./tab.vue";
-import Slider from "@@/components/base/slider";
-// import Scroll from '@@/components/scroll/scroll.vue'
-// import axios from "@@/plugins/rsa/axios";
-import sa from "sa-sdk-javascript";
 import {
-  fetchPoints,
-  // GetDistance,
-  setLItem,
-  getLItem,
-  formatDate_1
+  fetchPoints
+  // GetDistance
+  //   setLItem,
+  //   getLItem,
+  //   getCode
 } from "@@/service/util";
-import { baseUrl } from "@@/config/env"; // baseUrl
-// import BScroll from "better-scroll";
+import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
-// import Near1 from "./near1.vue";
-// import Near2 from "./near2.vue";
-// import Near3 from "./near3.vue";
-// import Near4 from "./near4.vue";
-// import Near5 from "./near5.vue";
-// import Recommended from "./recommended.vue";
-// import Consulting from "./consulting.vue"; // 咨询
-// import GoodThing from "./goodThing.vue"; // 好物
-
-// console.log(axios);
-// import {cityGuess, hotcity, groupcity} from '../../service/getData'
+import Loading from "@@/components/loading/loading.vue";
+import axios from "@@/plugins/rsa/axios";
+// import vueLoading from 'vue-loading-template';
+// import { baseUrl } from "@@/config/env"; // baseUrl
+import sa from'sa-sdk-javascript';
 
 export default {
   data() {
     return {
+      loadText: "",
       pullUpLoad: false,
       pullUpLoad_near: true,
-      data1: false,
-      banner: "/static/mine_banner.png",
-      icon: require("@@/images/mine/help_other-pressed.png"),
-      product: [],
-      listHeight: [],
-      scrollY: true,
-      topCat: false,
       scrollbar: false,
-      slider_top_click: true,
-      slider_middle_click: true,
-      bounce: false,
-      defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
-      tabAutoPlay: false,
-      tabLoop: false,
-      tabScrollbar: false,
-      showDot: true,
-      refreshNow:true,
-      dots: ["附近", "推荐", "世界杯专区"], //['附近','推荐','世界杯专区','咨询'],
-      // autoPlay:,
-      // defaultIcon: "",
-
-      // slider:[],
-      // slider1:[],
-      // slider2:[],
-      isError: true,
-      loopX: true,
+      data1: false,
+      stopPropagation: false,
       shopList: [],
-      limit: "",
-      creditResult: "",
-      isShowAlert: false,
-      alertTextFirst: "",
-      alertTextSecond: "",
-      btnText: "",
-      isAdmittance: false,
-      home: "",
-      foodsScroll: "",
-      residue: 0,
-      flag: false,
-      shopListFlag: false,
-      CURRENTPAGE: 0, // 页码
-      PAGNUM: 4,
-      refTime: "",
-      baseImg: baseUrl.img,
       totalInit: 0,
-      endX: 0,
-      sliderIndex: 0,
-      startX: 0,
-      scrollY: true,
-      scrollYOther: true,
-      startY: 0,
-      threshold: 0.2,
-      cityName1: window.CITYNAME || "定位中",
-      pullDownRefresh: {
-        threshold: 120,
-        stop: 60
+      defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
+      pullUpLoad: {
+        threshold: -50
       }
     };
   },
-  computed: {},
-
-  mounted() {
-    try {
-      fetchPoints(
-        "home1",
-        "event_3",
-        this.token.productNo,
-        "进入附近商户",
-        this.token.session.replace(/\+/g, "%2B")
-      );
-    } catch (e) {}
-    if (!window.LATITUDE) {
-      // this.aginEnter();
-    } else {
-      // this.init();
-    }
+  props: {
   },
-  created() {
-    //神策
-    let startTime = new Date();
-    let endTime = new Date() ;
-    sa.track("loadDelay",{
-      currentBusinessLine: "发现频道",
-      currentActivity: "更多页面",
-      currentURL: window.location.href,
-      delayTime: endTime - startTime,
-      offsetTime: 0,
-      endTime: formatDate_1(endTime.getTime()),
-      startTime: formatDate_1(startTime.getTime())
-    })
-  },
-
-  components: {
-    Slider,
-    Scroll,
-    Tab
-    // Near1,
-    // Near2,
-    // Near3,
-    // Near4,
-    // Near5
-    // Recommended,
-    // Consulting,
-    // GoodThing
-    // vueLoading
-    // SlideRender
-  },
-
   computed: {
     ...mapState([
-      "slider",
-      "slider1",
-      "slider2",
-      "products",
       "token",
+      "showLoading",
       "latitude",
       "longitude",
       "cityname",
-      "sliderScroll",
-      "slideIndex",
-      "openAndClose"
     ])
+  },
+
+  mounted() {
+    if (!window.LATITUDE) {
+      // this.aginEnter();
+    } else {
+      this.init();
+    }
+  },
+  created() {},
+
+  components: {
+    Scroll,
+    Loading
   },
 
   methods: {
     ...mapMutations([
-      "SLIDER1", // 我的页面banner图
-      "PRODUCTS",
-      "SHOWLOADING",
       "CITYNAME1",
-      "OPENANDCLOSE"
+      "SHOWLOADING"
     ]),
     scrollListen(pos) {
-      console.log("home");
+      console.log("near");
       console.log(pos);
-      // setTimeout(()=>{
-
-      // })
-      // 处理滑动
-      // if(Math.abs(pos.y)>280){
-      //   this.scrollYOther = true;
-      //   this.scrollY = false
-      //   // this.startY = pos.y
-      // }else if(Math.abs(pos.y)>0){
-      //   console.log(99999)
-      //   this.scrollYOther = false;
-      //   // this.scrollY = true
+      // if(Math.abs(pos.y)<5){
+      //   this.$emit('changeIscrollY',true)
+      // }else{
+      //   this.$emit('changeIscrollY',false)
       // }
-      if (Math.abs(pos.y) > 320) {
-        // this.scrollY = false
-        // this.scrollYOther = true;
-        // this.startY = -321
-        this.OPENANDCLOSE(false);
-        this.topCat = true;
-      } else {
-        this.topCat = false;
-        this.OPENANDCLOSE(true);
-      }
     },
-    changeIscrollY(flag) {
-      this.scrollY = flag;
-    },
-    goToPage(index) {
-      this.sliderIndex = index;
+    init2() {
+      setTimeout(() => {
+        this.loadText = "请点击刷新"
+      }, 8000);
     },
     aginEnter() {
-      // alert(33)
-      this.SHOWLOADING(true);
-      this.initScroll();
-      let that = this;
-      if (this.cityName1 && this.cityName1 != "定位中" && window.LATITUDE) {
-        this.init();
-      } else {
-        try {
-          new BMap.Geolocation().getCurrentPosition(function(r) {
-            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              // 判断状态
-              let pt = r.point;
-              console.log(r);
+      this.$emit("aginEnter");
+    },
 
-              new BMap.Geocoder().getLocation(pt, function(rs) {
-                // if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                if (rs.point) {
-                  let addComp = rs.addressComponents;
-                  window.LATITUDE = rs.point.lat;
-                  window.LONGITUDE = rs.point.lng;
-                  window.CITYNAME = addComp.city;
-                  that.cityName1 = addComp.city;
-                } else {
-                  window.LATITUDE = r.point.lat;
-                  window.LONGITUDE = r.point.lng;
-                  window.CITYNAME = r.address.city;
-                  that.cityName1 = r.address.city;
-                }
-                that.init();
-                // alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
-              });
-            } else {
-              this.SHOWLOADING(true);
-            }
-          });
-        } catch (e) {}
-      }
-    },
-    intervalCity() {
-      this.cityName1 = window.CITYNAME || "定位中";
-    },
-    defaultIconF(i) {
-      this.shopList[i].PIC_URL_1 = "/static/img/error.png";
-    },
     // GetDistance(a, b, c, d) {
     //   // alert(GetDistance(a, b, c, d))
     //   return GetDistance(a, b, c, d);
     // },
-    detail(url) {
-      window.location = url;
-    },
-    gotoAddress(path) {
-      this.$router.push(path);
-    },
-    done() {
-      // 跳转到下一个页面
-      this.$router.push("/mine");
-      // 神策
-      sa.track("clickSearch", {
-        operationType: "点击搜索框",
-        currentPage: "更多"
+    goSeller(obj) {
+      let params = {
+        latitude: window.LATITUDE,
+        longitude: window.LONGITUDE,
+        mbl_no: this.token.productNo,
+        merc_id: obj.MERC_ID,
+        merc_latitude: obj.LATITUDE,
+        merc_longitude: obj.LONGITUDE,
+        session: this.token.session.replace(/\+/g, "%2B"),
+        mercHl: obj.MERC_HOT_LIN 
+      };
+      console.log("~~~~~~~~~~~~",obj);
+      console.log("~~~~~~~~~~~~",params);
+      this.$router.push({
+        path: "/shopDetail",
+        query: {
+            params: params
+          }
       });
+      // 神策
+      sa.track('buttonClick', {
+        topCategory: '发现',
+        subCategory: '发现：附近页'
+      });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K07", //事件标记
+        this.token.productNo,
+        "立即消费按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      )
     },
-    touchStart(e) {
-      let touch = e.changedTouches[0];
-      this.startX = touch.pageX;
-      // console.log(touch)
-      // startY = touch.pageY;
-      // startX = touch.pageX;
-    },
-    goDetail(event, obj, flag, channel = "default") {
-      // alert(33)
-      // if (flag == 2) {
-      //   let touch = event.changedTouches[0];
-      //   console.log(touch);
-      //   this.endX = touch.pageX;
-      //   // 点击影响滑动
-      //   if (Math.abs(this.endX - this.startX) > 50) {
-      //     return;
-      //   }
-      // }
-
-      // let touch = event.touches[0];
-      // event.stopPropagation();
-      // event.preventDefault();
-      // if(this.stopClick){
-      //   return
-      // }
-      // 防止pc端触发两次点击
-      // if (!event._constructed) {
-      //   return;
-      // }
-      //埋点 parent_title, sub_title,phone,remark, session
-      try {
-        if (channel == "top") {
-          // 神策
-          sa.track("bannerClick", {
-            contentName: obj.marketingTitle,
-            bannerNumber: String(obj.marketingNumber),
-            topCategory: "更多"
-          });
-          fetchPoints(
-            "020000000000",
-            "020000000000K01",
-            this.token.productNo,
-            "轮播banner-" + obj.marketingTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
-        } else if (channel == "classify") {
-          // 神策
-          sa.track("buttonClick", {
-            buttonName: obj.marketingTitle,
-            topCategory: "发现",
-            subCategory: "发现：更多优惠"
-          });
-          fetchPoints(
-            "020000000000",
-            "020000000000K02",
-            this.token.productNo,
-            "分类-" + obj.marketingTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
-        }
-      } catch (e) {}
-
-      let url = flag == 1 ? obj.MERC_URL : obj.marketingEventCotent;
-      // if (flag == 1) {
-      //   setLItem("shopList", JSON.stringify(this.shopList));
-      //   // localStorage.setItem("shopList", JSON.stringify(this.shopList));
-      //   //.replace(/www/, "uat")
-      //   this.SHOWLOADING(true);
-      //   // setTimeout(()=>{
-
-      //   // },5000)
-      //   // this.stopClick = 1
-      //   window.location =
-      //     url.indexOf("?") > 0
-      //       ? url.replace(/\?/, "?showtitle=false&") +
-      //         "&SOURCE=DISCOVER&" +
-      //         window.location.href.split("?")[1].split("#")[0]
-      //       : url +
-      //         "?showtitle=false&SOURCE=DISCOVE&" +
-      //         window.location.href.split("?")[1].split("#")[0];
-      //   return;
-      // }
-      // alert(33)
-      if (
-        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
-        "android"
-      ) {
-        // window.location =
-        //   url.indexOf("?") > 0
-        //     ? url.replace(/\?/, "?showtitle=false&") +
-        //       "&SOURCE=DISCOVER&" +
-        //       window.location.href.split("?")[1].split("#")[0]
-        //     : url +
-        //       "?showtitle=false&SOURCE=DISCOVE&" +
-        //       window.location.href.split("?")[1].split("#")[0];
-        // window.location = url.replace(/\?/, "?showtitle=false&");
-        if (flag == 2) {
-          let url2 =
-            url.indexOf("?") > 0
-              ? url.replace(
-                  /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                    this.token.productNo +
-                    "&"
-                )
-              : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          // console.log(url2);
-          window.goActivity.goWeb(url2);
-        } else {
-          window.goActivity.goWeb(
-            url.replace(
-              /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo +
-                "&"
-            )
-          );
-        }
-      } else {
-        // console.log(
-        //   "activity://goWeb?url=" + url.replace(/\?/, "?showtitle=false&")
-        // );
-        if (flag == 2) {
-          let url_2 =
-            url.indexOf("?") > 0
-              ? url.replace(
-                  /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                    this.token.productNo +
-                    "&"
-                )
-              : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          // console.log(url_2);
-          window.location = "activity://goWeb?url=" + url_2;
-        } else {
-          // console.log(
-          //   url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&")
-          // );
-          window.location =
-            "activity://goWeb?url=" +
-            url.replace(
-              /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo +
-                "&"
-            );
-        }
-      }
+    goDetail(event, obj, flag) {
+      // 神策
+      // sa.track('clickShop', {
+      //   currentPage: '更多',
+      //   commodityName: '附近商户'
+      // });
+      sa.track('clickShop', {
+        currentPage: '更多',
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:false,
+        keyword:''
+      });
+      fetchPoints(
+        "020000000000", // 页面索引
+        "020000000000K07", //事件标记
+        this.token.productNo,
+        "附近商户-" + obj.STORES_NM, // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
+      this.$emit("goDetail", event, obj, flag);
     },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {
@@ -494,6 +204,7 @@ export default {
         return;
       }
       this.CURRENTPAGE += 1;
+      // console.log("*************", this.CURRENTPAGE);
       axios.post("getShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
@@ -505,7 +216,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
-        merc_trd_cls: 1300
+        merc_trd_cls: 1818
         }).then(res => {
           // this.shopList = res.STORES_REC;
           // 合并数组
@@ -533,7 +244,7 @@ export default {
       );
     },
     onPullingDown() {
-      // this.init(true);
+      this.init(true);
       // 模拟更新数据
       // setTimeout(() => {
       //   if (Math.random() > 0.5) {
@@ -562,7 +273,7 @@ export default {
       //     this.$refs.scroll.forceUpdate()
       //   }
       // }, 1500)
-      // this.loadMore();
+      this.loadMore();
     },
     rebuildScroll() {
       this.nextTick(() => {
@@ -630,7 +341,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
-        merc_trd_cls: 1300
+        merc_trd_cls: 1818
         }).then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
@@ -773,15 +484,38 @@ export default {
       
     }
   }
-  // props:['activeIcon']
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-// .home{
-//   position: relative;
-// }
+.t-2 {
+  height: 2.5625rem;
+  text-align: center;
+  position: relative;
+}
+.t-2:after {
+  @include onepx1(#d8d8d8);
+}
+.t-1 {
+  height: 100%;
+  line-height: 2.5625rem;
+  width: 9.375rem;
+  margin: 0 auto;
+  background-image: url("/static/img/2-5.png");
+  background-repeat: no-repeat;
+  background-position: 100%;
+}
+.t-3 {
+  height: 100%;
+  line-height: 2.5625rem;
+  width: 4.375rem;
+  color: #888888;
+  font-family: PingFangSC-Regular;
+  font-size: 0.75rem;
+  margin: 0 auto;
+  background: #fff;
+}
 .nullHeight {
   height: 0.5625rem;
   background: #f6f7f8;
@@ -812,8 +546,6 @@ export default {
   width: 100%;
   // position: relative;
   height: 100%;
-  padding-top: 3rem;
-  padding-bottom: 2rem;
   // background: #f0f1f2;
   overflow: hidden;
 }
@@ -835,81 +567,12 @@ export default {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
 }
-header {
-  @include wh(100%, 3rem);
-  background: #ffffff;
-  position: sticky;
-  z-index: 100000000;
-  top: 0;
-  left: 0;
-  .l {
-    height: 100%;
-    line-height: 3rem;
-    font-size: 1.125rem;
-    font-family: PingFangSC-Regular;
-    color: #13252e;
-    padding-right: 3.5rem;
-    text-align: center;
-  }
-  .t {
-    color: #6c6c6c;
-    font-size: 0.9375rem;
-    height: 3rem;
-    position: relative;
-    float: left;
-    text-align: left;
-    background-image: url(/static/img/back.png);
-    background-repeat: no-repeat;
-    background-position: 0.375rem 50%;
-    background-size: 1.1rem;
-    // padding-right: 0.6rem;
-    @include space();
-  }
-}
-.s_1,
-.s_5_1 {
-  // @include wh(100%, 3rem);
-  // // padding-top: 1.25rem;
-  // background: #ffffff;
-  // position: fixed;
-  // z-index: 100000;
+.s_1 {
   @include wh(100%, 3rem);
   // padding-top: 1.25rem;
   background: #ffffff;
-  position: sticky;
-  z-index: 100000000;
-  top: 0;
-  left: 0;
-  .cat_w {
-    height: 3rem !important;
-    top: 0rem !important;
-    background: white;
-    line-height: 3rem;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-  }
-  .cat {
-    width: 33%;
-    text-align: center;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    height: 3rem;
-    line-height: 3rem;
-    background: #fff;
-    font-family: PingFangSC-Regular;
-    color: #13252e;
-    font-size: 0.9375rem;
-  }
-  .cat.active {
-    background: #fff;
-    color: #ed1991;
-    border-bottom: 0.125rem solid #ed1991;
-    border-radius: 0;
-  }
+  position: fixed;
+  z-index: 21;
   .title {
     position: relative;
     height: 1.5625rem;
@@ -939,14 +602,11 @@ header {
   .t {
     color: #6c6c6c;
     font-size: 0.9375rem;
-    width: 4.0625rem;
+    width: 4.1875rem;
     position: relative;
     float: left;
     text-align: left;
     padding-left: 0.9375rem;
-    background-repeat: no-repeat;
-    background-position: 0.375rem 50%;
-    background-size: 1.1rem;
     // padding-right: 0.6rem;
     @include space();
   }
@@ -970,10 +630,9 @@ header {
     position: absolute;
     z-index: 2;
     left: 0.25rem;
-    top: 0.9875rem;
+    top: 0.125rem;
     img {
       width: 100%;
-      display: block;
     }
   }
   .i {
@@ -1056,12 +715,11 @@ header {
 .s_5 {
   // padding: 0 0.9375rem;
   // background: #fff;
-  // margin-top: 0.5625rem;
-  // margin-bottom: 1rem;
-  // height: 56.25rem;
+  margin-top: 0.5625rem;
+  margin-bottom: 1rem;
   ul {
-    height: 7.5rem;
-    padding-top: 1.625rem;
+    height: 6.6875rem;
+    padding-top: 1rem;
     position: relative;
     margin: 0 0.9375rem;
   }
@@ -1102,11 +760,11 @@ header {
       min-height: 4.5625rem;
     }
   }
-  .right {
+  .middle {
     float: left;
     padding-left: 0.5625rem;
-    min-width: 60%;
-    width: 75%;
+    min-width: 50%;
+    width: 50%;
     text-align: left;
   }
   .c1 {
@@ -1117,24 +775,23 @@ header {
   }
   .c2 {
     font-size: 0.6875rem;
-    color: #999999;
+    color: #999;
     padding-top: 0.5625rem;
-    max-width: 90%;
     @include space();
     .l {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      width: 100%;
+      @include space();
       display: inline-block;
-      max-width: 70%;
-    }
+      // max-width: 70%;
+    } 
+    
   }
   .c3 {
     font-size: 0.75rem;
     color: #e11a2f;
-    padding-top: 0.5625rem;
+    padding-top: 0.5rem;
     letter-spacing: -0.00375rem;
-    max-width: 70%;
+    max-width: 80%;
     @include space();
     div {
       @include space();
@@ -1142,7 +799,8 @@ header {
   }
   .r {
     position: absolute;
-    right: 0.9375rem;
+    top: 1rem;
+    right: 0;
   }
   .b {
     display: inline-block;
@@ -1151,6 +809,29 @@ header {
     border-radius: 0.125rem;
     padding: 0.05rem 0.225rem;
     margin-right: 0.1875rem;
+  }
+  .right {
+    float: left;
+    position: absolute;
+    top: 2.375rem;
+    right: 0;
+  }
+  .c4 {
+    position: relative;
+    height: 1.875rem;
+    color: #ed196c;
+    font-family: PingFangSC-Regular;
+    font-size: 0.75rem;
+    text-align: center;
+    z-index: 99;
+    .btn {
+      display: inline-block;
+      width: 4.5625rem;
+      height: 1.875rem;
+      border: 0.0625rem solid #ed196c;
+      border-radius: 0.9375rem;
+      line-height: 1.875rem;
+    }
   }
 }
 
@@ -1213,7 +894,6 @@ header {
   -webkit-flex: 1;
   flex: 1;
   position: relative;
-  height: 56.25rem;
   // margin: 0 .625rem .625rem;
 }
 .slider-item {
@@ -1322,7 +1002,7 @@ header {
   position: relative;
   // width: 4rem;
   padding: 0.3125rem 0.625rem;
-  top: 0.75rem;
+  top: 3.4375rem;
   background: #fff;
   z-index: 10;
   color: #444444;
@@ -1336,7 +1016,7 @@ header {
   float: left;
   width: 100%;
   bottom: 0;
-  background-color: #d8d8d8;
+  background-color: #e6e6e6;
   -webkit-transform-origin: 0, 0;
   transform-origin: 0, 0;
   -webkit-transform: scaleY(0.5);
@@ -1346,17 +1026,13 @@ header {
   //   @include onepx1(#d8d8d8);
   // }
 }
-.animation_2::after,
-.animation_1::after {
-  content: "  ";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 120%;
-  height: 0.0625rem;
-  background-color: #d8d8d8;
-  /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
-  -webkit-transform: scaleY(0.5);
-  transform: scaleY(0.5);
+.hr-1:nth-last-child(-1) {
+  height: 0;
+}
+.null {
+  height: 3rem;
+  // padding-top: 1.2rem;
+  // font-size: 0.6875rem;
+  // color: #afadadc4;
 }
 </style>

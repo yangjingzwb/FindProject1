@@ -18,9 +18,8 @@
   .loading{
     width: 100%;
     text-align: center;
-    desc{
-      line-height: 16px;
-      color: rgba(255, 255, 255, 0.5);
+    .desc {
+      color: #7e7e7e;
     }
   }
 </style>
