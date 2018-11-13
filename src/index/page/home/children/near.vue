@@ -115,13 +115,8 @@ export default {
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE
       };
-      console.log(params);
-      this.$router.push({
-        path: "/shopDetail",
-        query: {
-            params: params
-          }
-      });
+      this.$store.commit("SHOPPARM", params);
+      this.$router.push({path: "/shopDetail"});
       // 神策
       sa.track('clickShop', {
         currentPage: '发现',

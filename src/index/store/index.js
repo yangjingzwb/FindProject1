@@ -15,7 +15,10 @@ const state = {
 	slider:[], //首页轮播图
 	slider1:[], //我的轮播图
 	slider2:[], //我的轮播图
+	bannermarkets:[], //异形banner
 	topTitle:'', //标题
+	recommends:[], // 为你推荐banner
+	shopParm:[], // 为你推荐banner
 	products:'', // 首页，贷款超市产品列表
 	error:0,
 	direction:'',

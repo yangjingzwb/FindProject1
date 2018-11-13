@@ -22,8 +22,8 @@
         </div>
       </section>
       <!-- 秒杀 -->
-      <section v-if="jdBanner.marketingIcon" class="s_3 s" @click="goDetail($event,jdBanner,1,'jd')">
-        <img :src="jdBanner.marketingIcon" >
+      <section v-if="bannermarkets[0].marketingIcon" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
+        <img :src="bannermarkets[0].marketingIcon" >
       </section>  
             
       <section class="s_5 s" >
@@ -146,7 +146,7 @@ export default {
   },
   created() {
     this.initShow(); //控制标题头
-    this.jdSKill(); // 请求广告位
+    // this.jdSKill(); // 请求广告位
     // 获取优惠券
     this.getMainCoupon();
     this.getCoupon();
@@ -178,6 +178,7 @@ export default {
       "slider2",
       "slider",
       "slider1",
+      "bannermarkets",
       "topTitle",
       "products",
       "token",
@@ -537,7 +538,7 @@ export default {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
-            // console.log(this.shopList);
+            console.log("ye",this.shopList);
             setTimeout(() => {
               this.SHOWLOADING(false);
             }, 300);

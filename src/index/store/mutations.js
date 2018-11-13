@@ -5,7 +5,10 @@ import {
 	SLIDER,
 	SLIDER1,
 	SLIDER2,
+	BANNERMARKETS,
 	TOPTITLE,
+	RECOMMENDS,
+	SHOPPARM,
 	PRODUCTS,
 	ERROR,
 	LATITUDE,
@@ -56,8 +59,17 @@ export default {
 	[SLIDER2](state,data){
 		state.slider2 = data
 	},
+	[BANNERMARKETS](state,data){
+		state.bannermarkets = data
+	},
 	[TOPTITLE](state,data){
 		state.topTitle = data
+	},
+	[RECOMMENDS](state,data){
+		state.recommends = data
+	},
+	[SHOPPARM](state,data){
+		state.shopParm = data
 	},
 	[PRODUCTS](state,data){
 		state.products = data

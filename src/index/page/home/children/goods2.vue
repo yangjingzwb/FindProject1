@@ -4,7 +4,7 @@
                 为你推荐
               </div>
               <ul class="u1">
-                <li v-for="(item,index) in data" :key="'good2_1_'+ index" @click="goDetail($event,item,11)" >
+                <li v-for="(item,index) in recommends" :key="'good2_1_'+ index" @click="goDetail($event,item,11)" >
                   <ul class="u2">
                     <li class="icon">
                       <img v-lazy="item.marketingIcon"/>
@@ -24,7 +24,7 @@
 <script>
 import { fetchPoints, GetDistance } from "@@/service/util";
 import { mapState } from "vuex";
-import axios from "@@/plugins/rsa/axios";
+// import axios from "@@/plugins/rsa/axios";
 import sa from'sa-sdk-javascript';
 export default {
   data() {
@@ -33,11 +33,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["token"])
+    ...mapState(["token", "recommends"])
   },
 
   mounted() {
-    this.init();
+    // this.init();
   },
   created() {},
 

@@ -147,13 +147,15 @@ export default {
         session: this.token.session.replace(/\+/g, "%2B"),
         mercHl: obj.MERC_HOT_LIN 
       };
-      console.log("~~~~~~~~~~~~",obj);
-      console.log("~~~~~~~~~~~~",params);
+      this.$store.commit("SHOPPARM", params);
+      // console.log("xiao",this.$store.state.shopParm)
+      // console.log("~~~~~~~~~~~~",obj);
+      // console.log("~~~~~~~~~~~~",params);
       this.$router.push({
         path: "/shopDetail",
-        query: {
-            params: params
-          }
+        // query: {
+        //     params: params
+        //   }
       });
       // 神策
       sa.track('buttonClick', {
@@ -376,7 +378,7 @@ export default {
             return;
           }
 
-          // console.log(this.shopList);
+          console.log("yeye",this.shopList);
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
             this.data1 = true;

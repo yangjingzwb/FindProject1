@@ -328,8 +328,8 @@ export default {
   .dots {
     position: absolute;
     right: 0;
-    left: 0;
-    bottom: .75rem;
+    left: 18rem;
+    bottom: .35rem;
     transform: translateZ(.0625rem);
     text-align: center;
     font-size: 0;
@@ -343,7 +343,7 @@ export default {
       border: 1px solid #fff;
       &.active {
         width: .3125rem;
-        border-radius: .3125rem;
+        border-radius: 50%;
         background: #ed1991;
         border-width:0;
       }

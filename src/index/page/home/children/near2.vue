@@ -147,13 +147,9 @@ export default {
         session: this.token.session.replace(/\+/g, "%2B"),
         mercHl: obj.MERC_HOT_LIN 
       };
-      console.log("~~~~~~~~~~~~",obj);
-      console.log("~~~~~~~~~~~~",params);
+      this.$store.commit("SHOPPARM", params);
       this.$router.push({
-        path: "/shopDetail",
-        query: {
-            params: params
-          }
+        path: "/shopDetail"
       });
       // 神策
       sa.track('buttonClick', {

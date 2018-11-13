@@ -111,7 +111,9 @@ router.beforeEach((to, from, next) => {
   let slider = 0;
   let slider1 = 0;
   let slider2 = 0;
+  let bannermarkets = 0;
   let topTitle = 0;
+  let recommends = 0;
 
   // 单点登录
   //?SERVICE=user_ssoservice&VERSION=1.0&PARTNER=80010003&SIGN_TYPE=MD5&CREDTENTIAL=1593305,1502335609,1502336209,1502335609,218.77.2.82,client.cmpay.com&SIGN_DATA=08229a7a638c243bb7ab0a0e67e6d81c&viewCode=html
@@ -149,9 +151,13 @@ router.beforeEach((to, from, next) => {
           slider += 1;
           store.commit("SLIDER1", (res.data ? res.data.catalogs : []));
           slider1 += 1;
+          store.commit("BANNERMARKETS", (res.data ? res.data.bannermarkets : []));
+          bannermarkets += 1;
           store.commit("TOPTITLE", (res.data ? res.data.topSysConfigValue : ""));
           topTitle += 1;
-          // console.log(store.state.slider)
+          store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
+          recommends += 1;
+          // console.log("xiao",store.state.recommends)
           checkUtil(slider, slider1, slider2, next)
       }).catch((res) => {
           // window.location.reload()

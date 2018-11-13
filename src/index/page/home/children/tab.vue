@@ -2,26 +2,11 @@
   <div>
       <section v-if="slider1 && slider1.length>0" class="s_3 s">
         <ul>
-          <router-link tag="li" to="/home1/near1">
-            <img :src="slider1[0].marketingIcon" class="icon">
-            <span class="text">{{slider1[0].marketingTitle}}</span>
-          </router-link>
-          <router-link tag="li" to="/home1/near2">
-            <img :src="slider1[1].marketingIcon" class="icon">
-            <span class="text">{{slider1[1].marketingTitle}}</span>
-          </router-link>
-          <router-link tag="li" to="/home1/near3">
-            <img :src="slider1[2].marketingIcon" class="icon">
-            <span class="text">{{slider1[2].marketingTitle}}</span>
-          </router-link>
-          <router-link tag="li" to="/home1/near4">
-            <img :src="slider1[3].marketingIcon" class="icon">
-            <span class="text">{{slider1[3].marketingTitle}}</span>
-          </router-link>
-          <router-link tag="li" to="/home1/near5">
-            <img :src="slider1[4].marketingIcon" class="icon">
-            <span class="text">{{slider1[4].marketingTitle}}</span>
-          </router-link>
+          <li v-for="item in slider1"  @click="goDetail(item)">
+            <!-- :key="item.id" -->
+            <img :src="item.marketingIcon" :onerror='defaultIcon' class="icon" >
+            <span class="text">{{item.marketingTitle}}</span>
+          </li>
         </ul>
       </section>
   </div>
@@ -44,6 +29,7 @@ import Near5 from "./near5.vue";
 export default {
   data() {
     return {
+      defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
     }
   },
   computed: {
@@ -56,6 +42,20 @@ export default {
     ...mapMutations([
       "SLIDER1" // 分类icon
     ]),
+    goDetail(obj) {
+      console.log(obj.mercTrdCls);
+      if(obj.mercTrdCls == "1300") {
+        this.$router.push("/home1/near1");
+      } else if(obj.mercTrdCls == "1505") {
+        this.$router.push("/home1/near2");
+      } else if(obj.mercTrdCls == "1818") {
+        this.$router.push("/home1/near3");
+      } else if(obj.mercTrdCls == "1515") {
+        this.$router.push("/home1/near4");
+      }else {
+        this.$router.push("/home1/near5");
+      }
+    }
   }
 
 };

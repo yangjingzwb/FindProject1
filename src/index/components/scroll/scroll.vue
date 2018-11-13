@@ -150,7 +150,7 @@ export default {
     pullUpTxt() {
       const moreTxt =
         (this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.more) ||
-        "加载更多";
+        "";
 
       const noMoreTxt =
         (this.pullUpLoad &&

@@ -17,7 +17,7 @@ const debug = 2 // process.env.NODE_ENV !== 'production'
 // 配置环境
 if (debug == 1) { //生产
     baseUrl.api = 'https://find.cmpay.com:9105/rcServer/';
-    // baseUrl.api = 'http://211.138.236.219:9103/rcServer/';
+    // baseUrl.api = 'http://211.138.236.219:9105/rcServer/';
     baseUrl.img = 'https://mca.cmpay.com:28710'
     // baseUrl.img = 'http://211.138.236.210:18480'
 } else if (debug == 0) { //准生产

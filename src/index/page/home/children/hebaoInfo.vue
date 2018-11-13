@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <header class="s_1">
       <ul>
-        <router-link tag="li" class="l t" to="/home1"></router-link>
+        <li class="l t" @click="goBack()">
         <li class="l">
             <span>活动规则详情</span>
         </li>
@@ -75,7 +75,7 @@ export default {
   mounted() {
     this.init();
     // 隐藏进度条
-    document.getElementById("pg").style.display="none";
+    // document.getElementById("pg").style.display="none";
   },
   created() {},
 
@@ -118,6 +118,9 @@ export default {
       }
       return obj;
     },
+    goBack() {
+      this.$router.go(-1);
+    }
   }
 };
 </script>
