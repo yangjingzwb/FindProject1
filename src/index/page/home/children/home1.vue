@@ -2,7 +2,7 @@
   <div>
     <header>
       <ul>
-        <li class="l t" @click="goBack()"></li>
+        <router-link tag="li" class="l t" to="/"></router-link>
         <li class="l">
             <span>附近优惠</span>
         </li>

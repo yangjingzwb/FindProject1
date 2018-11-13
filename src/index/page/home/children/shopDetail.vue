@@ -2,7 +2,7 @@
   <div class="home">
     <div class="s_1">
       <ul>
-        <li class="l t" @click="goBack()"></li>
+        <router-link tag="li" class="l t" to="/home1"></router-link>
         <li class="l">
             <span>商家信息</span>
         </li>
@@ -396,9 +396,6 @@ export default {
         }
       }
       return obj;
-    },
-    goBack() {
-      this.$router.go(-1);
     },
     changeIscrollY(flag) {
       this.scrollY = flag;
