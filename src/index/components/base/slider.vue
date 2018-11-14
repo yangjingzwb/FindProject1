@@ -328,19 +328,19 @@ export default {
   .dots {
     position: absolute;
     right: 0;
-    left: 18rem;
-    bottom: .35rem;
+    left: 17.8rem;
+    bottom: 0.3375rem;
     transform: translateZ(.0625rem);
     text-align: center;
     font-size: 0;
     .dot {
       display: inline-block;
-      margin: 0 .25rem;
+      margin: 0 0.1875rem;
       width: .3125rem;
       height: .3125rem;
       border-radius: 50%;
       // background: #fff;
-      border: 1px solid #fff;
+      border: 0.0625rem solid #fff;
       &.active {
         width: .3125rem;
         border-radius: 50%;

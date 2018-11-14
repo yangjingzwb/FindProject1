@@ -11,12 +11,11 @@
     </header>
     <section class="s_1">
       <ul>
-        <li class="l t"> <!--@click="goBack()"-->
+        <li class="l t">
           {{cityName1}}
         </li>
         <li class="l i" @click="done()">
-          <span class="icon"><img src="/static/img/1-20.png"></span>
-            <button>搜一搜：请输入商户名称</button>
+          <button><span class="icon"><img src="/static/img/1-20.png"></span>搜一搜：请输入商户名称</button>
         </li>
       </ul>
     </section>
@@ -878,7 +877,7 @@ header {
   background: #ffffff;
   position: sticky;
   z-index: 100000000;
-  top: 0;
+  top: 3rem;
   left: 0;
   .cat_w {
     height: 3rem !important;
@@ -966,14 +965,15 @@ header {
   .icon {
     display: block;
     width: 1rem;
-    height: 1rem;
+    height: 2rem;
     position: absolute;
-    z-index: 2;
     left: 0.25rem;
-    top: 0.9875rem;
+    // top: 0.9875rem;
     img {
       width: 100%;
       display: block;
+      position: relative;
+      top: 0.5rem;
     }
   }
   .i {
@@ -986,6 +986,7 @@ header {
       display: block;
       height: 1.9375rem;
       width: 100%;
+      z-index: 999;
       position: relative;
       top: 0.5rem;
       text-indent: 2em;
