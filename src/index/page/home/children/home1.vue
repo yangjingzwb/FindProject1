@@ -20,18 +20,12 @@
       </ul>
     </section>
 
+    
+
     <div class="home">
-      <!-- <scroll
-        :data1 ="data1"
-        :data = "shopList"
-        :scrollbar='tabScrollbar'
-        :pullDownRefresh='pullDownRefresh'
-        :refreshNow = 'refreshNow'
-        :scrollY = "scrollYOther"
-        :pullUpLoad= "pullUpLoad_near"
-        @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp"
-        > -->
+      <scroll
+        scrollbar=true
+        >
         <div class="content">
           <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
             <div class="scroll content slide-content">
@@ -57,7 +51,7 @@
           </keep-alive>
           </section>
         </div>
-      <!-- </scroll> -->
+      </scroll>
      </div>
   </div>
 </template>

@@ -1,51 +1,52 @@
 <template>
-  <div >
+  <div class="aa" style="height:100%;position:relative;overflow:hidden;padding:0;">
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
-    <scroll
+    <!-- <scroll
         :data1 ="data1"
         :data = "shopList"
         :pullUpLoad= "pullUpLoad"
         :scrollbar="scrollbar"
-        @scroll="scrollListen"
         @pullingDown="onPullingDown"
-        @pullingUp="onPullingUp">
-        <div class="t-2">
-          <div class="t-1">
-            <div class="t-3">美食</div>
+        @pullingUp="onPullingUp"> -->
+        <div>
+          <div class="t-2">
+            <div class="t-1">
+              <div class="t-3">美食</div>
             </div>
             <div class="hr-1"></div>
+          </div>
+          <ul v-for="(item,index) in shopList"  @click="goSeller(item)" >
+            <!-- :key="item.TX_JRN" -->
+              <li class="left">
+                  <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
+                  <img v-else :src="'/static/img/error.png'" alt="">
+              </li>
+              <li class="middle">
+                  <div class="c1">{{item.STORES_NM}}</div>
+                  <div class="c2">
+                      <span class="l">{{item.BUS_ADDR}}</span>
+                      <span class="r">{{item.distance}}km</span>
+                      
+                  </div>
+                  <div class="c3" >
+                      <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
+                  </div>
+              </li>
+              <li class="right">
+                  <div class="c4">
+                      <span class="btn">立即消费</span>
+                  </div>
+              </li>
+              <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
+          </ul>
+          <ul v-if = "!shopList || shopList.length<=0 ">
+            <loading></loading>
+            <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
+            <li @click="aginEnter()" class="aa">{{loadText}}</li>
+          </ul>
         </div>
-        <ul v-for="(item,index) in shopList"  @click="goSeller(item)" >
-          <!-- :key="item.TX_JRN" -->
-            <li class="left">
-                <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
-                <img v-else :src="'/static/img/error.png'" alt="">
-            </li>
-            <li class="middle">
-                <div class="c1">{{item.STORES_NM}}</div>
-                <div class="c2">
-                    <span class="l">{{item.BUS_ADDR}}</span>
-                    <span class="r">{{item.distance}}km</span>
-                    
-                </div>
-                <div class="c3" >
-                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
-                </div>
-            </li>
-            <li class="right">
-                <div class="c4">
-                    <span class="btn">立即消费</span>
-                </div>
-            </li>
-            <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
-        </ul>
-        <ul v-if = "!shopList || shopList.length<=0 ">
-          <loading></loading>
-          <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
-          <li @click="aginEnter()" class="aa">{{loadText}}</li>
-        </ul>
-    </scroll>
-    <router-view></router-view>
+    <!-- </scroll> -->
+    <!-- <router-view></router-view> -->
     <!-- <div class="null"></div> -->
     </div>
 </template>
@@ -64,7 +65,7 @@ import Loading from "@@/components/loading/loading.vue";
 import axios from "@@/plugins/rsa/axios";
 // import vueLoading from 'vue-loading-template';
 // import { baseUrl } from "@@/config/env"; // baseUrl
-import sa from'sa-sdk-javascript';
+import sa from "sa-sdk-javascript";
 
 export default {
   data() {
@@ -83,16 +84,9 @@ export default {
       }
     };
   },
-  props: {
-  },
+  props: {},
   computed: {
-    ...mapState([
-      "token",
-      "showLoading",
-      "latitude",
-      "longitude",
-      "cityname",
-    ])
+    ...mapState(["token", "showLoading", "latitude", "longitude", "cityname"])
   },
 
   mounted() {
@@ -110,22 +104,19 @@ export default {
   },
 
   methods: {
-    ...mapMutations([
-      "CITYNAME1",
-      "SHOWLOADING"
-    ]),
-    scrollListen(pos) {
-      console.log("near");
-      console.log(pos);
-      // if(Math.abs(pos.y)<5){
-      //   this.$emit('changeIscrollY',true)
-      // }else{
-      //   this.$emit('changeIscrollY',false)
-      // }
-    },
+    ...mapMutations(["CITYNAME1", "SHOWLOADING"]),
+    // scrollListen(pos) {
+    //   console.log("near");
+    //   console.log(pos);
+    //   // if(Math.abs(pos.y)<5){
+    //   //   this.$emit('changeIscrollY',true)
+    //   // }else{
+    //   //   this.$emit('changeIscrollY',false)
+    //   // }
+    // },
     init2() {
       setTimeout(() => {
-        this.loadText = "请点击刷新"
+        this.loadText = "请点击刷新";
       }, 8000);
     },
     aginEnter() {
@@ -145,22 +136,22 @@ export default {
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
         session: this.token.session.replace(/\+/g, "%2B"),
-        mercHl: obj.MERC_HOT_LIN 
+        mercHl: obj.MERC_HOT_LIN
       };
       this.$store.commit("SHOPPARM", params);
       // console.log("xiao",this.$store.state.shopParm)
       // console.log("~~~~~~~~~~~~",obj);
       // console.log("~~~~~~~~~~~~",params);
       this.$router.push({
-        path: "/shopDetail",
+        path: "/shopDetail"
         // query: {
         //     params: params
         //   }
       });
       // 神策
-      sa.track('buttonClick', {
-        topCategory: '发现',
-        subCategory: '发现：附近页'
+      sa.track("buttonClick", {
+        topCategory: "发现",
+        subCategory: "发现：附近页"
       });
       fetchPoints(
         "010000000000", // 页面索引
@@ -168,7 +159,7 @@ export default {
         this.token.productNo,
         "立即消费按钮", // 事件名称
         this.token.session.replace(/\+/g, "%2B")
-      )
+      );
     },
     goDetail(event, obj, flag) {
       // 神策
@@ -176,13 +167,13 @@ export default {
       //   currentPage: '更多',
       //   commodityName: '附近商户'
       // });
-      sa.track('clickShop', {
-        currentPage: '更多',
-        commodityID:obj.MERC_ID,
+      sa.track("clickShop", {
+        currentPage: "更多",
+        commodityID: obj.MERC_ID,
         commodityName: obj.STORES_NM,
-        commodityType:obj.MERC_TRD_DESC,
-        is_FromSearch:false,
-        keyword:''
+        commodityType: obj.MERC_TRD_DESC,
+        is_FromSearch: false,
+        keyword: ""
       });
       fetchPoints(
         "020000000000", // 页面索引
@@ -207,19 +198,21 @@ export default {
       }
       this.CURRENTPAGE += 1;
       // console.log("*************", this.CURRENTPAGE);
-      axios.post("getShopInfo", {
-        longitude: window.LONGITUDE, // 经度
-        latitude: window.LATITUDE, // 维度
-        stores_nm: "", // 门店名称
-        merc_abbr: "", // 商户简称
-        mblno: this.token.productNo, //用户手机号
-        // tixn_cnl: "ROYTEL", // 固定值
-        currentPage: this.CURRENTPAGE,
-        pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
-        map_type: window.isUseBaiDuLoc ? 0 : 1,
-        merc_trd_cls: 1300
-        }).then(res => {
+      axios
+        .post("getShopInfo", {
+          longitude: window.LONGITUDE, // 经度
+          latitude: window.LATITUDE, // 维度
+          stores_nm: "", // 门店名称
+          merc_abbr: "", // 商户简称
+          mblno: this.token.productNo, //用户手机号
+          // tixn_cnl: "ROYTEL", // 固定值
+          currentPage: this.CURRENTPAGE,
+          pagNum: this.PAGNUM || 4,
+          session: this.token.session.replace(/\+/g, "%2B"),
+          map_type: window.isUseBaiDuLoc ? 0 : 1,
+          merc_trd_cls: 1300
+        })
+        .then(res => {
           // this.shopList = res.STORES_REC;
           // 合并数组
           this.shopList.push.apply(this.shopList, this.filterObj(res.data));
@@ -332,19 +325,21 @@ export default {
         this.SHOWLOADING(false);
         return;
       }
-      axios.post("getShopInfo", {
-        longitude: window.LONGITUDE, // 经度
-        latitude: window.LATITUDE, // 维度
-        stores_nm: "", // 门店名称
-        merc_abbr: "", // 门店简称
-        // tixn_cnl: "ROYTEL", // 固定值
-        currentPage: this.CURRENTPAGE,
-        mblno: this.token.productNo, //用户手机号
-        pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
-        map_type: window.isUseBaiDuLoc ? 0 : 1,
-        merc_trd_cls: 1300
-        }).then(res => {
+      axios
+        .post("getShopInfo", {
+          longitude: window.LONGITUDE, // 经度
+          latitude: window.LATITUDE, // 维度
+          stores_nm: "", // 门店名称
+          merc_abbr: "", // 门店简称
+          // tixn_cnl: "ROYTEL", // 固定值
+          currentPage: this.CURRENTPAGE,
+          mblno: this.token.productNo, //用户手机号
+          pagNum: this.PAGNUM || 4,
+          session: this.token.session.replace(/\+/g, "%2B"),
+          map_type: window.isUseBaiDuLoc ? 0 : 1,
+          merc_trd_cls: 1300
+        })
+        .then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
@@ -378,7 +373,7 @@ export default {
             return;
           }
 
-          console.log("yeye",this.shopList);
+          console.log("yeye", this.shopList);
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
             this.data1 = true;
@@ -473,17 +468,16 @@ export default {
       this.$router.go(-1);
     }
   },
-  activated(){
-    console.log(2323)
+  activated() {
+    console.log(2323);
     // alert()
-    this.refreshNow = !this.refreshNow
+    this.refreshNow = !this.refreshNow;
   },
-  watch:{
-    latitude(curVal,oldVal){
-      if(curVal&&curVal!="" && this.shopList.length<=0){
+  watch: {
+    latitude(curVal, oldVal) {
+      if (curVal && curVal != "" && this.shopList.length <= 0) {
         // this.init()
       }
-      
     }
   }
 };
@@ -785,8 +779,7 @@ export default {
       @include space();
       display: inline-block;
       // max-width: 70%;
-    } 
-    
+    }
   }
   .c3 {
     font-size: 0.75rem;
