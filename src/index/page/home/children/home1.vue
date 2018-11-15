@@ -24,6 +24,15 @@
 
     <div class="home">
       <scroll
+        :data1 ="data1"
+        :data = "shopList"
+        :scrollbar='tabScrollbar'
+        :pullDownRefresh='pullDownRefresh'
+        :refreshNow = 'refreshNow'
+        :scrollY = "scrollYOther"
+        :pullUpLoad= "pullUpLoad_near"
+        @pullingDown="onPullingDown"
+        @pullingUp="onPullingUp"
         scrollbar=true
         >
         <div class="content">
@@ -43,12 +52,30 @@
               </div>
             </div>
           </section>
-          <tab></tab>
+          
+          <section v-if="slider1 && slider1.length>0" class="s_3 s">
+            <ul>
+              <li v-for="item in slider1"  @click="goCatalogs(item)">
+                <img :src="item.marketingIcon" :onerror='defaultIcon' class="icon">
+                <span class="text">{{item.marketingTitle}}</span>
+              </li>
+            </ul>
+          </section>
           <div class="nullHeight"></div>
           <section class="s_5 s">
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
+            <near1
+              :data1 = "data1"
+              :latitude = 'latitude'
+              :longitude = 'longitude'
+              :shopList="shopList"
+              :data = "shopList"
+              @goDetail="goDetail"
+              >
+            </near1>
+            <ul v-if = "!shopList || shopList.length<=0 ">
+              <loading></loading>
+            <li @click="aginEnter()" class="aa">{{loadText}}</li>
+          </ul>
           </section>
         </div>
       </scroll>
@@ -61,10 +88,10 @@
 // import footGuide from '@@/components/footer/footGuide'
 // import SlideRender from '@@/components/page-render/slide-render'
 import { mapState, mapMutations } from "vuex";
-import Tab from "./tab.vue";
 import Slider from "@@/components/base/slider";
 // import Scroll from '@@/components/scroll/scroll.vue'
-// import axios from "@@/plugins/rsa/axios";
+import axios from "@@/plugins/rsa/axios";
+import Loading from "@@/components/loading/loading.vue";
 import sa from "sa-sdk-javascript";
 import {
   fetchPoints,
@@ -76,11 +103,7 @@ import {
 import { baseUrl } from "@@/config/env"; // baseUrl
 // import BScroll from "better-scroll";
 import Scroll from "@@/components/scroll/scroll.vue";
-// import Near1 from "./near1.vue";
-// import Near2 from "./near2.vue";
-// import Near3 from "./near3.vue";
-// import Near4 from "./near4.vue";
-// import Near5 from "./near5.vue";
+import Near1 from "./near1.vue";
 // import Recommended from "./recommended.vue";
 // import Consulting from "./consulting.vue"; // 咨询
 // import GoodThing from "./goodThing.vue"; // 好物
@@ -94,6 +117,7 @@ export default {
       pullUpLoad: false,
       pullUpLoad_near: true,
       data1: false,
+      loadText: "",
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       product: [],
@@ -166,7 +190,7 @@ export default {
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
-      // this.init();
+      this.init();
     }
   },
   created() {
@@ -186,13 +210,9 @@ export default {
 
   components: {
     Slider,
+    Loading,
     Scroll,
-    Tab
-    // Near1,
-    // Near2,
-    // Near3,
-    // Near4,
-    // Near5
+    Near1
     // Recommended,
     // Consulting,
     // GoodThing
@@ -327,6 +347,64 @@ export default {
       // console.log(touch)
       // startY = touch.pageY;
       // startX = touch.pageX;
+    },
+    goCatalogs(obj) {
+      console.log(obj.marketingTitle,obj.mercTrdCls);
+      axios.post("getShopInfo", {
+        longitude: window.LONGITUDE, // 经度
+        latitude: window.LATITUDE, // 维度
+        stores_nm: "", // 门店名称
+        merc_abbr: "", // 门店简称
+        // tixn_cnl: "ROYTEL", // 固定值
+        currentPage: this.CURRENTPAGE,
+        mblno: this.token.productNo, //用户手机号
+        pagNum: this.PAGNUM || 4,
+        session: this.token.session.replace(/\+/g, "%2B"),
+        map_type: window.isUseBaiDuLoc ? 0 : 1,
+        merc_trd_cls: obj.mercTrdCls
+        }).then(res => {
+          if (res.data && res.data.length > 0) {
+            this.isError = true;
+            this.shopList = this.filterObj(res.data);
+            // if (flag) {
+            //   this.home.finishPullDown();
+            // } else {
+            //   this.home.refresh();
+            // }
+            this.initScroll();
+            setTimeout(() => {
+              this.SHOWLOADING(false);
+            }, 300);
+          } else {
+            this.isError = true;
+            this.totalInit++;
+            if (this.totalInit <= 5) {
+              this.init();
+            } else {
+              // this.shopList = getLItem("shopList", 600000);
+              this.shopList = [];
+              // setTimeout(() => {
+              this.SHOWLOADING(false);
+              this.isError = false;
+              if (flag) {
+                this.initScroll();
+              } else {
+                this.initScroll();
+              }
+              // }, 300);
+            }
+            return;
+          }
+          console.log("cccccc",this.shopList);
+          if (res.data.length < this.PAGNUM) {
+            this.shopListFlag = true;
+            this.data1 = true;
+            //没有更多了
+          } else {
+            this.shopListFlag = false;
+            this.data1 = false;
+          }
+        })      
     },
     goDetail(event, obj, flag, channel = "default") {
       // alert(33)
@@ -482,7 +560,7 @@ export default {
       }
       return obj;
     },
-    loadMore() {
+    loadMore(obj) {
       if (this.shopListFlag) {
         return;
       }
@@ -555,7 +633,7 @@ export default {
       //     this.$refs.scroll.forceUpdate()
       //   }
       // }, 1500)
-      // this.loadMore();
+      this.loadMore();
     },
     rebuildScroll() {
       this.nextTick(() => {
@@ -623,7 +701,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
-        merc_trd_cls: 1300
+        merc_trd_cls: this.slider1[0].mercTrdCls
         }).then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
@@ -761,7 +839,7 @@ export default {
   watch:{
     latitude(curVal,oldVal){
       if(curVal&&curVal!="" && this.shopList.length<=0){
-        // this.init()
+        this.init()
       }
       
     }

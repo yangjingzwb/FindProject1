@@ -164,7 +164,7 @@ router.beforeEach((to, from, next) => {
       })
     }).catch((res) => {
       // console.log("加载失败了")
-      // window.location.reload()
+      window.location.reload()
     })
 });
 //  // 百度地图成功回调用函数

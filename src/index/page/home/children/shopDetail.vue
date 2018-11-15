@@ -41,13 +41,13 @@
             </div>
 
             <div class="address-info" @click="goDetail($event,shopData,2)">
-              <div class="left">
+              <!-- <div class="left">
                 <img src="/static/img/seller_voucher_icon.png"/>
                 <a>支持本店消费的和包券</a>
               </div>
               <div class="right">
                 <img class="special" src="/static/img/more_button.png"/>
-              </div>
+              </div> -->
             </div>
           </div>
         </section>
@@ -513,7 +513,7 @@ ul {
 .address {
   .address-info {
     position: relative;
-    height: 2.8125rem;
+    // height: 2.8125rem;
     .left {
       width: 80%;
       height: 100%;

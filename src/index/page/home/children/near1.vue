@@ -1,5 +1,5 @@
 <template>
-  <div class="aa">
+  <div>
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
     <!-- <scroll
         :data1 ="data1"
@@ -11,7 +11,7 @@
         <div>
           <div class="t-2">
             <div class="t-1">
-              <div class="t-3">美食</div>
+              <div class="t-3">{{shopList[0].MERC_TRD_DESC}}</div>
             </div>
             <div class="hr-1"></div>
           </div>
@@ -62,7 +62,6 @@ import {
 import { mapState, mapMutations } from "vuex";
 import Scroll from "@@/components/scroll/scroll.vue";
 import Loading from "@@/components/loading/loading.vue";
-import axios from "@@/plugins/rsa/axios";
 // import vueLoading from 'vue-loading-template';
 // import { baseUrl } from "@@/config/env"; // baseUrl
 import sa from "sa-sdk-javascript";
@@ -71,12 +70,7 @@ export default {
   data() {
     return {
       loadText: "",
-      pullUpLoad: false,
-      pullUpLoad_near: true,
-      scrollbar: false,
-      data1: false,
       stopPropagation: false,
-      shopList: [],
       totalInit: 0,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       pullUpLoad: {
@@ -84,9 +78,44 @@ export default {
       }
     };
   },
-  props: {},
+  props: {
+    latitude: {
+      type: String,
+      default: false
+    },
+    data1: {
+      type: Boolean,
+      default: false
+    },
+    scrollY: {
+      type: Boolean,
+      default: false
+    },
+    longitude: {
+      type: String,
+      default: false
+    },
+    shopList: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
+    tabScrollbar: {
+      type: Boolean,
+      default: false
+    },
+    pullDownRefresh: {
+      type: null,
+      default: true
+    }
+    // pullUpLoad: {
+    //   type: Boolean,
+    //   default: false
+    // }
+  },
   computed: {
-    ...mapState(["token", "showLoading", "latitude", "longitude", "cityname"])
+    ...mapState(["token", "showLoading","slider1"])
   },
 
   mounted() {
@@ -114,7 +143,7 @@ export default {
     //   //   this.$emit('changeIscrollY',false)
     //   // }
     // },
-    init2() {
+    init() {
       setTimeout(() => {
         this.loadText = "请点击刷新";
       }, 8000);
@@ -192,292 +221,12 @@ export default {
       }
       return obj;
     },
-    loadMore() {
-      if (this.shopListFlag) {
-        return;
-      }
-      this.CURRENTPAGE += 1;
-      // console.log("*************", this.CURRENTPAGE);
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 商户简称
-          mblno: this.token.productNo, //用户手机号
-          // tixn_cnl: "ROYTEL", // 固定值
-          currentPage: this.CURRENTPAGE,
-          pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc ? 0 : 1,
-          merc_trd_cls: 1300
-        })
-        .then(res => {
-          // this.shopList = res.STORES_REC;
-          // 合并数组
-          this.shopList.push.apply(this.shopList, this.filterObj(res.data));
-          if (res.data.length < this.PAGNUM) {
-            this.shopListFlag = true;
-            this.data1 = true;
-            // 数组没有更多了
-          } else {
-            this.shopListFlag = false;
-            this.data1 = false;
-          }
-          this.initScroll();
-        })
-        .catch(res => {
-          this.initScroll();
-        });
-    },
-    scrollTo() {
-      this.$refs.scroll.scrollTo(
-        this.scrollToX,
-        this.scrollToY,
-        this.scrollToTime,
-        ease[this.scrollToEasing]
-      );
-    },
+
     onPullingDown() {
-      this.init(true);
-      // 模拟更新数据
-      // setTimeout(() => {
-      //   if (Math.random() > 0.5) {
-      //     // 如果有新数据
-      //     this.items.unshift(this.$i18n.t('normalScrollListPage.newDataTxt') + +new Date())
-      //   } else {
-      //     // 如果没有新数据
-      //     this.$refs.scroll.forceUpdate()
-      //   }
-      // }, 2000)
+      this.$emit("pullingDown");
     },
     onPullingUp() {
-      // 更新数据
-      // console.log('pulling up and load data')
-      // setTimeout(() => {
-      //   if (Math.random() > 0.5) {
-      //     // 如果有新数据
-      //     let newPage = []
-      //     for (let i = 0; i < 10; i++) {
-      //       newPage.push(this.$i18n.t('normalScrollListPage.previousTxt') + ++this.itemIndex + this.$i18n.t('normalScrollListPage.followingTxt'))
-      //     }
-
-      //     this.items = this.items.concat(newPage)
-      //   } else {
-      //     // 如果没有新数据
-      //     this.$refs.scroll.forceUpdate()
-      //   }
-      // }, 1500)
-      this.loadMore();
-    },
-    rebuildScroll() {
-      this.nextTick(() => {
-        this.$refs.scroll.destroy();
-        this.$refs.scroll.initScroll();
-      });
-    },
-
-    refresh() {
-      this.init(true);
-      // 下拉刷新
-      // if (this.refTime) {
-      //   // 移除定时器
-      //   clearTimeout(this.refTime);
-      //   this.init(true);
-      //   // window.location = "http://211.138.236.219:9100/main.html?hebaosso=true&showtitle=false"
-      // }
-    },
-    init(flag) {
-      // this.CURRENTPAGE = 1;
-      // this.SHOWLOADING(true);
-      // if (history.length >= 3 && localStorage && getLItem("shopList", 60000)) {
-      //   // if (history.length >= 3 && localStorage && localStorage.getItem("shopList")) {
-      //   this.CURRENTPAGE = 1;
-      //   this.SHOWLOADING(true);
-      //   // this.shopList = JSON.parse(localStorage.getItem("shopList"));
-      //   this.shopList = getLItem("shopList", 60000);
-      //   this.initScroll();
-      //   setTimeout(() => {
-      //     this.SHOWLOADING(false);
-      //   }, 300);
-      //   // if (res.data.length < this.PAGNUM) {
-      //   this.shopListFlag = true;
-      //   return;
-      // }
-
-      this.CURRENTPAGE = 1;
-      if (!flag) {
-        this.SHOWLOADING(true);
-      } else {
-        this.SHOWLOADING(false);
-      }
-
-      // 单点登录
-      // 请求banner1
-      this.cityName1 = window.CITYNAME || "定位中";
-      // this.cityName1 =
-      //   window.CITYNAME ||
-      //   (/iP(ad|hone|od)/.test(navigator.userAgent)
-      //     ? window.LBSINFO.CityName || "定位中"
-      //     : getCode(window.LBSINFO.CityName));
-
-      if (!window.LONGITUDE) {
-        this.SHOWLOADING(false);
-        return;
-      }
-      axios
-        .post("getShopInfo", {
-          longitude: window.LONGITUDE, // 经度
-          latitude: window.LATITUDE, // 维度
-          stores_nm: "", // 门店名称
-          merc_abbr: "", // 门店简称
-          // tixn_cnl: "ROYTEL", // 固定值
-          currentPage: this.CURRENTPAGE,
-          mblno: this.token.productNo, //用户手机号
-          pagNum: this.PAGNUM || 4,
-          session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc ? 0 : 1,
-          merc_trd_cls: 1300
-        })
-        .then(res => {
-          if (res.data && res.data.length > 0) {
-            this.isError = true;
-            this.shopList = this.filterObj(res.data);
-            // if (flag) {
-            //   this.home.finishPullDown();
-            // } else {
-            //   this.home.refresh();
-            // }
-            this.initScroll();
-            setTimeout(() => {
-              this.SHOWLOADING(false);
-            }, 300);
-          } else {
-            this.isError = true;
-            this.totalInit++;
-            if (this.totalInit <= 5) {
-              this.init();
-            } else {
-              // this.shopList = getLItem("shopList", 600000);
-              this.shopList = [];
-              // setTimeout(() => {
-              this.SHOWLOADING(false);
-              this.isError = false;
-              if (flag) {
-                this.initScroll();
-              } else {
-                this.initScroll();
-              }
-              // }, 300);
-            }
-            return;
-          }
-
-          console.log("yeye", this.shopList);
-          if (res.data.length < this.PAGNUM) {
-            this.shopListFlag = true;
-            this.data1 = true;
-            //没有更多了
-          } else {
-            this.shopListFlag = false;
-            this.data1 = false;
-          }
-          // setTimeout(() => {
-          //   // this.foodsScroll.scrollTo(0, -42, 500);
-          //   this.home.refresh();
-          //   this._calcHeight();
-          // }, 40);
-          // alert(33)
-        })
-        .catch(res => {
-          // alert(11)
-          // setTimeout(()=>{
-          this.SHOWLOADING(false);
-          this.totalInit++;
-          if (this.totalInit <= 5) {
-            this.init();
-          } else {
-            this.initScroll();
-          }
-
-          // },300)
-        });
-      // 请求banner2
-      // 请求品类
-    },
-    initScroll() {
-      // if (!this.home) {
-      // this.$nextTick(() => {
-      // this.foodsScroll = this.home = new BScroll(this.$refs.home, {
-      //   scrollY: true,
-      //   // startY: -39,
-      //   // scrollX: false,
-      //   click: true,
-      //   probeType: 1,
-      //   bounce: true,
-      //   scrollbar: {
-      //     fade: true,
-      //     interactive: false // 1.8.0 新增
-      //   },
-      //   //  pullUpLoad:{
-      //   //                   threshold: -70, // 当上拉到超过底部 4.375rem 时，
-      //   //               }
-      //   // pullDownRefresh: {
-      //   //   threshold: 70,
-      //   //   stop: 50 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
-      //   // },
-      //   pullUpLoad: {
-      //     threshold: 50 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
-      //   }
-      //   // momentumLimitDistance: 15
-      // });
-      // // this.foodsScroll.on("pullingDown", () => {
-      // //   this.refresh(true);
-      // // });
-      // this.foodsScroll.on("pullingUp", pos => {
-      //   this.loadMore();
-      // });
-      // });
-      // this.foodsScroll.on('scrollEnd',(pos)=>{
-      //   console.log("888888888")
-      //   console.log(pos)
-      // })
-      // } else {
-      // this.home.finishPullUp();
-      // setTimeout(() => {
-      // this.$refs.scroll.forceUpdate()
-      // this.home.finishPullDown();
-      // // }, 300);
-      // this.home.finishPullUp();
-      // this.home.refresh();
-      // }
-    },
-    _calcHeight() {
-      // if (this.residue > 0) {
-      //   this.listHeight[this.listHeight.length - 1] += residue;
-      // }
-      // this.residueHeight = residue > 0 ? residue + "px" : "0rem"; //设置最后菜单的padding
-      // 重置滚动区域
-      // setTimeout(() => {
-      //   this._initScroll();
-      // }, 0);
-    },
-    goToApply() {},
-    closeAlert() {},
-    goBack() {
-      this.$router.go(-1);
-    }
-  },
-  activated() {
-    console.log(2323);
-    // alert()
-    this.refreshNow = !this.refreshNow;
-  },
-  watch: {
-    latitude(curVal, oldVal) {
-      if (curVal && curVal != "" && this.shopList.length <= 0) {
-        // this.init()
-      }
+      this.$emit("pullingUp");
     }
   }
 };
