@@ -20,8 +20,6 @@
       </ul>
     </section>
 
-    
-
     <div class="home">
       <scroll
         :data1 ="data1"
@@ -55,9 +53,9 @@
           
           <section v-if="slider1 && slider1.length>0" class="s_3 s">
             <ul>
-              <li v-for="item in slider1"  @click="goCatalogs(item)">
+              <li v-for="(item, index) in slider1"  @click="goCatalogs(index,item)">
                 <img :src="item.marketingIcon" :onerror='defaultIcon' class="icon">
-                <span class="text">{{item.marketingTitle}}</span>
+                <a :class="{'active':slideIndex==index}" class="text">{{item.marketingTitle}}</a>
               </li>
             </ul>
           </section>
@@ -117,6 +115,7 @@ export default {
       pullUpLoad: false,
       pullUpLoad_near: true,
       data1: false,
+      slideIndex: 0,
       loadText: "",
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
@@ -348,8 +347,10 @@ export default {
       // startY = touch.pageY;
       // startX = touch.pageX;
     },
-    goCatalogs(obj) {
+    goCatalogs(index,obj) {
       console.log(obj.marketingTitle,obj.mercTrdCls);
+      this.slideIndex = index;
+      this.CURRENTPAGE = 1;
       axios.post("getShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
@@ -560,10 +561,12 @@ export default {
       }
       return obj;
     },
-    loadMore(obj) {
+    loadMore() {
       if (this.shopListFlag) {
         return;
       }
+      let numIndex = this.slider1[this.slideIndex].mercTrdCls;
+      // console.log(numIndex);
       this.CURRENTPAGE += 1;
       axios.post("getShopInfo", {
         longitude: window.LONGITUDE, // 经度
@@ -576,7 +579,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
-        merc_trd_cls: 1300
+        merc_trd_cls: numIndex
         }).then(res => {
           // this.shopList = res.STORES_REC;
           // 合并数组
@@ -1100,6 +1103,11 @@ header {
     padding: 0.84375rem 0 0.25rem 0;
   }
   .text {
+    display: block;
+    color: #7e7e7e;
+    font-size: 0.75rem;
+  }
+  a.active {
     display: block;
     color: #13252e;
     font-size: 0.75rem;
