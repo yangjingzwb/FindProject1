@@ -1,5 +1,5 @@
 <template>
-  <div class="aa" style="height:100%;position:relative;overflow:hidden;padding:0;">
+  <div class="aa">
     <!-- style="position: absolue;width:100%; height:31.25rem;top:0;" -->
     <!-- <scroll
         :data1 ="data1"
