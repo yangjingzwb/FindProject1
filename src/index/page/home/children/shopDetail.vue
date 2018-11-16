@@ -697,7 +697,6 @@ ul {
   font-size: 0.875rem;
   color: #13252e;
   padding: 1.0625rem 0 1.0625rem 0;
-  line-height: 0.9375rem;
 }
 .null {
   height: 15.5625rem;

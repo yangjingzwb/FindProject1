@@ -42,7 +42,7 @@
             <li>
                 <div class="c2">
                   <span class="l" :class="{'active':item.ACT_INF}">{{item.STORES_NM}}</span>
-                  <span class="r">{{GetDistance(latitude,longitude,item.LATITUDE,item.LONGITUDE)}}km</span>
+                  <span class="r">{{item.distance}}km</span>
                 </div>
                 <div class="c2 c3">
                   <span class="l">{{item.BUS_ADDR}}</span>
@@ -76,7 +76,7 @@ import Scroll from "@@/components/scroll/scroll.vue";
 import axios from "@@/plugins/rsa/axios";
 import BScroll from "better-scroll";
 import sa from'sa-sdk-javascript';
-import { GetDistance, fetchPoints } from "@@/service/util";
+import {fetchPoints } from "@@/service/util";
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
 

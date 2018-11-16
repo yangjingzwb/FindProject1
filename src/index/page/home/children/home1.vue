@@ -55,7 +55,7 @@
             <ul>
               <li v-for="(item, index) in slider1"  @click="goCatalogs(index,item)">
                 <img :src="item.marketingIcon" :onerror='defaultIcon' class="icon">
-                <a :class="{'active':slideIndex==index}" class="text">{{item.marketingTitle}}</a>
+                <a :class="{'active':selectIndex==index}" class="text">{{item.marketingTitle}}</a>
               </li>
             </ul>
           </section>
@@ -117,7 +117,7 @@ export default {
       pullUpLoad_near: true,
       data1: false,
       titleParm: "",
-      slideIndex: 0,
+      selectIndex: 0,
       loadText: "",
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
@@ -351,7 +351,7 @@ export default {
       // startX = touch.pageX;
     },
     goCatalogs(index,obj) {
-      this.slideIndex = index;
+      this.selectIndex = index;
       this.CURRENTPAGE = 1;
       let mercParm = obj.mercTrdCls;
       this.titleParm = obj.marketingTitle;
@@ -574,7 +574,7 @@ export default {
       if (this.shopListFlag) {
         return;
       }
-      let numIndex = this.slider1[this.slideIndex].mercTrdCls;
+      let numIndex = this.slider1[this.selectIndex].mercTrdCls;
       // console.log(numIndex);
       this.CURRENTPAGE += 1;
       axios.post("getShopInfo", {
