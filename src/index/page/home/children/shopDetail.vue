@@ -146,7 +146,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["token"]),
+    ...mapState([
+      "token",
+      "shopParm",
+      "sliderScroll",
+      "latitude",
+      "longitude",
+      "cityname"
+    ]),
     dataList() {
       if (this.showAll == false) {
         var dataList = [];
@@ -175,18 +182,10 @@ export default {
   components: {
     Scroll
   },
-
-  computed: {
-    ...mapState([
-      "token",
-      "shopParm",
-      "sliderScroll",
-    ])
-  },
-
   methods: {
     ...mapMutations([
        'ISSHOWALERT',
+        "CITYNAME1",
        'ALERTTEXTFIRST'
      ]),
     init() {
@@ -213,14 +212,14 @@ export default {
     jumpMap(){
       let sName = '', // 出发地名
           dName = '', // 目的地名
-          city = '',  // 城市
-          LONGITUDE = this.longitude, // 出发地经度
-          LATITUDE = this.latitude, // 出发地纬度
-          MERC_LONGITUDE = this.LONGITUDE, // 目的地经度
-          MERC_LATITUDE = this.LATITUDE; // 目的地纬度
-      let BUS_ADDR = "长沙市湘江中路" || item.busAddr;
+          city = window.CITYNAME,  // 城市
+          longitude = window.LONGITUDE, // 出发地经度
+          latitude = window.LATITUDE, // 出发地纬度
+          MERC_LONGITUDE = this.shopParm.merc_longitude, // 目的地经度
+          MERC_LATITUDE = this.shopParm.merc_latitude, // 目的地纬度
+          BUS_ADDR = this.shopData.busAddr;
       // 客户端 跳转链接  安卓 0  苹果 1
-      // console.log(LONGITUDE,MERC_LONGITUDE,MERC_LATITUDE,BUS_ADDR);
+      console.log(city,longitude,latitude,MERC_LONGITUDE,MERC_LATITUDE,BUS_ADDR);
       if (AppFlag() === '1' && typeof(CmpOpenMapLocation) !== 'undefined' && typeof(CmpOpenMapLocation) === 'function') {
           CmpOpenMapLocation(sName, dName, LATITUDE, LONGITUDE, MERC_LATITUDE, MERC_LONGITUDE);
       } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.openNavigation) === 'function') {

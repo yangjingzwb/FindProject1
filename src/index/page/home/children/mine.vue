@@ -38,7 +38,7 @@
           <!-- <h6 class="title">
             <span class="text">附近优惠</span>
           </h6> -->
-          <ul v-for="item in shopList" @click="goDetail($event,item,1)" :key="item.id">
+          <ul v-for="item in shopList" @click="goSeller(item)" :key="item.id">
             <li>
                 <div class="c2">
                   <span class="l" :class="{'active':item.ACT_INF}">{{item.STORES_NM}}</span>
@@ -143,6 +143,39 @@ export default {
     },
     onPullingUp() {
       this.loadMore(true);
+    },
+    goSeller(obj) {
+      let params = {
+        latitude: window.LATITUDE,
+        longitude: window.LONGITUDE,
+        mbl_no: this.token.productNo,
+        merc_id: obj.TX_JRN,
+        merc_latitude: obj.LATITUDE,
+        merc_longitude: obj.LONGITUDE,
+        session: this.token.session.replace(/\+/g, "%2B"),
+        mercHl: obj.MERC_HOT_LIN
+      };
+      this.$store.commit("SHOPPARM", params);
+      // console.log("xiao",this.$store.state.shopParm)
+      console.log("~~~~~~~~~~~~",params);
+      this.$router.push({
+        path: "/shopDetail",
+        // query: {
+        //     params: params
+        //   }
+      });
+      // 神策
+      sa.track("buttonClick", {
+        topCategory: "发现",
+        subCategory: "发现：附近页"
+      });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K07", //事件标记
+        this.token.productNo,
+        "立即消费按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
     },
     goDetail(event, obj, flag) {
       event.stopPropagation();

@@ -165,7 +165,7 @@ export default {
         latitude: window.LATITUDE,
         longitude: window.LONGITUDE,
         mbl_no: this.token.productNo,
-        merc_id: obj.MERC_ID,
+        merc_id: obj.TX_JRN,
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
         session: this.token.session.replace(/\+/g, "%2B"),
@@ -176,7 +176,7 @@ export default {
       // console.log("~~~~~~~~~~~~",obj);
       // console.log("~~~~~~~~~~~~",params);
       this.$router.push({
-        path: "/shopDetail"
+        path: "/shopDetail",
         // query: {
         //     params: params
         //   }
