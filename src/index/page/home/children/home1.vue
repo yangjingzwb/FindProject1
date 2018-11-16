@@ -63,6 +63,7 @@
           <section class="s_5 s">
             <near1
               :data1 = "data1"
+              :titleParm = "titleParm"
               :latitude = 'latitude'
               :longitude = 'longitude'
               :shopList="shopList"
@@ -71,7 +72,7 @@
               >
             </near1>
             <ul v-if = "!shopList || shopList.length<=0 ">
-              <loading></loading>
+              <!-- <loading></loading> -->
             <li @click="aginEnter()" class="aa">{{loadText}}</li>
           </ul>
           </section>
@@ -115,6 +116,7 @@ export default {
       pullUpLoad: false,
       pullUpLoad_near: true,
       data1: false,
+      titleParm: "",
       slideIndex: 0,
       loadText: "",
       banner: "/static/mine_banner.png",
@@ -177,6 +179,7 @@ export default {
   computed: {},
 
   mounted() {
+    this.getListTitle();
     try {
       fetchPoints(
         "home1",
@@ -348,9 +351,11 @@ export default {
       // startX = touch.pageX;
     },
     goCatalogs(index,obj) {
-      console.log(obj.marketingTitle,obj.mercTrdCls);
       this.slideIndex = index;
       this.CURRENTPAGE = 1;
+      let mercParm = obj.mercTrdCls;
+      this.titleParm = obj.marketingTitle;
+      console.log(obj.marketingTitle, mercParm);
       axios.post("getShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
@@ -362,7 +367,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
-        merc_trd_cls: obj.mercTrdCls
+        merc_trd_cls: mercParm
         }).then(res => {
           if (res.data && res.data.length > 0) {
             this.isError = true;
@@ -388,15 +393,15 @@ export default {
               this.SHOWLOADING(false);
               this.isError = false;
               if (flag) {
-                this.initScroll();
+                // this.initScroll();
               } else {
-                this.initScroll();
+                // this.initScroll();
               }
               // }, 300);
             }
             return;
           }
-          console.log("cccccc",this.shopList);
+          // console.log("cccccc",this.shopList);
           if (res.data.length < this.PAGNUM) {
             this.shopListFlag = true;
             this.data1 = true;
@@ -561,6 +566,10 @@ export default {
       }
       return obj;
     },
+    getListTitle() {
+      let parms = this.slider1[0].marketingTitle;
+      this.titleParm = parms;   // 分类列表默认标题
+    },
     loadMore() {
       if (this.shopListFlag) {
         return;
@@ -672,7 +681,7 @@ export default {
       //   this.shopListFlag = true;
       //   return;
       // }
-
+      
       this.CURRENTPAGE = 1;
       if (!flag) {
         this.SHOWLOADING(true);

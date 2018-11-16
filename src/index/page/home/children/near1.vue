@@ -11,7 +11,7 @@
         <div>
           <div class="t-2">
             <div class="t-1">
-              <div class="t-3">{{shopList[0].MERC_TRD_DESC}}</div>
+              <div class="t-3">{{titleParm}}</div>
             </div>
             <div class="hr-1"></div>
           </div>
@@ -92,6 +92,10 @@ export default {
       default: false
     },
     longitude: {
+      type: String,
+      default: false
+    },
+    titleParm: {
       type: String,
       default: false
     },
@@ -533,7 +537,8 @@ export default {
   .c3 {
     font-size: 0.75rem;
     color: #e11a2f;
-    padding-top: 0.5rem;
+    padding-top: 0.4375rem;
+    padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
     max-width: 80%;
     @include space();
@@ -551,7 +556,7 @@ export default {
     background: #fff0f1;
     border: thin solid rgba(224, 24, 45, 0.2);
     border-radius: 0.125rem;
-    padding: 0.05rem 0.225rem;
+    padding: 0 0.1563rem;
     margin-right: 0.1875rem;
   }
   .right {
@@ -562,7 +567,7 @@ export default {
   }
   .c4 {
     position: relative;
-    height: 1.875rem;
+    height: 1.9375rem;
     color: #ed196c;
     font-family: PingFangSC-Regular;
     font-size: 0.75rem;
