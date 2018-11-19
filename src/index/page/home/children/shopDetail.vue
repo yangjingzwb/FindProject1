@@ -51,8 +51,8 @@
             </div>
           </div>
         </section>
-        <div class="nullHeight"></div>
-        <section class="s_3">
+        <!-- <div class="nullHeight"></div> -->
+        <section class="s_3" v-show = "couponList.length>=1">
           <div class="title">
             <p>商铺优惠券</p>
             <div class="hr-2"></div>
@@ -87,7 +87,7 @@
           </div>
         </section>
         <div class="nullHeight"></div>
-        <section class="s_4">
+        <section class="s_4" v-show = "shopData.rec.length>=1">
           <div class="title">
             <p>优惠活动</p>
             <div class="hr-2"></div>
@@ -106,7 +106,7 @@
           </div>
         </section>
         <div class="nullHeight"></div>
-        <section class="s_5">
+        <section class="s_5" v-show = "shopData.mercBriefDesc.length>=1">
           <div class="title">
               <p>商家简介</p>
               <div class="hr-2"></div>
@@ -115,7 +115,6 @@
             <div>{{shopData.mercBriefDesc}}</div>
           </div>
         </section>
-        <div class="null"></div>
         <!-- <div class="null">&nbsp;&nbsp;</div> -->
       </div>
     </scroll>
@@ -698,8 +697,8 @@ ul {
   padding: 1.0625rem 0 1.0625rem 0;
 }
 .null {
-  height: 15.5625rem;
-  background: #F6F7F8;
+  // height: 35.5625rem;
+  // background: #F6F7F8;
 }
 .hr-1 {
   display: block;

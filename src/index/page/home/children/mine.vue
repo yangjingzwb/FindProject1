@@ -167,13 +167,13 @@ export default {
       // 神策
       sa.track("buttonClick", {
         topCategory: "发现",
-        subCategory: "发现：附近页"
+        subCategory: "发现：搜索页"
       });
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K07", //事件标记
         this.token.productNo,
-        "立即消费按钮", // 事件名称
+        "搜索商户列表点击", // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
     },

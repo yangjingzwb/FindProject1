@@ -380,7 +380,7 @@ export default {
   /*right: 0*/
   /*bottom: 0*/
   overflow: hidden;
-  background: #fff;
+  background: #F6F7F8;
 
   .scroll-content {
     position: relative;
