@@ -140,7 +140,7 @@ export default {
     receiveCoupon(data) {
       // 神策
       sa.track('buttonClick', {
-      topCategory: '发现',
+      topCategory: '优惠',
       subCategory: '优惠券副站：立即领取'
       });
       fetchPoints(
@@ -202,7 +202,7 @@ export default {
     goShop(event,obj,flag) {
       // 神策
       sa.track('buttonClick', {
-      topCategory: '发现',
+      topCategory: '优惠',
       subCategory: '优惠券副站：去消费'
       });
       let params = obj.mercId;
@@ -221,7 +221,7 @@ export default {
       // 神策
       if(flag==7){
         sa.track('ZoneClick', {
-          topCategory: '发现',
+          topCategory: '优惠',
           subCategory:  '领券专区',
           locationOfZone: '主站',
           contentName: obj.couponName
@@ -237,7 +237,7 @@ export default {
       if(flag==6){
         // 神策
         sa.track('buttonClick', {
-        topCategory: '发现',
+        topCategory: '优惠',
         subCategory: '优惠券副站：查看详情'
         });
       }

@@ -129,7 +129,7 @@ router.beforeEach((to, from, next) => {
       console.log("sa.login登录成功");
       let endTime = new Date();
       sa.track("loadDelay", {
-        currentBusinessLine: "发现频道",
+        currentBusinessLine: "优惠频道",
         currentActivity: "调用高阳queryAccount接口",
         currentURL: window.location.href,
         currentURL: window.location.href,

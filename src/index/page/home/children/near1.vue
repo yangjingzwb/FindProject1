@@ -15,7 +15,7 @@
             </div>
             <div class="hr-1"></div>
           </div>
-          <ul v-for="(item,index) in shopList"  @click="goSeller(item)" >
+          <ul v-for="(item,index) in shopList"  @click="goSeller(item)" :key="item.id">
             <!-- :key="item.TX_JRN" -->
               <li class="left">
                   <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
@@ -182,9 +182,13 @@ export default {
         //   }
       });
       // 神策
-      sa.track("buttonClick", {
-        topCategory: "发现",
-        subCategory: "发现：附近页"
+      sa.track('clickShop', {
+        currentPage: '附近页商户列表',
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:false,
+        keyword:''
       });
       fetchPoints(
         "010000000000", // 页面索引

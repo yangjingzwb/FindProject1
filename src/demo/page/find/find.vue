@@ -1,7 +1,7 @@
  <template>
     <div class="rating_page">
-        <head-top head-title="发现" go-back='true'></head-top>
-        <section>发现</section>
+        <head-top head-title="优惠" go-back='true'></head-top>
+        <section>优惠</section>
         <foot-guide></foot-guide>
     </div>
 </template>

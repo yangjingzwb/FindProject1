@@ -101,7 +101,7 @@ export default {
         sa.track('ZoneClick', {
           contentName:'好护士专题营销',
           subCategory: '好护士八月养生季',
-          topCategory: '发现',
+          topCategory: '优惠',
           locationOfZone: 'banner主图'
         });
         fetchPoints(
@@ -117,7 +117,7 @@ export default {
         sa.track('ZoneClick', {
           contentName:'好护士专题营销',
           subCategory: '好护士八月养生季',
-          topCategory: '发现',
+          topCategory: '优惠',
           locationOfZone: '附图'+obj.Name
         });
         fetchPoints(

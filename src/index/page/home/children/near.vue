@@ -106,6 +106,22 @@ export default {
     //   return GetDistance(a, b, c, d);
     // },
     goSeller(obj) {
+      // 神策
+      sa.track('clickShop', {
+        currentPage: '优惠首页商户列表',
+        commodityID:obj.MERC_ID,
+        commodityName: obj.STORES_NM,
+        commodityType:obj.MERC_TRD_DESC,
+        is_FromSearch:false,
+        keyword:''
+      });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K06", //事件标记
+        this.token.productNo,
+        "立即消费-" + obj.STORES_NM, // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       let params = {
         latitude: this.latitude,
         longitude: this.longitude,
@@ -117,29 +133,13 @@ export default {
       };
       this.$store.commit("SHOPPARM", params);
       this.$router.push({path: "/shopDetail"});
-      // 神策
-      sa.track('clickShop', {
-        currentPage: '发现',
-        commodityID:obj.MERC_ID,
-        commodityName: obj.STORES_NM,
-        commodityType:obj.MERC_TRD_DESC,
-        is_FromSearch:false,
-        keyword:''
-      });
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K06", //事件标记
-        this.token.productNo,
-        "附近商户-" + obj.STORES_NM, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
     },
     // 更多优惠
     goMorePer() {
       // 神策
       sa.track('buttonClick', {
-        topCategory: '发现',
-        subCategory: '发现：首页'
+        topCategory: '优惠',
+        subCategory: '优惠：首页'
       });
       fetchPoints(
         "010000000000", // 页面索引

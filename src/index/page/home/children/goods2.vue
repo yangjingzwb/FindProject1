@@ -59,7 +59,7 @@ export default {
       // 神策
       sa.track('ZoneClick', {
         contentName: obj.marketingTitle,
-        topCategory: '发现',
+        topCategory: '优惠',
         subCategory: '为您推荐',
         locationOfZone: '商品'
       });

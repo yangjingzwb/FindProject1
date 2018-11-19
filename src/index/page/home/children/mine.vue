@@ -166,8 +166,8 @@ export default {
       });
       // 神策
       sa.track("buttonClick", {
-        topCategory: "发现",
-        subCategory: "发现：搜索页"
+        topCategory: "优惠",
+        subCategory: "优惠：搜索页"
       });
       fetchPoints(
         "010000000000", // 页面索引

@@ -192,7 +192,7 @@ export default [{
                 component: vipDescription,
             },]
         },
-        //发现页
+        //优惠页
         {
             path: '/find',
             component: find

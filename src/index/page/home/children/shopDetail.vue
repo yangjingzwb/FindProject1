@@ -200,6 +200,11 @@ export default {
       });
     },
     payKHD() {
+      // 神策
+      sa.track('buttonClick', {
+        topCategory: '优惠',
+        subCategory: '商家详情页'
+      });
       event.stopPropagation();
       // 客户端 跳转链接
       if (AppFlag() === '1') {
@@ -248,8 +253,8 @@ export default {
       });
       // 神策
       sa.track('buttonClick', {
-        topCategory: '发现',
-        subCategory: '商户满减活动'
+        topCategory: '优惠',
+        subCategory: '商户优惠活动页'
       });
       fetchPoints(
         "010000000000", // 页面索引
@@ -274,6 +279,18 @@ export default {
         });
     },
     receiveCoupon(data) {
+      // 神策
+      sa.track('buttonClick', {
+      topCategory: '优惠',
+      subCategory: '线下商户优惠券：立即领取'
+      });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K04", //事件标记
+        this.token.productNo,
+        "立即领取按钮", // 事件名称
+        this.token.session.replace(/\+/g, "%2B")
+      );
       this.isDisable = true;
       // console.log(data);
       let param_ = {
@@ -284,8 +301,8 @@ export default {
         mamt: data.issBillAmt, // 发券面额
         session: this.token.session.replace(/\+/g, "%2B") // 单点登录返回session
       };
-      console.log("XXXXXXXXXXXXXXXXXXXXXXX");
-      console.log(param_);
+      // console.log("XXXXXXXXXXXXXXXXXXXXXXX");
+      // console.log(param_);
       axios.post("receiveCoupon", param_).then(res => {
         if (res.code === "0") {
           let data = res.data;

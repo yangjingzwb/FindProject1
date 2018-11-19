@@ -100,7 +100,7 @@ export default {
         sa.track('ZoneClick', {
           contentName:'唯品会专题营销',
           subCategory: '唯品会会员福利月',
-          topCategory: '发现',
+          topCategory: '优惠',
           locationOfZone: 'banner主图'
         });
         fetchPoints(
@@ -116,7 +116,7 @@ export default {
         sa.track('ZoneClick', {
           contentName:'唯品会专题营销',
           subCategory: '唯品会会员福利月',
-          topCategory: '发现',
+          topCategory: '优惠',
           locationOfZone: '附图'+obj.Name
         });
         fetchPoints(

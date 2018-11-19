@@ -129,7 +129,7 @@ export default {
         "010000000000", // 页面索引
         "010000000000K13", //事件标记
         this.token.productNo,
-        "进入发现频道", // 事件名称
+        "进入优惠频道", // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
@@ -154,8 +154,8 @@ export default {
     let startTime = new Date();
     let endTime = new Date() ;
     sa.track("loadDelay", {
-      currentBusinessLine: "发现频道",
-      currentActivity: "发现页面",
+      currentBusinessLine: "优惠频道",
+      currentActivity: "优惠页面",
       currentURL: window.location.href,
       delayTime: endTime - startTime,
       offsetTime: 0,
@@ -391,7 +391,7 @@ export default {
           sa.track("bannerClick", {
             contentName: "异形banner活动",
             bannerNumber: String(obj.marketingNumber),
-            topCategory: "发现",
+            topCategory: "优惠",
           });
           fetchPoints(
             "010000000000",
@@ -405,7 +405,7 @@ export default {
           sa.track("bannerClick", {
             contentName: obj.marketingTitle,
             bannerNumber: String(obj.marketingNumber),
-            topCategory: "发现",
+            topCategory: "优惠",
           });
           // banner图埋点
           fetchPoints(
@@ -526,8 +526,8 @@ export default {
           //神策
           let endTime = new Date() ;
           sa.track("loadDelay",{
-            currentBusinessLine: "发现频道",
-            currentActivity: "调用发现页附近商户getShopInfo接口",
+            currentBusinessLine: "优惠频道",
+            currentActivity: "调用优惠页附近商户getShopInfo接口",
             currentURL: window.location.href,
             delayTime: endTime - startTime,
             offsetTime: 0,

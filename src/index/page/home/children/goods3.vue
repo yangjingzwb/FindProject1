@@ -61,7 +61,7 @@ export default {
     goDetail(event, obj, flag) {
       // 神策
       sa.track('ZoneClick', {
-        topCategory: '发现',
+        topCategory: '优惠',
         subCategory:  '京东资讯',
         locationOfZone: '附图',
         contentName: obj.title

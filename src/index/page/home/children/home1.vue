@@ -53,7 +53,7 @@
           
           <section v-if="slider1 && slider1.length>0" class="s_3 s">
             <ul>
-              <li v-for="(item, index) in slider1"  @click="goCatalogs(index,item)">
+              <li v-for="(item, index) in slider1"  @click="goCatalogs(index,item,'classify')">
                 <img :src="item.marketingIcon" :onerror='defaultIcon' class="icon">
                 <a :class="{'active':selectIndex==index}" class="text">{{item.marketingTitle}}</a>
               </li>
@@ -88,7 +88,6 @@
 // import SlideRender from '@@/components/page-render/slide-render'
 import { mapState, mapMutations } from "vuex";
 import Slider from "@@/components/base/slider";
-// import Scroll from '@@/components/scroll/scroll.vue'
 import axios from "@@/plugins/rsa/axios";
 import Loading from "@@/components/loading/loading.vue";
 import sa from "sa-sdk-javascript";
@@ -200,7 +199,7 @@ export default {
     let startTime = new Date();
     let endTime = new Date() ;
     sa.track("loadDelay",{
-      currentBusinessLine: "发现频道",
+      currentBusinessLine: "优惠频道",
       currentActivity: "更多页面",
       currentURL: window.location.href,
       delayTime: endTime - startTime,
@@ -350,12 +349,29 @@ export default {
       // startY = touch.pageY;
       // startX = touch.pageX;
     },
-    goCatalogs(index,obj) {
+    goCatalogs(index,obj, channel = "default") {
+      try {
+        if (channel == "classify") {
+          // 神策
+          sa.track("buttonClick", {
+            buttonName: obj.marketingTitle,
+            topCategory: "优惠",
+            subCategory: "优惠：附近页"
+          });
+          fetchPoints(
+            "020000000000",
+            "020000000000K02",
+            this.token.productNo,
+            "分类-" + obj.marketingTitle,
+            this.token.session.replace(/\+/g, "%2B")
+          );
+        }
+      } catch (e) {};
       this.selectIndex = index;
       this.CURRENTPAGE = 1;
       let mercParm = obj.mercTrdCls;
       this.titleParm = obj.marketingTitle;
-      console.log(obj.marketingTitle, mercParm);
+      // console.log(obj.marketingTitle, mercParm);
       axios.post("getShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
@@ -454,8 +470,8 @@ export default {
           // 神策
           sa.track("buttonClick", {
             buttonName: obj.marketingTitle,
-            topCategory: "发现",
-            subCategory: "发现：更多优惠"
+            topCategory: "优惠",
+            subCategory: "优惠：更多优惠"
           });
           fetchPoints(
             "020000000000",

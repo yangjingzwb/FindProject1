@@ -97,7 +97,7 @@ export default {
         // 神策
         sa.track('ZoneClick', {
           contentName: '专题位-banner',
-          topCategory: '发现',
+          topCategory: '优惠',
           subCategory: obj.tbConductConfig.marketingTitle,
           locationOfZone: '主图'
         });
@@ -113,7 +113,7 @@ export default {
          // 神策
         sa.track('ZoneClick', {
           contentName: obj.name,
-          topCategory: '发现',
+          topCategory: '优惠',
           subCategory:  '专题位商品',
           locationOfZone: '附图'
         });

@@ -10,7 +10,7 @@ http://113.108.79.80:3020/test1/?hebaosso=true&showtitle=false
 #本地模拟测试
 http://113.108.79.80:3020/test1/?CREDTENTIAL=credtential&SIGN_DATA=sign_data
 
-##发现频道优化
+##优惠频道优化
 1、删除冗余的代码 （0926）
 2、nginx配置
     keepalive_timeout  60;
