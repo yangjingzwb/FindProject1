@@ -68,13 +68,17 @@
               :longitude = 'longitude'
               :shopList="shopList"
               :data = "shopList"
+              @aginEnter = "aginEnter"
               @goDetail="goDetail"
               >
             </near1>
-            <ul v-if = "!shopList || shopList.length<=0 ">
-              <!-- <loading></loading> -->
-            <li @click="aginEnter()" class="aa">{{loadText}}</li>
-          </ul>
+            <!-- <ul v-if = "!shopList || shopList.length<=0 ">
+              <loading v-if="showLoading"></loading>
+              <li @click="aginEnter()" class="aa">
+                <img src="/static/img/load fail_2.png"/>
+                <div class="loadText">请点击刷新</div>
+              </li>
+            </ul> -->
           </section>
         </div>
       </scroll>
@@ -227,6 +231,7 @@ export default {
       "slider1",
       "slider2",
       "products",
+      "showLoading",
       "token",
       "latitude",
       "longitude",
@@ -1428,12 +1433,15 @@ header {
   position: relative;
   // width: 4rem;
   padding: 0.3125rem 0.625rem;
-  top: 0.75rem;
   background: #fff;
   z-index: 10;
-  color: #444444;
+  color: #7e7e7e;
   font-size: 0.75rem;
   text-align: center;
+  img {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
 }
 .hr-1 {
   display: block;

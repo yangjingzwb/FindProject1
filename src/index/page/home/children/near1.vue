@@ -8,7 +8,6 @@
         :scrollbar="scrollbar"
         @pullingDown="onPullingDown"
         @pullingUp="onPullingUp"> -->
-        <div>
           <div class="t-2">
             <div class="t-1">
               <div class="t-3">{{titleParm}}</div>
@@ -40,13 +39,14 @@
               <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
           </ul>
           <ul v-if = "!shopList || shopList.length<=0 ">
-            <loading></loading>
+            <loading v-if="showLoading"></loading>
             <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
-            <li @click="aginEnter()" class="aa">{{loadText}}</li>
+            <li @click="aginEnter()" class="aa">
+              <img src="/static/img/load fail_2.png"/>
+              <div class="loadText">请点击刷新</div>
+            </li>
           </ul>
-        </div>
     <!-- </scroll> -->
-    <!-- <router-view></router-view> -->
     <!-- <div class="null"></div> -->
     </div>
 </template>
@@ -69,7 +69,6 @@ import sa from "sa-sdk-javascript";
 export default {
   data() {
     return {
-      loadText: "",
       stopPropagation: false,
       totalInit: 0,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
@@ -126,7 +125,7 @@ export default {
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
-      this.init();
+      // this.init();
     }
   },
   created() {},
@@ -147,11 +146,6 @@ export default {
     //   //   this.$emit('changeIscrollY',false)
     //   // }
     // },
-    init() {
-      setTimeout(() => {
-        this.loadText = "请点击刷新";
-      }, 8000);
-    },
     aginEnter() {
       this.$emit("aginEnter");
     },
@@ -252,7 +246,7 @@ export default {
 }
 .t-1 {
   height: 100%;
-  line-height: 2.5625rem;
+  line-height: 2.5rem;
   width: 9.375rem;
   margin: 0 auto;
   background-image: url("/static/img/2-5.png");
@@ -755,12 +749,15 @@ export default {
   position: relative;
   // width: 4rem;
   padding: 0.3125rem 0.625rem;
-  top: 3.4375rem;
   background: #fff;
   z-index: 10;
-  color: #444444;
+  color: #7e7e7e;
   font-size: 0.75rem;
   text-align: center;
+  img {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
 }
 .hr-1 {
   display: block;

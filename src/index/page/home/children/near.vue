@@ -30,9 +30,12 @@
             <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
-          <loading></loading>
+          <loading v-if="showLoading"></loading>
           <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
-          <li @click="aginEnter()" class="aa">{{loadText}}</li>
+          <li @click="aginEnter()" class="aa">
+            <img src="/static/img/load fail_2.png"/>
+            <div class="loadText">请点击刷新</div>
+          </li>
         </ul>
         <div v-else class="nullHeight"></div>
     </div>
@@ -50,7 +53,6 @@ import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
-      loadText: "",
       stopPropagation: false,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       pullUpLoad: {
@@ -79,7 +81,7 @@ export default {
   },
 
   mounted() {
-    this.init();
+    // this.init();
   },
   created() {},
 
@@ -92,11 +94,6 @@ export default {
       "ISSHOWALERT",
       "SHOWLOADING"
     ]),
-    init() {
-      setTimeout(() => {
-        this.loadText = "请点击刷新"
-      }, 8000);
-    },
     aginEnter() {
       this.$emit("aginEnter");
     },
@@ -478,7 +475,7 @@ export default {
     font-size: 0.75rem;
     color: #e11a2f;
     padding-top: 0.4375rem;
-     padding-bottom: 0.125rem;
+    padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
     max-width: 80%;
     @include space();
@@ -690,13 +687,18 @@ export default {
 .aa {
   position: relative;
   // width: 4rem;
+  font-family: PingFangSC-Regular;
   padding: 0.3125rem 0.625rem;
-  top: 3.4375rem;
+  // top: 3.4375rem;
   background: #fff;
   z-index: 10;
-  color: #444444;
+  color: #7e7e7e;
   font-size: 0.75rem;
   text-align: center;
+  img {
+     width: 3rem;
+     height: 3rem;
+   }
 }
 .hr-1 {
   display: block;

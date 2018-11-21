@@ -538,7 +538,7 @@ export default {
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
-            console.log("ye",this.shopList);
+            // console.log("ye",this.shopList);
             setTimeout(() => {
               this.SHOWLOADING(false);
             }, 300);

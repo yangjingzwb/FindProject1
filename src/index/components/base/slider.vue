@@ -328,14 +328,14 @@ export default {
   .dots {
     position: absolute;
     right: 0;
-    left: 17.8rem;
-    bottom: 0.3375rem;
+    left: 0;
+    bottom: 0.75rem;
     transform: translateZ(.0625rem);
     text-align: center;
     font-size: 0;
     .dot {
       display: inline-block;
-      margin: 0 0.1875rem;
+      margin: 0 0.25rem;
       width: .3125rem;
       height: .3125rem;
       border-radius: 50%;

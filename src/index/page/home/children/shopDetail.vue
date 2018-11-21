@@ -54,7 +54,7 @@
         <!-- <div class="nullHeight"></div> -->
         <section class="s_3" v-show = "couponList.length>=1">
           <div class="title">
-            <p>商铺优惠券</p>
+            <p>商户优惠券</p>
             <div class="hr-2"></div>
           </div>
           <div class="seller-coupon">
@@ -568,14 +568,15 @@ ul {
       }
     }
     .right {
-      width: 1.5rem;
-      height: 100%;
+      width: 2.2rem;
+      height: 2.5rem;
       position: relative;
       img {
         width: 1.5rem;
         height: 1.5rem;
         position: absolute;
         top: .6rem;
+        right: 0;
       }
       .special {
         position: absolute;

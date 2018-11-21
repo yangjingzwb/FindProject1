@@ -627,7 +627,7 @@ export default {
     font-size: 0.8125rem;
     color: #888888;
     padding-top: 0.25rem;
-    max-width: 100%;
+    max-width: 70%;
     @include space();
   }
   .r {
