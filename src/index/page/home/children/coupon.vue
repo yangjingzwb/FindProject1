@@ -404,6 +404,7 @@ ul:nth-last-child(1)::after {
     z-index: 99;
     .r {
       width: 4.75rem;
+      height: 1.875rem;
       background-image: linear-gradient(90deg, #e93357 0%, #f55b97 100%);
       font-size: 0.75rem;
       font-family: PingFangSC-Regular;

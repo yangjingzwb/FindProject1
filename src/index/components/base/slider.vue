@@ -328,24 +328,26 @@ export default {
   .dots {
     position: absolute;
     right: 0;
-    left: 0;
-    bottom: 0.75rem;
-    transform: translateZ(.0625rem);
+    left: 17.75rem;
+    bottom: 6px;
+    transform: translateZ(1px);
     text-align: center;
     font-size: 0;
     .dot {
       display: inline-block;
-      margin: 0 0.25rem;
-      width: .3125rem;
-      height: .3125rem;
+      margin: 0 3px;
+      width: 3px;
+      height: 3px;
       border-radius: 50%;
       // background: #fff;
-      border: 0.0625rem solid #fff;
+      border: 1px solid #fff;
+      box-sizing: content-box;
       &.active {
-        width: .3125rem;
+        width: 3px;
         border-radius: 50%;
         background: #ed1991;
-        border-width:0;
+        // border-width:0;
+        border: 1px solid #ed1991;
       }
     }
   }

@@ -274,7 +274,7 @@ export default {
               return item;
             })
             this.couponList = data;
-            console.log(this.couponList);
+            // console.log(this.couponList);
           }
         });
     },
@@ -667,6 +667,7 @@ ul {
       z-index: 99;
       .r {
         width: 4.5625rem;
+        height: 1.875rem;
         background-image: linear-gradient(90deg, #e93357 0%, #f55b97 100%);
         font-size: 0.75rem;
         font-family: PingFangSC-Regular;
