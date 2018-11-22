@@ -2,7 +2,8 @@
   <div class="content-wrapper">
     <header class="s_1">
       <ul>
-        <router-link tag="li" class="l t" to="/shopDetail"></router-link>
+        <!-- <router-link tag="li" class="l t" to="/shopDetail"></router-link> -->
+        <li class="l t" @click="goBack()"></li>
         <li class="l">
             <span>活动规则详情</span>
         </li>

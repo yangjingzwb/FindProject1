@@ -1138,6 +1138,7 @@ header {
     font-size: 0.75rem;
   }
   a.active {
+    font-family: PingFangSC-Semibold;
     display: block;
     color: #13252e;
     font-size: 0.75rem;

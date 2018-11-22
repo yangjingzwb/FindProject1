@@ -2,7 +2,8 @@
   <div class="home">
     <div class="s_1">
       <ul>
-        <router-link tag="li" class="l t" to="/home1"></router-link>
+        <!-- <router-link tag="li" class="l t" to="/home1"></router-link> -->
+        <li class="l t" @click="goBack()"></li>
         <li class="l">
             <span>商家信息</span>
         </li>
@@ -126,6 +127,7 @@ import { mapState, mapMutations } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 import {
   fetchPoints,
+  animationProgress,
   AppFlag,
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
@@ -414,6 +416,9 @@ export default {
     },
     changeIscrollY(flag) {
       this.scrollY = flag;
+    },
+    goBack() {
+      this.$router.go(-1);
     }
   }
 };
