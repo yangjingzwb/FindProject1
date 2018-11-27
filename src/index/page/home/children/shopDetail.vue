@@ -31,7 +31,7 @@
           <div class="address">
             <div class="address-info">
               <div class="left" @click="jumpMap()">
-                <img src="/static/img/seller_address_icon.png"/>
+                <img src="/static/img/address_icon.png"/>
                 <a>{{shopData.busAddr}}</a>
               </div>
               <div v-if="showTel" 
@@ -41,15 +41,16 @@
               <div class="hr-2"></div>
             </div>
 
-            <div class="address-info" @click="goDetail($event,shopData,2)">
-              <!-- <div class="left">
-                <img src="/static/img/seller_voucher_icon.png"/>
+            <!-- <div class="address-info" @click="goDetail($event,shopData,2)">
+              <div class="left">
+                <img src="/static/img/voucher_icon.png"/>
                 <a>支持本店消费的和包券</a>
               </div>
               <div class="right">
-                <img class="special" src="/static/img/more_button.png"/>
-              </div> -->
-            </div>
+                <span class="link">查看详情</span>
+                <img class="special" src="/static/img/link_button.png"/>
+              </div>
+            </div> -->
           </div>
         </section>
         <!-- <div class="nullHeight"></div> -->
@@ -100,7 +101,8 @@
                 <span class="activity">{{item.GME_NM}}：{{item.GME_ABBR}}</span>
               </div>
               <div class="right">
-                <img class="special" src="/static/img/more_button.png"/>
+                <span class="link">查看规则</span>
+                <img class="special" src="/static/img/link_button.png"/>
               </div>
               <div class="hr-2"></div>
             </div>
@@ -535,7 +537,7 @@ ul {
     position: relative;
     // height: 2.8125rem;
     .left {
-      width: 80%;
+      width: 75%;
       height: 100%;
       position: relative;
       overflow: hidden;
@@ -573,9 +575,16 @@ ul {
       }
     }
     .right {
-      width: 2.2rem;
+      width: 4.2rem;
       height: 2.5rem;
       position: relative;
+      .link {
+        font-family: PingFangSC-Regular;
+        font-size: 0.75rem;
+        color: #5a6164;
+        text-align: right;
+        line-height: 2.8125rem;
+      }
       img {
         width: 1.5rem;
         height: 1.5rem;
@@ -585,7 +594,7 @@ ul {
       }
       .special {
         position: absolute;
-        top: .85rem;
+        top: .9375rem;
         right: 0;
         width: 0.9375rem;
         height: 0.9375rem;

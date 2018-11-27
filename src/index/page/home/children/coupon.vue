@@ -2,7 +2,9 @@
   <div>
     <div class="nullHeight"></div>
     <div class="t-2">
-        领券专区
+        <div class="t-1">
+          <div class="t-3">领券专区</div>
+        </div>
         <div class="hr-1"></div>
     </div>
     <section class="sw">
@@ -310,13 +312,29 @@ div.sw-option-end {
 }
 .t-2 {
   position: relative;
-  height: 2.875rem;
+  height: 2.5rem;
   text-align: center;
   position: relative;
-  color: #13252e;
   line-height: 2.875rem;
+}
+.t-1 {
+  height: 100%;
+  line-height: 2.5rem;
+  width: 7.5rem;
+  margin: 0 auto;
+  background-image: url("/static/img/line1.png");
+  background-repeat: no-repeat;
+  background-position: 100%;
+}
+.t-3 {
+  height: 100%;
+  line-height: 2.5625rem;
+  width: 5rem;
+  color: #ed196c;
   font-family: PingFangSC-Regular;
   font-size: 0.9375rem;
+  margin: 0 auto;
+  background: #fff;
 }
 ul {
   width: 20.625rem;

@@ -2,32 +2,34 @@
   <div >
     <div class="nullHeight"></div>
         <div class="t-2">
-            附近优惠
-            <div class="t-4" @click="goMorePer()">更多</div>
-            <div class="hr-1"></div>
+          <div class="t-1">
+            <div class="t-3">附近优惠</div>
+          </div>
+          <div class="t-4" @click="goMorePer()">更多</div>
+          <div class="hr-1"></div>
         </div>
         <ul v-for="(item,index) in shopList"  @click="goSeller(item)" :key="item.id">
           <!-- :key="item.TX_JRN" -->
-            <li class="left">
-                <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
-                <img v-else :src="'/static/img/error.png'" alt="">
+          <li class="left">
+            <img v-if="item.PIC_URL_1" :src="item.PIC_URL_1" :onerror = 'defaultIcon' alt="" >
+            <img v-else :src="'/static/img/error.png'" alt="">
+          </li>
+          <li class="middle">
+            <div class="c1">{{item.STORES_NM}}</div>
+            <div class="c2">
+              <span class="l">{{item.BUS_ADDR}}</span>
+              <span class="r">{{item.distance}}km</span>
+            </div>
+            <div class="c3">
+              <span v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
+            </div>
+          </li>
+          <li class="right">
+            <div class="c4">
+              <span class="btn">立即消费</span>
+            </div>
             </li>
-            <li class="middle">
-                <div class="c1">{{item.STORES_NM}}</div>
-                <div class="c2">
-                    <span class="l">{{item.BUS_ADDR}}</span>
-                    <span class="r">{{item.distance}}km</span>
-                </div>
-                <div class="c3">
-                    <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
-                </div>
-            </li>
-            <li class="right">
-                 <div class="c4">
-                     <span class="btn">立即消费</span>
-                 </div>
-             </li>
-            <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
+          <li class="hr-1" :class="{height0:index == shopList.length-1}"></li>
         </ul>
         <ul v-if = "!shopList || shopList.length<=0 ">
           <loading v-if="showLoading"></loading>
@@ -155,13 +157,10 @@ export default {
 @import "~@@/style/mixin";
 .t-2 {
   position: relative;
-  height: 2.875rem;
+  height: 2.5rem;
   text-align: center;
   position: relative;
-  color: #13252e;
-  line-height: 2.875rem;
-  font-family: PingFangSC-Regular;
-  font-size: 0.9375rem;
+  line-height: 2.5rem;
 }
 .t-4 {
   // width: 1.125rem;
@@ -184,20 +183,20 @@ export default {
 }
 .t-1 {
   height: 100%;
-  line-height: 2.5625rem;
-  width: 9.375rem;
+  line-height: 2.5rem;
+  width: 7.5rem;
   margin: 0 auto;
-  background-image: url("/static/img/2-5.png");
+  background-image: url("/static/img/line1.png");
   background-repeat: no-repeat;
   background-position: 100%;
 }
 .t-3 {
   height: 100%;
   line-height: 2.5625rem;
-  width: 4.375rem;
-  color: #888888;
+  width: 5rem;
+  color: #ed196c;
   font-family: PingFangSC-Regular;
-  font-size: 0.75rem;
+  font-size: 0.9375rem;
   margin: 0 auto;
   background: #fff;
 }
@@ -477,7 +476,7 @@ export default {
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 90%;
+    max-width: 80%;
     @include space();
     div {
       @include space();
