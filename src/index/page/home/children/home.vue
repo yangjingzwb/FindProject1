@@ -1,8 +1,25 @@
 <template>
   <div class="home">
-    <div :class="isShow">优惠</div>
+    <div :class="isShow">
+      <span>优惠</span>
+      <span @click="getSharePage()" class="shareBtn"></span>
+    </div>
+    <!-- 弹窗 -->
+    <!-- <div class="alert_info">
+      <p>
+        <a href="https://www.baidu.com"></a>
+      </p>
+      <div @click="alertCloseBtn()" class="alert_close">
+        <span>X</span>
+      </div>
+    </div> -->
+    
     <scroll
       :scrollbar="scrollbar"
+      :data1 ="data1"
+      :data ="jdList"
+      :pullUpLoad= "pullUpLoad_near"
+      @pullingUp="onPullingUp"
     >
     <div :class="isShow2">
       <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
@@ -53,14 +70,14 @@
           @goDetail="goDetail"
         ></goods2>
         <!-- 京东资讯 -->
-        <!-- <goods3
+        <goods3
           :jdList="jdList"
           @goDetail="goDetail"
-        ></goods3> -->
+        ></goods3>
 
       </section>
-      <!-- <div class="null">&nbsp;</div> -->
-      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
+      <div class="null">&nbsp;</div>
+      <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
     </div>
     </scroll>
   </div>
@@ -75,6 +92,7 @@ import sa from "sa-sdk-javascript";
 import {
   fetchPoints,
   // GetDistance,
+  shareNow,
   setLItem,
   getLItem,
   // getCode,
@@ -85,7 +103,7 @@ import Near from "./near.vue";
 import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
-// import Goods3 from "./goods3.vue";
+import Goods3 from "./goods3.vue";
 // import Recommended from "./recommended.vue";
 // import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -135,7 +153,7 @@ export default {
     } catch (e) {}
     // 获取运营banner
     this.getMiddle();
-    // this.getJD();
+    this.getJD();
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -169,7 +187,7 @@ export default {
     Slider,
     Goods1,
     Goods2,
-    // Goods3,
+    Goods3,
     Scroll
   },
 
@@ -223,7 +241,7 @@ export default {
       this.sliderIndex = index;
     },
     onPullingUp() {
-      // this.jdloadMore();
+      this.jdloadMore();
     },
     jdloadMore() {
       if (this.jdFlag) {
@@ -607,6 +625,14 @@ export default {
         }
       });
     },
+    getSharePage(e) {
+      let index_urls = {
+        shareUrl: "https://www.cmpay.com/info/wap/mkm18/autoTelFareAct/shared.html",
+        wap_produce_reqData: "/gmeweb/miguhw_merc.xhtml?viewCode=json"// 单点登录
+      };
+      let shareTxt = "惊喜大礼，尽快查收吧";
+      shareNow(index_urls.shareUrl, shareTxt);
+    },
     // initScroll() {},
     // _calcHeight() {
     // },
@@ -679,6 +705,15 @@ div.container::-webkit-scrollbar {
   // font-weight: 200;
   text-align: center;
   line-height: 3rem;
+  .shareBtn {
+    width: 1.125rem;
+    height: 1.125rem;
+    background: url("/static/img/share_icon.png") top no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: .95rem;
+    right: 1rem;
+  }
 }
 .headerHidden {
   display: none;
@@ -687,6 +722,38 @@ div.container::-webkit-scrollbar {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+.alert_info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 100;
+  p {
+    width: 300px;
+    height: 400px;
+    background: url(/static/img/alert_bg.png) no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -200px;
+  }
+  .alert_close {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 20%;
+    right: 10%;
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 50%;
+    background-size: 1.8rem auto;
+  }
 }
 
 .content {

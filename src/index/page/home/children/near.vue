@@ -476,7 +476,7 @@ export default {
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 80%;
+    max-width: 85%;
     @include space();
     div {
       @include space();

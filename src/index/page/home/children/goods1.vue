@@ -17,7 +17,7 @@
               </li>
               <li class="sub">
                 <span class="price">¥{{(itemson.price)}}</span>
-                <span class="linePrice">¥{{(itemson.originalPrice)}}</span>
+                <span v-if="itemson.originalPrice.length" class="linePrice">¥{{(itemson.originalPrice)}}</span>
               </li>
             </ul>
           </li>
@@ -208,7 +208,6 @@ export default {
       // padding-left: .625rem;
     }
     .linePrice {
-      display: none;
       font-size: 0.75rem;
       color: #9b9b9b;
       font-family: PingFangSC-Regular;

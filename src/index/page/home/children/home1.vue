@@ -204,7 +204,7 @@ export default {
     let endTime = new Date() ;
     sa.track("loadDelay",{
       currentBusinessLine: "优惠频道",
-      currentActivity: "更多页面",
+      currentActivity: "优惠更多页面",
       currentURL: window.location.href,
       delayTime: endTime - startTime,
       offsetTime: 0,
@@ -344,7 +344,7 @@ export default {
       // 神策
       sa.track("clickSearch", {
         operationType: "点击搜索框",
-        currentPage: "更多"
+        currentPage: "优惠更多"
       });
     },
     touchStart(e) {
@@ -462,7 +462,7 @@ export default {
           sa.track("bannerClick", {
             contentName: obj.marketingTitle,
             bannerNumber: String(obj.marketingNumber),
-            topCategory: "更多"
+            topCategory: "优惠更多"
           });
           fetchPoints(
             "020000000000",

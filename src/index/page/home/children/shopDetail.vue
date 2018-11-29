@@ -575,7 +575,7 @@ ul {
       }
     }
     .right {
-      width: 4.2rem;
+      width: 4.3rem;
       height: 2.5rem;
       position: relative;
       .link {

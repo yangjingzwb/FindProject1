@@ -104,7 +104,7 @@ export default {
 <style lang="scss">
 .list-wrapper-v {
   position: relative;
-  height: 126px;
+  height: 120px;
   // height: 100%;
   // width: 375px;
   overflow: hidden;

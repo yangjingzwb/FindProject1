@@ -128,6 +128,14 @@ export const AppFlag = () => {
   }
   return isAppFlag;
 };
+// 和包分享到微信、QQ
+export const shareNow = (shareUrl, shareTxt) =>  {
+  if (AppFlag() === '1') {
+      window.location.href = "cyberapp://IOSShare#IOSShareTitle= #IOSShareURL=" + shareUrl + "#IOSShareDetails=" + shareTxt;
+  } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.goTopSpeed) === 'function') {
+      window.MobileWalletShare.startShare('', shareUrl, shareTxt);
+  }
+};
 /**
  * 异步加载JS
  * @param {*} url 

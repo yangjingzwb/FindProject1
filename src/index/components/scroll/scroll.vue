@@ -156,7 +156,7 @@ export default {
         (this.pullUpLoad &&
           this.pullUpLoad.txt &&
           this.pullUpLoad.txt.noMore) ||
-        "没有更多数据了";
+        "亲，我是有底线的";
 
       return this.pullUpDirty ? moreTxt : noMoreTxt;
     },
@@ -356,7 +356,7 @@ export default {
     },
     data1(){
       // this.isPullingDown = false;
-      // this.pullUpTxt = '没有更多数据了'
+      this.pullUpTxt = '没有更多数据了'
       this.refresh();
       setTimeout(() => {
         this.forceUpdate(false);

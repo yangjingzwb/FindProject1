@@ -195,11 +195,11 @@ export default {
     goDetail(event, obj, flag) {
       // 神策
       // sa.track('clickShop', {
-      //   currentPage: '更多',
+      //   currentPage: '优惠更多',
       //   commodityName: '附近商户'
       // });
       sa.track("clickShop", {
-        currentPage: "更多",
+        currentPage: "优惠更多",
         commodityID: obj.MERC_ID,
         commodityName: obj.STORES_NM,
         commodityType: obj.MERC_TRD_DESC,
@@ -538,7 +538,7 @@ export default {
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 80%;
+    max-width: 85%;
     @include space();
     div {
       @include space();
