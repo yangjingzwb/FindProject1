@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     initSetWidth(){
-      console.log(this.$refs.wrapper.children[0])
+      // console.log(this.$refs.wrapper.children[0])
       this.children = this.$refs.wrapper.children[0].children;
       let width = 0;
 
@@ -104,7 +104,7 @@ export default {
 <style lang="scss" scoped>
 .list-wrapper-v {
   position: relative;
-  height: 120px;
+  height: 155px;
   // height: 100%;
   // width: 375px;
   overflow: hidden;

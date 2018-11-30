@@ -1,11 +1,16 @@
 <!--和悦商品接口-->
 <template>
 <div>
-    <div v-for="(item, index) of middle" :key="'good1_1_'+index">
+    <div v-for="(item, index) of dataList" :key="'good1_1_'+index">
       <div v-if="banner" class="banner" @click="goDetail($event,item,2)">
         <img v-lazy="item.tbConductConfig.marketingIcon"/>
       </div>
       <div class="goods">
+        <scroll 
+          :scrollX = true
+          :scrollbar = false
+          :data="item.goodsVO"
+        >
         <ul class="u1">
           <li v-for="(itemson, index) of item.goodsVO" @click="goDetail($event,itemson,3)" :key="'good1_'+index">
             <ul class="u2">
@@ -21,10 +26,19 @@
               </li>
             </ul>
           </li>
+          <li v-if="item.goodsVO.length>2" class="sw-option sw-option-end"><a href="group1/M00/00/04/wKgBxVv_S_CAWYVEAACGyuL4HR8827.jpg">更多优惠</a></li>
         </ul>
+        </scroll>
       </div>
-      <div class="nullHeight"></div>
+      
     </div>
+    <div v-if="showMore = middle.length>4 ? true : false" 
+        @click="showAll = !showAll" 
+        class="more">
+      <span v-if="showAll==false" class="down">展开</span>
+      <span v-else class="up">收起</span>
+    </div>
+    <div class="nullHeight"></div>
 </div>
    
 </template>
@@ -38,11 +52,14 @@ import {
 } from "@@/service/util";
 import { mapState } from "vuex";
 import axios from "@@/plugins/rsa/axios";
+import Scroll from "@@/components/scroll/scroll-goods.vue";
 import sa from'sa-sdk-javascript';
 export default {
   data() {
     return {
       data: {},
+      showAll: false,
+      showMore: false
       // banner: {}
     };
   },
@@ -53,6 +70,21 @@ export default {
     ...mapState(["token"]),
     banner:function(){
       return this.middle && this.middle.length>=1 ? this.middle[0] : this.middle[0]
+    },
+    dataList() {
+      if (this.showAll == false) {
+        var dataList = [];
+        if (this.middle.length > 4) {
+          for (var i = 0; i < 4; i++) {
+            dataList.push(this.middle[i])
+          }
+        } else {
+          dataList = this.middle
+        }
+        return dataList;
+      } else {
+        return this.middle
+      }
     }
   },
 
@@ -63,7 +95,9 @@ export default {
   },
   created() {},
 
-  components: {},
+  components: {
+    Scroll
+  },
 
   methods: {
     init() {
@@ -157,9 +191,9 @@ export default {
     display: flex;
     padding-top: 0.6875rem;
     & > li {
-      flex: 3;
+      flex: 4;
       flex-direction: row;
-      max-width: 34%;
+      max-width: 24%;
     }
 
     li.icon {
@@ -215,11 +249,69 @@ export default {
       text-align: left;
     }
     .u2 {
-      padding-bottom: 1.4375rem;
+      // padding-bottom: 1.4375rem;
     }
     .sub {
       text-indent: 0.3rem;
     }
   }
+  .sw-option {
+    height: 6.875rem;;
+    line-height: 6.875rem;
+    font-size: 0.75rem;
+    text-align: center;
+    background: #F55B97;
+    border-radius: 0.5rem;
+    flex: 0 1 auto;
+    // float: left;
+    a {
+      color: #fff;
+    }
+    img {
+      display: inline-block;
+      height: 5.625rem;
+      // padding-left: 15px;
+    }
+    .p2 {
+      // padding-left: .4375rem;
+    }
+  }
+  div.sw-option-end {
+    margin: 0 auto;
+    color: #aeafaf;
+    font-family: PingFangSC-Regular;
+    font-size: 0.75rem;
+    width: 1.25rem;
+    padding-top: 0.5rem;
+    line-height: 0.9375rem;
+    margin-right: 0.625rem;
+    margin-left: 0.625rem;
+  }
+}
+.more {
+  float: right;
+  height: 100%;
+  font-size: 0.875rem;
+  padding-bottom: .5rem;
+  color: #7E7E7E;
+  .down {
+    display: inline-block;
+    width: 4rem;
+    color: #13252e;
+    background: url(/static/img/down.png) no-repeat 60% 50%;
+    background-size: auto 80%;
+  }
+  .up {
+    display: inline-block;
+    width: 4rem;
+    color: #13252e;
+    background: url(/static/img/up.png) no-repeat 60% 50%;
+    background-size: auto 80%;
+  }
+}
+.nullHeight {
+    width: 100%;
+    height: 0.5625rem;
+    background: #F6F7F8;
 }
 </style>
