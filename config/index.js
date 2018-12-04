@@ -31,7 +31,7 @@ module.exports = {
         context: [ //代理路径
             '/mock',
         ],
-        proxypath: 'https://find.cmpay.com:9105/',
+        proxypath: 'https://find.cmpay.com:9102/',
         // proxypath: 'http://211.138.236.219:9103/',
         // proxypath: 'http://113.108.79.80:3020/',
         // CSS Sourcemaps off by default because relative paths are "buggy"

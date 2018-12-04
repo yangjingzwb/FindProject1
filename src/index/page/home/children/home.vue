@@ -5,14 +5,26 @@
       <span @click="getSharePage()" class="shareBtn"></span>
     </div>
     <!-- 弹窗 -->
-    <!-- <div class="alert_info">
-      <p>
-        <a href="https://www.baidu.com"></a>
+    <div v-if="alertinfo && alertinfo.length>0" :class="isAlertInfo">
+      <p v-for="item in alertinfo">
+        <a href="https://www.baidu.com"><img :src="item.popupIcon" /></a>
       </p>
-      <div @click="alertCloseBtn()" class="alert_close">
-        <span>X</span>
-      </div>
-    </div> -->
+      <div @click="alertCloseBtn()" class="alert_close"></div>
+    </div>
+          
+    <section v-if="tabs && tabs.length>0" class="tabs">
+      <!-- <span v-for="(item, index) in tabs"  @click="goCatalogs(index,item,'classify')"> -->
+        <!-- <a :class="{'active':selectIndex==index}" >{{item.tabTitle}}</a> -->
+      <!-- <span @click="goCatalogs(index,item,'classify')"> -->
+        <span :class="{'active':selectIndex==index}" >
+          <a href="https://mall.joypay.cn/cm-mall/outservice/topicdetail.do?topicId=227">秒杀</a>
+        </span>
+        <span :class="{'active':selectIndex==index}" >首页</span>
+        <span :class="{'active':selectIndex==index}" >
+          <a href="http://h.umfintech.com/mallweb/h5hb/activitys/July.htm">拼购</a>
+        </span>
+      <!-- </span> -->
+    </section>
     
     <scroll
       :scrollbar="scrollbar"
@@ -113,6 +125,7 @@ export default {
     return {
       isShow: "",
       isShow2: "",
+      isAlertInfo: "alert_info",
       pullUpLoad: false,
       pullUpLoad_near: true,
       data1: false,
@@ -195,7 +208,8 @@ export default {
     ...mapState([
       "slider2",
       "slider",
-      "slider1",
+      "tabs",
+      "alertinfo",
       "bannermarkets",
       "topTitle",
       "products",
@@ -633,6 +647,9 @@ export default {
       let shareTxt = "惊喜大礼，尽快查收吧";
       shareNow(index_urls.shareUrl, shareTxt);
     },
+    alertCloseBtn() {
+      this.isAlertInfo = "alert_info_hide";
+    },
     // initScroll() {},
     // _calcHeight() {
     // },
@@ -657,7 +674,7 @@ export default {
   // overflow: auto;
   height: 95%;
   position: relative;
-  top: 3rem;
+  top: 6rem;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -665,7 +682,7 @@ export default {
    // overflow: auto;
    height: 95%;
    position: relative;
-   top: 0;
+   top: 3rem;
    overflow-y: auto;
    -webkit-overflow-scrolling: touch;
  }
@@ -724,6 +741,7 @@ div.container::-webkit-scrollbar {
   overflow: hidden;
 }
 .alert_info {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
@@ -732,30 +750,69 @@ div.container::-webkit-scrollbar {
   background: rgba(0,0,0,0.6);
   z-index: 100;
   p {
-    width: 300px;
-    height: 400px;
-    background: url(/static/img/alert_bg.png) no-repeat;
+    width: 18.75rem;
+    height: 25rem;
+    // background: url(/static/img/alert_bg.png) no-repeat;
     background-size: contain;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -150px;
-    margin-top: -200px;
+    margin-left: -9.375rem;
+    margin-top: -12.5rem;
+  }
+  img {
+    width: 18.75rem;
+    height: 25rem;
   }
   .alert_close {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 20%;
-    right: 10%;
+    width: 1.75rem;
+    height: 1.75rem;
+    top: 81%;
+    left: 50%;
+    background: url(/static/img/close.png) no-repeat;
     color: #000;
     text-align: center;
-    background-color: #fff;
-    border-radius: 50%;
-    background-size: 1.8rem auto;
+    // background-color: #fff;
+    // border-radius: 50%;
+    background-size: 1.75rem 1.75rem;
   }
 }
-
+.alert_info_hide {
+  display: none;
+}
+.tabs {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  font-size: 1rem !important;
+  color: #13252e;
+  font-family: PingFangSC-Regular !important;
+  background: #ffffff;
+  // position: -webkit-sticky;
+  position: fixed;
+  z-index: 100000000;
+  top: 0;
+  left: 0;
+  // font-weight: 200;
+  text-align: center;
+  line-height: 3rem;
+  span {
+    flex: 3;
+    display: block;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    max-width: 6.75rem;
+    max-height: 6.75rem;
+    position: relative;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    a {
+      color: #000;
+    }
+  }
+}
 .content {
   // height: auto;
 }
@@ -1218,9 +1275,9 @@ div.container::-webkit-scrollbar {
   font-size: 0.75rem;
   text-align: center;
 }
-// .null {
-//    height: 2rem;
-//  }
+.null {
+   height: 2rem;
+ }
 .hr-1 {
   display: block;
   position: absolute;

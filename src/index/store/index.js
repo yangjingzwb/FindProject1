@@ -15,6 +15,8 @@ const state = {
 	slider:[], //首页轮播图
 	slider1:[], //我的轮播图
 	slider2:[], //我的轮播图
+	tabs:[], //tab
+	alertinfo:[], //弹窗
 	bannermarkets:[], //异形banner
 	topTitle:'', //标题
 	recommends:[], // 为你推荐banner

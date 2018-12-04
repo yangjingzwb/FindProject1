@@ -5,6 +5,8 @@ import {
 	SLIDER,
 	SLIDER1,
 	SLIDER2,
+	TABS,
+	ALERTINFO,
 	BANNERMARKETS,
 	TOPTITLE,
 	RECOMMENDS,
@@ -58,6 +60,12 @@ export default {
 	},
 	[SLIDER2](state,data){
 		state.slider2 = data
+	},
+	[TABS](state,data){
+		state.tabs = data
+	},
+	[ALERTINFO](state,data){
+		state.alertinfo = data
 	},
 	[BANNERMARKETS](state,data){
 		state.bannermarkets = data
