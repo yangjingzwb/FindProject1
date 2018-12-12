@@ -2,9 +2,9 @@
   <div>
     <div class="t-2">
       <div class="t-1 ">
-        <div class="t-3">为你推荐</div>
+        <!-- <div class="t-3">为你推荐</div> -->
       </div>
-      <div class="hr-1"></div>
+      <!-- <div class="hr-1"></div> -->
     </div>
     <div class="goods-2">
       <ul class="u1">
@@ -96,9 +96,10 @@ export default {
   line-height: 2.5rem;
   width: 7.5rem;
   margin: 0 auto;
-  background-image: url("/static/img/line1.png");
+  background-image: url("/static/img/goos2__img.png");
   background-repeat: no-repeat;
-  background-position: 100%;
+  background-size: 9.375rem 2.1875rem;
+  background-position: center center;
 }
 .t-3 {
   line-height: 2.5rem;
@@ -121,11 +122,11 @@ export default {
     overflow: hidden;
   }
   .u1 > li {
-    height: 14.4rem;
+    // height: 14.4rem;
     width: 50%;
     float: left;
     padding: 0 0.5rem 0 0.5rem;
-    margin-bottom: 1.125rem;
+    margin-bottom: 0.625rem;
     overflow: hidden;
   }
   .text {
@@ -145,8 +146,8 @@ export default {
   }
   .price {
     font-size: 0.9375rem;
-    color: #ed1991;
-    font-family: PingFangSC-Medium;
+    color: #ea2845;
+    font-family: PingFangSC-Semibold;
     margin-top: 0.3125rem;
   }
   li.icon {

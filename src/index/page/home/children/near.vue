@@ -3,10 +3,10 @@
     <div class="nullHeight"></div>
         <div class="t-2">
           <div class="t-1">
-            <div class="t-3">附近优惠</div>
+            <!-- <div class="t-3">附近优惠</div> -->
           </div>
-          <div class="t-4" @click="goMorePer()">更多</div>
-          <div class="hr-1"></div>
+          <div class="t-4" @click="goMorePer()">更多优惠</div>
+          <!-- <div class="hr-1"></div> -->
         </div>
         <ul v-for="(item,index) in shopList"  @click="goSeller(item)" :key="item.id">
           <!-- :key="item.TX_JRN" -->
@@ -160,7 +160,7 @@ export default {
   height: 2.5rem;
   text-align: center;
   position: relative;
-  line-height: 2.5rem;
+  line-height: 2.8rem;
 }
 .t-4 {
   // width: 1.125rem;
@@ -169,14 +169,13 @@ export default {
   font-size: 0.75rem;
   position: absolute;
   right: .5rem;
-  padding-right: 1.1rem;
-  color: #7E7E7E;
+  padding-right: 1.3rem;
+  color: #7e7e7e;
   top: 0;
-  background-image: url("/static/img/more_button.png");
+  background-image: url("/static/img/more_arrow_2.png");
   background-repeat: no-repeat;
-  background-position: 100%;
-  background-position: 85% 50%;
-  background-size: auto 25%;
+  background-position: 90% 55%;
+  background-size: auto 32%;
 }
 .t-2:after {
   @include onepx1(#d8d8d8);
@@ -184,11 +183,12 @@ export default {
 .t-1 {
   height: 100%;
   line-height: 2.5rem;
-  width: 7.5rem;
+  width: 9.375rem;
   margin: 0 auto;
-  background-image: url("/static/img/line1.png");
+  background-image: url("/static/img/near_img.png");
   background-repeat: no-repeat;
-  background-position: 100%;
+  background-size: 9.375rem 2.1875rem;
+  background-position: center center;
 }
 .t-3 {
   height: 100%;
@@ -472,11 +472,11 @@ export default {
   }
   .c3 {
     font-size: 0.75rem;
-    color: #e11a2f;
+    color: #fff;
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 85%;
+    max-width: 100%;
     @include space();
     div {
       @include space();
@@ -489,10 +489,14 @@ export default {
   }
   .b {
     display: inline-block;
-    background: #fff0f1;
-    border: thin solid rgba(224, 24, 45, 0.2);
-    border-radius: 0.125rem;
-    padding: 0 0.1563rem;
+    font-size: 0.75rem;
+    font-family: PingFangSC-Regular;
+    letter-spacing: -0.06px;
+    line-height: 0.75rem;
+    background-image: linear-gradient(-162deg, #F65050 0%, #E22828 100%, #C90F0F 100%);
+    // border: thin solid rgba(224, 24, 45, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.1875rem 0.5rem;
     margin-right: 0.1875rem;
   }
     .right {

@@ -17,11 +17,11 @@
         <!-- <a :class="{'active':selectIndex==index}" >{{item.tabTitle}}</a> -->
       <!-- <span @click="goCatalogs(index,item,'classify')"> -->
         <span :class="{'active':selectIndex==index}" >
-          <a href="https://mall.joypay.cn/cm-mall/outservice/topicdetail.do?topicId=227">秒杀</a>
+          <a href="https://mall.joypay.cn/cm-mall/outservice/topicdetail.do?topicId=227">{{tabs[0].tabTitle}}</a>
         </span>
         <span :class="{'active':selectIndex==index}" >首页</span>
         <span :class="{'active':selectIndex==index}" >
-          <a href="http://h.umfintech.com/mallweb/h5hb/activitys/July.htm">拼购</a>
+          <a href="http://h.umfintech.com/mallweb/h5hb/activitys/July.htm">{{tabs[1].tabTitle}}</a>
         </span>
       <!-- </span> -->
     </section>
@@ -148,6 +148,7 @@ export default {
       goods1: [],
       PAGENUM: 0, // jd页码
       PAGESIZE: 4, // jd页码数量
+      selectIndex: 0,
       jdFlag: false,
       scrollbar: false
     };
@@ -750,31 +751,32 @@ div.container::-webkit-scrollbar {
   background: rgba(0,0,0,0.6);
   z-index: 100;
   p {
-    width: 18.75rem;
-    height: 25rem;
+    width: 15.625rem;
+    height: 18.75rem;
     // background: url(/static/img/alert_bg.png) no-repeat;
     background-size: contain;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -9.375rem;
-    margin-top: -12.5rem;
+    margin-left: -7.8125rem;
+    margin-top: -9.375rem;
   }
   img {
-    width: 18.75rem;
-    height: 25rem;
+    width: 15.625rem;
+    height: 18.75rem;
+    border-radius: 5px;
   }
   .alert_close {
     position: absolute;
     width: 1.75rem;
     height: 1.75rem;
-    top: 81%;
+    margin-left: -0.875rem;
+    top: 73%;
     left: 50%;
-    background: url(/static/img/close.png) no-repeat;
+    background: url(/static/img/close_img.png) no-repeat;
     color: #000;
     text-align: center;
     // background-color: #fff;
-    // border-radius: 50%;
     background-size: 1.75rem 1.75rem;
   }
 }
@@ -788,7 +790,8 @@ div.container::-webkit-scrollbar {
   font-size: 1rem !important;
   color: #13252e;
   font-family: PingFangSC-Regular !important;
-  background: #ffffff;
+  background: #fff;
+  // background-image: linear-gradient(90deg, #E91B39 0%, #F7405B 100%);
   // position: -webkit-sticky;
   position: fixed;
   z-index: 100000000;

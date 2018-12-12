@@ -2,8 +2,8 @@
     <div class="goods-3">
       <div class="nullHeight"></div>
       <div class="title">
-        <div class="t-text">资讯</div>
-        <div class="hr-1"></div>
+        <div class="t-text"></div>
+        <!-- <div class="hr-1"></div> -->
       </div>
 
      <div class="goods">
@@ -104,17 +104,21 @@ export default {
 .goods-3 {
   clear: both;
   .title {
-    height: 3.0625rem;
     position: relative;
-    line-height: 3.0625rem;
+    height: 2.5rem;
     text-align: center;
-
+    position: relative;
+    line-height: 2.5rem;
   }
   .t-text {
-    font-size: 0.9375rem;
-    width: 5rem;
+    height: 100%;
+    line-height: 2.5rem;
+    width: 7.5rem;
     margin: 0 auto;
-    background-color: #fff;
+    background-image: url("/static/img/goos3_img.png");
+    background-repeat: no-repeat;
+    background-size: 9.375rem 2.1875rem;
+    background-position: center center;
   }
   .u1 {
     padding: 0 !important;

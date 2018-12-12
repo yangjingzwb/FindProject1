@@ -3,9 +3,9 @@
     <div class="nullHeight"></div>
     <div class="t-2">
         <div class="t-1">
-          <div class="t-3">领券专区</div>
+          <!-- <div class="t-3">领券专区</div> -->
         </div>
-        <div class="hr-1"></div>
+        <!-- <div class="hr-1"></div> -->
     </div>
     <section class="sw">
       <scroll 
@@ -276,7 +276,7 @@ export default {
 .sw-box {
   // width: 200%;
   height:5.625rem;
-  margin: 1.25rem 0 .9375rem 0.625rem;
+  margin: 0.625rem 0 .9375rem 0.625rem;
   // overflow-x:auto;
   // overflow-y: hidden;
   display: flex;
@@ -320,11 +320,12 @@ div.sw-option-end {
 .t-1 {
   height: 100%;
   line-height: 2.5rem;
-  width: 7.5rem;
+  width: 9.375rem;
   margin: 0 auto;
-  background-image: url("/static/img/line1.png");
+  background-image: url("/static/img/coupon_img.png");
   background-repeat: no-repeat;
-  background-position: 100%;
+  background-size: 9.375rem 2.1875rem;
+  background-position: center center;
 }
 .t-3 {
   height: 100%;

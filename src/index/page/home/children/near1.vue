@@ -534,11 +534,11 @@ export default {
   }
   .c3 {
     font-size: 0.75rem;
-    color: #e11a2f;
+    color: #fff;
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 85%;
+    max-width: 100%;
     @include space();
     div {
       @include space();
@@ -551,10 +551,14 @@ export default {
   }
   .b {
     display: inline-block;
-    background: #fff0f1;
-    border: thin solid rgba(224, 24, 45, 0.2);
-    border-radius: 0.125rem;
-    padding: 0 0.1563rem;
+    font-size: 0.75rem;
+    font-family: PingFangSC-Regular;
+    letter-spacing: -0.06px;
+    line-height: 0.75rem;
+    background-image: linear-gradient(-162deg, #F65050 0%, #E22828 100%, #C90F0F 100%);
+    // border: thin solid rgba(224, 24, 45, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.1875rem 0.5rem;
     margin-right: 0.1875rem;
   }
   .right {

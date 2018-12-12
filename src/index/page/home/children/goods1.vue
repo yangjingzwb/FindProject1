@@ -26,7 +26,13 @@
               </li>
             </ul>
           </li>
-          <li v-if="item.goodsVO.length>2" class="sw-option sw-option-end"><a href="group1/M00/00/04/wKgBxVv_S_CAWYVEAACGyuL4HR8827.jpg">更多优惠</a></li>
+          <li @click="goDetail($event,item,2)" class="sw-option sw-option-end">
+            <ul class="sw_wrapper">
+              <li>更多优惠</li>
+              <li class="sw_text">MORE</li>
+              <li class="sw_button">></li>
+            </ul>
+          </li>
         </ul>
         </scroll>
       </div>
@@ -35,8 +41,11 @@
     <div v-if="showMore = middle.length>4 ? true : false" 
         @click="showAll = !showAll" 
         class="more">
-      <span v-if="showAll==false" class="down">展开</span>
-      <span v-else class="up">收起</span>
+      <div v-if="showAll==false" class="down">
+        <div>更多特价商品</div>
+        <div class="down_img">&nbsp;</div>
+      </div>
+      <div v-else class="up">收起</div>
     </div>
     <div class="nullHeight"></div>
 </div>
@@ -171,7 +180,7 @@ export default {
 @import "~@@/style/mixin";
 .banner {
   width: 100%;
-  // height: 8.3125rem;
+  // height: 100%;
   overflow: hidden;
   margin-bottom: 0.5rem;
   img {
@@ -181,8 +190,14 @@ export default {
 }
 .goods {
   // height: 11.3125rem;
-  padding-left: 0.6875rem;
-  padding-right: 0.6875rem;
+  // padding-left: 0.6875rem;
+  padding: 0.625rem;
+  position: relative;
+  left: 1rem;
+  bottom: 1.5rem;
+  background: #fff;
+  box-shadow: 0 0.3125rem 0.625rem 0 rgba(0,0,0,0.16);
+  border-radius: 0.3125rem;
   .u2 {
     overflow: hidden;
   }
@@ -209,10 +224,9 @@ export default {
     img {
       // width: 3.75rem;
       // min-height: 4.125rem;
-
       display: block;
-      max-width: 6.5625rem;
-      max-height: 6.5625rem;
+      max-width: 6.25rem;
+      max-height: 6.25rem;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -236,7 +250,7 @@ export default {
     }
     .price {
       font-size: 0.75rem;
-      color: #ed1991;
+      color: #ea2845;
       font-family: PingFangSC-Medium;
       text-align: left;
       // padding-left: .625rem;
@@ -256,24 +270,30 @@ export default {
     }
   }
   .sw-option {
-    height: 6.875rem;;
-    line-height: 6.875rem;
-    font-size: 0.75rem;
+    font-size: 0.9375rem;
     text-align: center;
-    background: #F55B97;
-    border-radius: 0.5rem;
-    flex: 0 1 auto;
+    background: #f6f7f8;
+    // border-radius: 0.5rem;
+    // flex: 0 1 auto;
     // float: left;
-    a {
-      color: #fff;
-    }
-    img {
-      display: inline-block;
-      height: 5.625rem;
-      // padding-left: 15px;
-    }
-    .p2 {
-      // padding-left: .4375rem;
+    color: #8b8b8b;
+    .sw_wrapper {
+      padding-top: 2.5rem;
+      .sw_text {
+        font-family: PingFangSC-Semibold;
+        padding-top: .25rem;
+        font-size: 0.75rem;
+        color: #d2d2d3;
+      }
+      .sw_button {
+        margin: 0.45rem auto;
+        width: 3.5rem;
+        height: 1.4rem;
+        line-height: 1.4rem;
+        color: #fff;
+        background-color: #e1e1e1;
+        border-radius: 1.2rem;
+      }
     }
   }
   div.sw-option-end {
@@ -289,24 +309,25 @@ export default {
   }
 }
 .more {
-  float: right;
+  // float: right;
+  margin-left: 42%;
+  margin-top: 1rem;
+  width: 5rem;
   height: 100%;
-  font-size: 0.875rem;
+  font-family: PingFangSC-Regular;
+  font-size: 0.75rem;
   padding-bottom: .5rem;
-  color: #7E7E7E;
-  .down {
-    display: inline-block;
-    width: 4rem;
-    color: #13252e;
-    background: url(/static/img/down.png) no-repeat 60% 50%;
+  color: #7e7e7e;
+  .down_img {
+    background: url(/static/img/more_arrow_3.png) no-repeat 42% 50%;
     background-size: auto 80%;
   }
   .up {
     display: inline-block;
+    text-align: center;
     width: 4rem;
-    color: #13252e;
-    background: url(/static/img/up.png) no-repeat 60% 50%;
-    background-size: auto 80%;
+    background: url(/static/img/up.png) no-repeat 85% 50%;
+    background-size: 18%;
   }
 }
 .nullHeight {
