@@ -212,8 +212,8 @@ export default {
     }
 
     li.icon {
-      max-height: 6.875rem;
-      height: 6.875rem;
+      max-height: 6.25rem;
+      height: 6.25rem;
       position: relative;
       margin: 0 auto;
       // margin-top: 1.375rem;
@@ -279,6 +279,7 @@ export default {
     color: #8b8b8b;
     .sw_wrapper {
       padding-top: 2.5rem;
+      font-size: 0.875rem;
       .sw_text {
         font-family: PingFangSC-Semibold;
         padding-top: .25rem;

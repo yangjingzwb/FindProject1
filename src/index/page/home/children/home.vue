@@ -6,7 +6,7 @@
     </div>
     <!-- 弹窗 -->
     <div v-if="alertinfo && alertinfo.length>0" :class="isAlertInfo">
-      <p v-for="item in alertinfo">
+      <p v-for="item in alertinfo" :key="item.id">
         <a href="https://www.baidu.com"><img :src="item.popupIcon" /></a>
       </p>
       <div @click="alertCloseBtn()" class="alert_close"></div>
@@ -16,12 +16,14 @@
       <!-- <span v-for="(item, index) in tabs"  @click="goCatalogs(index,item,'classify')"> -->
         <!-- <a :class="{'active':selectIndex==index}" >{{item.tabTitle}}</a> -->
       <!-- <span @click="goCatalogs(index,item,'classify')"> -->
-        <span :class="{'active':selectIndex==index}" >
-          <a href="https://mall.joypay.cn/cm-mall/outservice/topicdetail.do?topicId=227">{{tabs[0].tabTitle}}</a>
+        <span class="tabs_t" @click="goToPage(0)">
+          <a :class="{'active':selectIndex==0}" href="https://wqs.jd.com/portal/wx/seckill_m/index.shtml?cu=true&utm_source=kong&utm_medium=unionkcps&utm_campaign=t_1000543739_&utm_term=ea61b55ddeab494282e9076635b5f3b4">{{tabs[0].tabTitle}}</a>
         </span>
-        <span :class="{'active':selectIndex==index}" >首页</span>
-        <span :class="{'active':selectIndex==index}" >
-          <a href="http://h.umfintech.com/mallweb/h5hb/activitys/July.htm">{{tabs[1].tabTitle}}</a>
+        <span>
+          <a :class="{'active':selectIndex==1}">首页</a>
+        </span>
+        <span class="tabs_t" @click="goToPage(2)">
+          <a :class="{'active':selectIndex==2}" href="http://h.umfintech.com/mallweb/h5hb/activitys/July.htm">{{tabs[1].tabTitle}}</a>
         </span>
       <!-- </span> -->
     </section>
@@ -51,7 +53,7 @@
         </div>
       </section>
       <!-- 秒杀 -->
-      <section v-if="bannermarkets[0].marketingIcon" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
+      <section v-if="bannermarkets.length>0" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
         <img :src="bannermarkets[0].marketingIcon" >
       </section>  
             
@@ -148,7 +150,7 @@ export default {
       goods1: [],
       PAGENUM: 0, // jd页码
       PAGESIZE: 4, // jd页码数量
-      selectIndex: 0,
+      selectIndex: 1,
       jdFlag: false,
       scrollbar: false
     };
@@ -252,8 +254,8 @@ export default {
     changeIscrollY(flag) {
       this.scrollY = flag;
     },
-    goToPage(index) {
-      this.sliderIndex = index;
+    goToPage(index){
+      this.selectIndex = index;
     },
     onPullingUp() {
       this.jdloadMore();
@@ -764,16 +766,16 @@ div.container::-webkit-scrollbar {
   img {
     width: 15.625rem;
     height: 18.75rem;
-    border-radius: 5px;
+    border-radius: 0.3125rem;
   }
   .alert_close {
     position: absolute;
     width: 1.75rem;
     height: 1.75rem;
     margin-left: -0.875rem;
-    top: 73%;
+    top: 75%;
     left: 50%;
-    background: url(/static/img/close_img.png) no-repeat;
+    background: url(/static/img/close_icon.png) no-repeat;
     color: #000;
     text-align: center;
     // background-color: #fff;
@@ -787,14 +789,10 @@ div.container::-webkit-scrollbar {
   width: 100%;
   height: 3rem;
   display: flex;
-  font-size: 1rem !important;
-  color: #13252e;
-  font-family: PingFangSC-Regular !important;
-  background: #fff;
-  // background-image: linear-gradient(90deg, #E91B39 0%, #F7405B 100%);
+  background-image: linear-gradient(90deg, #E91B39 0%, #F7405B 100%);
   // position: -webkit-sticky;
   position: fixed;
-  z-index: 100000000;
+  z-index: 9999;
   top: 0;
   left: 0;
   // font-weight: 200;
@@ -812,7 +810,16 @@ div.container::-webkit-scrollbar {
     left: 20%;
     transform: translate(-50%, -50%);
     a {
-      color: #000;
+      font-family: PingFangSC-Regular;
+      font-size: 0.875rem;
+      color: #fff;
+      line-height: 3rem;
+      padding: 0 0.125rem 0.3125rem;
+    }
+    a.active{
+      font-family: PingFangSC-Semibold;
+      font-size: 1rem;
+      border-bottom: 0.125rem solid #fff;
     }
   }
 }
