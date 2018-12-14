@@ -7,25 +7,30 @@
     <!-- 弹窗 -->
     <div v-if="alertinfo && alertinfo.length>0" :class="isAlertInfo">
       <p v-for="item in alertinfo" :key="item.id">
-        <a href="https://www.baidu.com"><img :src="item.popupIcon" /></a>
+        <a @click="goDetail($event,item,12,'alert_tip')"><img :src="item.popupIcon" /></a>
       </p>
       <div @click="alertCloseBtn()" class="alert_close"></div>
     </div>
           
     <section v-if="tabs && tabs.length>0" class="tabs">
-      <!-- <span v-for="(item, index) in tabs"  @click="goCatalogs(index,item,'classify')"> -->
-        <!-- <a :class="{'active':selectIndex==index}" >{{item.tabTitle}}</a> -->
-      <!-- <span @click="goCatalogs(index,item,'classify')"> -->
-        <span class="tabs_t" @click="goToPage(0)">
-          <a :class="{'active':selectIndex==0}" href="https://wqs.jd.com/portal/wx/seckill_m/index.shtml?cu=true&utm_source=kong&utm_medium=unionkcps&utm_campaign=t_1000543739_&utm_term=ea61b55ddeab494282e9076635b5f3b4">{{tabs[0].tabTitle}}</a>
+      <span>
+          <!-- <a id="indexId" class="activeIndex">首页</a> -->
+          <a @click="goTitleIndex()" id="indexId" class="activeIndex" >首页</a>
+        </span>
+      <span v-for="(item, index) in tabs" >
+        <a id="indexId2" @click="goToPage($event,item,index)" :class="{'active':selectIndex==index}" >{{item.tabTitle}}</a>
+
+        <!-- <span class="tabs_t" @click="goToPage(0)">
+          <a :class="{'active':selectIndex==0}" @click="goDetail($event,item,13,'tab1')">{{tabs[0].tabTitle}}</a>
         </span>
         <span>
           <a :class="{'active':selectIndex==1}">首页</a>
         </span>
-        <span class="tabs_t" @click="goToPage(2)">
-          <a :class="{'active':selectIndex==2}" href="http://h.umfintech.com/mallweb/h5hb/activitys/July.htm">{{tabs[1].tabTitle}}</a>
-        </span>
-      <!-- </span> -->
+        <span class="tabs_t" @click="goDetail($event,13,13,'tab1')">
+          <a :class="{'active':selectIndex==2}">{{tabs[1].tabTitle}}</a>
+        </span> -->
+        
+      </span>
     </section>
     
     <scroll
@@ -150,7 +155,7 @@ export default {
       goods1: [],
       PAGENUM: 0, // jd页码
       PAGESIZE: 4, // jd页码数量
-      selectIndex: 1,
+      selectIndex: 77,
       jdFlag: false,
       scrollbar: false
     };
@@ -254,8 +259,47 @@ export default {
     changeIscrollY(flag) {
       this.scrollY = flag;
     },
-    goToPage(index){
+    goTitleIndex() {
+      document.getElementById("indexId").classList.add("activeIndex");
+      document.getElementById("indexId2").classList.remove("active");
+
+    },
+    goToPage(event, obj, index){
+      document.getElementById("indexId").classList.remove("activeIndex");
       this.selectIndex = index;
+      let url = obj.tabEventCotent;
+      console.log(obj,url);
+      if (
+        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+        "android"
+      ) {
+          let url2 =
+            url.indexOf("?") > 0
+              ? url.replace(
+                  /\?/,
+                  "?SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?SOURCE=DISCOVER&account=" +
+                this.token.productNo;
+          window.goActivity.goWeb(url2);
+      } else {
+          let url_2 =
+            url.indexOf("?") > 0
+              ? url.replace(
+                  /\?/,
+                  "?SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?SOURCE=DISCOVER&account=" +
+                this.token.productNo;
+          // console.log(url_2);
+          window.location = "activity://goWeb?url=" + url_2;
+      }
     },
     onPullingUp() {
       this.jdloadMore();
@@ -450,11 +494,56 @@ export default {
             "顶部banner" + "-" + obj.marketingTitle,
             this.token.session.replace(/\+/g, "%2B")
           );
+        } else if (channel == "alert_tip") {
+          // 神策
+          sa.track("bannerClick", {
+            contentName: obj.popupTitle,
+            topCategory: "优惠",
+          });
+          // banner图埋点
+          fetchPoints(
+            "010000000000",
+            "010000000000K08",
+            this.token.productNo,
+            "首页弹窗" + "-" + obj.popupTitle,
+            this.token.session.replace(/\+/g, "%2B")
+          );
+        } else if (channel == "tab1") {
+          // 神策
+          sa.track("bannerClick", {
+            contentName: obj.popupTitle,
+            topCategory: "优惠",
+          });
+          // banner图埋点
+          fetchPoints(
+            "010000000000",
+            "010000000000K08",
+            this.token.productNo,
+            "首页弹窗" + "-" + obj.popupTitle,
+            this.token.session.replace(/\+/g, "%2B")
+          );
+        } else if (channel == "tab2") {
+          // 神策
+          sa.track("bannerClick", {
+            contentName: obj.popupTitle,
+            topCategory: "优惠",
+          });
+          // banner图埋点
+          fetchPoints(
+            "010000000000",
+            "010000000000K08",
+            this.token.productNo,
+            "首页弹窗" + "-" + obj.popupTitle,
+            this.token.session.replace(/\+/g, "%2B")
+          );
         }
       } catch (e) {}
 
       let url = flag == 2 ? obj.tbConductConfig.marketingEventCotent : obj.MERC_URL;
       url = flag == 11 ? obj.marketingEventCotent : url;
+      url = flag == 12 ? obj.popupEventCotent : url;
+      url = flag == 13 ? obj.tabs.tabEventCotent : url;
+      url = flag == 14 ? obj.tabEventCotent : url;
       url = flag == 1 ? obj.marketingEventCotent : url;
       url = flag == 3 ? obj.detailUrl : url;
       url = flag == 4 ? obj.url : url;
@@ -468,7 +557,7 @@ export default {
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 99) {
+        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -492,7 +581,7 @@ export default {
           );
         }
       } else {
-        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 99) {
+        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
           let url_2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -750,7 +839,7 @@ div.container::-webkit-scrollbar {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.7);
   z-index: 100;
   p {
     width: 15.625rem;
@@ -816,7 +905,12 @@ div.container::-webkit-scrollbar {
       line-height: 3rem;
       padding: 0 0.125rem 0.3125rem;
     }
-    a.active{
+    a.activeIndex {
+      font-family: PingFangSC-Semibold;
+      font-size: 1rem;
+      border-bottom: 0.125rem solid #fff;
+    }
+     a.active:hover,a.active:active{
       font-family: PingFangSC-Semibold;
       font-size: 1rem;
       border-bottom: 0.125rem solid #fff;

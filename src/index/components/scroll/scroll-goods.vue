@@ -109,6 +109,7 @@ export default {
   // width: 375px;
   overflow: hidden;
   // overflow: hidden;
+  padding-left: 1rem;
   background: #fff;
 
   // .scroll-content {

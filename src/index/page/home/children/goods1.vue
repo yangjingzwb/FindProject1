@@ -1,6 +1,6 @@
 <!--和悦商品接口-->
 <template>
-<div>
+<div id="goods">
     <div v-for="(item, index) of dataList" :key="'good1_1_'+index">
       <div v-if="banner" class="banner" @click="goDetail($event,item,2)">
         <img v-lazy="item.tbConductConfig.marketingIcon"/>
@@ -45,7 +45,7 @@
         <div>更多特价商品</div>
         <div class="down_img">&nbsp;</div>
       </div>
-      <div v-else class="up">收起</div>
+      <div @click="scrollGoods()" v-else class="up">收起</div>
     </div>
     <div class="nullHeight"></div>
 </div>
@@ -135,6 +135,10 @@ export default {
         this.data = data.slice(0, 3); // 每个专题必须至少返回3个商品
       });
     },
+    scrollGoods() {
+      document.getElementById("goods").scrollIntoView();
+      console.log(document.getElementsByClassName("goods"));
+    },
     goDetail(event, obj, flag) {
       if (flag == 2) {
         // 神策
@@ -190,14 +194,16 @@ export default {
 }
 .goods {
   // height: 11.3125rem;
-  // padding-left: 0.6875rem;
-  padding: 0.625rem;
+  padding: 0.6875rem 0 0.5rem 0;
+  margin: 0.625rem 0.625rem 0.125rem 0;
   position: relative;
   left: 1rem;
   bottom: 1.5rem;
   background: #fff;
   box-shadow: 0 0.3125rem 0.625rem 0 rgba(0,0,0,0.16);
   border-radius: 0.3125rem;
+  // border-top-right-radius: 0.3125rem;
+  // border-bottom-right-radius: 0.3125rem;
   .u2 {
     overflow: hidden;
   }
@@ -267,9 +273,12 @@ export default {
     }
     .sub {
       text-indent: 0.3rem;
+      width: 7.1875rem;
     }
   }
   .sw-option {
+    margin-left: 0.3125rem;
+    margin-right: 1rem;
     font-size: 0.9375rem;
     text-align: center;
     background: #f6f7f8;
