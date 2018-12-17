@@ -907,14 +907,15 @@ div.container::-webkit-scrollbar {
     }
     a.activeIndex {
       font-family: PingFangSC-Semibold;
-      font-size: 1rem;
+      font-size: 0.875rem;
       border-bottom: 0.125rem solid #fff;
     }
-     a.active:hover,a.active:active{
-      font-family: PingFangSC-Semibold;
-      font-size: 1rem;
-      border-bottom: 0.125rem solid #fff;
-    }
+    //  a.active:hover,a.active:active{
+    //   display: block;
+    //   font-family: PingFangSC-Semibold;
+    //   font-size: 0.875rem;
+    //   border-bottom: 0.125rem solid #fff;
+    // }
   }
 }
 .content {

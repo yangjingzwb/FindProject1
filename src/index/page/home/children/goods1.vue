@@ -195,7 +195,7 @@ export default {
 .goods {
   // height: 11.3125rem;
   padding: 0.6875rem 0 0.5rem 0;
-  margin: 0.625rem 0.625rem 0.125rem 0;
+  margin: 0.625rem 0.6875rem 0.125rem 0;
   position: relative;
   left: 1rem;
   bottom: 1.5rem;

@@ -16,8 +16,9 @@
             <li class="text" style="-webkit-box-orient: vertical;">
               {{item.marketingTitle}}
             </li>
-            <li class="price">
-              ¥{{item.commodityPrice.toFixed(2)}}
+            <li class="sub">
+              <span class="price">¥{{item.commodityPrice.toFixed(2)}}</span>
+              <span class="linePrice">¥{{item.originalPrice.toFixed(2)}}</span>
             </li>
           </ul>
         </li>
@@ -132,7 +133,7 @@ export default {
   .text {
     font-size: 0.8125rem;
     color: #13252e;
-    font-family: PingFangSC-Light;
+    font-family: PingFangSC-Regular;
     white-space: normal !important;
     letter-spacing: 0.0625rem;
     line-height: 0.9375rem;
@@ -149,6 +150,20 @@ export default {
     color: #ea2845;
     font-family: PingFangSC-Semibold;
     margin-top: 0.3125rem;
+  }
+  .linePrice {
+    font-size: 0.8125rem;
+    color: #aeafaf;
+    font-family: PingFangSC-Regular;
+    text-decoration: line-through;
+    text-align: left;
+  }
+  .u2 {
+    // padding-bottom: 1.4375rem;
+  }
+  .sub {
+    text-indent: 0.3rem;
+    width: 7.1875rem;
   }
   li.icon {
     max-height: 9.75rem;
