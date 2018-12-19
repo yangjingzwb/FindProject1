@@ -51,7 +51,7 @@ export default {
       console.log(size);
       for (let i = 0; i < size; i++) {
         // let child = this.children[i];
-        width += 7;
+        width += 7.9;
       }
 
       // this.$refs.listWrapper.children[0].style.width=width+'px'
@@ -104,13 +104,12 @@ export default {
 <style lang="scss" scoped>
 .list-wrapper-v {
   position: relative;
-  height: 8.75rem;
+  height: 9.9375rem;
   // height: 100%;
   // width: 375px;
   overflow: hidden;
-  // overflow: hidden;
-  padding-left: 1rem;
-  background: #fff;
+  // padding-bottom: 2rem;
+  // background: #fff;
 
   // .scroll-content {
   //   position: relative;

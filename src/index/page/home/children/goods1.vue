@@ -1,7 +1,7 @@
 <!--和悦商品接口-->
 <template>
 <div id="goods">
-    <div v-for="(item, index) of dataList" :key="'good1_1_'+index">
+    <div class="goods_wrapper" v-for="(item, index) of dataList" :key="'good1_1_'+index">
       <div v-if="banner" class="banner" @click="goDetail($event,item,2)">
         <img v-lazy="item.tbConductConfig.marketingIcon"/>
       </div>
@@ -11,6 +11,7 @@
           :scrollbar = false
           :data="item.goodsVO"
         >
+        <div class="goods_box">
         <ul class="u1">
           <li v-for="(itemson, index) of item.goodsVO" @click="goDetail($event,itemson,3)" :key="'good1_'+index">
             <ul class="u2">
@@ -34,6 +35,7 @@
             </ul>
           </li>
         </ul>
+        </div>
         </scroll>
       </div>
       
@@ -136,8 +138,9 @@ export default {
       });
     },
     scrollGoods() {
-      document.getElementById("goods").scrollIntoView();
-      console.log(document.getElementsByClassName("goods"));
+      window.scrollTo(0,"2000px");
+      // document.getElementById("goods").scrollIntoView();
+      // console.log(document.getElementsByClassName("goods"));
     },
     goDetail(event, obj, flag) {
       if (flag == 2) {
@@ -182,32 +185,50 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
+.goods_wrapper {
+  height: 22.25rem;
+}
 .banner {
   width: 100%;
   // height: 100%;
   overflow: hidden;
-  margin-bottom: 0.5rem;
+  position: relative;
+  // margin-bottom: 0.5rem;
   img {
     width: 100%;
+    
     // height: 100%;
   }
 }
 .goods {
+  transform: translateY(-1.5rem);
+}
+.goods_box {
   // height: 11.3125rem;
-  padding: 0.6875rem 0 0.5rem 0;
-  margin: 0.625rem 0.6875rem 0.125rem 0;
+  // padding: 0.5rem 0.5rem 3.5rem 0.5rem;
+  // margin: 0.625rem 0.6875rem 0.125rem 1.5rem;
   position: relative;
-  left: 1rem;
-  bottom: 1.5rem;
-  background: #fff;
-  box-shadow: 0 0.3125rem 0.625rem 0 rgba(0,0,0,0.16);
+  // left: 0.625rem;
+  // bottom: 1.5rem;
+  // background: #fff;
+  
+  // box-shadow: 0 0.3125rem 1.25rem 0 rgba(0,0,0,0.16);
   border-radius: 0.3125rem;
+  padding: 0 1.5rem 1rem 0.9375rem;
   // border-top-right-radius: 0.3125rem;
   // border-bottom-right-radius: 0.3125rem;
   .u2 {
     overflow: hidden;
   }
   .u1 {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    // margin: 0.625rem 0.6875rem 0.125rem 1.5rem;
+    position: relative;
+    // left: 0.625rem;
+    // bottom: 1.5rem;
+    background: #fff;
+    box-shadow: 0 0.3125rem 0.625rem 0 rgba(0,0,0,0.16);
+    border-radius: 0.3125rem;
     padding: 0 !important;
     display: flex;
     padding-top: 0.6875rem;
@@ -215,6 +236,7 @@ export default {
       flex: 4;
       flex-direction: row;
       max-width: 24%;
+      margin: 0.3rem 0.3rem 0.3rem 0;
     }
 
     li.icon {
@@ -277,8 +299,7 @@ export default {
     }
   }
   .sw-option {
-    margin-left: 0.3125rem;
-    margin-right: 1rem;
+    margin: 0.2rem 1rem .8rem 0.3125rem;
     font-size: 0.9375rem;
     text-align: center;
     background: #f6f7f8;
@@ -287,7 +308,7 @@ export default {
     // float: left;
     color: #8b8b8b;
     .sw_wrapper {
-      padding-top: 2.5rem;
+      padding-top: 2.2rem;
       font-size: 0.875rem;
       .sw_text {
         font-family: PingFangSC-Semibold;

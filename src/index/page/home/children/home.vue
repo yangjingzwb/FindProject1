@@ -878,7 +878,8 @@ div.container::-webkit-scrollbar {
   width: 100%;
   height: 3rem;
   display: flex;
-  background-image: linear-gradient(90deg, #E91B39 0%, #F7405B 100%);
+  background-color: #fff;
+  // background-image: linear-gradient(90deg, #E91B39 0%, #F7405B 100%);
   // position: -webkit-sticky;
   position: fixed;
   z-index: 9999;
@@ -901,7 +902,7 @@ div.container::-webkit-scrollbar {
     a {
       font-family: PingFangSC-Regular;
       font-size: 0.875rem;
-      color: #fff;
+      color: #000;
       line-height: 3rem;
       padding: 0 0.125rem 0.3125rem;
     }
