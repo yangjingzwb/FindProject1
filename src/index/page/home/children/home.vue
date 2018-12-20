@@ -17,7 +17,7 @@
           <a @click="goTitleIndex()" id="indexId" class="activeIndex" >首页</a>
         </span> -->
       <span v-for="(item, index) in tabs" >
-        <a id="indexId2" @click="goToPage($event,item,index)" :class="{'active':selectIndex==index}" >{{item.tabTitle}}</a>
+        <a id="indexId2" @click="goToPage($event,item,index)" :class="{'active':selectIndex==index}">{{item.tabTitle}}</a>
 
         <!-- <span class="tabs_t" @click="goToPage(0)">
           <a :class="{'active':selectIndex==0}" @click="goDetail($event,item,13,'tab1')">{{tabs[0].tabTitle}}</a>
@@ -286,6 +286,9 @@ export default {
                   "?SOURCE=DISCOVER&account=" +
                   this.token.productNo;
             window.goActivity.goWeb(url2);
+            setTimeout(() => {
+              this.selectIndex = 1;
+            }, 1000);
         } else {
             let url_2 =
               url.indexOf("?") > 0
@@ -300,6 +303,9 @@ export default {
                   this.token.productNo;
             // console.log(url_2);
             window.location = "activity://goWeb?url=" + url_2;
+            setTimeout(() => {
+              this.selectIndex = 1;
+            }, 1000);
         }
       }
     },
@@ -903,20 +909,21 @@ div.container::-webkit-scrollbar {
     transform: translate(-50%, -50%);
     a {
       font-family: PingFangSC-Regular;
-      font-size: 0.875rem;
-      color: #000;
+      font-size: 0.9375rem;
+      color: #13252e;
       line-height: 3rem;
-      padding: 0 0.125rem 0.3125rem;
+      padding: 0 0.1875rem 0.3125rem;
     }
-    a.activeIndex {
+    // a.activeIndex {
+    //   font-family: PingFangSC-Semibold;
+    //   font-size: 0.9375rem;
+    //   border-bottom: 0.125rem solid #ed196c;
+    // }
+     a.active {
+      // display: block;
+      color: #ea2845;
       font-family: PingFangSC-Semibold;
-      font-size: 0.875rem;
-      border-bottom: 0.125rem solid #ed196c;
-    }
-     a.active:hover,a.active:active{
-      display: block;
-      font-family: PingFangSC-Semibold;
-      font-size: 0.875rem;
+      font-size: 0.9375rem;
       border-bottom: 0.125rem solid #ed196c;
     }
   }

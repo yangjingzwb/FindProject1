@@ -233,6 +233,7 @@ export default {
         "搜索页面取消按钮", // 事件名称
         this.token.session.replace(/\+/g, "%2B")
       );
+      this.searchT = "";
       this.$router.go(-1);
     },
     detail(url) {

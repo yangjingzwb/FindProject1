@@ -154,12 +154,13 @@ export default {
     }
     .text {
       width: 80%;
+      height: 1rem;
       color: #13252e;
       font-size: 0.9375rem;
-      line-height: 0.9375rem;
+      line-height: 1rem;
       font-family: PingFangSC-Regular;
       padding-left: 0.9375rem;
-      margin-top: 1rem;
+      margin-top: 1.125rem;
       margin-bottom: 0.625rem;
       text-overflow: ellipsis;
       white-space: nowrap;
