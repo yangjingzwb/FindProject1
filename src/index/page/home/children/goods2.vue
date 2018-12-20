@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <div class="t-2">
+    <div class="goods-2">
+      <div class="t-2">
       <div class="t-1 ">
         <!-- <div class="t-3">为你推荐</div> -->
       </div>
       <!-- <div class="hr-1"></div> -->
-    </div>
-    <div class="goods-2">
+      </div>
       <ul class="u1">
         <li v-for="(item,index) in recommends" :key="'good2_1_'+ index" @click="goDetail($event,item,11)" >
           <ul class="u2">
@@ -24,7 +23,6 @@
         </li>
       </ul>
     </div>
-  </div>
 </template>
 
 <script>
@@ -41,14 +39,11 @@ export default {
   computed: {
     ...mapState(["token", "recommends"])
   },
-
   mounted() {
     // this.init();
   },
   created() {},
-
   components: {},
-
   methods: {
     init() {
       axios
@@ -85,49 +80,35 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
-.t-2 {
+.goods-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  .t-2 {
   position: relative;
   height: 2.5rem;
   text-align: center;
   position: relative;
   line-height: 2.5rem;
-}
-.t-1 {
-  height: 100%;
-  line-height: 2.5rem;
-  width: 7.5rem;
-  margin: 0 auto;
-  background-image: url("/static/img/goos2__img.png");
-  background-repeat: no-repeat;
-  background-size: 9.375rem 2.1875rem;
-  background-position: center center;
-}
-.t-3 {
-  line-height: 2.5rem;
-  width: 5rem;
-  color: #ed196c;
-  font-family: PingFangSC-Regular;
-  font-size: 0.9375rem;
-  margin: 0 auto;
-  background: #fff;
-  z-index: 999;
-}
-.goods-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 1.25rem;
-  .ul {
-    margin-top: 1.25rem;
+  }
+  .t-1 {
+    height: 100%;
+    line-height: 2.5rem;
+    width: 7.5rem;
+    margin: 0 auto;
+    background-image: url("/static/img/goos2__img.png");
+    background-repeat: no-repeat;
+    background-size: 9.375rem 2.1875rem;
+    background-position: center center;
   }
   .u2 {
-    overflow: hidden;
+    // overflow: hidden;
   }
   .u1 > li {
-    // height: 14.4rem;
+    height: 14.4rem;
     width: 50%;
     float: left;
     padding: 0 0.5rem 0 0.5rem;
-    margin-bottom: 0.625rem;
+    // margin-bottom: 1.125rem;
     overflow: hidden;
   }
   .text {
@@ -145,14 +126,8 @@ export default {
     overflow: hidden;
     margin-top: 0.625rem;
   }
-  .price {
-    font-size: 0.9375rem;
-    color: #ea2845;
-    font-family: PingFangSC-Semibold;
-    margin-top: 0.3125rem;
-  }
   .linePrice {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: #aeafaf;
     font-family: PingFangSC-Regular;
     text-decoration: line-through;
@@ -163,7 +138,12 @@ export default {
   }
   .sub {
     text-indent: 0.3rem;
-    width: 7.1875rem;
+  }
+  .price {
+    font-size: 0.9375rem;
+    color: #ea2845;
+    font-family: PingFangSC-Semibold;
+    margin-top: 0.3125rem;
   }
   li.icon {
     max-height: 9.75rem;
@@ -184,28 +164,5 @@ export default {
     transform: translate(-50%, -50%);
     // border: 1px solid #D8D8D8;
   }
-}
-.hr-1 {
-  display: block;
-  position: absolute;
-  height: 0.0625rem;
-  float: left;
-  width: 100%;
-  bottom: 0;
-  background-color: #e6e6e6;
-  -webkit-transform-origin: 0, 0;
-  transform-origin: 0, 0;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-  // &::after {
-  //   @include onepx1(#d8d8d8);
-  // }
-}
-.hr-1:nth-last-child(-1) {
-  height: 0;
-}
-.hr-1.height0 {
-  height: 0 !important;
 }
 </style>

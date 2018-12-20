@@ -237,6 +237,8 @@ export default {
       flex-direction: row;
       max-width: 24%;
       margin: 0.3rem 0.3rem 0.3rem 0;
+      padding-left: 0.3125rem;
+      padding-bottom: 0.3125rem;
     }
 
     li.icon {

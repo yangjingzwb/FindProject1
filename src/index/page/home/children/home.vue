@@ -13,10 +13,9 @@
     </div>
           
     <section v-if="tabs && tabs.length>0" class="tabs">
-      <span>
-          <!-- <a id="indexId" class="activeIndex">首页</a> -->
+      <!-- <span>
           <a @click="goTitleIndex()" id="indexId" class="activeIndex" >首页</a>
-        </span>
+        </span> -->
       <span v-for="(item, index) in tabs" >
         <a id="indexId2" @click="goToPage($event,item,index)" :class="{'active':selectIndex==index}" >{{item.tabTitle}}</a>
 
@@ -155,7 +154,7 @@ export default {
       goods1: [],
       PAGENUM: 0, // jd页码
       PAGESIZE: 4, // jd页码数量
-      selectIndex: 77,
+      selectIndex: 1,
       jdFlag: false,
       scrollbar: false
     };
@@ -260,45 +259,48 @@ export default {
       this.scrollY = flag;
     },
     goTitleIndex() {
-      document.getElementById("indexId").classList.add("activeIndex");
+      // document.getElementById("indexId").classList.add("activeIndex");
       document.getElementById("indexId2").classList.remove("active");
-
     },
     goToPage(event, obj, index){
-      document.getElementById("indexId").classList.remove("activeIndex");
+      // document.getElementById("indexId").classList.remove("activeIndex");
       this.selectIndex = index;
       let url = obj.tabEventCotent;
-      console.log(obj,url);
-      if (
-        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
-        "android"
-      ) {
-          let url2 =
-            url.indexOf("?") > 0
-              ? url.replace(
-                  /\?/,
+      // console.log(url);
+      if(url !== "http://INDEX.INDEX") {
+        // url.replace("http://INDEX.INDEX", "");
+        // console.log(url.replace("http://INDEX.INDEX", ""));
+        if (
+          (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+          "android"
+        ) {
+            let url2 =
+              url.indexOf("?") > 0
+                ? url.replace(
+                    /\?/,
+                    "?SOURCE=DISCOVER&account=" +
+                      this.token.productNo +
+                      "&"
+                  )
+                : url +
                   "?SOURCE=DISCOVER&account=" +
-                    this.token.productNo +
-                    "&"
-                )
-              : url +
-                "?SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          window.goActivity.goWeb(url2);
-      } else {
-          let url_2 =
-            url.indexOf("?") > 0
-              ? url.replace(
-                  /\?/,
+                  this.token.productNo;
+            window.goActivity.goWeb(url2);
+        } else {
+            let url_2 =
+              url.indexOf("?") > 0
+                ? url.replace(
+                    /\?/,
+                    "?SOURCE=DISCOVER&account=" +
+                      this.token.productNo +
+                      "&"
+                  )
+                : url +
                   "?SOURCE=DISCOVER&account=" +
-                    this.token.productNo +
-                    "&"
-                )
-              : url +
-                "?SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          // console.log(url_2);
-          window.location = "activity://goWeb?url=" + url_2;
+                  this.token.productNo;
+            // console.log(url_2);
+            window.location = "activity://goWeb?url=" + url_2;
+        }
       }
     },
     onPullingUp() {
@@ -909,14 +911,14 @@ div.container::-webkit-scrollbar {
     a.activeIndex {
       font-family: PingFangSC-Semibold;
       font-size: 0.875rem;
-      border-bottom: 0.125rem solid #fff;
+      border-bottom: 0.125rem solid #ed196c;
     }
-    //  a.active:hover,a.active:active{
-    //   display: block;
-    //   font-family: PingFangSC-Semibold;
-    //   font-size: 0.875rem;
-    //   border-bottom: 0.125rem solid #fff;
-    // }
+     a.active:hover,a.active:active{
+      display: block;
+      font-family: PingFangSC-Semibold;
+      font-size: 0.875rem;
+      border-bottom: 0.125rem solid #ed196c;
+    }
   }
 }
 .content {
