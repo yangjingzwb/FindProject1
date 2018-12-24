@@ -13,22 +13,8 @@
     </div>
           
     <section v-if="tabs && tabs.length>0" class="tabs">
-      <!-- <span>
-          <a @click="goTitleIndex()" id="indexId" class="activeIndex" >首页</a>
-        </span> -->
-      <span v-for="(item, index) in tabs" >
+      <span v-for="(item, index) in tabs">
         <a id="indexId2" @click="goToPage($event,item,index)" :class="{'active':selectIndex==index}">{{item.tabTitle}}</a>
-
-        <!-- <span class="tabs_t" @click="goToPage(0)">
-          <a :class="{'active':selectIndex==0}" @click="goDetail($event,item,13,'tab1')">{{tabs[0].tabTitle}}</a>
-        </span>
-        <span>
-          <a :class="{'active':selectIndex==1}">首页</a>
-        </span>
-        <span class="tabs_t" @click="goDetail($event,13,13,'tab1')">
-          <a :class="{'active':selectIndex==2}">{{tabs[1].tabTitle}}</a>
-        </span> -->
-        
       </span>
     </section>
     
@@ -38,15 +24,24 @@
       :data ="jdList"
       :pullUpLoad= "pullUpLoad_near"
       @pullingUp="onPullingUp"
+      ref="scroll"
     >
     <div :class="isShow2">
-      <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
+      <carousel-3d class="index-carousel" :autoplay="true" :display="3" :animationSpeed="500" :width="350" :height="150" :border="0" :autoplayTimeout="4000" :controlsVisible="true" :autoplayHoverpause="true" :perspective="55" :loop="true">
+        <slide v-for="(item, i) in slider2" :index="i" :key="i">
+          <template slot-scope="{ index, isCurrent, leftIndex, rightIndex }">
+            <a @click="goDetail($event,item,11,'top')" >
+              <img :src="item.marketingIcon">
+            </a>
+          </template>
+          </slide>
+      </carousel-3d>
+      <!-- <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
         <div class="scroll slide-content">
           <div>
             <div class="slider-wrapper">
               <slider :click="slider_top_click" :autoPlay = "slider.length>0" :loop="slider.length>0">
                   <div v-for="item in slider2">
-                    <!-- :key="item.marketingId -->
                       <a @click="goDetail($event,item,11,'top')" >
                         <img :src="item.marketingIcon">
                       </a>
@@ -55,8 +50,9 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       <!-- 秒杀 -->
+      <div class="nullHeight"></div>
       <section v-if="bannermarkets.length>0" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
         <img :src="bannermarkets[0].marketingIcon" >
       </section>  
@@ -81,7 +77,9 @@
         <!-- 专题营销位 -->
         <goods1
           @goDetail="goDetail"
+          @backtop="backToTop"
           :middle = "goods1"
+          
         ></goods1>
         <!-- 为你推荐 -->
         <goods2
@@ -103,7 +101,8 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import Slider from "@@/components/base/slider";
+// import HomeSlider from "@@/components/base/slider";
+import { Carousel3d, Slide } from 'vue-carousel-3d';
 import axios from "@@/plugins/rsa/axios";
 import sa from "sa-sdk-javascript";
 // import VueLazyload from "vue-lazyload"
@@ -204,7 +203,9 @@ export default {
   components: {
     Near,
     Coupon,
-    Slider,
+    // HomeSlider,
+    Carousel3d,
+    Slide,
     Goods1,
     Goods2,
     Goods3,
@@ -258,12 +259,7 @@ export default {
     changeIscrollY(flag) {
       this.scrollY = flag;
     },
-    goTitleIndex() {
-      // document.getElementById("indexId").classList.add("activeIndex");
-      document.getElementById("indexId2").classList.remove("active");
-    },
     goToPage(event, obj, index){
-      // document.getElementById("indexId").classList.remove("activeIndex");
       this.selectIndex = index;
       let url = obj.tabEventCotent;
       // console.log(url);
@@ -469,6 +465,9 @@ export default {
     // },
     detail(url) {
       window.location = url;
+    },
+    backToTop() {
+      this.$refs.scroll && this.$refs.scroll.scrollTo(0,-1800);
     },
     goDetail(event, obj, flag, channel = "default") {
       //埋点 parent_title, sub_title,phone,remark, session
@@ -782,7 +781,7 @@ export default {
    // overflow: auto;
    height: 95%;
    position: relative;
-   top: 3rem;
+   top: 1.75rem;
    overflow-y: auto;
    -webkit-overflow-scrolling: touch;
  }
@@ -847,22 +846,22 @@ div.container::-webkit-scrollbar {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.6);
   z-index: 100;
   p {
-    width: 15.625rem;
-    height: 18.75rem;
+    width: 18.75rem;
+    height: 18.125rem;
     // background: url(/static/img/alert_bg.png) no-repeat;
     background-size: contain;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -7.8125rem;
-    margin-top: -9.375rem;
+    margin-left: -9.375rem;
+    margin-top: -9.0625rem;
   }
   img {
-    width: 15.625rem;
-    height: 18.75rem;
+    width: 18.75rem;
+    height: 18.125rem;
     border-radius: 0.3125rem;
   }
   .alert_close {
@@ -890,7 +889,7 @@ div.container::-webkit-scrollbar {
   // background-image: linear-gradient(90deg, #E91B39 0%, #F7405B 100%);
   // position: -webkit-sticky;
   position: fixed;
-  z-index: 9999;
+  z-index: 9;
   top: 0;
   left: 0;
   // font-weight: 200;
@@ -1094,10 +1093,13 @@ div.container::-webkit-scrollbar {
   background-color: #fff;
   // height: 6.25rem;
   width: 100%;
+  height: 5.9375rem;
   img {
     width: 100%;
     // height: 5.625rem;
     margin-top: 0.2rem;
+    position: relative;
+    top: -1.4rem;
   }
 }
 .s_4 {

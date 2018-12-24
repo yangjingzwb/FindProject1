@@ -47,7 +47,7 @@
         <div>更多特价商品</div>
         <div class="down_img">&nbsp;</div>
       </div>
-      <div @click="scrollGoods()" v-else class="up">收起</div>
+      <div @click="backToTop()" v-else class="up">收起</div>
     </div>
     <div class="nullHeight"></div>
 </div>
@@ -137,8 +137,9 @@ export default {
         this.data = data.slice(0, 3); // 每个专题必须至少返回3个商品
       });
     },
-    scrollGoods() {
-      window.scrollTo(0,"2000px");
+    backToTop() {
+      this.$emit('backtop');
+      // document.documentElement.scrollTop;
       // document.getElementById("goods").scrollIntoView();
       // console.log(document.getElementsByClassName("goods"));
     },
@@ -297,7 +298,8 @@ export default {
     }
     .sub {
       text-indent: 0.3rem;
-      width: 7.1875rem;
+      width: 6.75rem;
+      white-space: nowrap;
     }
   }
   .sw-option {
