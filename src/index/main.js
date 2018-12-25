@@ -23,6 +23,7 @@ import AlertTip from "@@/components/common/alertTip";
 import { checkUtil, animationProgress, formatDate_1,asyncLoaded } from "@@/service/util";
 // 神策
 import sa from "sa-sdk-javascript";
+import 'swiper/dist/css/swiper.css'
 
 sa.init({
     sdk_url: "https://static.sensorsdata.cn/sdk/1.10.9/sensorsdata.min.js",

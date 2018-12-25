@@ -27,15 +27,6 @@
       ref="scroll"
     >
     <div :class="isShow2">
-      <carousel-3d class="index-carousel" :autoplay="true" :display="3" :animationSpeed="500" :width="350" :height="150" :border="0" :autoplayTimeout="4000" :controlsVisible="true" :autoplayHoverpause="true" :perspective="55" :loop="true">
-        <slide v-for="(item, i) in slider2" :index="i" :key="i">
-          <template slot-scope="{ index, isCurrent, leftIndex, rightIndex }">
-            <a @click="goDetail($event,item,11,'top')" >
-              <img :src="item.marketingIcon">
-            </a>
-          </template>
-          </slide>
-      </carousel-3d>
       <!-- <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
         <div class="scroll slide-content">
           <div>
@@ -51,8 +42,10 @@
           </div>
         </div>
       </section> -->
+      <section>
+        <home-slider></home-slider>
+      </section>
       <!-- 秒杀 -->
-      <div class="nullHeight"></div>
       <section v-if="bannermarkets.length>0" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
         <img :src="bannermarkets[0].marketingIcon" >
       </section>  
@@ -101,8 +94,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-// import HomeSlider from "@@/components/base/slider";
-import { Carousel3d, Slide } from 'vue-carousel-3d';
+import HomeSlider from "@@/components/base/slider";
 import axios from "@@/plugins/rsa/axios";
 import sa from "sa-sdk-javascript";
 // import VueLazyload from "vue-lazyload"
@@ -158,7 +150,6 @@ export default {
       scrollbar: false
     };
   },
-  computed: {},
 
   mounted() {
     try {
@@ -203,9 +194,7 @@ export default {
   components: {
     Near,
     Coupon,
-    // HomeSlider,
-    Carousel3d,
-    Slide,
+    HomeSlider,
     Goods1,
     Goods2,
     Goods3,
@@ -467,7 +456,7 @@ export default {
       window.location = url;
     },
     backToTop() {
-      this.$refs.scroll && this.$refs.scroll.scrollTo(0,-1800);
+      this.$refs.scroll && this.$refs.scroll.scrollTo(0,-1650);
     },
     goDetail(event, obj, flag, channel = "default") {
       //埋点 parent_title, sub_title,phone,remark, session

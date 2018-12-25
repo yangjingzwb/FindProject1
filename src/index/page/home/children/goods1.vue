@@ -187,7 +187,7 @@ export default {
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
 .goods_wrapper {
-  height: 22.25rem;
+  height: 20rem;
 }
 .banner {
   width: 100%;
