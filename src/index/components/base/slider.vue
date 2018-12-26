@@ -16,7 +16,7 @@ export default{
 data(){
 	return {
 		swiperOption: {
-			debugger: true,  
+			debugger: true,
 			loop: true,
 			autoplay: {
 				delay:2000,
