@@ -18,6 +18,8 @@ http://113.108.79.80:3020/test1/?CREDTENTIAL=credtential&SIGN_DATA=sign_data
     开启https
     开启http2
 ##首屏优化
+#vue-awesome-swiper问题
+1、初始化添加该属性：setWrapperSize
 
 
 

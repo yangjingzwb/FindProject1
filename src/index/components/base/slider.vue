@@ -1,78 +1,121 @@
 <template>
-	<div class="swiper">
-		<swiper :options="swiperOption">
-			<swiper-slide><img src="http://img1.qunarzz.com/piao/fusion/1811/7c/8e5c4ab8ee8b7402.jpg_750x200_dd7a38dd.jpg" /></swiper-slide>
-			<swiper-slide><img src="http://img1.qunarzz.com/piao/fusion/1706/b8/a8e8ff02b094c802.jpg_750x200_ddaec8e5.jpg" /></swiper-slide>
-			<!-- <swiper-slide v-for="item in slider2"><img :src="item.marketingIcon"></swiper-slide> -->
-			<div class="swiper-pagination" slot="pagination"></div>
-		</swiper>
-	</div>
+  <div class="swiper">
+    <swiper :options="swiperOption" ref='swiper'>
+      <swiper-slide v-for="item in slider2">
+				<a @click="goDetail($event,item,11,'top')" >
+					<img :src="item.marketingIcon">
+				</a>
+			</swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
+    </swiper>
+  </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
-export default{
-data(){
-	return {
-		swiperOption: {
-			debugger: true,
-			loop: true,
-			autoplay: {
-				delay:2000,
-				stopOnLastSlide: false, // 切换到最后一个时不停止
-				disableOnInteraction: false, //用户操作swiper之后 不停止autoplay
-			},
-			pagination: {
-				el: '.swiper-pagination',
-			},
-			slidesPerView: "auto",
-			centeredSlides: true
-			}
-	}
-},
-	components: {
-		swiper,
-		swiperSlide
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import { setTimeout } from 'timers';
+export default {
+  data() {
+    return {
+      swiperOption: {
+        setWrapperSize: true,
+        direction: 'horizontal',
+        slidesPerView: 1.09,
+        autoHeight: true,
+        observeParents: true,
+        //循环
+        loop: true,
+        initialSlide: 1,
+        autoplay: {
+          delay: 4000,
+          stopOnLastSlide: false,
+          disableOnInteraction: false,
+      },
+        normalizeSlideIndex: false,
+        spaceBetween: 6,
+        slidesOffsetBefore: document.body.clientWidth/1.1*0.045,
+        slidesOffsetAfter: 32,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        }
+      }
+    };
+  },
+  components: {
+    swiper,
+    swiperSlide
+  },
+	methods: {
+    goDetail(event, obj, flag) {
+      this.$emit("goDetail", event, obj, flag);
+    }
 	},
-
-  computed: {
+	computed: {
     ...mapState([
       "slider2",
     ])
+  },
+  mounted() {
+    // setTimeout(()=>{
+    //   console.log(this.$refs.swiper.swiper)
+    //   this.$refs.swiper.swiper.init()
+    // },2000)
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .swiper {
-	margin: 10px auto;
-  width: 100%;
-  height: 8.9rem;
-  overflow: hidden;
+   height: 9rem;
+	 margin-bottom: 0.5rem;
+}
+.swiper-slide-prev img {
+  // scale: 0.8;
+  transform: scaleY(0.9)
+}
+.swiper-slide-next img{
+  transform: scaleY(0.9);
 }
 .swiper-slide {
-	width: 85%;
-	height: 8.9rem;
-	.swiper-slide-active {
-		img {
-			margin-top: 0;
-			width: 100%;
-			height: 100%;
-		}
-	}
+ 
+}
+.swiper-slide-active img{
+  // height: 10.5rem;
+}
+.swiper-container {
+ 
 }
 img {
-	display: block;
-	margin: 0 auto;
-	margin-top: 3.5%;
-	width: 90.625%;
-	height: 90.625%;
-	vertical-align: middle;
-	-webkit-transition: all .5s ease 0s;
-	-moz-transition: all 1s ease 0s;
-	-ms-transition: all 1s ease 0s;
-	-o-transition: all 1s ease 0s;
-	transition: all .5s ease 0s;
+  display: block;
+  height: 8.9rem;
+  width: 100%;
+  border-radius: 2px;
+	transition: all 0.6s ease 0s;
+}
+.swiper .swiper-pagination-bullets {
+  bottom: 0px;
+}
+</style>
+<style>
+span.swiper-pagination-bullet {
+  width: 0.25rem;
+  height: 0.25rem;
+  margin: 0 0.2rem !important;
+  border: 1px solid #fff !important;
+  box-sizing: content-box;
+  background: none !important;
+  opacity: 1 !important;
+  /* background: rgba(255,255,255,1); */
+}
+span.swiper-pagination-bullet-active {
+    width: 0.25rem;
+    height: 0.25rem;
+    /* background: #fff !important; */
+    background: #fff !important;
+  border: 1px solid #fff !important;
+  opacity: none !important;
 }
 </style>

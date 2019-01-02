@@ -43,7 +43,7 @@
         </div>
       </section> -->
       <section>
-        <home-slider></home-slider>
+        <home-slider @goDetail="goDetail"></home-slider>
       </section>
       <!-- 秒杀 -->
       <section v-if="bannermarkets.length>0" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
@@ -770,7 +770,7 @@ export default {
    // overflow: auto;
    height: 95%;
    position: relative;
-   top: 1.75rem;
+   top: 3rem;
    overflow-y: auto;
    -webkit-overflow-scrolling: touch;
  }

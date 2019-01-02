@@ -1341,6 +1341,7 @@ header {
 }
 .foods-wrapper {
   width: 100%;
+  height: 8.875rem;
   // padding-left: 0.9375rem;
   // padding-right: 0.9375rem;
   .title {
