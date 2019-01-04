@@ -211,12 +211,13 @@ export default {
         "android"
       ) {
         //  window.location = url.indexOf('?')>0?(url.replace(/\?/,'?showtitle=false&')+"&SOURCE=DISCOVER&"+window.location.href.split('?')[1].split('#')[0]):(url+"?showtitle=false&SOURCE=DISCOVE&"+window.location.href.split('?')[1].split('#')[0]);
-        window.goActivity.goWeb(
+        // window.goActivity.goWeb(
+        window.location(
           url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&")
         );
       } else {
         window.location =
-          "activity://goWeb?url=" +
+          // "activity://goWeb?url=" +
           url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&");
       }
     },

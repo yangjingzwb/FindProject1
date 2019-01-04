@@ -34,13 +34,12 @@
         scrollbar=true
         >
         <div class="content">
-          <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
+          <!-- <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
             <div class="scroll content slide-content">
               <div>
                   <div class="slider-wrapper">
                       <slider :click="slider_top_click" :autoPlay = "slider.length>1" :loop="slider.length>1">
                           <div v-for="item in slider">
-                            <!-- :key="item.marketingId -->
                               <a  @click="goDetail($event,item,2,'top')" >
                                   <img :src="item.marketingIcon">
                               </a>
@@ -49,6 +48,9 @@
                   </div>
               </div>
             </div>
+          </section> -->
+          <section>
+            <home-slider @goDetail="goDetail"></home-slider>
           </section>
           
           <section v-if="slider1 && slider1.length>0" class="s_3 s">
@@ -91,7 +93,7 @@
 // import footGuide from '@@/components/footer/footGuide'
 // import SlideRender from '@@/components/page-render/slide-render'
 import { mapState, mapMutations } from "vuex";
-import Slider from "@@/components/base/slider";
+import HomeSlider from "@@/components/base/slider2";
 import axios from "@@/plugins/rsa/axios";
 import Loading from "@@/components/loading/loading.vue";
 import sa from "sa-sdk-javascript";
@@ -214,7 +216,7 @@ export default {
   },
 
   components: {
-    Slider,
+    HomeSlider,
     Loading,
     Scroll,
     Near1
@@ -431,7 +433,7 @@ export default {
             this.shopListFlag = false;
             this.data1 = false;
           }
-        })      
+        })
     },
     goDetail(event, obj, flag, channel = "default") {
       // alert(33)
@@ -535,9 +537,11 @@ export default {
                 "?hebaosso=true&SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           // console.log(url2);
-          window.goActivity.goWeb(url2);
+          // window.goActivity.goWeb(url2);
+          window.location(url2);
         } else {
-          window.goActivity.goWeb(
+          // window.goActivity.goWeb(
+          window.location(
             url.replace(
               /\?/,
               "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
@@ -563,13 +567,14 @@ export default {
                 "?hebaosso=true&SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           // console.log(url_2);
-          window.location = "activity://goWeb?url=" + url_2;
+          // window.location = "activity://goWeb?url=" + url_2;
+          window.location = url_2;
         } else {
           // console.log(
           //   url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&")
           // );
           window.location =
-            "activity://goWeb?url=" +
+            // "activity://goWeb?url=" +
             url.replace(
               /\?/,
               "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +

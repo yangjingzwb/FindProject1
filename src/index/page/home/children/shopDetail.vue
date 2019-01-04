@@ -204,6 +204,7 @@ export default {
       });
     },
     payKHD() {
+      window.location = "https://p.10086.cn/info/wap/sjqb/cpb/jsym/index.html?isGoto=0&actionId=236";
       // 神策
       sa.track('buttonClick', {
         topCategory: '优惠',
@@ -211,11 +212,11 @@ export default {
       });
       event.stopPropagation();
       // 客户端 跳转链接
-      if (AppFlag() === '1') {
-          window.location.href = "activity://GTF";
-      } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.goTopSpeed) === 'function') {
-          window.goActivity.goTopSpeed();
-      }
+      // if (AppFlag() === '1') {
+      //     window.location.href = "activity://GTF";
+      // } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.goTopSpeed) === 'function') {
+      //     window.goActivity.goTopSpeed();
+      // }
     },
     jumpMap(){
       let sName = '', // 出发地名
@@ -370,9 +371,11 @@ export default {
                : url +
                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
                  this.token.productNo;
-           window.goActivity.goWeb(url2);
+          //  window.goActivity.goWeb(url2);
+           window.location(url2);
          } else {
-           window.goActivity.goWeb(
+          //  window.goActivity.goWeb(
+           window.location(
              url.replace(
                /\?/,
                "?hebaosso=true&SOURCE=DISCOVER&account=" +
@@ -395,10 +398,11 @@ export default {
                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
                  this.token.productNo;
           //  console.log(url_2);
-           window.location = "activity://goWeb?url=" + url_2;
+          //  window.location = "activity://goWeb?url=" + url_2;
+           window.location = url_2;
          } else {
            window.location =
-             "activity://goWeb?url=" +
+            //  "activity://goWeb?url=" +
              url.replace(
                /\?/,
                "?hebaosso=true&SOURCE=DISCOVER&account=" +

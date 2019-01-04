@@ -270,7 +270,8 @@ export default {
                 : url +
                   "?SOURCE=DISCOVER&account=" +
                   this.token.productNo;
-            window.goActivity.goWeb(url2);
+            // window.goActivity.goWeb(url2);
+            window.location(url2);
             setTimeout(() => {
               this.selectIndex = 1;
             }, 1000);
@@ -287,7 +288,8 @@ export default {
                   "?SOURCE=DISCOVER&account=" +
                   this.token.productNo;
             // console.log(url_2);
-            window.location = "activity://goWeb?url=" + url_2;
+            // window.location = "activity://goWeb?url=" + url_2;
+            window.location = url_2;
             setTimeout(() => {
               this.selectIndex = 1;
             }, 1000);
@@ -565,9 +567,11 @@ export default {
               : url +
                 "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
-          window.goActivity.goWeb(url2);
+          // window.goActivity.goWeb(url2);
+          window.location(url2);
         } else {
-          window.goActivity.goWeb(
+          // window.goActivity.goWeb(
+          window.location(
             url.replace(
               /\?/,
               "?SOURCE=DISCOVER&account=" +
@@ -590,10 +594,11 @@ export default {
                 "?SOURCE=DISCOVER&account=" +
                 this.token.productNo;
           // console.log(url_2);
-          window.location = "activity://goWeb?url=" + url_2;
+          // window.location = "activity://goWeb?url=" + url_2;
+          window.location = url_2;
         } else {
           window.location =
-            "activity://goWeb?url=" +
+            // "activity://goWeb?url=" +
             url.replace(
               /\?/,
               "?SOURCE=DISCOVER&account=" +
