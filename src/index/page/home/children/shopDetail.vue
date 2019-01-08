@@ -20,7 +20,7 @@
             <ul>
               <li class="left">
                 <div class="seller-name">{{shopData.mercAbbr}}</div>
-                <div class="seller-time">营业时间: 9:00-22:00</div>
+                <div class="seller-time">营业时间: {{shopData.businessHour}}</div>
               </li>
               <li class="right">
                 <button class="go-buy-btn" @click="payKHD()">去买单</button>

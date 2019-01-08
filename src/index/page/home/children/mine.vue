@@ -234,6 +234,7 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
       this.$router.go(-1);
+      this.searchT = "";
     },
     detail(url) {
       window.location = url;

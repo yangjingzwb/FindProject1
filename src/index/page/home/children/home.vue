@@ -22,7 +22,7 @@
         </div>
       </section>
       <!-- 秒杀 -->
-      <section v-if="bannermarkets[0].marketingIcon" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
+      <section v-if="bannermarkets.length>0" class="s_3 s" @click="goDetail($event,bannermarkets[0],1,'jd')">
         <img :src="bannermarkets[0].marketingIcon" >
       </section>  
             

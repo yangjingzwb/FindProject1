@@ -18,7 +18,7 @@
       <div class="content">
         <div class="content-info">
           <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
-          <div class="list-info">参与时间：09:00到23:59</div>
+          <div class="list-info">参与时间：{{data.attEffTm}}到{{data.attExpTm}}</div>
           <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
           <div class="list-info">参与用户范围：客户端新老用户</div>
           <div class="list-info">
