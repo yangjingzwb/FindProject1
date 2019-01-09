@@ -489,6 +489,9 @@ export default {
           obj[i].PIC_URL_1 = this.baseImg + obj[i].PIC_URL_1;
         }
       }
+      // obj = obj.filter((item)=>{ 
+      //     return item.ACT_FLG == 1;
+      // });
       return obj;
     },
 
