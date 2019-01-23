@@ -18,14 +18,14 @@
       <div class="content">
         <div class="content-info">
           <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
-          <div class="list-info">参与时间：09:00到23:59</div>
+          <div class="list-info">参与时间：{{data.attEffTm}}到{{data.attExpTm}}</div>
           <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
-          <div class="list-info">参与用户范围：客户端新老用户</div>
+          <div class="list-info">参与用户范围：{{usrTyp}}</div>
           <div class="list-info">
             <span class="left">参与条件：</span>
             <ul class="right">
               <li>1. {{ruleFlgText}}</li>
-              <li>2. 用户已绑定银行卡</li>
+              <li>2. {{ruleFlgText2}}</li>
             </ul>
           </div>
           <div class="list-info">活动方式：{{ruleText}}</div>
@@ -62,7 +62,9 @@ export default {
     return {
       data: {},
       ruleText: "",
+      usrTyp: "",
       ruleFlgText: "",
+      ruleFlgText2: "",
       mjrTypText: ""
     };
   },
@@ -88,7 +90,9 @@ export default {
           if (res.code === "0") {
             this.data = res.data;
             this.rule = res.data.gmeRec[0].drawRuleTyp;
+            this.userTyp = res.data.userTyp;
             this.usrFlg = res.data.usrFlg2;
+            this.usrFlg2 = res.data.usrFlg4;
             this.mjrTyp = res.data.mjrTyp;
             // console.log(this.data);
             if(this.rule == "1") {
@@ -98,10 +102,20 @@ export default {
             } else {
               this.ruleText = "直减"
             };
+            if(this.userTyp == "1") {
+              this.usrTyp = " 客户端新老用户"
+            } else {
+              this.usrTyp = "客户端新用户"
+            };
             if(this.usrFlg == "1") {
               this.ruleFlgText = "全网用户"
             } else {
               this.ruleFlgText = "中国移动用户"
+            };
+            if(this.usrFlg2 == "1") {
+              this.ruleFlgText2 = "用户需为首绑卡用户"
+            } else {
+              this.ruleFlgText2 = "用户已绑定银行卡"
             };
             if(this.mjrTyp == "1") {
               this.mjrTypText = "随机立减"

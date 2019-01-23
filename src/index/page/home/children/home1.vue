@@ -91,7 +91,7 @@
 // import footGuide from '@@/components/footer/footGuide'
 // import SlideRender from '@@/components/page-render/slide-render'
 import { mapState, mapMutations } from "vuex";
-import Slider from "@@/components/base/slider";
+import Slider from "@@/components/base/slider-BScroll";
 import axios from "@@/plugins/rsa/axios";
 import Loading from "@@/components/loading/loading.vue";
 import sa from "sa-sdk-javascript";
@@ -1314,7 +1314,7 @@ header {
     height: 100%;
   }
   img {
-    max-height: 10.625rem;
+    max-height: 170px;
   }
 }
 .scroll {
@@ -1341,7 +1341,7 @@ header {
 }
 .foods-wrapper {
   width: 100%;
-  height: 8.875rem;
+  height: 10.625rem;
   // padding-left: 0.9375rem;
   // padding-right: 0.9375rem;
   .title {

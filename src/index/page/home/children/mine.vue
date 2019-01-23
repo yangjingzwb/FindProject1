@@ -7,17 +7,16 @@
     <!-- accountStatus 账户状态(正常:ACTIVE;失效:INACTIVE;过期:EXPIRED;已经逾期：overdue) -->
     <section class="s_1">
       <ul>
-       
         <li class="l i">
           <span class="icon"><img src="/static/img/1-20.png"></span>
           <form @submit="submitF($event)" class="form">
-            <input type="search" v-model="searchT" placeholder="搜一搜：请输入商户名称" ref='searchInput'>
+            <input type="search" v-focus="true" v-model="searchT" placeholder="搜一搜：请输入商户名称" ref='searchInput'>
           </form>
           <span v-show="searchT&&isIphone" class="icon_after" @click = "clear()">
             <img src="/static/img/Group6.png">
           </span>
         </li>
-         <li class="l t" @click="cancel()">
+        <li class="l t" @click="cancel()">
           取消
           <!-- <span></span> -->
         </li>

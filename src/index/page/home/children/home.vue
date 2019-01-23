@@ -2,7 +2,7 @@
   <div class="home">
     <div :class="isShow">
       <span>优惠</span>
-      <span @click="getSharePage()" class="shareBtn"></span>
+      <!-- <span @click="getSharePage()" class="shareBtn"></span> -->
     </div>
     <!-- 弹窗 -->
     <div v-if="alertinfo && alertinfo.length>0" :class="isAlertInfo">
@@ -12,11 +12,11 @@
       <div @click="alertCloseBtn()" class="alert_close"></div>
     </div>
           
-    <section v-if="tabs && tabs.length>0" class="tabs">
+    <!-- <section v-if="tabs && tabs.length>0" class="tabs">
       <span v-for="(item, index) in tabs">
         <a id="indexId2" @click="goToPage($event,item,index)" :class="{'active':selectIndex==index}">{{item.tabTitle}}</a>
       </span>
-    </section>
+    </section> -->
     
     <scroll
       :scrollbar="scrollbar"
@@ -79,13 +79,13 @@
           @goDetail="goDetail"
         ></goods2>
         <!-- 京东资讯 -->
-        <goods3
+        <!-- <goods3
           :jdList="jdList"
           @goDetail="goDetail"
-        ></goods3>
+        ></goods3> -->
 
       </section>
-      <div class="null">&nbsp;</div>
+      <!-- <div class="null">&nbsp;</div> -->
       <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
     </div>
     </scroll>
@@ -112,7 +112,7 @@ import Near from "./near.vue";
 import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
-import Goods3 from "./goods3.vue";
+// import Goods3 from "./goods3.vue";
 // import Recommended from "./recommended.vue";
 // import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -197,7 +197,7 @@ export default {
     HomeSlider,
     Goods1,
     Goods2,
-    Goods3,
+    // Goods3,
     Scroll
   },
 
@@ -553,7 +553,7 @@ export default {
         (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
         "android"
       ) {
-        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
+        if (flag == 1 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
           let url2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -577,7 +577,7 @@ export default {
           );
         }
       } else {
-        if (flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
+        if (flag == 1 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
           let url_2 =
             url.indexOf("?") > 0
               ? url.replace(
@@ -762,7 +762,7 @@ export default {
   // overflow: auto;
   height: 95%;
   position: relative;
-  top: 6rem;
+  top: 3rem;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -770,7 +770,7 @@ export default {
    // overflow: auto;
    height: 95%;
    position: relative;
-   top: 3rem;
+  //  top: 3rem;
    overflow-y: auto;
    -webkit-overflow-scrolling: touch;
  }
