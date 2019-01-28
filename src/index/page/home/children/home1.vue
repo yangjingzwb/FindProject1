@@ -1314,7 +1314,7 @@ header {
     height: 100%;
   }
   img {
-    max-height: 170px;
+    max-height: 10.625rem;
   }
 }
 .scroll {

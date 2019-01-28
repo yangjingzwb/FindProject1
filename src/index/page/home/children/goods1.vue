@@ -298,7 +298,7 @@ export default {
     }
     .sub {
       text-indent: 0.3rem;
-      width: 6.75rem;
+      // width: 6.75rem;
       white-space: nowrap;
     }
   }

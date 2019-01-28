@@ -25,7 +25,6 @@
                   <div class="c2">
                       <span class="l">{{item.BUS_ADDR}}</span>
                       <span class="r">{{item.distance}}km</span>
-                      
                   </div>
                   <div class="c3" >
                       <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
@@ -511,7 +510,7 @@ export default {
     float: left;
     padding-left: 0.5625rem;
     min-width: 50%;
-    width: 50%;
+    width: 55%;
     text-align: left;
   }
   .c1 {
@@ -538,7 +537,7 @@ export default {
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 100%;
+    // max-width: 83%;
     @include space();
     div {
       @include space();
@@ -558,7 +557,7 @@ export default {
     background-image: linear-gradient(-162deg, #F65050 0%, #E22828 100%, #C90F0F 100%);
     // border: thin solid rgba(224, 24, 45, 0.2);
     border-radius: 0.5rem;
-    padding: 0.1875rem 0.5rem;
+    padding: 0.1875rem 0.3rem;
     margin-right: 0.1875rem;
   }
   .right {

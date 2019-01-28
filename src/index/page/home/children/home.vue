@@ -22,7 +22,6 @@
       :scrollbar="scrollbar"
       :data1 ="data1"
       :data ="jdList"
-      :pullUpLoad= "pullUpLoad_near"
       @pullingUp="onPullingUp"
       ref="scroll"
     >
@@ -86,7 +85,7 @@
 
       </section>
       <!-- <div class="null">&nbsp;</div> -->
-      <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
+      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
     </div>
     </scroll>
   </div>

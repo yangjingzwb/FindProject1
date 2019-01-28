@@ -19,13 +19,15 @@
         <div class="content-info">
           <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
           <div class="list-info">参与时间：{{data.attEffTm}}到{{data.attExpTm}}</div>
-          <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
-          <div class="list-info">参与用户范围：{{usrTyp}}</div>
+          <!-- <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
+          <div class="list-info">参与用户范围：{{usrTyp}}</div> -->
           <div class="list-info">
             <span class="left">参与条件：</span>
             <ul class="right">
               <li>1. {{ruleFlgText}}</li>
               <li>2. {{ruleFlgText2}}</li>
+              <li v-for="(item,index) in data.provRec">3. 活动省份：{{item.provNm}}</li>
+              <li>4. 参与用户范围：{{usrTyp}}</li>
             </ul>
           </div>
           <div class="list-info">活动方式：{{ruleText}}</div>
@@ -44,7 +46,7 @@
             </tbody>
           </table>
           <div class="list-info">活动规则：{{data.gmeRule}}</div>
-          <div class="list-info">注：活动具体规则由开展方制定，参与方式详询活动开展方</div>
+          <div class="list-info">注：活动具体规则请咨询10086及查看店内海报，参与方式详情咨询门店店员。</div>
         </div>
       </div>
     </section>
@@ -103,7 +105,9 @@ export default {
               this.ruleText = "直减"
             };
             if(this.userTyp == "1") {
-              this.usrTyp = " 客户端新老用户"
+              this.usrTyp = "客户端新老用户"
+            } else if(this.userTyp == "2") {
+              this.usrTyp = "客户端老用户"
             } else {
               this.usrTyp = "客户端新用户"
             };

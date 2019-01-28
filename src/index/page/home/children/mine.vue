@@ -10,7 +10,7 @@
         <li class="l i">
           <span class="icon"><img src="/static/img/1-20.png"></span>
           <form @submit="submitF($event)" class="form">
-            <input type="search" v-focus="true" v-model="searchT" placeholder="搜一搜：请输入商户名称" ref='searchInput'>
+            <input type="search" v-model="searchT" placeholder="搜一搜：请输入商户名称" ref='searchInput'>
           </form>
           <span v-show="searchT&&isIphone" class="icon_after" @click = "clear()">
             <img src="/static/img/Group6.png">
@@ -23,44 +23,44 @@
       </ul>
     </section>
       <div class="home home1" ref="home">
-        <scroll
+        <!-- <scroll
         :data = "shopList"
           :pullUpLoad="pullUpLoad"
           :data1 = "shopListFlag"
           @pullingUp="onPullingUp"
-        >
-      <div class="content">
-        <section class="s_8">
+        > -->
+        <div class="content">
+          <section class="s_8">
 
-        </section>
-        <section class="s_5 s">
-          <!-- <h6 class="title">
-            <span class="text">附近优惠</span>
-          </h6> -->
-          <ul v-for="item in shopList" @click="goSeller(item)" :key="item.id">
-            <li>
-                <div class="c2">
-                  <span class="l" :class="{'active':item.ACT_INF}">{{item.STORES_NM}}</span>
-                  <span class="r">{{item.distance}}km</span>
-                </div>
-                <div class="c2 c3">
-                  <span class="l">{{item.BUS_ADDR}}</span>
-                  <span class="r r1">立即消费</span>
-                </div>
-            </li>
-            <li class="hr-1"></li>
-          </ul>
-        
-          <div class="end"></div>
-        </section>
-        <section class="s_5 s_6 s">
-            <div class = "sub2" v-if="!isFirstIn && shopList.length<=0">
-              <img src="/static/img/1-4.png">
-              <span class="txt">抱歉，没有找到相关商户</span>
-            </div>
-        </section>
-    </div>
-           </scroll>
+          </section>
+          <section class="s_5 s">
+            <!-- <h6 class="title">
+              <span class="text">附近优惠</span>
+            </h6> -->
+            <ul v-for="item in shopList" @click="goSeller(item)" :key="item.id">
+              <li>
+                  <div class="c2">
+                    <span class="l" :class="{'active':item.ACT_FLG == 1}">{{item.STORES_NM}}</span>
+                    <span class="r">{{item.distance}}km</span>
+                  </div>
+                  <div class="c2 c3">
+                    <span class="l">{{item.BUS_ADDR}}</span>
+                    <span class="r r1">立即消费</span>
+                  </div>
+              </li>
+              <li class="hr-1"></li>
+            </ul>
+          
+            <div class="end"></div>
+          </section>
+          <section class="s_5 s_6 s">
+              <div class = "sub2" v-if="!isFirstIn && shopList.length<=0">
+                <img src="/static/img/1-4.png">
+                <span class="txt">抱歉，没有找到相关商户</span>
+              </div>
+          </section>
+        </div>
+        <!-- </scroll> -->
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@
 // import SlideRender from '@@/components/page-render/slide-render'
 import { mapState, mapMutations } from "vuex";
 // import Slider from "@@/components/base/slider";
-import Scroll from "@@/components/scroll/scroll.vue";
+// import Scroll from "@@/components/scroll/scroll.vue";
 import axios from "@@/plugins/rsa/axios";
 import BScroll from "better-scroll";
 import sa from'sa-sdk-javascript';
@@ -123,7 +123,7 @@ export default {
 
   components: {
     // Slider,
-    Scroll
+    // Scroll
     // SlideRender
   },
 
@@ -658,7 +658,7 @@ export default {
 .s_6 {
   padding: 0 0.9375rem;
   background: #fff;
-  margin-top: 0.5625rem;
+  // margin-top: 0.5625rem;
   ul {
     // height: 7.5rem;
     // padding-top: 1.625rem;
@@ -823,7 +823,8 @@ export default {
 }
 .s_6 {
   background: #f0f1f2;
-  margin-top: 6.25rem;
+  padding-top: 6.25rem;
+  height: 40rem;
 }
 .s_5.s_6::after {
   content: " ";
