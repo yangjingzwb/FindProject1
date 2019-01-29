@@ -162,7 +162,7 @@ export default {
     } catch (e) {}
     // 获取运营banner
     this.getMiddle();
-    this.getJD();
+    // this.getJD();
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -176,7 +176,7 @@ export default {
     // this.jdSKill(); // 请求广告位
     // 获取优惠券
     this.getMainCoupon();
-    this.getCoupon();
+    // this.getCoupon();
     //神策
     let startTime = new Date();
     let endTime = new Date() ;
@@ -294,7 +294,7 @@ export default {
       }
     },
     onPullingUp() {
-      this.jdloadMore();
+      // this.jdloadMore();
     },
     jdloadMore() {
       if (this.jdFlag) {

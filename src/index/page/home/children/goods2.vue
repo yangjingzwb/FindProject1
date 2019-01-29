@@ -117,7 +117,7 @@ export default {
     font-family: PingFangSC-Regular;
     white-space: normal !important;
     letter-spacing: 0.0625rem;
-    line-height: 0.9375rem;
+    line-height: 1rem;
     display: -webkit-box;
     /* autoprefixer: ignore next */
     -webkit-box-orient: vertical;

@@ -450,7 +450,7 @@ export default {
     float: left;
     padding-left: 0.5625rem;
     min-width: 50%;
-    width: 50%;
+    width: 54%;
     text-align: left;
   }
   .c1 {
@@ -476,7 +476,7 @@ export default {
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 83%;
+    // max-width: 83%;
     @include space();
     div {
       @include space();
@@ -496,7 +496,7 @@ export default {
     background-image: linear-gradient(-162deg, #F65050 0%, #E22828 100%, #C90F0F 100%);
     // border: thin solid rgba(224, 24, 45, 0.2);
     border-radius: 0.5rem;
-    padding: 0.1875rem 0.5rem;
+    padding: 0.1875rem 0.3rem;
     margin-right: 0.1875rem;
   }
     .right {
