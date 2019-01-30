@@ -503,34 +503,6 @@ export default {
             "首页弹窗" + "-" + obj.popupTitle,
             this.token.session.replace(/\+/g, "%2B")
           );
-        } else if (channel == "tab1") {
-          // 神策
-          sa.track("bannerClick", {
-            contentName: obj.popupTitle,
-            topCategory: "优惠",
-          });
-          // banner图埋点
-          fetchPoints(
-            "010000000000",
-            "010000000000K08",
-            this.token.productNo,
-            "首页弹窗" + "-" + obj.popupTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
-        } else if (channel == "tab2") {
-          // 神策
-          sa.track("bannerClick", {
-            contentName: obj.popupTitle,
-            topCategory: "优惠",
-          });
-          // banner图埋点
-          fetchPoints(
-            "010000000000",
-            "010000000000K08",
-            this.token.productNo,
-            "首页弹窗" + "-" + obj.popupTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
         }
       } catch (e) {}
 
@@ -857,9 +829,9 @@ div.container::-webkit-scrollbar {
     width: 1.75rem;
     height: 1.75rem;
     margin-left: -0.875rem;
-    top: 75%;
+    top: 76%;
     left: 50%;
-    background: url(/static/img/close_icon.png) no-repeat;
+    background: url(/static/img/close_icon_1.png) no-repeat;
     color: #000;
     text-align: center;
     // background-color: #fff;

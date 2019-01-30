@@ -164,7 +164,7 @@ router.beforeEach((to, from, next) => {
           topTitle += 1;
           store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
           recommends += 1;
-          // console.log("xiao",store.state.alertinfo)
+          // console.log("xiao",store.state.recommends)
           checkUtil(slider, slider1, slider2, next)
       }).catch((res) => {
           // window.location.reload()

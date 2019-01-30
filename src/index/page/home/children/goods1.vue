@@ -276,7 +276,7 @@ export default {
       // -webkit-box-orient: vertical;
       // text-overflow: ellipsis;
       text-align: left;
-      padding-right: 0.75rem;
+      // padding-right: 0.75rem;
       @include space();
     }
     .price {
