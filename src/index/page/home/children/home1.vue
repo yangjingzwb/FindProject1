@@ -34,7 +34,7 @@
         scrollbar=true
         >
         <div class="content">
-          <!-- <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
+          <section v-if="slider && slider.length>0" class="s_2 s foods-wrapper">
             <div class="scroll content slide-content">
               <div>
                   <div class="slider-wrapper">
@@ -48,10 +48,10 @@
                   </div>
               </div>
             </div>
-          </section> -->
-          <section>
-            <home-slider @goDetail="goDetail"></home-slider>
           </section>
+          <!-- <section>
+            <home-slider @goDetail="goDetail"></home-slider>
+          </section> -->
           
           <section v-if="slider1 && slider1.length>0" class="s_3 s">
             <ul>
@@ -93,7 +93,7 @@
 // import footGuide from '@@/components/footer/footGuide'
 // import SlideRender from '@@/components/page-render/slide-render'
 import { mapState, mapMutations } from "vuex";
-import HomeSlider from "@@/components/base/slider2";
+import Slider from "@@/components/base/slider-BScroll";
 import axios from "@@/plugins/rsa/axios";
 import Loading from "@@/components/loading/loading.vue";
 import sa from "sa-sdk-javascript";
@@ -216,7 +216,7 @@ export default {
   },
 
   components: {
-    HomeSlider,
+    Slider,
     Loading,
     Scroll,
     Near1
@@ -379,16 +379,16 @@ export default {
       let mercParm = obj.mercTrdCls;
       this.titleParm = obj.marketingTitle;
       // console.log(obj.marketingTitle, mercParm);
-      axios.post("getShopInfo", {
+      axios.post("getExternalShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
-        stores_nm: "", // 门店名称
-        merc_abbr: "", // 门店简称
+        // stores_nm: "", // 门店名称
+        // merc_abbr: "", // 门店简称
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
-        mblno: this.token.productNo, //用户手机号
+        // mblno: this.token.productNo, //用户手机号
         pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
         merc_trd_cls: mercParm
         }).then(res => {
@@ -603,16 +603,16 @@ export default {
       let numIndex = this.slider1[this.selectIndex].mercTrdCls;
       // console.log(numIndex);
       this.CURRENTPAGE += 1;
-      axios.post("getShopInfo", {
+      axios.post("getExternalShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
-        stores_nm: "", // 门店名称
-        merc_abbr: "", // 商户简称
-        mblno: this.token.productNo, //用户手机号
+        // stores_nm: "", // 门店名称
+        // merc_abbr: "", // 商户简称
+        // mblno: this.token.productNo, //用户手机号
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
         pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
         merc_trd_cls: numIndex
         }).then(res => {
@@ -728,16 +728,16 @@ export default {
         this.SHOWLOADING(false);
         return;
       }
-      axios.post("getShopInfo", {
+      axios.post("getExternalShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
-        stores_nm: "", // 门店名称
-        merc_abbr: "", // 门店简称
+        // stores_nm: "", // 门店名称
+        // merc_abbr: "", // 门店简称
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
-        mblno: this.token.productNo, //用户手机号
+        // mblno: this.token.productNo, //用户手机号
         pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
         merc_trd_cls: this.slider1[0].mercTrdCls
         }).then(res => {
@@ -921,7 +921,7 @@ export default {
   width: 100%;
   // position: relative;
   height: 100%;
-  padding-top: 3rem;
+  // padding-top: 3rem;
   padding-bottom: 2rem;
   // background: #f0f1f2;
   overflow: hidden;
@@ -1346,7 +1346,7 @@ header {
 }
 .foods-wrapper {
   width: 100%;
-  height: 8.875rem;
+  height: 10.625rem;
   // padding-left: 0.9375rem;
   // padding-right: 0.9375rem;
   .title {

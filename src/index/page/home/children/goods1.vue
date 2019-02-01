@@ -157,7 +157,7 @@ export default {
           "010000000000K01", //事件标记
           this.token.productNo,
           "专题营销位", // 事件名称
-          this.token.session.replace(/\+/g, "%2B")
+          // this.token.session.replace(/\+/g, "%2B")
         );
       }
       if(flag==3){
@@ -173,7 +173,7 @@ export default {
           "010000000000K02", //事件标记
           this.token.productNo,
           "专题营销位-"+obj.name, // 事件名称
-          this.token.session.replace(/\+/g, "%2B")
+          // this.token.session.replace(/\+/g, "%2B")
         );
       }
       // alert(JSON.stringify(obj))
@@ -276,7 +276,7 @@ export default {
       // -webkit-box-orient: vertical;
       // text-overflow: ellipsis;
       text-align: left;
-      padding-right: 0.75rem;
+      // padding-right: 0.75rem;
       @include space();
     }
     .price {

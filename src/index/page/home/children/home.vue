@@ -1,29 +1,30 @@
 <template>
   <div class="home">
-    <div :class="isShow">
-      <span>优惠</span>
-      <span @click="getSharePage()" class="shareBtn"></span>
+    <div class="header" :class="isShow">
+      <span class="header_title">优惠</span>
+      <!-- <span @click="getSharePage()" class="shareBtn"></span> -->
+      <span class="logo"><i class="logo_icon"></i></span>
+      <span @click="goLogin()" class="loginBtn">
+        <a>登录</a>
+      </span>
     </div>
     <!-- 弹窗 -->
-    <div v-if="alertinfo && alertinfo.length>0" :class="isAlertInfo">
+    <!-- <div v-if="alertinfo && alertinfo.length>0" :class="isAlertInfo">
       <p v-for="item in alertinfo" :key="item.id">
         <a @click="goDetail($event,item,12,'alert_tip')"><img :src="item.popupIcon" /></a>
       </p>
       <div @click="alertCloseBtn()" class="alert_close"></div>
-    </div>
+    </div> -->
           
-    <section v-if="tabs && tabs.length>0" class="tabs">
+    <!-- <section v-if="tabs && tabs.length>0" class="tabs">
       <span v-for="(item, index) in tabs">
         <a id="indexId2" @click="goToPage($event,item,index)" :class="{'active':selectIndex==index}">{{item.tabTitle}}</a>
       </span>
-    </section>
+    </section> -->
     
     <scroll
       :scrollbar="scrollbar"
       :data1 ="data1"
-      :data ="jdList"
-      :pullUpLoad= "pullUpLoad_near"
-      @pullingUp="onPullingUp"
       ref="scroll"
     >
     <div :class="isShow2">
@@ -52,12 +53,12 @@
             
       <section class="s_5 s" >
         <!-- 优惠券 -->
-        <coupon
+        <!-- <coupon
           :couponMainList="couponMainList"
           :couponList="couponList"
           @goDetail="goDetail"
           >
-        </coupon>
+        </coupon> -->
         <!-- 附近 -->
         <near
           :latitude = 'latitude'
@@ -79,14 +80,14 @@
           @goDetail="goDetail"
         ></goods2>
         <!-- 京东资讯 -->
-        <goods3
+        <!-- <goods3
           :jdList="jdList"
           @goDetail="goDetail"
-        ></goods3>
+        ></goods3> -->
 
       </section>
-      <div class="null">&nbsp;</div>
-      <!-- <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div> -->
+      <!-- <div class="null">&nbsp;</div> -->
+      <div class="null">————&nbsp;&nbsp;亲，我是有底线的&nbsp;&nbsp;————</div>
     </div>
     </scroll>
   </div>
@@ -107,12 +108,13 @@ import {
   // getCode,
   formatDate_1
 } from "@@/service/util";
+import wxapi from "@@/service/wxapi.js";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Near from "./near.vue";
 import Coupon from "./coupon.vue";
 import Goods1 from "./goods1.vue";
 import Goods2 from "./goods2.vue";
-import Goods3 from "./goods3.vue";
+// import Goods3 from "./goods3.vue";
 // import Recommended from "./recommended.vue";
 // import GoodThing from "./goodThing.vue"; // 好物
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -152,18 +154,19 @@ export default {
   },
 
   mounted() {
+    wxapi.wxRegister(this.wxRegCallback);
     try {
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K13", //事件标记
         this.token.productNo,
         "进入优惠频道", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
+        // this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
     // 获取运营banner
     this.getMiddle();
-    this.getJD();
+    // this.getJD();
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -173,10 +176,10 @@ export default {
     // document.getElementById("pg").style.display="none";
   },
   created() {
-    this.initShow(); //控制标题头
+    // this.initShow(); //控制标题头
     // this.jdSKill(); // 请求广告位
     // 获取优惠券
-    this.getMainCoupon();
+    // this.getMainCoupon();
     this.getCoupon();
     //神策
     let startTime = new Date();
@@ -197,7 +200,7 @@ export default {
     HomeSlider,
     Goods1,
     Goods2,
-    Goods3,
+    // Goods3,
     Scroll
   },
 
@@ -221,6 +224,45 @@ export default {
   },
 
   methods: {
+    wxRegCallback () {
+      // 用于微信JS-SDK回调
+      // this.wxShareTimeline()
+      this.wxShareAppMessage()
+    },
+    wxShareTimeline () {
+      // 微信自定义分享到朋友圈
+      let option = {
+        title: '限时团购周 挑战最低价',
+        link: window.location.href.split('#')[0],
+        imgUrl: 'http://hbmp.letshappy.cn/logo.jpg',
+        success: () => {
+          // alert('分享成功')
+        },
+        error: () => {
+          // alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareTimeline(option)
+    },
+    wxShareAppMessage () {
+      // 微信自定义分享给朋友
+      let option = {
+        title: '省钱就用和包支付，首绑卡满20减10',
+        desc: '优惠超值限时整点抢，领券购好物，全场大牌3折起！',
+        link: window.location.href.split('#')[0],
+        imgUrl: 'http://hbmp.letshappy.cn/logo.jpg',
+        success: () => {
+          // alert('分享成功')
+        },
+        error: () => {
+          // alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareAppMessage(option)
+    },
+    
     ...mapMutations([
       "SLIDER1", // 我的页面banner图
       "PRODUCTS",
@@ -297,7 +339,7 @@ export default {
       }
     },
     onPullingUp() {
-      this.jdloadMore();
+      // this.jdloadMore();
     },
     jdloadMore() {
       if (this.jdFlag) {
@@ -506,34 +548,6 @@ export default {
             "首页弹窗" + "-" + obj.popupTitle,
             this.token.session.replace(/\+/g, "%2B")
           );
-        } else if (channel == "tab1") {
-          // 神策
-          sa.track("bannerClick", {
-            contentName: obj.popupTitle,
-            topCategory: "优惠",
-          });
-          // banner图埋点
-          fetchPoints(
-            "010000000000",
-            "010000000000K08",
-            this.token.productNo,
-            "首页弹窗" + "-" + obj.popupTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
-        } else if (channel == "tab2") {
-          // 神策
-          sa.track("bannerClick", {
-            contentName: obj.popupTitle,
-            topCategory: "优惠",
-          });
-          // banner图埋点
-          fetchPoints(
-            "010000000000",
-            "010000000000K08",
-            this.token.productNo,
-            "首页弹窗" + "-" + obj.popupTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
         }
       } catch (e) {}
 
@@ -636,23 +650,23 @@ export default {
         this.SHOWLOADING(false);
       }, 2000);
       let startTime = new Date();
-      axios.post("getShopInfo", {
+      axios.post("getExternalShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
-        stores_nm: "", // 门店名称
-        merc_abbr: "", // 门店简称
-        mblno: this.token.productNo, //用户手机号
+        // stores_nm: "", // 门店名称
+        // merc_abbr: "", // 门店简称
+        // mblno: this.token.productNo, //用户手机号
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
         pagNum: this.PAGNUM || 2,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1
         }).then(res => {
           //神策
           let endTime = new Date() ;
           sa.track("loadDelay",{
             currentBusinessLine: "优惠频道",
-            currentActivity: "调用优惠页附近商户getShopInfo接口",
+            currentActivity: "调用优惠页附近商户getExternalShopInfo接口",
             currentURL: window.location.href,
             delayTime: endTime - startTime,
             offsetTime: 0,
@@ -732,13 +746,10 @@ export default {
         }
       });
     },
-    getSharePage(e) {
-      let index_urls = {
-        shareUrl: "https://www.cmpay.com/info/wap/mkm18/autoTelFareAct/shared.html",
-        wap_produce_reqData: "/gmeweb/miguhw_merc.xhtml?viewCode=json"// 单点登录
-      };
-      let shareTxt = "惊喜大礼，尽快查收吧";
-      shareNow(index_urls.shareUrl, shareTxt);
+    goLogin(e) {
+      let urls = "http://hebao.letshappy.cn:3020/rcServer/hbopenreceive?state=" + window.location.href;
+      console.log(urls);
+      window.location = urls;
     },
     alertCloseBtn() {
       this.isAlertInfo = "alert_info_hide";
@@ -775,7 +786,7 @@ export default {
    // overflow: auto;
    height: 95%;
    position: relative;
-   top: 3rem;
+  //  top: 3rem;
    overflow-y: auto;
    -webkit-overflow-scrolling: touch;
  }
@@ -809,20 +820,47 @@ div.container::-webkit-scrollbar {
   background: #ffffff;
   // position: -webkit-sticky;
   position: fixed;
-  z-index: 100000000;
+  z-index: 10;
   top: 0;
   left: 0;
   // font-weight: 200;
   text-align: center;
   line-height: 3rem;
-  .shareBtn {
-    width: 1.125rem;
-    height: 1.125rem;
-    background: url("/static/img/share_icon.png") top no-repeat;
-    background-size: 100% 100%;
+  .header_title {
+    position: relative;
+    left: 1.2rem;
+  }
+  .logo {
+    position: relative;
+    bottom: 0.1rem;
+    left: 5.2rem;
+  }
+  .logo_icon {
+    display: inline-block;
+    width: 1.75rem;
+    height: 1.75rem;
+    background-image: url(/static/img/logo_icon.png);
+    vertical-align: middle;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .loginBtn {
     position: absolute;
-    top: .95rem;
+    top: 0.8rem;
     right: 1rem;
+    width: 2.8rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 0.875rem;
+    color: #ed196c;
+    display: block;
+    border: 0.0625rem solid #ed196c;
+    border-radius: 0.3125rem;
+    // background: url("/static/img/share_icon.png") top no-repeat;
+    // background-size: 100% 100%;
+    a {
+      color: #ed196c;
+    }
   }
 }
 .headerHidden {
@@ -1387,7 +1425,7 @@ div.container::-webkit-scrollbar {
   text-align: center;
 }
 .null {
-   height: 2rem;
+   height: 5rem;
  }
 .hr-1 {
   display: block;

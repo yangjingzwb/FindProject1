@@ -51,7 +51,7 @@ export default {
       console.log(size);
       for (let i = 0; i < size; i++) {
         // let child = this.children[i];
-        width += 8;
+        width += 7.3;
       }
 
       // this.$refs.listWrapper.children[0].style.width=width+'px'

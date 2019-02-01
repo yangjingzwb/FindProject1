@@ -376,7 +376,7 @@ export default {
   height: 100%;
   /*position: absolute
   /*left: 0*/
-  /*top: 0*/
+  top: 3rem;
   /*right: 0*/
   /*bottom: 0*/
   overflow: hidden;
@@ -414,12 +414,12 @@ export default {
   }
 }
 .pullup-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  // width: 100%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // padding-top: 20px;
+  // padding-bottom: 20px;
   // margin-bottom: 30px;
 }
 </style>

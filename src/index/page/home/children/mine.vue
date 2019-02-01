@@ -148,12 +148,12 @@ export default {
       let params = {
         latitude: window.LATITUDE,
         longitude: window.LONGITUDE,
-        mbl_no: this.token.productNo,
+        // mbl_no: this.token.productNo,
         merc_id: obj.TX_JRN,
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
-        session: this.token.session.replace(/\+/g, "%2B"),
-        mercHl: obj.MERC_HOT_LIN
+        // session: this.token.session.replace(/\+/g, "%2B"),
+        // mercHl: obj.MERC_HOT_LIN
       };
       this.$store.commit("SHOPPARM", params);
       // console.log("xiao",this.$store.state.shopParm)
@@ -232,7 +232,7 @@ export default {
         "030000000000K05", //事件标记
         this.token.productNo,
         "搜索页面取消按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
+        // this.token.session.replace(/\+/g, "%2B")
       );
       this.searchT = "";
       this.$router.go(-1);
@@ -249,16 +249,16 @@ export default {
       }
       this.CURRENTPAGE += 1;
       axios
-        .post("getShopInfo", {
+        .post("getExternalShopInfo", {
           longitude: window.LONGITUDE, // 经度
           latitude: window.LATITUDE, // 维度
-          stores_nm: this.searchT, // 门店名称
-          merc_abbr: this.searchT, //  商户简称
-          mblno: this.token.productNo, //用户手机号
+          // stores_nm: this.searchT, // 门店名称
+          // merc_abbr: this.searchT, //  商户简称
+          // mblno: this.token.productNo, //用户手机号
           // TTXN_CNL: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM,
-          session: this.token.session.replace(/\+/g, "%2B"),
+          // session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
@@ -353,16 +353,16 @@ export default {
       } catch (e) {}
       // 请求banner1
       axios
-        .post("getShopInfo", {
+        .post("getExternalShopInfo", {
           longitude: window.LONGITUDE, // 经度
           latitude: window.LATITUDE, // 维度
-          stores_nm: this.searchT, // 门店名称
-          merc_abbr: this.searchT, // 商户名称
+          // stores_nm: this.searchT, // 门店名称
+          // merc_abbr: this.searchT, // 商户名称
           currentPage: this.CURRENTPAGE, // 当前页数
-          mblno: this.token.productNo, //用户手机号
+          // mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM, // 没页条
           // TTXN_CNL: "ROYTEL", // 固定值
-          session: this.token.session.replace(/\+/g, "%2B"),
+          // session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
@@ -461,7 +461,7 @@ export default {
   background: #ffffff;
 }
 .s_8 {
-  @include wh(100%, 3rem);
+  // @include wh(100%, 3rem);
   // padding-top: 1.25rem;
 }
 .s_1::after {

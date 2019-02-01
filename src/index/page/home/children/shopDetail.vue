@@ -20,7 +20,7 @@
             <ul>
               <li class="left">
                 <div class="seller-name">{{shopData.mercAbbr}}</div>
-                <div class="seller-time">营业时间: 9:00-22:00</div>
+                <div class="seller-time">营业时间: {{shopData.businessHour}}</div>
               </li>
               <li class="right">
                 <button class="go-buy-btn" @click="payKHD()">去买单</button>
@@ -88,8 +88,8 @@
             </ul>
           </div>
         </section>
-        <div class="nullHeight"></div>
-        <section class="s_4" v-show = "shopData.rec.length>=1">
+        <!-- <div class="nullHeight"></div> -->
+        <!-- <section class="s_4" v-show = "shopData.rec.length>=1">
           <div class="title">
             <p>优惠活动</p>
             <div class="hr-2"></div>
@@ -107,7 +107,7 @@
               <div class="hr-2"></div>
             </div>
           </div>
-        </section>
+        </section> -->
         <div class="nullHeight"></div>
         <section class="s_5" v-show = "shopData.mercBriefDesc.length>=1">
           <div class="title">
@@ -133,7 +133,7 @@ import {
   AppFlag,
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
-import Scroll from "@@/components/scroll/scroll.vue";
+// import Scroll from "@@/components/scroll/scroll.vue";
 import sa from "sa-sdk-javascript";
 
 export default {
@@ -183,7 +183,7 @@ export default {
     this.getCoupon();
   },
   components: {
-    Scroll
+    // Scroll
   },
   methods: {
     ...mapMutations([
@@ -195,7 +195,7 @@ export default {
       // let params = this.$route.query.params;
       let params = this.shopParm;
       // console.log(参数接收,params);
-      axios.post("getShopInfoDetail", params).then(res => {
+      axios.post("getExternalShopInfoDetail", params).then(res => {
           if (res.code === "0") {
             this.shopData = res.data;
             // console.log("shop",this.shopData);

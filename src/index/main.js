@@ -124,55 +124,58 @@ router.beforeEach((to, from, next) => {
   // store.commit('TOKEN', {"session":"TESTSSION","productNo":'13795442667'})
   // let userId = '';
   let startTime = new Date();
-  axios
-    .post("queryAccount", {})
-    .then(res => {
-      //神策
-      sa.login(res.data.usrNo);
-      console.log("sa.login登录成功");
-      let endTime = new Date();
-      sa.track("loadDelay", {
-        currentBusinessLine: "优惠频道",
-        currentActivity: "调用高阳queryAccount接口",
-        currentURL: window.location.href,
-        currentURL: window.location.href,
-        delayTime: endTime - startTime,
-        endTime: formatDate_1(endTime.getTime()),
-        startTime: formatDate_1(startTime.getTime())
-      });
-      store.commit("TOKEN", res.data || {});
-      if (!res.data || res.data.length <= 0) {
-      } else {
-      }
-
-      // 请求banner1
-      axios.get("index/getIndexAllData")
-      .then((res) => {
-          store.commit("SLIDER2", (res.data ? res.data.operations : []));
-          slider2 += 1;
-          store.commit("SLIDER", (res.data ? res.data.tops : []));
-          slider += 1;
-          store.commit("SLIDER1", (res.data ? res.data.catalogs : []));
-          slider1 += 1;
-          store.commit("TABS", (res.data ? res.data.tabs : []));
-          tabs += 1;
-          store.commit("ALERTINFO", (res.data ? res.data.popUps : []));
-          alertinfo += 1;
-          store.commit("BANNERMARKETS", (res.data ? res.data.bannermarkets : []));
-          bannermarkets += 1;
-          store.commit("TOPTITLE", (res.data ? res.data.topSysConfigValue : ""));
-          topTitle += 1;
-          store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
-          recommends += 1;
-          // console.log("xiao",store.state.alertinfo)
-          checkUtil(slider, slider1, slider2, next)
-      }).catch((res) => {
-          // window.location.reload()
-      })
+  axios.post("queryAccount", {})
+  .then(res => {
+    //神策
+    sa.login(res.data.usrNo);
+    console.log("sa.login登录成功");
+    let endTime = new Date();
+    sa.track("loadDelay", {
+      currentBusinessLine: "优惠频道",
+      currentActivity: "调用高阳queryAccount接口",
+      currentURL: window.location.href,
+      currentURL: window.location.href,
+      delayTime: endTime - startTime,
+      endTime: formatDate_1(endTime.getTime()),
+      startTime: formatDate_1(startTime.getTime())
+    });
+    store.commit("TOKEN", res.data || {});
+    console.log("xxxxxxxxxxxxx",store.state.token);
+    if (!res.data || res.data.length <= 0) {
+    } else {
+    }
     }).catch((res) => {
       // console.log("加载失败了")
-      window.location.reload()
+      // window.location.reload()
     })
+      // 请求banner1
+    axios.get("index/getIndexAllData")
+    .then((res) => {
+        store.commit("SLIDER2", (res.data ? res.data.operations : []));
+        slider2 += 1;
+        store.commit("SLIDER", (res.data ? res.data.tops : []));
+        slider += 1;
+        store.commit("SLIDER1", (res.data ? res.data.catalogs : []));
+        slider1 += 1;
+        store.commit("TABS", (res.data ? res.data.tabs : []));
+        tabs += 1;
+        store.commit("ALERTINFO", (res.data ? res.data.popUps : []));
+        alertinfo += 1;
+        store.commit("BANNERMARKETS", (res.data ? res.data.bannermarkets : []));
+        bannermarkets += 1;
+        store.commit("TOPTITLE", (res.data ? res.data.topSysConfigValue : ""));
+        topTitle += 1;
+        store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
+        recommends += 1;
+        // console.log("xiao",store.state.alertinfo)
+        checkUtil(slider, slider1, slider2, next)
+    }).catch((res) => {
+        // window.location.reload()
+    })
+    // }).catch((res) => {
+    //   // console.log("加载失败了")
+    //   window.location.reload()
+    // })
 });
 //  // 百度地图成功回调用函数
 //  window.LBSBD_1=function(){

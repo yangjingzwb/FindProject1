@@ -119,14 +119,14 @@ export default {
         "010000000000K06", //事件标记
         this.token.productNo,
         "立即消费-" + obj.STORES_NM, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
+        // this.token.session.replace(/\+/g, "%2B")
       );
       let params = {
         latitude: this.latitude,
         longitude: this.longitude,
-        mbl_no: this.token.productNo,
+        // mbl_no: this.token.productNo,
         merc_id: obj.TX_JRN,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE
       };
@@ -145,7 +145,7 @@ export default {
         "010000000000K07", //事件标记
         this.token.productNo,
         "更多优惠按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
+        // this.token.session.replace(/\+/g, "%2B")
       );
       this.$router.push("/home1");
     }
@@ -450,7 +450,7 @@ export default {
     float: left;
     padding-left: 0.5625rem;
     min-width: 50%;
-    width: 50%;
+    width: 54%;
     text-align: left;
   }
   .c1 {
@@ -476,7 +476,7 @@ export default {
     padding-top: 0.4375rem;
     padding-bottom: 0.125rem;
     letter-spacing: -0.00375rem;
-    max-width: 100%;
+    // max-width: 100%;
     @include space();
     div {
       @include space();
@@ -496,7 +496,7 @@ export default {
     background-image: linear-gradient(-162deg, #F65050 0%, #E22828 100%, #C90F0F 100%);
     // border: thin solid rgba(224, 24, 45, 0.2);
     border-radius: 0.5rem;
-    padding: 0.1875rem 0.5rem;
+    padding: 0.1875rem 0.3rem;
     margin-right: 0.1875rem;
   }
     .right {

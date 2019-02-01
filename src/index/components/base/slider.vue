@@ -111,10 +111,10 @@ span.swiper-pagination-bullet {
   /* background: rgba(255,255,255,1); */
 }
 span.swiper-pagination-bullet-active {
-    width: 0.25rem;
-    height: 0.25rem;
-    /* background: #fff !important; */
-    background: #fff !important;
+  width: 0.25rem;
+  height: 0.25rem;
+  /* background: #fff !important; */
+  background: #fff !important;
   border: 1px solid #fff !important;
   opacity: none !important;
 }

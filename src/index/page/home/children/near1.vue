@@ -27,9 +27,9 @@
                       <span class="r">{{item.distance}}km</span>
                       
                   </div>
-                  <div class="c3" >
+                  <!-- <div class="c3" >
                       <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
-                  </div>
+                  </div> -->
               </li>
               <li class="right">
                   <div class="c4">
@@ -158,12 +158,12 @@ export default {
       let params = {
         latitude: window.LATITUDE,
         longitude: window.LONGITUDE,
-        mbl_no: this.token.productNo,
+        // mbl_no: this.token.productNo,
         merc_id: obj.TX_JRN,
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
-        session: this.token.session.replace(/\+/g, "%2B"),
-        mercHl: obj.MERC_HOT_LIN
+        // session: this.token.session.replace(/\+/g, "%2B"),
+        // mercHl: obj.MERC_HOT_LIN
       };
       this.$store.commit("SHOPPARM", params);
       // console.log("xiao",this.$store.state.shopParm)
@@ -511,7 +511,7 @@ export default {
     float: left;
     padding-left: 0.5625rem;
     min-width: 50%;
-    width: 50%;
+    width: 54%;
     text-align: left;
   }
   .c1 {
@@ -558,7 +558,7 @@ export default {
     background-image: linear-gradient(-162deg, #F65050 0%, #E22828 100%, #C90F0F 100%);
     // border: thin solid rgba(224, 24, 45, 0.2);
     border-radius: 0.5rem;
-    padding: 0.1875rem 0.5rem;
+    padding: 0.1875rem 0.3rem;
     margin-right: 0.1875rem;
   }
   .right {
