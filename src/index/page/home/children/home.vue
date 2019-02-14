@@ -1053,13 +1053,13 @@ div.container::-webkit-scrollbar {
   background-color: #fff;
   // height: 6.25rem;
   width: 100%;
-  height: 5.9375rem;
+  height: 6.25rem;
   img {
     width: 100%;
     // height: 5.625rem;
     margin-top: 0.2rem;
     position: relative;
-    top: -1.4rem;
+    top: -1.2rem;
   }
 }
 .s_4 {

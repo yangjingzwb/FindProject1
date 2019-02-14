@@ -15,6 +15,7 @@
 import { mapState, mapMutations } from "vuex";
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+import sa from "sa-sdk-javascript";
 import { setTimeout } from 'timers';
 export default {
   data() {
@@ -51,6 +52,12 @@ export default {
 	methods: {
     goDetail(event, obj, flag) {
       this.$emit("goDetail", event, obj, flag);
+      // 神策
+      sa.track("bannerClick", {
+        contentName: obj.marketingTitle,
+        bannerNumber: String(obj.marketingNumber),
+        topCategory: "优惠",
+      });
     }
 	},
 	computed: {

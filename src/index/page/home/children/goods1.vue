@@ -43,7 +43,7 @@
     <div v-if="showMore = middle.length>4 ? true : false" 
         @click="showAll = !showAll" 
         class="more">
-      <div v-if="showAll==false" class="down">
+      <div @click="isMore()" v-if="showAll==false" class="down">
         <div>更多特价商品</div>
         <div class="down_img">&nbsp;</div>
       </div>
@@ -139,9 +139,21 @@ export default {
     },
     backToTop() {
       this.$emit('backtop');
+      // 神策
+      sa.track('buttonClick', {
+      topCategory: '优惠',
+      subCategory: '收起更多特价商品'
+      });
       // document.documentElement.scrollTop;
       // document.getElementById("goods").scrollIntoView();
       // console.log(document.getElementsByClassName("goods"));
+    },
+    isMore(){
+      // 神策
+      sa.track('buttonClick', {
+      topCategory: '优惠',
+      subCategory: '点击下拉更多特价商品'
+      });
     },
     goDetail(event, obj, flag) {
       if (flag == 2) {

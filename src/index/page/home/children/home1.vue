@@ -388,6 +388,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
+        // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: mercParm
         }).then(res => {
           if (res.data && res.data.length > 0) {
@@ -609,6 +610,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
+        // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: numIndex
         }).then(res => {
           // this.shopList = res.STORES_REC;
@@ -734,6 +736,7 @@ export default {
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1,
+        // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: this.slider1[0].mercTrdCls
         }).then(res => {
           if (res.data && res.data.length > 0) {
