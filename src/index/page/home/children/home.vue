@@ -1353,6 +1353,7 @@ div.container::-webkit-scrollbar {
   text-align: center;
 }
 .null {
+   padding-bottom: 3.5rem;
    height: 2rem;
  }
 .hr-1 {

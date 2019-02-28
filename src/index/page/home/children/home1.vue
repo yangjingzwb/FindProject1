@@ -387,7 +387,7 @@ export default {
         mblno: this.token.productNo, //用户手机号
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
-        map_type: window.isUseBaiDuLoc ? 0 : 1,
+        map_type: window.isUseBaiDuLoc ? 0 : 0,
         // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: mercParm
         }).then(res => {
@@ -609,7 +609,7 @@ export default {
         currentPage: this.CURRENTPAGE,
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
-        map_type: window.isUseBaiDuLoc ? 0 : 1,
+        map_type: window.isUseBaiDuLoc ? 0 : 0,
         // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: numIndex
         }).then(res => {
@@ -735,7 +735,7 @@ export default {
         mblno: this.token.productNo, //用户手机号
         pagNum: this.PAGNUM || 4,
         session: this.token.session.replace(/\+/g, "%2B"),
-        map_type: window.isUseBaiDuLoc ? 0 : 1,
+        map_type: window.isUseBaiDuLoc ? 0 : 0,
         // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: this.slider1[0].mercTrdCls
         }).then(res => {

@@ -1,8 +1,9 @@
 <template>
   <div class="swiper">
-    <swiper :options="swiperOption" ref='swiper'>
+    <swiper :options="swiperOption" ref='mySwiper'>
       <swiper-slide v-for="item in slider2">
-				<a @click="goDetail($event,item,11,'top')" >
+				<!-- <a @click="goDetail($event,item,11,'top')" > -->
+				<a>
 					<img :src="item.marketingIcon">
 				</a>
 			</swiper-slide>
@@ -17,6 +18,7 @@ import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import sa from "sa-sdk-javascript";
 import { setTimeout } from 'timers';
+let vm = null;
 export default {
   data() {
     return {
@@ -33,7 +35,7 @@ export default {
           delay: 4000,
           stopOnLastSlide: false,
           disableOnInteraction: false,
-      },
+        },
         normalizeSlideIndex: false,
         spaceBetween: 6,
         slidesOffsetBefore: document.body.clientWidth/1.1*0.045,
@@ -41,7 +43,14 @@ export default {
         pagination: {
           el: ".swiper-pagination",
           clickable: true
-        }
+        },
+        on: {
+          click: function () {
+            const realIndex = this.realIndex;
+            vm.goDetail(realIndex);
+          }
+        },
+        preventLinksPropagation: false   // 阻止点击事件冒泡
       }
     };
   },
@@ -50,12 +59,46 @@ export default {
     swiperSlide
   },
 	methods: {
-    goDetail(event, obj, flag) {
-      this.$emit("goDetail", event, obj, flag);
+    goDetail(obj) {
+      let url = this.slider2[obj].marketingEventCotent;
+      let objs = this.slider2[obj];
+      console.log(this.slider2[obj].marketingTitle);
+      if (
+        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+        "android"
+      ) {
+        let url2 =
+          url.indexOf("?") > 0
+            ? url.replace(
+                /\?/,
+                "?SOURCE=DISCOVER&account=" +
+                  this.token.productNo +
+                  "&"
+              )
+            : url +
+              "?SOURCE=DISCOVER&account=" +
+              this.token.productNo;
+        window.goActivity.goWeb(url2);
+      } else {
+          let url_2 =
+              url.indexOf("?") > 0
+                ? url.replace(
+                    /\?/,
+                    "?SOURCE=DISCOVER&account=" +
+                      this.token.productNo +
+                      "&"
+                  )
+                : url +
+                  "?SOURCE=DISCOVER&account=" +
+                  this.token.productNo;
+            // console.log(url_2);
+            window.location = "activity://goWeb?url=" + url_2;
+      };
+      // this.$emit("goDetail", event, obj, flag);
       // 神策
       sa.track("bannerClick", {
-        contentName: obj.marketingTitle,
-        bannerNumber: String(obj.marketingNumber),
+        contentName: objs.marketingTitle,
+        bannerNumber: String(objs.marketingNumber),
         topCategory: "优惠",
       });
     }
@@ -63,7 +106,14 @@ export default {
 	computed: {
     ...mapState([
       "slider2",
-    ])
+      "token"
+    ]),
+    swiper() {
+      return this.$refs.mySwiper.swiper;
+    }
+  },
+  created() {
+    vm = this;
   },
   mounted() {
     // setTimeout(()=>{

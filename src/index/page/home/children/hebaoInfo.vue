@@ -10,46 +10,61 @@
       </ul>
       <div class="hr-1"></div>
     </header>
-    <section class="s_4">
-      <div class="title">
-        <p>{{data.gmeNm}}</p>
-        <div class="hr-2"></div>
-      </div>
-      <div class="content">
-        <div class="content-info">
-          <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
-          <div class="list-info">参与时间：{{data.attEffTm}}到{{data.attExpTm}}</div>
-          <!-- <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
-          <div class="list-info">参与用户范围：{{usrTyp}}</div> -->
-          <div class="list-info">
-            <span class="left">参与条件：</span>
-            <ul class="right">
-              <li>1. {{ruleFlgText}}</li>
-              <li>2. {{ruleFlgText2}}</li>
-              <li v-for="(item,index) in data.provRec">3. 活动省份：{{item.provNm}}</li>
-              <li>4. 参与用户范围：{{usrTyp}}</li>
-            </ul>
-          </div>
-          <div class="list-info">活动方式：{{ruleText}}</div>
-          <table class="deal-menu" v-for="(item,index) in data.gmeRec">
-            <tbody>
-              <tr>
-                  <th class="name">订单金额区间（元）</th>
-                  <th class="price">满减</th>
-                  <th class="amount">最高享受</th>
-              </tr>
-              <tr>
-                  <td class="price">{{item.ruleAmtMin}}-{{item.ruleAmtMax}}</td>
-                  <td class="amount"> {{mjrTypText}}</td>
-                  <td class="subtotal">{{item.drawAmtMax}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="list-info">活动规则：{{data.gmeRule}}</div>
-          <div class="list-info">注：活动具体规则请咨询10086及查看店内海报，参与方式详情咨询门店店员。</div>
+
+    <div class="home">
+      <scroll
+        >
+      <section class="s_4">
+        
+        <div class="title">
+          <p>{{data.gmeNm}}
+            <span class="supTitle" v-show="isShowT">（活动日：逢6/周六）</span>
+          </p>
+          <div class="hr-2"></div>
         </div>
-      </div>
-    </section>
+        <div class="content">
+          <div class="content-info">
+            <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
+            <div class="list-info">参与时间：{{data.attEffTm}}到{{data.attExpTm}}</div>
+            <!-- <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
+            <div class="list-info">参与用户范围：{{usrTyp}}</div> -->
+            <div class="list-info">
+              <span class="left">参与条件：</span>
+              <ul class="right">
+                <li>1. {{ruleFlgText}}</li>
+                <li>2. {{ruleFlgText2}}</li>
+                <li v-for="(item,index) in data.provRec">3. 活动省份：{{item.provNm}}
+                  <span v-show="isShowT">（仅限在归属地市参与）</span>
+                </li>
+                <li>4. 参与用户范围：{{usrTyp}}</li>
+              </ul>
+            </div>
+            <div class="list-info">活动方式：{{ruleText}}</div>
+            <table class="deal-menu" v-for="(item,index) in data.gmeRec">
+              <tbody>
+                <tr>
+                    <th class="name">订单金额区间（元）</th>
+                    <th class="price">满减</th>
+                    <th class="amount">最高享受</th>
+                </tr>
+                <tr>
+                    <td class="price">{{item.ruleAmtMin}}-{{item.ruleAmtMax}}</td>
+                    <td class="amount"> {{mjrTypText}}</td>
+                    <td class="subtotal">{{item.drawAmtMax}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="list-info">活动规则：{{data.gmeRule}}
+              <!-- <span v-show="isShowT">（满减活动是逢6和节假日（周六，6日、16日、26日，元旦3天、春节7天）上午7点-22点）。</span> -->
+            </div>
+            <div class="list-info">注：活动具体规则请咨询10086及查看店内海报，参与方式详情咨询门店店员。</div>
+              <div class="list-hr"></div>
+          </div>
+        </div>
+      </section>
+    
+      </scroll>
+     </div>
   </div>
 </template>
 
@@ -59,12 +74,14 @@ import {
 } from "@@/service/util";
 import { mapState, mapMutations } from "vuex";
 import axios from "@@/plugins/rsa/axios";
+import Scroll from "@@/components/scroll/scroll.vue";
 export default {
   data() {
     return {
-      data: {},
+      data: [],
       ruleText: "",
       usrTyp: "",
+      isShowT: false,
       ruleFlgText: "",
       ruleFlgText2: "",
       mjrTypText: ""
@@ -73,12 +90,16 @@ export default {
   props: {
 
   },
+  components: {
+    Scroll
+  },
   computed: {
     ...mapState(["token"])
   },
 
   mounted() {
     this.init();
+    // this.scroll = new Bscroll(this.$refs.wrapper);
     // 隐藏进度条
     // document.getElementById("pg").style.display="none";
   },
@@ -96,7 +117,31 @@ export default {
             this.usrFlg = res.data.usrFlg2;
             this.usrFlg2 = res.data.usrFlg4;
             this.mjrTyp = res.data.mjrTyp;
+            this.gmeId = res.data.gmeId;
             // console.log(this.data);
+            if(this.gmeId == "18122802") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122810") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122805") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122803") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122720") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122719") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122715") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122417") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122717") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122714") {
+              this.isShowT = true;
+            } else if (this.gmeId == "18122718") {
+              this.isShowT = true;
+            };
             if(this.rule == "1") {
               this.ruleText = "满减"
             } else if(this.rule == "0") {
@@ -146,6 +191,33 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@@/style/mixin";
+.home {
+  // transition: all 0.3s;
+  // -webkit-transition: all 0.3s;
+  // transform: translateZ(0);
+  // -webkit-transform: translateZ(0);
+  position: absolute;
+  z-index: 1;
+  top: 3rem;
+  left: 0;
+  width: 100%;
+  // position: relative;
+  height: 100%;
+  padding-bottom: 2rem;
+  // background: #f0f1f2;
+  overflow: hidden;
+}
+.home1 {
+  // margin-top: 4.25rem;
+  height: 100%;
+  overflow: hidden;
+  // z-index: 19;
+}
+
+</style>
+
+<style lang="scss" scoped>
+@import "~@@/style/mixin";
 
 .s_1 {
   @include wh(100%, 3rem);
@@ -179,6 +251,7 @@ export default {
 }
 .s_2,.s_3,.s_4 {
   padding: 0 0.9375rem;
+  width: 100%;
   background: #fff;
 }
 ul {
@@ -304,6 +377,9 @@ ul {
   color: #13252e;
   line-height: 2.5rem;
 }
+.supTitle {
+  font-size: .7rem;
+}
 table{
     font-size: 0.8125rem;
     color: #888;
@@ -341,6 +417,9 @@ th, td{
   // &::after {
   //   @include onepx1(#d8d8d8);
   // }
+}
+.list-hr {
+  height: 2rem;
 }
 .hr-1:nth-last-child(-1) {
   height: 0;
