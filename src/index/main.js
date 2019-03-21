@@ -140,6 +140,12 @@ router.beforeEach((to, from, next) => {
         endTime: formatDate_1(endTime.getTime()),
         startTime: formatDate_1(startTime.getTime())
       });
+      sa.track("pageLoadingStart", {
+        $title: "优惠",
+        $url: window.location.href,
+        $url_path: window.location.href,
+        currentBusinessLine: "优惠频道"
+      });
       store.commit("TOKEN", res.data || {});
       if (!res.data || res.data.length <= 0) {
       } else {

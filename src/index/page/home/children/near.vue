@@ -6,6 +6,8 @@
             <!-- <div class="t-3">附近优惠</div> -->
           </div>
           <div class="t-4" @click="goMorePer()">更多优惠</div>
+          <!-- <router-link class="t-4" to='/home1' target='_blank'>更多优惠</router-link> -->
+          
           <!-- <div class="hr-1"></div> -->
         </div>
         <ul v-for="(item,index) in shopList"  @click="goSeller(item)" :key="item.id">
@@ -148,6 +150,13 @@ export default {
         this.token.session.replace(/\+/g, "%2B")
       );
       this.$router.push("/home1");
+      // let routeData = this.$router.resolve({
+      //   path: '/home1',
+      // });
+      // alert(JSON.stringify(routeData.href));
+      // window.open(routeData.href, '_blank');
+      // let urls = window.location.href;
+      // window.location = "activity://goWeb?url=" + urls + routeData.href;
     }
   }
 };

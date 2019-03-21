@@ -618,7 +618,15 @@ export const getLItem = (key, exp) => {
     return false;
   }
 };
-
+// 判断请求shopDetail接口时跳转外放拼接使用
+export const isShopDetail = () => {
+  var u = window.location.href;
+  if (u.match(/merc_id/i)) {
+      return true;
+  } else {
+      return false;
+  }
+};
 /**
  * 获取和包客户端的LBS
  */

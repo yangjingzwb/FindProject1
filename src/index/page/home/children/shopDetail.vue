@@ -196,7 +196,7 @@ export default {
       let params = this.shopParm;
       // console.log(参数接收,params);
       axios.post("getShopInfoDetail", params).then(res => {
-          if (res.code === "0") {
+          if (res.data) {
             this.shopData = res.data;
             // console.log("shop",this.shopData);
             this.showTel = this.shopData.mercHl.length>2 ? true : false
@@ -243,7 +243,7 @@ export default {
         longitude: this.longitude,
         mbl_no: this.token.productNo,
         merc_id: obj.mercId,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE
       };

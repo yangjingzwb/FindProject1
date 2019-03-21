@@ -625,6 +625,12 @@ export default {
             endTime: formatDate_1(endTime.getTime()),
             startTime: formatDate_1(startTime.getTime())
           });
+          sa.track("pageLoadingCompleted", {
+            $title: "优惠",
+            $url: window.location.href,
+            $url_path: window.location.href,
+            currentBusinessLine: "优惠频道"
+          });
 
           if (res.data && res.data.length > 0) {
             this.isError = true;

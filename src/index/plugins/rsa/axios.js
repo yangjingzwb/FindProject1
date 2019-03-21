@@ -5,7 +5,7 @@
 import axios from 'axios'
 // import util from '@@/plugins/rsa/util'
 // import store from '@@/store/'
-import { objPlan, getFreeSign, SessionkeyVarify, setMd5 } from '@@/service/util'
+import { objPlan,isShopDetail, getFreeSign, SessionkeyVarify, setMd5 } from '@@/service/util'
 // import {geUUID} from '@@/service/util';
 import { baseUrl } from '@@/config/env' // baseUrl
 
@@ -37,7 +37,17 @@ axios.interceptors.request.use(config => {
             // 更换头部
             axios.defaults.headers.post['Content-Type'] = 'application/json;encoding=utf-8';
         } else {
-            config.url = urlObj.api + config.url + "?" + objPlan(config.data, 1)
+            if(config.url == "getShopInfoDetail") {
+                if(isShopDetail()) {
+                    config.url = urlObj.api + config.url + "?" + window.location.href.split('?')[1];
+                } else {
+                    config.url = urlObj.api + config.url + "?" + objPlan(config.data, 1)
+                }
+                // console.log(window.location.href.split('?')[1]);
+                // console.log(window.location.href.split('?')[1].split('&')[1]);
+            } else {
+                config.url = urlObj.api + config.url + "?" + objPlan(config.data, 1)
+            }
         }
     }
 
