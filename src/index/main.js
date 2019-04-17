@@ -170,6 +170,13 @@ router.beforeEach((to, from, next) => {
           topTitle += 1;
           store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
           recommends += 1;
+          // 神策
+          sa.track("pageLoadingCompleted", {
+            $title: "优惠",
+            $url: window.location.href,
+            $url_path: window.location.href,
+            currentBusinessLine: "优惠频道"
+          });
           // console.log("xiao",store.state.recommends)
           checkUtil(slider, slider1, slider2, next)
       }).catch((res) => {

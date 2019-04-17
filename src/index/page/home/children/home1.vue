@@ -740,13 +740,6 @@ export default {
         // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: this.slider1[0].mercTrdCls
         }).then(res => {
-          // 神策
-          sa.track("pageLoadingCompleted", {
-            $title: "优惠",
-            $url: window.location.href,
-            $url_path: window.location.href,
-            currentBusinessLine: "优惠频道"
-          });
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
