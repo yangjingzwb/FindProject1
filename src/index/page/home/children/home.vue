@@ -1,8 +1,8 @@
 <template>
   <div class="home">
+    <div v-show="isShareBtn" @click="getSharePage()" class="shareBtn"></div>
     <div :class="isShow">
       <span>优惠</span>
-      <!-- <span @click="getSharePage()" class="shareBtn"></span> -->
     </div>
     <!-- 弹窗 -->
     <div v-if="alertinfo && alertinfo.length>0" :class="isAlertInfo">
@@ -101,6 +101,7 @@ import {
   fetchPoints,
   // GetDistance,
   shareNow,
+  isHebaoApp,
   setLItem,
   getLItem,
   // getCode,
@@ -122,6 +123,7 @@ export default {
       isShow: "",
       isShow2: "",
       isAlertInfo: "alert_info",
+      isShareBtn: false,
       pullUpLoad: false,
       pullUpLoad_near: true,
       data1: false,
@@ -152,12 +154,14 @@ export default {
 
   mounted() {
     try {
+      // 获取优惠券
+      this.getMainCoupon();
       fetchPoints(
         "010000000000", // 页面索引
         "010000000000K13", //事件标记
         this.token.productNo,
         "进入优惠频道", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
+        // this.token.session.replace(/\+/g, "%2B")
       );
     } catch (e) {}
     // 获取运营banner
@@ -174,8 +178,6 @@ export default {
   created() {
     this.initShow(); //控制标题头
     // this.jdSKill(); // 请求广告位
-    // 获取优惠券
-    this.getMainCoupon();
     // this.getCoupon();
     //神策
     let startTime = new Date();
@@ -205,6 +207,7 @@ export default {
       "slider2",
       "slider",
       "tabs",
+      "tokenstatus",
       "alertinfo",
       "bannermarkets",
       "topTitle",
@@ -466,43 +469,20 @@ export default {
             contentName: "异形banner活动",
             bannerNumber: String(obj.marketingNumber),
             topCategory: "优惠",
-          });
-          fetchPoints(
-            "010000000000",
-            "010000000000K10",
-            this.token.productNo,
-            "异形banner活动",
-            this.token.session.replace(/\+/g, "%2B")
-          );
+          })
         } else if (channel == "top") {
           // 神策
           sa.track("bannerClick", {
             contentName: obj.marketingTitle,
             bannerNumber: String(obj.marketingNumber),
             topCategory: "优惠",
-          });
-          // banner图埋点
-          fetchPoints(
-            "010000000000",
-            "010000000000K08",
-            this.token.productNo,
-            "顶部banner" + "-" + obj.marketingTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
+          })
         } else if (channel == "alert_tip") {
           // 神策
           sa.track("bannerClick", {
             contentName: obj.popupTitle,
             topCategory: "优惠",
-          });
-          // banner图埋点
-          fetchPoints(
-            "010000000000",
-            "010000000000K08",
-            this.token.productNo,
-            "首页弹窗" + "-" + obj.popupTitle,
-            this.token.session.replace(/\+/g, "%2B")
-          );
+          })
         }
       } catch (e) {}
 
@@ -520,58 +500,84 @@ export default {
       url = flag == 8 ? obj.couponEventContent  : url;
       url = flag == 99 ? obj.couponDetailsContent : url;
       console.log(url);
-      if (
-        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
-        "android"
-      ) {
-        if (flag == 1 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
-          let url2 =
-            url.indexOf("?") > 0
-              ? url.replace(
+      if(isHebaoApp()) {
+        if(this.tokenstatus)  {
+          if (
+            (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+            "android"
+          ) {
+            if (flag == 1 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
+              let url2 =
+                url.indexOf("?") > 0
+                  ? url.replace(
+                      /\?/,
+                      "?SOURCE=DISCOVER&account=" +
+                        this.token.productNo +
+                        "&"
+                    )
+                  : url +
+                    "?SOURCE=DISCOVER&account=" +
+                    this.token.productNo;
+              window.goActivity.goWeb(url2);
+            } else {
+              window.goActivity.goWeb(
+                url.replace(
                   /\?/,
                   "?SOURCE=DISCOVER&account=" +
                     this.token.productNo +
                     "&"
                 )
-              : url +
-                "?SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          window.goActivity.goWeb(url2);
+              );
+            }
+          } else {
+            if (flag == 1 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
+              let url_2 =
+                url.indexOf("?") > 0
+                  ? url.replace(
+                      /\?/,
+                      "?SOURCE=DISCOVER&account=" +
+                        this.token.productNo +
+                        "&"
+                    )
+                  : url +
+                    "?SOURCE=DISCOVER&account=" +
+                    this.token.productNo;
+              // console.log(url_2);
+              window.location = "activity://goWeb?url=" + url_2;
+            } else {
+              window.location =
+                "activity://goWeb?url=" +
+                url.replace(
+                  /\?/,
+                  "?SOURCE=DISCOVER&account=" +
+                    this.token.productNo +
+                    "&"
+                );
+            }
+          }
         } else {
-          window.goActivity.goWeb(
-            url.replace(
-              /\?/,
-              "?SOURCE=DISCOVER&account=" +
-                this.token.productNo +
-                "&"
-            )
-          );
+          // 神策
+          sa.track("buttonClick", {
+            buttonName: "登录查看更多优惠",
+            topCategory: "外放优惠",
+            subCategory: "外放优惠：登录"
+          });
+          let urls = "https://find.cmpay.com:9102/rcServer/hbopenreceive?state=" + window.location.href;
+          // let urls = window.location.href;
+          // window.location = urls;
+          if (
+            (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+            "ios"
+          ) {
+            // window.location.href = 'touristLogin(urls)' 
+            // window.goActivity.touristLogin(urls);
+            touristLogin(urls)
+          } else {
+            window.goActivity.startLoginModule('javascript:loginSuccess(%b)', urls)
+          }
         }
       } else {
-        if (flag == 1 || flag == 2 || flag == 3 || flag == 4 || flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 11 || flag == 12 || flag == 13 || flag == 14 || flag == 99) {
-          let url_2 =
-            url.indexOf("?") > 0
-              ? url.replace(
-                  /\?/,
-                  "?SOURCE=DISCOVER&account=" +
-                    this.token.productNo +
-                    "&"
-                )
-              : url +
-                "?SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          // console.log(url_2);
-          window.location = "activity://goWeb?url=" + url_2;
-        } else {
-          window.location =
-            "activity://goWeb?url=" +
-            url.replace(
-              /\?/,
-              "?SOURCE=DISCOVER&account=" +
-                this.token.productNo +
-                "&"
-            );
-        }
+        window.location.href = "https://p.10086.cn/ptw/tohebao.xhtml?TAGPAG=248&MERCSIGN=OCGCfUUSCelCupTUkTKUibWkpz60nful";
       }
     },
     filterObj(obj) {
@@ -602,16 +608,19 @@ export default {
         this.SHOWLOADING(false);
       }, 2000);
       let startTime = new Date();
-      axios.post("getShopInfo", {
+      if(isHebaoApp()) {
+        this.isShareBtn = true;
+      };
+      axios.post("getExternalShopInfo", {
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
         stores_nm: "", // 门店名称
         merc_abbr: "", // 门店简称
-        mblno: this.token.productNo, //用户手机号
+        mblno: "", //用户手机号
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
         pagNum: this.PAGNUM || 2,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 1
         }).then(res => {
           //神策
@@ -624,6 +633,12 @@ export default {
             offsetTime: 0,
             endTime: formatDate_1(endTime.getTime()),
             startTime: formatDate_1(startTime.getTime())
+          });
+          sa.track("pageLoadingCompleted", {
+            $title: "优惠",
+            $url: window.location.href,
+            $url_path: window.location.href,
+            currentBusinessLine: "优惠频道"
           });
 
           if (res.data && res.data.length > 0) {
@@ -657,8 +672,6 @@ export default {
           } else {
           }
         });
-      // 请求banner2
-      // 请求品类
     },
     // 获取优惠券
     getMainCoupon() {
@@ -700,10 +713,10 @@ export default {
     },
     getSharePage(e) {
       let index_urls = {
-        shareUrl: "https://www.cmpay.com/info/wap/mkm18/autoTelFareAct/shared.html",
+        shareUrl: window.location.href,
         wap_produce_reqData: "/gmeweb/miguhw_merc.xhtml?viewCode=json"// 单点登录
       };
-      let shareTxt = "惊喜大礼，尽快查收吧";
+      let shareTxt = "优惠频道—省钱就用和包支付，刷和包、得流量、返红包，首绑卡满20减10";
       shareNow(index_urls.shareUrl, shareTxt);
     },
     alertCloseBtn() {
@@ -762,6 +775,16 @@ div.container::-webkit-scrollbar {
   width: 100%;
   height: 3.125rem;
 }
+.shareBtn {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url("/static/img/share_button.png") top no-repeat;
+  background-size: 100% 100%;
+  position: fixed;
+  top: 20rem;
+  right: 0.2rem;
+  z-index: 9999999;
+}
 .header {
   // height: 3rem;
   // width: 100%;
@@ -781,15 +804,6 @@ div.container::-webkit-scrollbar {
   // font-weight: 200;
   text-align: center;
   line-height: 3rem;
-  .shareBtn {
-    width: 1.125rem;
-    height: 1.125rem;
-    background: url("/static/img/share_icon.png") top no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    top: .95rem;
-    right: 1rem;
-  }
 }
 .headerHidden {
   display: none;
@@ -1353,7 +1367,7 @@ div.container::-webkit-scrollbar {
   text-align: center;
 }
 .null {
-   padding-bottom: 3.5rem;
+   padding-bottom: 4.5rem;
    height: 2rem;
  }
 .hr-1 {

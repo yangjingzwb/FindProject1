@@ -57,6 +57,7 @@
     window.LATITUDE = '';
     window.LONGITUDE = '';
     window.CITYNAME = '';
+    window.CITYNAME2 = '';
     window.LBSINFO = {
     }
     window.isUseBaiDuLoc = false;
@@ -104,11 +105,13 @@
             if (this.getStatus() == BMAP_STATUS_SUCCESS) { //判断状态
               console.log(r)
               new BMap.Geocoder().getLocation(r.point, function (rs) {
+                console.log(rs.addressComponents.district);
                 if (rs) {
                   var addComp = rs.addressComponents;
                   window.LATITUDE = rs.point.lat;
                   window.LONGITUDE = rs.point.lng;
                   window.CITYNAME = addComp.city;
+                  window.CITYNAME2 = addComp.district;
                 } else {
                   window.LATITUDE = r.point.lat;
                   window.LONGITUDE = r.point.lng;

@@ -26,7 +26,7 @@
                       <span class="l">{{item.BUS_ADDR}}</span>
                       <span class="r">{{item.distance}}km</span>
                   </div>
-                  <div class="c3" >
+                  <div v-show="isShowInfo" class="c3" >
                       <span  v-for="item1 in item.ACT_INF" class="b" >{{item1.GME_ABBR}}</span>
                   </div>
               </li>
@@ -42,7 +42,7 @@
             <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
             <li @click="aginEnter()" class="aa">
               <img src="/static/img/load fail_2.png"/>
-              <div class="loadText">请点击刷新</div>
+              <div class="loadText">抱歉，该区域附近暂无和包商户</div>
             </li>
           </ul>
     <!-- </scroll> -->
@@ -69,6 +69,7 @@ export default {
   data() {
     return {
       stopPropagation: false,
+      isShowInfo: false,
       totalInit: 0,
       defaultIcon: 'this.src="' + "/static/img/error.png" + '"',
       pullUpLoad: {
@@ -117,10 +118,16 @@ export default {
     // }
   },
   computed: {
-    ...mapState(["token", "showLoading","slider1"])
+    ...mapState(["token","tokenstatus","showLoading","slider1"])
   },
 
   mounted() {
+    if(this.tokenstatus == 11) {
+      this.isShowInfo = true;
+      // document.getElementById("btnLog").style.width= "100%";
+    } else {
+      this.isShowInfo = false;
+    };
     if (!window.LATITUDE) {
       // this.aginEnter();
     } else {
@@ -157,11 +164,11 @@ export default {
       let params = {
         latitude: window.LATITUDE,
         longitude: window.LONGITUDE,
-        mbl_no: this.token.productNo,
+        mbl_no: this.token.productNo || "15074834092",
         merc_id: obj.TX_JRN,
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         mercHl: obj.MERC_HOT_LIN
       };
       this.$store.commit("SHOPPARM", params);
@@ -183,13 +190,6 @@ export default {
         is_FromSearch:false,
         keyword:''
       });
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K07", //事件标记
-        this.token.productNo,
-        "立即消费按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
     },
     goDetail(event, obj, flag) {
       // 神策
@@ -205,13 +205,6 @@ export default {
         is_FromSearch: false,
         keyword: ""
       });
-      fetchPoints(
-        "020000000000", // 页面索引
-        "020000000000K07", //事件标记
-        this.token.productNo,
-        "附近商户-" + obj.STORES_NM, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
       this.$emit("goDetail", event, obj, flag);
     },
     filterObj(obj) {

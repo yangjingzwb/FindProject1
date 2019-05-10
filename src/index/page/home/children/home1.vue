@@ -1,19 +1,22 @@
 <template>
   <div>
+    <div v-show="isShareBtn" @click="getSharePage()" class="shareBtn"></div>
     <header>
       <ul>
-        <!-- <router-link tag="li" class="l t" to="/"></router-link> -->
-        <li class="l t" @click="goBack()"></li>
+        <router-link tag="li" class="l t" to="/"></router-link>
+        <!-- <li class="l t" @click="goBack()"></li> -->
         <li class="l">
-            <span>附近优惠</span>
+          <span>附近优惠</span>
         </li>
       </ul>
       <div class="hr-1"></div>
     </header>
     <section class="s_1">
       <ul>
-        <li class="l t">
-          {{cityName1}}
+        <li class="l t" @click="getClickCity()">
+          <span v-show="showCity">{{cityName1.split("市")[0]}}</span>
+          <span v-show="showCitys">{{county}}</span>
+          <!-- {{cityName2}} -->
         </li>
         <li class="l i" @click="done()">
           <button><span class="icon"><img src="/static/img/1-20.png"></span>搜一搜：请输入商户名称</button>
@@ -83,7 +86,20 @@
           </section>
         </div>
       </scroll>
-     </div>
+      </div>
+      <div v-show="isStatus" class="foot_login fx" id="foot_login fx">
+        <ul>
+          <li class="login_l">
+            <img src="/static/img/login_logo.png">
+          </li>
+          <li class="login_m">
+            登录查看更多优惠
+          </li>
+          <li class="login_r">
+            <span @click="goLogin()">立即登录</span>
+          </li>
+        </ul>
+      </div>
   </div>
 </template>
 
@@ -99,7 +115,10 @@ import sa from "sa-sdk-javascript";
 import {
   fetchPoints,
   // GetDistance,
+  isHebaoApp,
+  shareNow,
   setLItem,
+  animationProgress,
   getLItem,
   formatDate_1
 } from "@@/service/util";
@@ -110,7 +129,8 @@ import Near1 from "./near1.vue";
 // import Recommended from "./recommended.vue";
 // import Consulting from "./consulting.vue"; // 咨询
 // import GoodThing from "./goodThing.vue"; // 好物
-
+import Cookies from 'js-cookie'
+import Bus from './gongtong.js'
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
 
@@ -120,9 +140,14 @@ export default {
       pullUpLoad: false,
       pullUpLoad_near: true,
       data1: false,
+      isShareBtn: false,
+      isStatus: false,
+      showCity: true,
+      showCitys: false,
       titleParm: "",
       selectIndex: 0,
       loadText: "",
+      county: "",
       banner: "/static/mine_banner.png",
       icon: require("@@/images/mine/help_other-pressed.png"),
       product: [],
@@ -174,6 +199,7 @@ export default {
       startY: 0,
       threshold: 0.2,
       cityName1: window.CITYNAME || "定位中",
+      cityName2: window.CITYNAME2,
       pullDownRefresh: {
         threshold: 120,
         stop: 60
@@ -183,8 +209,53 @@ export default {
   computed: {},
 
   mounted() {
+    Cookies.remove("item")
+    Cookies.remove("l1")
+    var vm = this
+    // 用$on事件来接收参数
+    Bus.$on('val', (data) => {
+      vm.cityName1 = data
+    })
+    Cookies.set("href",window.location.href)
+    this.l=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_longitude:window.LONGITUDE
+    this.s=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_latitude:window.LATITUDE
+    this.cityName1 =((document.cookie.indexOf("item")!=-1)?Cookies.get("item").city_name:"")||window.CITYNAME || "定位中";
+    // axios.post("getShopInfo", {
+    //   centre_longitude: this.l,
+    //   centre_latitude: this.s,
+    //   longitude: window.LONGITUDE, // 经度
+    //   latitude: window.LATITUDE, // 维度
+    //   stores_nm: "", // 门店名称
+    //   merc_abbr: "", // 商户简称
+    //   mblno: this.token.productNo, //用户手机号
+    //   // tixn_cnl: "ROYTEL", // 固定值
+    //   currentPage: this.CURRENTPAGE,
+    //   pagNum: this.PAGNUM || 4,
+    //   // session: this.token.session.replace(/\+/g, "%2B"),
+    //   map_type: window.isUseBaiDuLoc ? 0 : 0,
+    //   // map_type: window.isUseBaiDuLoc,
+    //   merc_trd_cls: this.numIndex
+    //   }).then(res => {
+    //     // this.shopList = res.STORES_REC;
+    //     // 合并数组
+    //     this.shopList.push.apply(this.shopList, this.filterObj(res.data));
+    //     if (res.data.length < this.PAGNUM) {
+    //       this.shopListFlag = true;
+    //       this.data1 = true;
+    //       // 数组没有更多了
+    //     } else {
+    //       this.shopListFlag = false;
+    //       this.data1 = false;
+    //     }
+    //     this.initScroll();
+    //   })
+    //   .catch(res => {
+    //     this.initScroll();
+    //   });
+      
     this.getListTitle();
     try {
+      console.log("okokok",this.countyParm);
       fetchPoints(
         "home1",
         "event_3",
@@ -234,6 +305,8 @@ export default {
       "products",
       "showLoading",
       "token",
+      "countyParm",
+      "tokenstatus",
       "latitude",
       "longitude",
       "cityname",
@@ -249,6 +322,8 @@ export default {
       "PRODUCTS",
       "SHOWLOADING",
       "CITYNAME1",
+      "CITYNAME2",
+      // "CITYCOUNTY",
       "OPENANDCLOSE"
     ]),
     scrollListen(pos) {
@@ -283,6 +358,32 @@ export default {
     },
     goToPage(index) {
       this.sliderIndex = index;
+    },
+    getSharePage(e) {
+      let index_urls = {
+        shareUrl: window.location.href,
+        wap_produce_reqData: "/gmeweb/miguhw_merc.xhtml?viewCode=json"// 单点登录
+      };
+      let shareTxt = "附近优惠——刷和包享立减，附近商户 首绑卡消费满20减10";
+      shareNow(index_urls.shareUrl, shareTxt);
+    },
+    getClickCity(){
+      // 神策
+      sa.track("buttonClick", {
+        buttonName: "进入城市页",
+        topCategory: "外放优惠",
+        subCategory: "外放优惠：城市页"
+      });
+      Cookies.set("city2",window.CITYNAME)
+      Cookies.set("city1",window.LONGITUDE)
+      Cookies.set("city",window.LATITUDE)
+      this.$router.push({
+        path: "/city",
+        query: {
+            params: this.cityName1,
+            params2: this.cityName2
+          }
+      });
     },
     aginEnter() {
       // alert(33)
@@ -339,6 +440,17 @@ export default {
     gotoAddress(path) {
       this.$router.push(path);
     },
+    goLogin(e) {
+      // 神策
+      sa.track("buttonClick", {
+        buttonName: "登录查看更多优惠",
+        topCategory: "外放优惠",
+        subCategory: "外放优惠：登录"
+      });
+      let urls = "https://find.cmpay.com:9102/rcServer/hbopenreceive?state=" + window.location.href;
+      console.log(urls);
+      window.location = urls;
+    },
     done() {
       // 跳转到下一个页面
       this.$router.push("/mine");
@@ -376,18 +488,24 @@ export default {
       this.selectIndex = index;
       this.CURRENTPAGE = 1;
       let mercParm = obj.mercTrdCls;
+      Cookies.set("l1",mercParm);
       this.titleParm = obj.marketingTitle;
       // console.log(obj.marketingTitle, mercParm);
-      axios.post("getShopInfo", {
+      this.l=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).longitude:window.LONGITUDE
+      this.s=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).latitude:window.LATITUDE
+      this.cityName1 =((document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).cityName:"")||window.CITYNAME || "定位中";
+      axios.post("getExternalShopInfo", {
+        centre_longitude: this.l,
+        centre_latitude: this.s,
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
         stores_nm: "", // 门店名称
         merc_abbr: "", // 门店简称
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
-        mblno: this.token.productNo, //用户手机号
+        mblno: "", //用户手机号
         pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 0,
         // map_type: window.isUseBaiDuLoc,
         merc_trd_cls: mercParm
@@ -511,75 +629,79 @@ export default {
       //   return;
       // }
       // alert(33)
-      if (
-        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
-        "android"
-      ) {
-        // window.location =
-        //   url.indexOf("?") > 0
-        //     ? url.replace(/\?/, "?showtitle=false&") +
-        //       "&SOURCE=DISCOVER&" +
-        //       window.location.href.split("?")[1].split("#")[0]
-        //     : url +
-        //       "?showtitle=false&SOURCE=DISCOVE&" +
-        //       window.location.href.split("?")[1].split("#")[0];
-        // window.location = url.replace(/\?/, "?showtitle=false&");
-        if (flag == 2) {
-          let url2 =
-            url.indexOf("?") > 0
-              ? url.replace(
-                  /\?/,
+      if(isHebaoApp()) {
+        if (
+          (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+          "android"
+        ) {
+          // window.location =
+          //   url.indexOf("?") > 0
+          //     ? url.replace(/\?/, "?showtitle=false&") +
+          //       "&SOURCE=DISCOVER&" +
+          //       window.location.href.split("?")[1].split("#")[0]
+          //     : url +
+          //       "?showtitle=false&SOURCE=DISCOVE&" +
+          //       window.location.href.split("?")[1].split("#")[0];
+          // window.location = url.replace(/\?/, "?showtitle=false&");
+          if (flag == 2) {
+            let url2 =
+              url.indexOf("?") > 0
+                ? url.replace(
+                    /\?/,
+                    "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                      this.token.productNo +
+                      "&"
+                  )
+                : url +
                   "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                    this.token.productNo +
-                    "&"
-                )
-              : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          // console.log(url2);
-          window.goActivity.goWeb(url2);
-        } else {
-          window.goActivity.goWeb(
-            url.replace(
-              /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo +
-                "&"
-            )
-          );
-        }
-      } else {
-        // console.log(
-        //   "activity://goWeb?url=" + url.replace(/\?/, "?showtitle=false&")
-        // );
-        if (flag == 2) {
-          let url_2 =
-            url.indexOf("?") > 0
-              ? url.replace(
-                  /\?/,
-                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                    this.token.productNo +
-                    "&"
-                )
-              : url +
-                "?hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo;
-          // console.log(url_2);
-          window.location = "activity://goWeb?url=" + url_2;
+                  this.token.productNo;
+            // console.log(url2);
+            window.goActivity.goWeb(url2);
+          } else {
+            window.goActivity.goWeb(
+              url.replace(
+                /\?/,
+                "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+                  this.token.productNo +
+                  "&"
+              )
+            );
+          }
         } else {
           // console.log(
-          //   url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&")
+          //   "activity://goWeb?url=" + url.replace(/\?/, "?showtitle=false&")
           // );
-          window.location =
-            "activity://goWeb?url=" +
-            url.replace(
-              /\?/,
-              "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
-                this.token.productNo +
-                "&"
-            );
+          if (flag == 2) {
+            let url_2 =
+              url.indexOf("?") > 0
+                ? url.replace(
+                    /\?/,
+                    "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                      this.token.productNo +
+                      "&"
+                  )
+                : url +
+                  "?hebaosso=true&SOURCE=DISCOVER&account=" +
+                  this.token.productNo;
+            // console.log(url_2);
+            window.location = "activity://goWeb?url=" + url_2;
+          } else {
+            // console.log(
+            //   url.replace(/\?/, "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&")
+            // );
+            window.location =
+              "activity://goWeb?url=" +
+              url.replace(
+                /\?/,
+                "?showtitle=false&hebaosso=true&SOURCE=DISCOVER&account=" +
+                  this.token.productNo +
+                  "&"
+              );
+          }
         }
-      }
+      } else {
+          window.location.href="" + obj.marketingEventCotent
+      }  
     },
     filterObj(obj) {
       for (let i = 0; i < obj.length; i++) {
@@ -592,27 +714,39 @@ export default {
     getListTitle() {
       let parms = this.slider1[0].marketingTitle;
       this.titleParm = parms;   // 分类列表默认标题
+      if(isHebaoApp()) {
+        this.isShareBtn = true;
+      }
+      if(this.tokenstatus == 11) {
+        this.isStatus = false;
+      }
     },
     loadMore() {
       if (this.shopListFlag) {
         return;
       }
-      let numIndex = this.slider1[this.selectIndex].mercTrdCls;
+      this.numIndex = this.slider1[this.selectIndex].mercTrdCls;
+      Cookies.set("l1",this.numIndex);
       // console.log(numIndex);
       this.CURRENTPAGE += 1;
-      axios.post("getShopInfo", {
+      this.l=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_longitude:window.LONGITUDE
+      this.s=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_latitude:window.LATITUDE
+      this.cityName1 =((document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_name:"")||window.CITYNAME || "定位中";
+      axios.post("getExternalShopInfo", {
+        centre_longitude:this.l,
+        centre_latitude:this.s,
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
         stores_nm: "", // 门店名称
         merc_abbr: "", // 商户简称
-        mblno: this.token.productNo, //用户手机号
+        mblno: "", //用户手机号
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
         pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 0,
         // map_type: window.isUseBaiDuLoc,
-        merc_trd_cls: numIndex
+        merc_trd_cls: this.numIndex
         }).then(res => {
           // this.shopList = res.STORES_REC;
           // 合并数组
@@ -689,6 +823,17 @@ export default {
       // }
     },
     init(flag) {
+      let params_ = this.$route.query.params;
+      let params2_ = this.$route.query.params2;
+      if(params_ !== undefined) {
+        this.county = params_;
+        this.showCity = false;
+        this.showCitys = true;
+      }
+      if(params2_ == 5) {
+        this.showCity = true;
+        this.showCitys = false;
+      }
       // this.CURRENTPAGE = 1;
       // this.SHOWLOADING(true);
       // if (history.length >= 3 && localStorage && getLItem("shopList", 60000)) {
@@ -712,34 +857,45 @@ export default {
       } else {
         this.SHOWLOADING(false);
       }
-
       // 单点登录
       // 请求banner1
-      this.cityName1 = window.CITYNAME || "定位中";
+      this.cityName1 = ((document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).cityName:"")||window.CITYNAME || "定位中";
       // this.cityName1 =
       //   window.CITYNAME ||
       //   (/iP(ad|hone|od)/.test(navigator.userAgent)
       //     ? window.LBSINFO.CityName || "定位中"
       //     : getCode(window.LBSINFO.CityName));
 
-      if (!window.LONGITUDE) {
-        this.SHOWLOADING(false);
-        return;
-      }
-      axios.post("getShopInfo", {
+      // if (!window.LONGITUDE) {
+      //   this.SHOWLOADING(false);
+      //   return;
+      // }
+      this.l=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_longitude:window.LONGITUDE
+      this.s=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_latitude:window.LATITUDE
+      this.cityName1 =((document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_name:"")||window.CITYNAME || "定位中";
+      axios.post("getExternalShopInfo", {
+        centre_longitude: this.l || window.LONGITUDE,
+        centre_latitude:  this.s || window.LATITUDE,
         longitude: window.LONGITUDE, // 经度
         latitude: window.LATITUDE, // 维度
         stores_nm: "", // 门店名称
         merc_abbr: "", // 门店简称
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
-        mblno: this.token.productNo, //用户手机号
+        mblno: "", //用户手机号
         pagNum: this.PAGNUM || 4,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 0,
         // map_type: window.isUseBaiDuLoc,
-        merc_trd_cls: this.slider1[0].mercTrdCls
+        merc_trd_cls: (document.cookie.indexOf("l1")!=-1)?Cookies.get("l1"):this.slider1[0].mercTrdCls
         }).then(res => {
+          // 神策
+          sa.track("pageLoadingCompleted", {
+            $title: "优惠",
+            $url: window.location.href,
+            $url_path: window.location.href,
+            currentBusinessLine: "优惠频道"
+          });
           if (res.data && res.data.length > 0) {
             this.isError = true;
             this.shopList = this.filterObj(res.data);
@@ -802,8 +958,6 @@ export default {
 
           // },300)
         });
-      // 请求banner2
-      // 请求品类
     },
     initScroll() {
       // if (!this.home) {
@@ -865,7 +1019,8 @@ export default {
     goToApply() {},
     closeAlert() {},
     goBack() {
-      this.$router.go(-1);
+      // this.$router.go(-1);
+      window.history.go(-1)
     }
   },
   activated(){
@@ -875,11 +1030,17 @@ export default {
   },
   watch:{
     latitude(curVal,oldVal){
+      this.init()
       if(curVal&&curVal!="" && this.shopList.length<=0){
-        this.init()
       }
       
-    }
+    },
+    cityName1(curVal,oldVal){
+      this.flagS=false
+      this.init()
+      if(curVal&&curVal!="" && this.shopList.length<=0){
+        
+      } }
   }
   // props:['activeIcon']
 };
@@ -930,6 +1091,16 @@ export default {
   height: 100%;
   overflow: hidden;
   // z-index: 19;
+}
+.shareBtn {
+    width: 1.05rem;
+    height: 1.05rem;
+    background: url(/static/img/share_icon.png) top no-repeat;
+    background-size: 100% 100%;
+    position: fixed;
+    top: 1rem;
+    right: 1.2rem;
+    z-index: 9999999999;
 }
 .content {
   // height: auto;
@@ -1045,16 +1216,16 @@ header {
     line-height: 3rem;
   }
   .t {
+    max-width: 7rem;
     color: #6c6c6c;
-    font-size: 0.9375rem;
-    width: 4.0625rem;
+    font-size: 0.8125rem;
     position: relative;
     float: left;
     text-align: left;
     padding-left: 0.9375rem;
-    background-repeat: no-repeat;
-    background-position: 0.375rem 50%;
-    background-size: 1.1rem;
+    padding-right: 1rem;
+    background: url(/static/img/down.png) no-repeat 100% 50%;
+    background-size: .8125rem;
     // padding-right: 0.6rem;
     @include space();
   }
@@ -1478,5 +1649,50 @@ header {
   /* 如果不用 background-color, 使用 border-top:.0625rem solid #f00; 效果是一样的*/
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
+}
+.foot_login {
+  width: 100%;
+  height: 3.1875rem;
+  bottom: 0;
+  left: 0;
+  z-index: 10005;
+  color: #fff;
+  background: rgba(0,0,0,0.60);
+  .login_l {
+    float: left;
+    padding: 0.5rem 0.625rem 0.5rem 0.9375rem;
+    // padding-left: ;
+
+    img {
+    width: 2.1875rem;
+    height: 2.1875rem;
+    }
+  }
+  .login_m {
+    float: left;
+    font-family: PingFangSC-Regular;
+    font-size: 0.875rem;
+    line-height: 3.1875rem;
+  }
+  .login_r {
+    float: right;
+    line-height: 3.1875rem;
+    span {
+      display: inline-block;
+      margin: 0.625rem 0.9375rem 0.625rem;
+      width: 6.25rem;
+      height: 2rem;
+      text-align: center;
+      font-size: 0.875rem;
+      font-family: PingFangSC-Regular;
+      line-height: 2rem;
+      background-image: linear-gradient(-90deg, #F1238F 0%, #E7175D 100%);
+      border-radius: 4px;
+    }
+  }
+}
+.fx {
+  display: block;
+  position: fixed;
 }
 </style>

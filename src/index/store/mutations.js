@@ -1,5 +1,6 @@
 import {
 	TOKEN,
+	TOKENSTATUS,
 	RECORD_ADDRESS,
 	FLAG,
 	SLIDER,
@@ -11,6 +12,7 @@ import {
 	TOPTITLE,
 	RECOMMENDS,
 	SHOPPARM,
+	COUNTYPARM,
 	PRODUCTS,
 	ERROR,
 	LATITUDE,
@@ -27,6 +29,7 @@ import {
 	SHOWLOADING,
 	SLIDERSCROLL,
 	CITYNAME1,
+	CITYNAME2,
 	SLIDEINDEX,
 	OPENANDCLOSE,
 	SETMIDDLE
@@ -48,6 +51,9 @@ export default {
 	},
 	[TOKEN](state,token){
 		state.token = token
+	},
+	[TOKENSTATUS](state,tokenstatus){
+		state.tokenstatus = tokenstatus
 	},
 	[FLAG](state,flag){
 		state.flag = 1
@@ -78,6 +84,9 @@ export default {
 	},
 	[SHOPPARM](state,data){
 		state.shopParm = data
+	},
+	[COUNTYPARM](state,data){
+		state.countyParm = data
 	},
 	[PRODUCTS](state,data){
 		state.products = data
@@ -130,6 +139,9 @@ export default {
 	},
 	[CITYNAME1](state, data){
 		state['cityName1'] = data
+	},
+	[CITYNAME2](state, data){
+		state['cityName2'] = data
 	},
 	[SLIDEINDEX](state, data){
 		state['slideIndex'] = data

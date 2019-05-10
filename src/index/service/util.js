@@ -136,6 +136,15 @@ export const shareNow = (shareUrl, shareTxt) =>  {
       window.MobileWalletShare.startShare('', shareUrl, shareTxt);
   }
 };
+// 判断是否在和包浏览器环境
+export const isHebaoApp = () => {
+  var u = navigator.userAgent;
+  if (u.match(/hebao/i)) {
+      return true;
+  } else {
+      return false;
+  }
+};
 /**
  * 异步加载JS
  * @param {*} url 

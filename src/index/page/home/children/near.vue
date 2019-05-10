@@ -121,14 +121,14 @@ export default {
         "010000000000K06", //事件标记
         this.token.productNo,
         "立即消费-" + obj.STORES_NM, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
+        // this.token.session.replace(/\+/g, "%2B")
       );
       let params = {
         latitude: this.latitude,
         longitude: this.longitude,
-        mbl_no: this.token.productNo,
+        // mbl_no: this.token.productNo,
         merc_id: obj.TX_JRN,
-        session: this.token.session.replace(/\+/g, "%2B"),
+        // session: this.token.session.replace(/\+/g, "%2B"),
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE
       };
@@ -147,7 +147,7 @@ export default {
         "010000000000K07", //事件标记
         this.token.productNo,
         "更多优惠按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
+        // this.token.session.replace(/\+/g, "%2B")
       );
       this.$router.push("/home1");
       // let routeData = this.$router.resolve({

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="this.tokenstatus == 11">
     <div class="nullHeight"></div>
     <div class="t-2">
         <div class="t-1">
@@ -106,7 +106,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["token"]),
+    ...mapState(["token", "tokenstatus"]),
     dataList() {
       if (this.showAll == false) {
         var dataList = [];

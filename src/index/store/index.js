@@ -11,6 +11,7 @@ const state = {
 	longitude: '', // 当前位置经度121.48789949
 	cityname:'上海',//CITYNAME
 	token:{}, // 老平台获取到的token
+	tokenstatus: '',
 	flag: 0, // 是否做过分流判断
 	slider:[], //首页轮播图
 	slider1:[], //我的轮播图
@@ -23,6 +24,7 @@ const state = {
 	shopParm:[], // 为你推荐banner
 	products:'', // 首页，贷款超市产品列表
 	error:0,
+	countyParm:'',
 	direction:'',
 	animation:{},
 	historyCount:0,
@@ -34,6 +36,7 @@ const state = {
 	showLoading:true,
 	sliderScroll:'',
 	cityName1:window.CITYNAME || "定位中",
+	cityName2:window.CITYNAME2,
 	slideIndex:0,
 	openAndClose:true,
 	middle:[],

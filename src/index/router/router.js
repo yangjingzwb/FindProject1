@@ -14,7 +14,7 @@ const mine = r => require.ensure([], () => r(require('../page/home/children/mine
 const shopList = r => require.ensure([], () => r(require('../page/home/children/shopList')), 'shopList')
 const shopDetail = r => require.ensure([], () => r(require('../page/home/children/shopDetail')), 'shopDetail')
 const hebaoInfo = r => require.ensure([], () => r(require('../page/home/children/hebaoInfo')), 'hebaoInfo')
-
+const city = r => require.ensure([], () => r(require('../page/home/children/city')), 'city')
 export default [{
     path: '/',
     component: App, //顶层路由，对应main.html
@@ -94,7 +94,14 @@ export default [{
                meta:{
                    keepAlive: false
                }
-           }
+           },
+           {
+                path: 'city', 
+                component: city,
+                meta:{
+                    keepAlive: false
+                }
+            }
        
         //常见问题模块
     ]

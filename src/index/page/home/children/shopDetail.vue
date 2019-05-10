@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="home">
     <div class="s_1">
       <ul>
@@ -23,7 +24,7 @@
                 <div class="seller-time">营业时间: {{shopData.businessHour}}</div>
               </li>
               <li class="right">
-                <button class="go-buy-btn" @click="payKHD()">去买单</button>
+                <button class="go-buy-btn" @click="payKHDs()">去买单</button>
               </li>
               <li class="hr-2"></li>
             </ul>
@@ -89,8 +90,8 @@
           </div>
         </section>
         <div class="nullHeight"></div>
-        <section class="s_4" v-show = "shopData.rec.length>=1">
-          <div class="title">
+        <section class="s_4" v-if = "this.tokenstatus == 11">
+          <div class="title" v-show = "shopData.rec.length>=1">
             <p>优惠活动</p>
             <div class="hr-2"></div>
           </div>
@@ -122,15 +123,29 @@
       </div>
     </scroll>
   </div>
+  <transition name="fade">
+  <div v-show="isPayWrapper" class="payWrapper" @click="payClose">
+    <div class="menuTop"></div>
+    <div class="menuWrapper" @click.stop>
+      <div class="top" @click="clickScan">扫一扫</div>
+      <div class="hr-3"></div>
+      <div class="middle" @click="payKHD">付款码</div>
+      <div class="nullHeight"></div>
+      <div class="bottom" @click="payClose">取消</div>
+    </div>
+  </div>
+  </transition>
+
+</div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import axios from "@@/plugins/rsa/axios";
 import {
-  fetchPoints,
+  isHebaoApp,
   animationProgress,
-  AppFlag,
+  AppFlag
 } from "@@/service/util";
 import { baseUrl } from "@@/config/env"; // baseUrl
 import Scroll from "@@/components/scroll/scroll.vue";
@@ -141,6 +156,7 @@ export default {
     return {
       shopData: {},
       couponList: [],
+      isPayWrapper: false,
       showTel: false,
       scrollbar:false,
       isDisable: false,
@@ -152,6 +168,7 @@ export default {
     ...mapState([
       "token",
       "shopParm",
+      "tokenstatus",
       "sliderScroll",
       "latitude",
       "longitude",
@@ -195,13 +212,49 @@ export default {
       // let params = this.$route.query.params;
       let params = this.shopParm;
       // console.log(参数接收,params);
-      axios.post("getShopInfoDetail", params).then(res => {
-          if (res.data) {
-            this.shopData = res.data;
-            // console.log("shop",this.shopData);
-            this.showTel = this.shopData.mercHl.length>2 ? true : false
-          }
+      if(isHebaoApp()) {
+        axios.post("getShopInfoDetail", params).then(res => {
+            if (res.data) {
+              this.shopData = res.data;
+              // console.log("shop",this.shopData);
+              this.showTel = this.shopData.mercHl.length>2 ? true : false
+            }
+        });
+      } else {
+          axios.post("getExternalShopInfoDetail", params).then(res => {
+            if (res.code === "0") {
+              this.shopData = res.data;
+              this.showTel = this.shopData.mercHl.length>2 ? true : false
+            }
+          });
+      }
+    },
+    payKHDs() {
+      // 神策
+      sa.track('buttonClick', {
+        topCategory: '优惠',
+        subCategory: '商家详情页'
       });
+      event.stopPropagation();
+      if(isHebaoApp()) {
+        this.isPayWrapper = true;
+      } else {
+        window.location.href = "https://p.10086.cn/ptw/tohebao.xhtml?TAGPAG=248&MERCSIGN=OCGCfUUSCelCupTUkTKUibWkpz60nful";
+      }
+    },
+    payClose() {
+      this.isPayWrapper = false;
+    },
+    clickScan() {
+      if (
+          (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+          "ios"
+        ) {
+          scanCodeByApp()
+        } else {
+          window.goActivity.ScannerByAppForJsBack()
+        }
+        this.isPayWrapper = false;
     },
     payKHD() {
       // 神策
@@ -216,6 +269,7 @@ export default {
       } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.goTopSpeed) === 'function') {
           window.goActivity.goTopSpeed();
       }
+      this.isPayWrapper = false;
     },
     jumpMap(){
       let sName = '', // 出发地名
@@ -241,13 +295,13 @@ export default {
         gmeId: obj.GME_ID,
         latitude: this.latitude,
         longitude: this.longitude,
-        mbl_no: this.token.productNo,
+        mbl_no: this.token.productNo || "15074834092",
         merc_id: obj.mercId,
         // session: this.token.session.replace(/\+/g, "%2B"),
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE
       };
-      // console.log("222222222",params);
+      // alert(JSON.stringify(obj));
       // console.log("222222222",obj);
       this.$router.push({
         path: "/hebaoInfo",
@@ -259,14 +313,7 @@ export default {
       sa.track('buttonClick', {
         topCategory: '优惠',
         subCategory: '商户优惠活动页'
-      });
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K07", //事件标记
-        this.token.productNo,
-        "和包满减活动", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      )
+      })
     },
     getCoupon() {
       axios.post('queryCoupon',{
@@ -288,13 +335,6 @@ export default {
       topCategory: '优惠',
       subCategory: '线下商户优惠券：立即领取'
       });
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K04", //事件标记
-        this.token.productNo,
-        "立即领取按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
       this.isDisable = true;
       // console.log(data);
       let param_ = {
@@ -344,13 +384,6 @@ export default {
       });
     },
     goDetail(event, obj, flag) {
-      fetchPoints(
-        "020000000000", // 页面索引
-        "020000000000K07", //事件标记
-        this.token.productNo,
-        "附近商户-" + obj.STORES_NM, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
       let url = flag == 1 ? obj.couponDetailsContent : url;
       url = flag == 2 ? obj.recUrl : url;
       console.log(url);
@@ -715,6 +748,48 @@ ul {
     }
   }
 }
+.payWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 999999999;
+  .menuWrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 3rem;
+    background-color: #fff;
+    color: #3478f6;
+    .top {
+      background: url(/static/img/sys.png) no-repeat 38% 50%;
+      background-size: 1rem;
+    }
+    .middle {
+      background: url(/static/img/ewm.png) no-repeat 37.5% 50%;
+      background-size: 1.4rem;
+    }
+    .bottom {
+      color: #ea4e3d;
+    }
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+  .menuWrapper {
+    transition: all 0.3s;
+  }
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  .menuWrapper {
+    transform: translate3d(0, 100%, 0)
+  }
+}
 .title {
   position: relative;
   height: 2.5rem;
@@ -758,6 +833,19 @@ ul {
   position: absolute;
   height: 0.0625rem;
   float: left;
+  width: 100%;
+  bottom: 0;
+  background-color: #e6e6e6;
+  -webkit-transform-origin: 0, 0;
+  -ms-transform-origin: 0, 0;
+  transform-origin: 0, 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.hr-3 {
+  position: relative;
+  height: 0.08rem;
   width: 100%;
   bottom: 0;
   background-color: #e6e6e6;

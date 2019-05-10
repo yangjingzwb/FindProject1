@@ -163,14 +163,7 @@ export default {
           topCategory: '优惠',
           subCategory: obj.tbConductConfig.marketingTitle,
           locationOfZone: '主图'
-        });
-        fetchPoints(
-          "010000000000", // 页面索引
-          "010000000000K01", //事件标记
-          this.token.productNo,
-          "专题营销位", // 事件名称
-          this.token.session.replace(/\+/g, "%2B")
-        );
+        })
       }
       if(flag==3){
          // 神策
@@ -179,14 +172,7 @@ export default {
           topCategory: '优惠',
           subCategory:  '专题位商品',
           locationOfZone: '附图'
-        });
-        fetchPoints(
-          "010000000000", // 页面索引
-          "010000000000K02", //事件标记
-          this.token.productNo,
-          "专题营销位-"+obj.name, // 事件名称
-          this.token.session.replace(/\+/g, "%2B")
-        );
+        })
       }
       // alert(JSON.stringify(obj))
       this.$emit("goDetail", event, obj, flag);

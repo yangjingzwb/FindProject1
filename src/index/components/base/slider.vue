@@ -63,37 +63,55 @@ export default {
       let url = this.slider2[obj].marketingEventCotent;
       let objs = this.slider2[obj];
       console.log(this.slider2[obj].marketingTitle);
-      if (
-        (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
-        "android"
-      ) {
-        let url2 =
-          url.indexOf("?") > 0
-            ? url.replace(
-                /\?/,
-                "?SOURCE=DISCOVER&account=" +
-                  this.token.productNo +
-                  "&"
-              )
-            : url +
-              "?SOURCE=DISCOVER&account=" +
-              this.token.productNo;
-        window.goActivity.goWeb(url2);
-      } else {
-          let url_2 =
-              url.indexOf("?") > 0
-                ? url.replace(
-                    /\?/,
-                    "?SOURCE=DISCOVER&account=" +
-                      this.token.productNo +
-                      "&"
-                  )
-                : url +
+      if(this.tokenstatus == 11) {
+        if (
+          (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+          "android"
+        ) {
+          let url2 =
+            url.indexOf("?") > 0
+              ? url.replace(
+                  /\?/,
                   "?SOURCE=DISCOVER&account=" +
-                  this.token.productNo;
-            // console.log(url_2);
-            window.location = "activity://goWeb?url=" + url_2;
-      };
+                    this.token.productNo +
+                    "&"
+                )
+              : url +
+                "?SOURCE=DISCOVER&account=" +
+                this.token.productNo;
+          window.goActivity.goWeb(url2);
+        } else {
+            let url_2 =
+                url.indexOf("?") > 0
+                  ? url.replace(
+                      /\?/,
+                      "?SOURCE=DISCOVER&account=" +
+                        this.token.productNo +
+                        "&"
+                    )
+                  : url +
+                    "?SOURCE=DISCOVER&account=" +
+                    this.token.productNo;
+              // console.log(url_2);
+              window.location = "activity://goWeb?url=" + url_2;
+        };
+      } else {
+        // 神策
+        sa.track("buttonClick", {
+          buttonName: "登录查看更多优惠",
+          topCategory: "外放优惠",
+          subCategory: "外放优惠：登录"
+        });
+        let urls = "https://find.cmpay.com:9102/rcServer/hbopenreceive?state=" + window.location.href;
+        if (
+          (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
+          "ios"
+        ) {
+          touristLogin(urls)
+        } else {
+          window.goActivity.startLoginModule('javascript:loginSuccess(%b)', urls)
+        }
+      }
       // this.$emit("goDetail", event, obj, flag);
       // 神策
       sa.track("bannerClick", {
@@ -106,6 +124,7 @@ export default {
 	computed: {
     ...mapState([
       "slider2",
+      "tokenstatus",
       "token"
     ]),
     swiper() {

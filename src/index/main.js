@@ -20,7 +20,7 @@ import "./config/rem";
 import FastClick from "fastclick";
 import axios from "@@/plugins/rsa/axios";
 import AlertTip from "@@/components/common/alertTip";
-import { checkUtil, animationProgress, formatDate_1,asyncLoaded } from "@@/service/util";
+import { checkUtil, isHebaoApp, animationProgress, formatDate_1,asyncLoaded } from "@@/service/util";
 // 神策
 import sa from "sa-sdk-javascript";
 import 'swiper/dist/css/swiper.css'
@@ -124,6 +124,8 @@ router.beforeEach((to, from, next) => {
   // store.commit('TOKEN', {"session":"TESTSSION","productNo":'13795442667'})
   // let userId = '';
   let startTime = new Date();
+  // if(isHebaoApp()) {
+  console.log("和包端");
   axios
     .post("queryAccount", {})
     .then(res => {
@@ -147,6 +149,7 @@ router.beforeEach((to, from, next) => {
         currentBusinessLine: "优惠频道"
       });
       store.commit("TOKEN", res.data || {});
+      store.commit("TOKENSTATUS", res.data.productNo.length);
       if (!res.data || res.data.length <= 0) {
       } else {
       }
@@ -170,13 +173,6 @@ router.beforeEach((to, from, next) => {
           topTitle += 1;
           store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
           recommends += 1;
-          // 神策
-          sa.track("pageLoadingCompleted", {
-            $title: "优惠",
-            $url: window.location.href,
-            $url_path: window.location.href,
-            currentBusinessLine: "优惠频道"
-          });
           // console.log("xiao",store.state.recommends)
           checkUtil(slider, slider1, slider2, next)
       }).catch((res) => {
@@ -184,8 +180,108 @@ router.beforeEach((to, from, next) => {
       })
     }).catch((res) => {
       // console.log("加载失败了")
-      window.location.reload()
+      console.log("No queryAccount");
+      axios.post("queryAccount", {})
+      .then(res => {
+        //神策
+        sa.login(res.data.usrNo);
+        console.log(res.data.usrNo);
+        console.log("sa.login登录成功");
+        let endTime = new Date();
+        sa.track("loadDelay", {
+          currentBusinessLine: "优惠频道",
+          currentActivity: "调用高阳queryAccount接口",
+          currentURL: window.location.href,
+          currentURL: window.location.href,
+          delayTime: endTime - startTime,
+          endTime: formatDate_1(endTime.getTime()),
+          startTime: formatDate_1(startTime.getTime())
+        });
+        store.commit("TOKEN", res.data || {});
+        store.commit("TOKENSTATUS", res.data.productNo.length);
+        console.log("xxxxxxxxxxxxx",store.state.token.productNo.length);
+        
+        }).catch((res) => {
+          // console.log("加载失败了")
+          // window.location.reload()
+        })
+          // 请求banner1
+        axios.get("index/getIndexAllData")
+        .then((res) => {
+            store.commit("SLIDER2", (res.data ? res.data.operations : []));
+            slider2 += 1;
+            store.commit("SLIDER", (res.data ? res.data.tops : []));
+            slider += 1;
+            store.commit("SLIDER1", (res.data ? res.data.catalogs : []));
+            slider1 += 1;
+            store.commit("TABS", (res.data ? res.data.tabs : []));
+            tabs += 1;
+            store.commit("ALERTINFO", (res.data ? res.data.popUps : []));
+            alertinfo += 1;
+            store.commit("BANNERMARKETS", (res.data ? res.data.bannermarkets : []));
+            bannermarkets += 1;
+            store.commit("TOPTITLE", (res.data ? res.data.topSysConfigValue : ""));
+            topTitle += 1;
+            store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
+            recommends += 1;
+            // console.log("xiao",store.state.alertinfo)
+            checkUtil(slider, slider1, slider2, next)
+        }).catch((res) => {
+            // window.location.reload()
+        })
+      
     })
+  // } else {
+  //     console.log("外放端");
+  //     axios.post("queryAccount", {})
+  //     .then(res => {
+  //       //神策
+  //       sa.login(res.data.usrNo);
+  //       console.log(res.data.usrNo);
+  //       console.log("sa.login登录成功");
+  //       let endTime = new Date();
+  //       sa.track("loadDelay", {
+  //         currentBusinessLine: "优惠频道",
+  //         currentActivity: "调用高阳queryAccount接口",
+  //         currentURL: window.location.href,
+  //         currentURL: window.location.href,
+  //         delayTime: endTime - startTime,
+  //         endTime: formatDate_1(endTime.getTime()),
+  //         startTime: formatDate_1(startTime.getTime())
+  //       });
+  //       store.commit("TOKEN", res.data || {});
+  //       store.commit("TOKENSTATUS", res.data.productNo.length);
+  //       console.log("xxxxxxxxxxxxx",store.state.token.productNo.length);
+        
+  //       }).catch((res) => {
+  //         // console.log("加载失败了")
+  //         // window.location.reload()
+  //       })
+  //         // 请求banner1
+  //       axios.get("index/getIndexAllData")
+  //       .then((res) => {
+  //           store.commit("SLIDER2", (res.data ? res.data.operations : []));
+  //           slider2 += 1;
+  //           store.commit("SLIDER", (res.data ? res.data.tops : []));
+  //           slider += 1;
+  //           store.commit("SLIDER1", (res.data ? res.data.catalogs : []));
+  //           slider1 += 1;
+  //           store.commit("TABS", (res.data ? res.data.tabs : []));
+  //           tabs += 1;
+  //           store.commit("ALERTINFO", (res.data ? res.data.popUps : []));
+  //           alertinfo += 1;
+  //           store.commit("BANNERMARKETS", (res.data ? res.data.bannermarkets : []));
+  //           bannermarkets += 1;
+  //           store.commit("TOPTITLE", (res.data ? res.data.topSysConfigValue : ""));
+  //           topTitle += 1;
+  //           store.commit("RECOMMENDS", (res.data ? res.data.recommends : []));
+  //           recommends += 1;
+  //           // console.log("xiao",store.state.alertinfo)
+  //           checkUtil(slider, slider1, slider2, next)
+  //       }).catch((res) => {
+  //           // window.location.reload()
+  //       })
+  //   }
 });
 //  // 百度地图成功回调用函数
 //  window.LBSBD_1=function(){

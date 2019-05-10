@@ -63,15 +63,7 @@ export default {
         topCategory: '优惠',
         subCategory: '为您推荐',
         locationOfZone: '商品'
-      });
-      // 埋点-为你推荐
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K05", //事件标记
-        this.token.productNo,
-        "为你推荐-"+obj.marketingTitle, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
+      })
       this.$emit("goDetail", event, obj, flag);
     }
   }

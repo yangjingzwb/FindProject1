@@ -76,6 +76,7 @@ import axios from "@@/plugins/rsa/axios";
 import BScroll from "better-scroll";
 import sa from'sa-sdk-javascript';
 import {fetchPoints } from "@@/service/util";
+import Cookies from 'js-cookie'
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
 
@@ -90,7 +91,7 @@ export default {
       // data1:true,
       shopListFlag: false,
       CURRENTPAGE: 1, // 页码
-      PAGNUM: 4, // 页数
+      PAGNUM: 6, // 页数
       isFirstIn: 1,
       isIphone: os,
       pullUpLoad: {
@@ -147,12 +148,12 @@ export default {
       let params = {
         latitude: window.LATITUDE,
         longitude: window.LONGITUDE,
-        mbl_no: this.token.productNo,
+        // mbl_no: this.token.productNo,
         merc_id: obj.TX_JRN,
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
-        session: this.token.session.replace(/\+/g, "%2B"),
-        mercHl: obj.MERC_HOT_LIN
+        // session: this.token.session.replace(/\+/g, "%2B"),
+        // mercHl: obj.MERC_HOT_LIN
       };
       this.$store.commit("SHOPPARM", params);
       // console.log("xiao",this.$store.state.shopParm)
@@ -168,13 +169,6 @@ export default {
         topCategory: "优惠",
         subCategory: "优惠：搜索页"
       });
-      fetchPoints(
-        "010000000000", // 页面索引
-        "010000000000K07", //事件标记
-        this.token.productNo,
-        "搜索商户列表点击", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
     },
     goDetail(event, obj, flag) {
       event.stopPropagation();
@@ -190,13 +184,6 @@ export default {
         is_FromSearch:true,
         keyword:this.searchT
       });
-      fetchPoints(
-        "030000000000", // 页面索引
-        "030000000000K04", //事件标记
-        this.token.productNo,
-        "搜索结果列表商户点击-" + obj.STORES_NM, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
 
       let url = !flag ? obj.marketingEventCotent : obj.MERC_URL;
       // if (flag) {
@@ -225,13 +212,6 @@ export default {
         operationType: '点击取消',
         currentPage: '附近商家',
       });
-      fetchPoints(
-        "030000000000", // 页面索引
-        "030000000000K05", //事件标记
-        this.token.productNo,
-        "搜索页面取消按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
       this.searchT = "";
       this.$router.go(-1);
     },
@@ -247,16 +227,16 @@ export default {
       }
       this.CURRENTPAGE += 1;
       axios
-        .post("getShopInfo", {
+        .post("getExternalShopInfo", {
           longitude: window.LONGITUDE, // 经度
           latitude: window.LATITUDE, // 维度
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, //  商户简称
-          mblno: this.token.productNo, //用户手机号
+          // mblno: this.token.productNo, //用户手机号
           // TTXN_CNL: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM,
-          session: this.token.session.replace(/\+/g, "%2B"),
+          // session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
@@ -286,13 +266,6 @@ export default {
       //   operationType: '删除所有',
       //   currentPage: '附近商家',
       // });
-      fetchPoints(
-        "030000000000", // 页面索引
-        "030000000000K03", //事件标记
-        this.token.productNo,
-        "搜索词清除按钮", // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
       this.searchT = "";
     },
     init() {
@@ -350,17 +323,22 @@ export default {
         );
       } catch (e) {}
       // 请求banner1
+      this.l=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_longitude:window.LONGITUDE
+      this.s=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_latitude:window.LATITUDE
+      this.cityName1 =((document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_name:"")||window.CITYNAME || "定位中";
       axios
-        .post("getShopInfo", {
+        .post("getExternalShopInfo", {
+          centre_longitude: this.l || "",
+          centre_latitude: this.s || "",
           longitude: window.LONGITUDE, // 经度
           latitude: window.LATITUDE, // 维度
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, // 商户名称
           currentPage: this.CURRENTPAGE, // 当前页数
-          mblno: this.token.productNo, //用户手机号
+          // mblno: this.token.productNo, //用户手机号
           pagNum: this.PAGNUM, // 没页条
           // TTXN_CNL: "ROYTEL", // 固定值
-          session: this.token.session.replace(/\+/g, "%2B"),
+          // session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
@@ -400,13 +378,6 @@ export default {
         return;
       }
       this.searchT = this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g, "");
-      fetchPoints(
-        "030000000000", // 页面索引
-        "030000000000K01", //事件标记
-        this.token.productNo,
-        "搜索栏-" + this.searchT, // 事件名称
-        this.token.session.replace(/\+/g, "%2B")
-      );
     }
   }
   // props:['activeIcon']
