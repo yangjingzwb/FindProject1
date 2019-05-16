@@ -90,12 +90,18 @@ export default {
       });
     },
     goCityClick (city) {
-      // alert(city.city_name);
-      sessionStorage.removeItem("county");
-      Bus.$emit('val', city.cityName)
+      sessionStorage.removeItem("county")
+      sessionStorage.removeItem("indexPrev")
+      Bus.$emit('val', city.city_name)
       Cookies.set("item",JSON.stringify(city))
-      console.log(city.city_name);
-      this.$router.push('/home1')
+      // console.log(city.city_name);
+      // this.$router.push('/home1')
+      this.$router.push({
+        path: "/home1",
+        query: {
+            params2: 5
+          }
+      })
     },
     ...mapMutations(['changeCity'])
   },

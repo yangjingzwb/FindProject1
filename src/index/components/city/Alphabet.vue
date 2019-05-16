@@ -4,14 +4,14 @@
       <li class="item" @click="handleLetterClick"
        :key="top"    
         :ref="top"
-        @touchstart="handleTouchStart"
+        @touchstart.prevent="handleTouchStart"
         @touchmove="handleTouchMove"
         @touchend="handleTouchEnd"
   >定位</li>
       <li class="item" @click="handleLetterClick"
        :key=" top1"
         :ref=" top1"
-        @touchstart="handleTouchStart"
+        @touchstart.prevent="handleTouchStart"
         @touchmove="handleTouchMove"
         @touchend="handleTouchEnd"
   >热门</li>
@@ -19,7 +19,7 @@
         v-for="item of letters"
         :key="item"
         :ref="item"
-        @touchstart="handleTouchStart"
+        @touchstart.prevent="handleTouchStart"
         @touchmove="handleTouchMove"
         @touchend="handleTouchEnd"
         @click="handleLetterClick"
@@ -72,15 +72,14 @@ export default {
     },
   
     handleTouchMove (e) {
-   
- if (this.touchStatus) {
+      if (this.touchStatus) {
         if (this.timeer) {
           clearTimeout(this.timeer)
         }
         this.timeer = setTimeout(() => {
           console.log(e.touches[0])
-          const touchY = e.touches[0].clientY - 40 // 手指触摸当前位置距离视口顶部的距离减去40（40指滚动区域最上边和页面顶部之间的距离）
-          const index = Math.floor((touchY - this.startY) / 26) // 手指触摸当前位置所在的字母索引（26指单个字母的高度）
+          const touchY = e.touches[0].clientY - 79 // 手指触摸当前位置距离视口顶部的距离减去40（40指滚动区域最上边和页面顶部之间的距离）
+          const index = Math.floor((touchY - this.startY) / 20) // 手指触摸当前位置所在的字母索引（26指单个字母的高度）
           if (index >= 0 && index < this.letters.length) {
             this.$emit('change', this.letters[index])
           }

@@ -20,11 +20,10 @@
       <div class="button-lists" v-show="isList">
             <div
               class="button-wrapper"
-              v-for="item in loca"
+              v-for="(item, index) in loca"
               :key="item.indexName"
-              @click="handleDisClick(item)"
             >
-              <div id="buttonBg" class="button">{{item.area_name}}</div>
+              <div :class="{btnColor:index==indexPrev}" @click="handleDisClick(item)" id="buttonBg" class="button">{{item.area_name}}</div>
             </div>
           </div>
           <div class="nullHeight"></div>
@@ -104,6 +103,7 @@ export default {
       county: sessionStorage.county || "全城",
       showList: false,
       cityArea: [],
+      indexPrev: sessionStorage.indexPrev || 0,
       isList: false,
       isAreaList: false
     }
@@ -148,6 +148,7 @@ export default {
       S.longitude=Cookies.get("city1")
       S.latitude=Cookies.get("city")
       sessionStorage.removeItem("county")
+      sessionStorage.removeItem("indexPrev")
       Bus.$emit('val', S.cityName)
       Cookies.set("item",JSON.stringify(S))
       // this.$router.push("/home1")
@@ -179,6 +180,7 @@ export default {
         subCategory: "外放优惠：城市页"
       });
       sessionStorage.removeItem("county");
+      sessionStorage.removeItem("indexPrev");
       // this.$store.commit('changeCity', city) // 将参数city传给vuex中的mutations中的changeCity函数
       Bus.$emit('val', city.city_name )
       Cookies.set("item",JSON.stringify(city))
@@ -208,6 +210,7 @@ export default {
         subCategory: "外放优惠：城市页"
       });
       sessionStorage.removeItem("county");
+      sessionStorage.removeItem("indexPrev");
       // this.$store.commit('changeCity', city) // 将参数city传给vuex中的mutations中的changeCity函数
       Bus.$emit('val', city.city_name )
       Cookies.set("item",JSON.stringify(city))
@@ -238,8 +241,11 @@ export default {
       });
       this.county = city.area_name;
       sessionStorage.county = city.area_name;
+      this.indexPrev = city.area_index;
+      sessionStorage.indexPrev = city.area_index;
       let params = city.area_name;
       this.$store.commit("COUNTYPARM", params);
+      // alert(city.area_name);
       // this.$store.commit('changeCity', city) // 将参数city传给vuex中的mutations中的changeCity函数
       Bus.$emit('val', city.area_name)
       Cookies.set("item",JSON.stringify(city))
@@ -345,6 +351,9 @@ export default {
 }
 .button-wrapper {
   float: left;
+}
+.btnColor {
+  background:#f0f0f0;
 }
 .button {
   /* margin: 4px;

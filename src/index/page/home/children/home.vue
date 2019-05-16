@@ -720,6 +720,12 @@ export default {
       shareNow(index_urls.shareUrl, shareTxt);
     },
     alertCloseBtn() {
+      // 神策
+      sa.track("buttonClick", {
+        buttonName: "关闭弹窗",
+        topCategory: "优惠",
+        subCategory: "优惠：首页"
+      });
       this.isAlertInfo = "alert_info_hide";
     },
     // initScroll() {},
@@ -777,7 +783,7 @@ div.container::-webkit-scrollbar {
 }
 .shareBtn {
   width: 2.5rem;
-  height: 2.5rem;
+  height: 2.6rem;
   background: url("/static/img/share_button.png") top no-repeat;
   background-size: 100% 100%;
   position: fixed;
