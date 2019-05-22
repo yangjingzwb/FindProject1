@@ -503,7 +503,7 @@ export default {
         merc_abbr: "", // 门店简称
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
-        mblno: "", //用户手机号
+        mblno: this.token.productNo || "", //用户手机号
         pagNum: this.PAGNUM || 4,
         // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 0,
@@ -739,7 +739,7 @@ export default {
         latitude: window.LATITUDE, // 维度
         stores_nm: "", // 门店名称
         merc_abbr: "", // 商户简称
-        mblno: "", //用户手机号
+        mblno: this.token.productNo || "", //用户手机号
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
         pagNum: this.PAGNUM || 4,
@@ -882,7 +882,7 @@ export default {
         merc_abbr: "", // 门店简称
         // tixn_cnl: "ROYTEL", // 固定值
         currentPage: this.CURRENTPAGE,
-        mblno: "", //用户手机号
+        mblno: this.token.productNo || "", //用户手机号
         pagNum: this.PAGNUM || 4,
         // session: this.token.session.replace(/\+/g, "%2B"),
         map_type: window.isUseBaiDuLoc ? 0 : 0,

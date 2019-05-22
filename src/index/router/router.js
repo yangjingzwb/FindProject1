@@ -71,7 +71,7 @@ export default [{
             path: 'mine', 
             component: mine,
             meta:{
-                keepAlive: true
+                keepAlive: false
             }
         },
         {

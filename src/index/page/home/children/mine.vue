@@ -7,60 +7,62 @@
     <!-- accountStatus 账户状态(正常:ACTIVE;失效:INACTIVE;过期:EXPIRED;已经逾期：overdue) -->
     <section class="s_1">
       <ul>
+       
         <li class="l i">
-          <span class="icon"><img src="/static/img/1-20.png"></span>
+        <span class="icon"><img src="/static/img/1-20.png"></span>
           <form @submit="submitF($event)" class="form">
             <input type="search" v-model="searchT" placeholder="搜一搜：请输入商户名称" ref='searchInput'>
           </form>
-          <span v-show="searchT&&isIphone" class="icon_after" @click = "clear()">
+          <!-- <span v-show="searchT&&isIphone"  @click = "clear()">
             <img src="/static/img/Group6.png">
-          </span>
+          </span> -->
         </li>
-        <li class="l t" @click="cancel()">
-          取消
+         <li class="l t" @click="cancel()">
+          返回
           <!-- <span></span> -->
         </li>
       </ul>
     </section>
       <div class="home home1" ref="home">
-        <!-- <scroll
+        <scroll
         :data = "shopList"
           :pullUpLoad="pullUpLoad"
           :data1 = "shopListFlag"
           @pullingUp="onPullingUp"
-        > -->
-        <div class="content">
-          <section class="s_8">
+        >
+      <div class="content">
+        <section class="s_8">
 
-          </section>
-          <section class="s_5 s">
-            <!-- <h6 class="title">
-              <span class="text">附近优惠</span>
-            </h6> -->
-            <ul v-for="item in shopList" @click="goSeller(item)" :key="item.id">
-              <li>
-                  <div class="c2">
-                    <span class="l" :class="{'active':item.ACT_FLG == 1}">{{item.STORES_NM}}</span>
-                    <span class="r">{{item.distance}}km</span>
-                  </div>
-                  <div class="c2 c3">
-                    <span class="l">{{item.BUS_ADDR}}</span>
-                    <span class="r r1">立即消费</span>
-                  </div>
-              </li>
-              <li class="hr-1"></li>
-            </ul>
-          
-            <div class="end"></div>
-          </section>
-          <section class="s_5 s_6 s">
-              <div class = "sub2" v-if="!isFirstIn && shopList.length<=0">
-                <img src="/static/img/1-4.png">
-                <span class="txt">抱歉，没有找到相关商户</span>
-              </div>
-          </section>
-        </div>
-        <!-- </scroll> -->
+        </section>
+        
+        <section class="s_5 s">
+          <!-- <h6 class="title">
+            <span class="text">附近优惠</span>
+          </h6> -->
+          <ul v-for="item in shopList" @click="goSeller(item)" :key="item.id">
+            <li>
+                <div class="c2">
+                  <span class="l" :class="{'active':item.ACT_FLG == 1}">{{item.STORES_NM}}</span>
+                  <span class="r">{{item.distance}}km</span>
+                </div>
+                <div class="c2 c3">
+                  <span class="l">{{item.BUS_ADDR}}</span>
+                  <span class="r r1">立即消费</span>
+                </div>
+            </li>
+            <li class="hr-1"></li>
+          </ul>
+        
+          <div class="end"></div>
+        </section>
+        <section class="s_5 s_6 s" v-if="!isFirstIn && shopList.length<=0">
+            <div class = "sub2" >
+              <img src="/static/img/1-4.png">
+              <span class="txt">抱歉，没有找到相关商户</span>
+            </div>
+        </section>
+    </div>
+           </scroll>
     </div>
   </div>
 </template>
@@ -71,7 +73,7 @@
 // import SlideRender from '@@/components/page-render/slide-render'
 import { mapState, mapMutations } from "vuex";
 // import Slider from "@@/components/base/slider";
-// import Scroll from "@@/components/scroll/scroll.vue";
+import Scroll from "@@/components/scroll/scroll.vue";
 import axios from "@@/plugins/rsa/axios";
 import BScroll from "better-scroll";
 import sa from'sa-sdk-javascript';
@@ -79,7 +81,6 @@ import {fetchPoints } from "@@/service/util";
 import Cookies from 'js-cookie'
 // console.log(axios);
 // import {cityGuess, hotcity, groupcity} from '../../service/getData'
-
 export default {
   data() {
     let os = /iP(ad|hone|od)/.test(navigator.userAgent);
@@ -91,7 +92,7 @@ export default {
       // data1:true,
       shopListFlag: false,
       CURRENTPAGE: 1, // 页码
-      PAGNUM: 6, // 页数
+      PAGNUM: 8, // 页数
       isFirstIn: 1,
       isIphone: os,
       pullUpLoad: {
@@ -124,7 +125,7 @@ export default {
 
   components: {
     // Slider,
-    // Scroll
+    Scroll
     // SlideRender
   },
 
@@ -148,27 +149,34 @@ export default {
       let params = {
         latitude: window.LATITUDE,
         longitude: window.LONGITUDE,
-        // mbl_no: this.token.productNo,
+        mbl_no: this.token.productNo || "",
         merc_id: obj.TX_JRN,
         merc_latitude: obj.LATITUDE,
         merc_longitude: obj.LONGITUDE,
         // session: this.token.session.replace(/\+/g, "%2B"),
-        // mercHl: obj.MERC_HOT_LIN
+        mercHl: obj.MERC_HOT_LIN
       };
       this.$store.commit("SHOPPARM", params);
       // console.log("xiao",this.$store.state.shopParm)
       console.log("~~~~~~~~~~~~",params);
       this.$router.push({
         path: "/shopDetail",
-        // query: {
-        //     params: params
-        //   }
+        query: {
+            params: params
+           }
       });
       // 神策
       sa.track("buttonClick", {
         topCategory: "优惠",
         subCategory: "优惠：搜索页"
       });
+      fetchPoints(
+        "010000000000", // 页面索引
+        "010000000000K07", //事件标记
+        this.token.productNo,
+        "搜索商户列表点击", // 事件名称
+        // this.token.session.replace(/\+/g, "%2B")
+      );
     },
     goDetail(event, obj, flag) {
       event.stopPropagation();
@@ -184,6 +192,13 @@ export default {
         is_FromSearch:true,
         keyword:this.searchT
       });
+      fetchPoints(
+        "030000000000", // 页面索引
+        "030000000000K04", //事件标记
+        this.token.productNo,
+        "搜索结果列表商户点击-" + obj.STORES_NM, // 事件名称
+        // this.token.session.replace(/\+/g, "%2B")
+      );
 
       let url = !flag ? obj.marketingEventCotent : obj.MERC_URL;
       // if (flag) {
@@ -208,10 +223,18 @@ export default {
     },
     cancel() {
       // 神策
+      this.searchT=""
       sa.track('clickSearch', {
         operationType: '点击取消',
         currentPage: '附近商家',
       });
+      fetchPoints(
+        "030000000000", // 页面索引
+        "030000000000K05", //事件标记
+        this.token.productNo,
+        "搜索页面取消按钮", // 事件名称
+        // this.token.session.replace(/\+/g, "%2B")
+      );
       this.searchT = "";
       this.$router.go(-1);
     },
@@ -226,22 +249,30 @@ export default {
         return;
       }
       this.CURRENTPAGE += 1;
+      
+      this.l=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_longitude:window.LONGITUDE
+      this.s=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_latitude:window.LATITUDE
+      this.cityName1 =((document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_name:"")||window.CITYNAME || "定位中";
+      // this.PAGNUM=this.PAGNUM+8
       axios
         .post("getExternalShopInfo", {
+          centre_longitude: this.l,
+          centre_latitude: this.s,
           longitude: window.LONGITUDE, // 经度
           latitude: window.LATITUDE, // 维度
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, //  商户简称
-          // mblno: this.token.productNo, //用户手机号
+          mblno: this.token.productNo || "", //用户手机号
           // TTXN_CNL: "ROYTEL", // 固定值
           currentPage: this.CURRENTPAGE,
           pagNum: this.PAGNUM,
           // session: this.token.session.replace(/\+/g, "%2B"),
-          map_type: window.isUseBaiDuLoc ? 0 : 1
+          map_type:0
         })
         .then(res => {
           // this.shopList = res.STORES_REC;
           // 合并数组
+         
           this.shopList.push.apply(this.shopList, res.data);
           if (res.data.length < this.PAGNUM) {
             // this.data1 = true
@@ -265,52 +296,62 @@ export default {
       // sa.track('clickSearch', {
       //   operationType: '删除所有',
       //   currentPage: '附近商家',
-      // });
+      // });c
+      fetchPoints(
+        "030000000000", // 页面索引
+        "030000000000K03", //事件标记
+        this.token.productNo,
+        "搜索词清除按钮", // 事件名称
+        // this.token.session.replace(/\+/g, "%2B")
+      );
       this.searchT = "";
     },
     init() {
-      // if (!this.home) {
-      //   this.home = new BScroll(this.$refs.home, {
-      //     scrollY: true,
-      //     scrollX: false,
-      //     click: true,
-      //     bounce: false,
-      //     pullDownRefresh: {
-      //       threshold: -100 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
-      //     },
-      //     pullUpLoad: {
-      //       threshold: -100 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
-      //     }
-      //     // momentumLimitDistance: 15
-      //   });
-      //   this.home.on("scrollEnd", pos => {
-      //     if (Math.abs(this.home.y) <= Math.abs(this.home.maxScrollY) + 50) {
-      //       // 加载更多
-      //       this.loadMore();
-      //       // this.$emit('scrollToEnd')
-      //     }
-      //     // 下拉动作
-      //     // if (pos.y > 50) {
-      //     //   console.log("touchend")
-      //     //   // self.loadData();
-      //     // }
-      //   });
-      //   this.home.on("scrollToEnd", pos => {
-      //     // console.log("scrollToEnd")
-      //   });
-      // } else {
-      //   this.home.finishPullUp();
-      //   this.home.refresh();
-      // }
+      if (!this.home) {
+        this.home = new BScroll(this.$refs.home, {
+          scrollY: true,
+          scrollX: false,
+          click: true,
+          bounce: false,
+          pullDownRefresh: {
+            threshold: -100 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
+          },
+          pullUpLoad: {
+            threshold: -100 // 在上拉到超过底部 1.25rem 时，触发 pullingUp 事件
+          }
+          // momentumLimitDistance: 15
+        });
+        this.home.on("scrollEnd", pos => {
+          if (Math.abs(this.home.y)-20<= Math.abs(this.home.maxScrollY) ) {
+            // 加载更多
+            this.loadMore();
+            this.$emit('scrollToEnd')
+          }
+         // 下拉动作
+          if (pos.y > 1) {
+            console.log("touchend")
+            self.loadData();
+          }
+        });
+        this.home.on("scrollToEnd", pos => {
+          // console.log("scrollToEnd")
+        });
+      } else {
+        this.home.finishPullUp();
+        this.home.refresh();
+      }
     },
     submitF(e, obj) {
+     
+      this.CURRENTPAGE=0
+      this.PAGNUM=8
       this.$refs.searchInput.blur();
       this.SHOWLOADING(true);
       e.preventDefault();
-      // if (!this.searchT) {
-      //   this.SHOWLOADING(false);
-      //   return;
-      // }
+      if (!this.searchT) {
+        this.SHOWLOADING(false);
+        return;
+      }
        
       // 埋点
       try {
@@ -319,29 +360,31 @@ export default {
           "030000000000K02", //事件标记
           this.token.productNo,
           "搜索按钮", // 事件名称
-          this.token.session.replace(/\+/g, "%2B")
+          // this.token.session.replace(/\+/g, "%2B")
         );
       } catch (e) {}
       // 请求banner1
       this.l=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_longitude:window.LONGITUDE
       this.s=(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_latitude:window.LATITUDE
       this.cityName1 =((document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).city_name:"")||window.CITYNAME || "定位中";
-      axios
-        .post("getExternalShopInfo", {
-          centre_longitude: this.l || "",
-          centre_latitude: this.s || "",
+      axios.post("getExternalShopInfo", {
+          // centre_longitude:(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).longitude:window.LONGITUDE,
+          // centre_latitude:(document.cookie.indexOf("item")!=-1)?JSON.parse(Cookies.get("item")).latitude:window.LATITUDE,
+          centre_longitude: this.l,
+          centre_latitude: this.s,
           longitude: window.LONGITUDE, // 经度
           latitude: window.LATITUDE, // 维度
           stores_nm: this.searchT, // 门店名称
           merc_abbr: this.searchT, // 商户名称
           currentPage: this.CURRENTPAGE, // 当前页数
-          // mblno: this.token.productNo, //用户手机号
-          pagNum: this.PAGNUM, // 没页条
+          mblno: this.token.productNo || "", //用户手机号
+          pagNum: this.PAGNUM, // 每页条
           // TTXN_CNL: "ROYTEL", // 固定值
           // session: this.token.session.replace(/\+/g, "%2B"),
           map_type: window.isUseBaiDuLoc ? 0 : 1
         })
         .then(res => {
+         
           sa.track('applySearch', {
             keyword:this.searchT,
             hasResult: res.data.length>=1 ? 1 : 0
@@ -378,6 +421,13 @@ export default {
         return;
       }
       this.searchT = this.searchT.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g, "");
+      fetchPoints(
+        "030000000000", // 页面索引
+        "030000000000K01", //事件标记
+        this.token.productNo,
+        "搜索栏-" + this.searchT, // 事件名称
+        // this.token.session.replace(/\+/g, "%2B")
+      );
     }
   }
   // props:['activeIcon']
@@ -597,7 +647,7 @@ export default {
   .c3 {
     font-size: 0.8125rem;
     color: #888888;
-    padding-top: 0.25rem;
+    // padding-top: 0.25rem;
     max-width: 70%;
     @include space();
   }

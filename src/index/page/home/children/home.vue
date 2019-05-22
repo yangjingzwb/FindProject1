@@ -563,17 +563,21 @@ export default {
             subCategory: "外放优惠：登录"
           });
           let urls = "https://find.cmpay.com:9102/rcServer/hbopenreceive?state=" + window.location.href;
+          let loginUrl = 'https://find.cmpay.com:9102/main.html';
           // let urls = window.location.href;
           // window.location = urls;
           if (
             (/iP(ad|hone|od)/.test(navigator.userAgent) ? "ios" : "android") ==
             "ios"
           ) {
-            // window.location.href = 'touristLogin(urls)' 
-            // window.goActivity.touristLogin(urls);
-            touristLogin(urls)
+            touristLogin(loginUrl)
+            // try {
+            //     return User.getLocation();
+            // } catch (e) {
+
+            // }
           } else {
-            window.goActivity.startLoginModule('javascript:loginSuccess(%b)', urls)
+            window.goActivity.startLoginModule('javascript:loginSuccess(%b)', loginUrl)
           }
         }
       } else {
