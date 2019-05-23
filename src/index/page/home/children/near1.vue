@@ -162,14 +162,14 @@ export default {
     // },
     goSeller(obj) {
       let params = {
-        latitude: window.LATITUDE,
-        longitude: window.LONGITUDE,
-        mbl_no: this.token.productNo || "15074834092",
+        // latitude: window.LATITUDE,
+        // longitude: window.LONGITUDE,
+        mbl_no: this.token.productNo || "",
         merc_id: obj.TX_JRN,
-        merc_latitude: obj.LATITUDE,
-        merc_longitude: obj.LONGITUDE,
+        // merc_latitude: obj.LATITUDE,
+        // merc_longitude: obj.LONGITUDE,
         // session: this.token.session.replace(/\+/g, "%2B"),
-        mercHl: obj.MERC_HOT_LIN
+        // mercHl: obj.MERC_HOT_LIN
       };
       this.$store.commit("SHOPPARM", params);
       // console.log("xiao",this.$store.state.shopParm)

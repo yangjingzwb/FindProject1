@@ -124,13 +124,13 @@ export default {
         // this.token.session.replace(/\+/g, "%2B")
       );
       let params = {
-        latitude: this.latitude,
-        longitude: this.longitude,
-        // mbl_no: this.token.productNo,
+        // latitude: this.latitude,
+        // longitude: this.longitude,
+        mbl_no: this.token.productNo || "",
         merc_id: obj.TX_JRN,
         // session: this.token.session.replace(/\+/g, "%2B"),
-        merc_latitude: obj.LATITUDE,
-        merc_longitude: obj.LONGITUDE
+        // merc_latitude: obj.LATITUDE,
+        // merc_longitude: obj.LONGITUDE
       };
       this.$store.commit("SHOPPARM", params);
       this.$router.push({path: "/shopDetail"});

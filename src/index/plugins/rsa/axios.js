@@ -37,7 +37,7 @@ axios.interceptors.request.use(config => {
             // 更换头部
             axios.defaults.headers.post['Content-Type'] = 'application/json;encoding=utf-8';
         } else {
-            if(config.url == "getShopInfoDetail") {
+            if(config.url == "getExternalShopInfoDetail") {
                 if(isShopDetail()) {
                     config.url = urlObj.api + config.url + "?" + window.location.href.split('?')[1];
                 } else {
