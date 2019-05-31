@@ -21,7 +21,7 @@
             <ul>
               <li class="left">
                 <div class="seller-name">{{shopData.mercAbbr}}</div>
-                <div class="seller-time">营业时间: {{shopData.businessHour}}</div>
+                <div v-show="shopData.businessHour.length>=1" class="seller-time">营业时间: {{shopData.businessHour}}</div>
               </li>
               <li class="right">
                 <button class="go-buy-btn" @click="payKHDs()">去买单</button>

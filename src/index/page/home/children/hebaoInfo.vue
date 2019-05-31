@@ -24,8 +24,8 @@
         </div>
         <div class="content">
           <div class="content-info">
-            <div class="list-info">活动时间：{{data.effDt}}到{{data.expDt}}</div>
-            <div class="list-info">参与时间：{{data.attEffTm}}到{{data.attExpTm}}</div>
+            <div class="list-info">活动时间：<span v-show="data.grpDt.length>=1" v-for="(item,index) in data.grpDt">{{item.attDtStr}}</span>{{data.effDt}}到{{data.expDt}}</div>
+            <div class="list-info">参与时间：<span v-show="data.grpWek.length>=1" v-for="(item,index) in data.grpWek">{{item.attWek}}</span>{{data.attEffTm}}到{{data.attExpTm}}</div>
             <!-- <div class="list-info" v-for="(item,index) in data.provRec">活动省份：{{item.provNm}}</div>
             <div class="list-info">参与用户范围：{{usrTyp}}</div> -->
             <div class="list-info">
