@@ -1127,7 +1127,7 @@ header {
     font-size: 1.125rem;
     font-family: PingFangSC-Regular;
     color: #13252e;
-    padding-right: 0.5rem;
+    padding-right: 3.5rem;
     text-align: center;
   }
   .t {
