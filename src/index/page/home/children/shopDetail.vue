@@ -272,20 +272,21 @@ export default {
       this.isPayWrapper = false;
     },
     jumpMap(){
+      let params = this.shopParm;
       let sName = '', // 出发地名
-          dName = '', // 目的地名
+          dName = this.shopData.busAddr, // 目的地名
           city = window.CITYNAME,  // 城市
-          longitude = window.LONGITUDE, // 出发地经度
-          latitude = window.LATITUDE, // 出发地纬度
-          MERC_LONGITUDE = this.shopParm.merc_longitude, // 目的地经度
-          MERC_LATITUDE = this.shopParm.merc_latitude, // 目的地纬度
-          BUS_ADDR = this.shopData.busAddr;
+          sLongitude = window.LONGITUDE, // 出发地经度
+          sLatitude = window.LATITUDE, // 出发地纬度
+          dLongitude = this.shopParm.merc_longitude, // 目的地经度
+          dLatitude = this.shopParm.merc_latitude; // 目的地纬度
       // 客户端 跳转链接  安卓 0  苹果 1
-      console.log(city,longitude,latitude,MERC_LONGITUDE,MERC_LATITUDE,BUS_ADDR);
+      // console.log(params);
+      console.log(sName, dName, sLatitude, sLongitude, dLatitude, dLongitude);
       if (AppFlag() === '1' && typeof(CmpOpenMapLocation) !== 'undefined' && typeof(CmpOpenMapLocation) === 'function') {
-          CmpOpenMapLocation(sName, dName, LATITUDE, LONGITUDE, MERC_LATITUDE, MERC_LONGITUDE);
+          CmpOpenMapLocation(sName, dName, sLatitude, sLongitude, dLatitude, dLongitude);
       } else if (AppFlag() === '0' && typeof(goActivity) !== 'undefined' && typeof(goActivity.openNavigation) === 'function') {
-          window.goActivity.openNavigation('', LATITUDE, LONGITUDE, BUS_ADDR, MERC_LATITUDE, MERC_LONGITUDE, city);
+          window.goActivity.openNavigation(sName, sLatitude, sLongitude, dName, dLatitude, dLongitude);
       } else {
           // 非客户端 
       }

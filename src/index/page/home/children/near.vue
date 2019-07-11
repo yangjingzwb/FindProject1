@@ -129,8 +129,8 @@ export default {
         mbl_no: this.token.productNo || "",
         merc_id: obj.TX_JRN,
         // session: this.token.session.replace(/\+/g, "%2B"),
-        // merc_latitude: obj.LATITUDE,
-        // merc_longitude: obj.LONGITUDE
+        merc_latitude: obj.LATITUDE,
+        merc_longitude: obj.LONGITUDE
       };
       this.$store.commit("SHOPPARM", params);
       this.$router.push({path: "/shopDetail"});

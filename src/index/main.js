@@ -21,6 +21,10 @@ import FastClick from "fastclick";
 import axios from "@@/plugins/rsa/axios";
 import AlertTip from "@@/components/common/alertTip";
 import { checkUtil, isHebaoApp, animationProgress, formatDate_1,asyncLoaded } from "@@/service/util";
+import methods from "./config/methods";//方法挂靠全局
+Object.keys(methods).forEach((key) => {
+	Vue.prototype[key] = methods[key];
+});
 // 神策
 import sa from "sa-sdk-javascript";
 import 'swiper/dist/css/swiper.css'

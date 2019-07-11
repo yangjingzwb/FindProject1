@@ -42,7 +42,7 @@
             <!-- <vue-loading v-if="showLoading" type='balls' color="#ed196c"></vue-loading> -->
             <li @click="aginEnter()" class="aa">
               <img src="/static/img/load fail_2.png"/>
-              <div class="loadText">抱歉，该区域附近暂无和包商户</div>
+              <div class="loadText">请点击刷新</div>
             </li>
           </ul>
     <!-- </scroll> -->
@@ -166,8 +166,8 @@ export default {
         // longitude: window.LONGITUDE,
         mbl_no: this.token.productNo || "",
         merc_id: obj.TX_JRN,
-        // merc_latitude: obj.LATITUDE,
-        // merc_longitude: obj.LONGITUDE,
+        merc_latitude: obj.LATITUDE,
+        merc_longitude: obj.LONGITUDE,
         // session: this.token.session.replace(/\+/g, "%2B"),
         // mercHl: obj.MERC_HOT_LIN
       };

@@ -15,6 +15,7 @@ const shopList = r => require.ensure([], () => r(require('../page/home/children/
 const shopDetail = r => require.ensure([], () => r(require('../page/home/children/shopDetail')), 'shopDetail')
 const hebaoInfo = r => require.ensure([], () => r(require('../page/home/children/hebaoInfo')), 'hebaoInfo')
 const city = r => require.ensure([], () => r(require('../page/home/children/city')), 'city')
+const vipCoupon = r => require.ensure([], () => r(require('../page/home/children/vipCoupon')), 'vipCoupon')
 export default [{
     path: '/',
     component: App, //顶层路由，对应main.html
@@ -101,7 +102,14 @@ export default [{
                 meta:{
                     keepAlive: false
                 }
-            }
+            },
+            {
+                 path: 'vipCoupon', 
+                 component: vipCoupon,
+                 meta:{
+                     keepAlive: false
+                 }
+             }
        
         //常见问题模块
     ]
